@@ -13,6 +13,7 @@
 
             // Run the given named hook for the given vm.
             runHook = function (vm, hook, container, callback) {
+                callback = callback || _.noop;
                 if (_.isFunction(vm[hook])) {
                     return vm[hook](container, callback);
                 }
@@ -29,12 +30,8 @@
                         applicationContainer.appendChild(container);
                         runHook(vm, 'binding', container, function () {
                             ko.applyBindings(vm, container);
-                            runHook(vm, 'ready', container, function () {
-                                current = {
-                                    vm: vm,
-                                    container: container
-                                };
-                            });
+                            current = { vm: vm, container: container };
+                            runHook(vm, 'ready', container);
                         });
                     });
                 };
