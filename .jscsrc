@@ -1,0 +1,6 @@
+{
+    "preset": "crockford",
+    "disallowSpacesInsideArrayBrackets": null,
+    "requireSpacesInsideArrayBrackets": "all",
+    "disallowDanglingUnderscores": null
+}
