@@ -1,0 +1,31 @@
+{
+  "name": "rwahs-research-frontend",
+  "version": "0.0.1",
+  "description": "SPA frontend for CollectiveAccess SimpleAPI",
+  "main": "public/app/main.js",
+  "scripts": {
+    "test": "gulp qa"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/rwahs/research-frontend.git"
+  },
+  "author": "Gaia Resources <dev@gaiaresources.com.au>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rwahs/research-frontend/issues"
+  },
+  "homepage": "https://github.com/rwahs/research-frontend#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-connect": "^4.0.0",
+    "gulp-jscs": "^3.0.2",
+    "gulp-jscs-stylish": "^1.4.0",
+    "gulp-jshint": "^2.0.1",
+    "gulp-less": "^3.1.0",
+    "gulp-mocha-phantomjs": "^0.11.0",
+    "jshint": "^2.9.2",
+    "mocha": "^2.5.3"
+  }
+}
