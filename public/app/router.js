@@ -23,8 +23,6 @@
             attach = function (viewPath, viewModelPath, context) {
                 var container, vm, _attach;
 
-                console.log('router: attaching view "' + viewPath + '" to view model "' + viewModelPath + '"...');
-
                 _attach = function () {
                     runHook(vm, 'attaching', container, function () {
                         applicationContainer.innerHTML = '';
@@ -62,7 +60,7 @@
                     return attach('ui/pages/about', 'ui/pages/Page', context);
                 });
 
-                page('/:type/search', function (context) {
+                page('/:type/search/:query?', function (context) {
                     switch (context.params.type) {
                         case 'library':
                             return attach('ui/search/library', 'ui/search/Search', context);
