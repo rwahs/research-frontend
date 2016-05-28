@@ -53,11 +53,11 @@
             // Configure and start the router.
             return function () {
                 page('/', function (context) {
-                    return attach('ui/pages/home', 'ui/pages/Page', context);
+                    return attach('ui/page/home', 'ui/page/Page', context);
                 });
 
                 page('/about', function (context) {
-                    return attach('ui/pages/about', 'ui/pages/Page', context);
+                    return attach('ui/page/about', 'ui/page/Page', context);
                 });
 
                 page('/:type/search/:query?', function (context) {
@@ -71,7 +71,7 @@
                         case 'memorials':
                             return attach('ui/search/memorials', 'ui/search/Search', context);
                         default:
-                            return attach('ui/errors/404', 'ui/errors/404', context);
+                            return attach('ui/error/404', 'ui/error/Error', context);
                     }
                 });
 
@@ -86,12 +86,12 @@
                         case 'memorials':
                             return attach('ui/detail/memorials', 'ui/detail/Detail', context);
                         default:
-                            return attach('ui/errors/404', 'ui/errors/404', context);
+                            return attach('ui/error/404', 'ui/error/Error', context);
                     }
                 });
 
                 page('*', function (context) {
-                    return attach('ui/errors/404', 'ui/errors/404', context);
+                    return attach('ui/error/404', 'ui/error/Error', context);
                 });
 
                 page.start();

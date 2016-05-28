@@ -57,7 +57,11 @@
         function (mocha) {
             require(
                 [
-                    'spec/ui/pages/Page.spec'
+                    'spec/ui/detail/Detail.spec',
+                    'spec/ui/error/Error.spec',
+                    'spec/ui/page/Page.spec',
+                    'spec/ui/search/Search.spec',
+                    'spec/util/router.spec'
                 ],
                 function () {
                     // See https://github.com/nathanboktae/mocha-phantomjs-core/issues/12

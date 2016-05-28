@@ -38,7 +38,7 @@
     // Boot the application
     require([ 'jquery' ], function () {
         require([ 'bootstrap' ], function () {
-            require([ './router' ], function (router) {
+            require([ 'util/router' ], function (router) {
                 router();
             });
         });
