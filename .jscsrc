@@ -2,5 +2,6 @@
     "preset": "crockford",
     "disallowSpacesInsideArrayBrackets": null,
     "requireSpacesInsideArrayBrackets": "all",
-    "disallowDanglingUnderscores": null
+    "disallowDanglingUnderscores": null,
+    "requireDotNotation": { "allExcept": [ "snake_case", "keywords" ] }
 }
