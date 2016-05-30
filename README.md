@@ -4,14 +4,16 @@ Public research frontend SPA for CollectiveAccess.
 
 ## Development Environment Setup
 
-You need a recent version of Node.js installed.  For development environments, `nvm` is recommended: 
-https://github.com/creationix/nvm.  Then execute the following commands in the project's root directory:
+You need a Node.js 6.x installed.  It may work on previous versions (5.x) but this is untested.  For development 
+environments, `nvm` is recommended: https://github.com/creationix/nvm.  
+
+To install dependencies, execute the following commands in the project's root directory:
 
     npm install -g gulp bower
     npm install
     bower install
 
-This (1) Installs global dependencies, (2) installs local development and automation dependencies, and (3) installs 
+This (1) installs global dependencies, (2) installs local development and automation dependencies, and (3) installs 
 application dependencies.  You can check `package.json` and `bower.json` to see what will be installed.
 
 ## Automation
