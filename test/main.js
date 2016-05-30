@@ -61,6 +61,7 @@
                     'spec/ui/pages/error/ErrorPage.spec',
                     'spec/ui/pages/static/StaticPage.spec',
                     'spec/ui/pages/search/SearchPage.spec',
+                    'spec/ui/pages/search/SearchMapper.spec',
                     'spec/util/container.spec',
                     'spec/util/router.spec'
                 ],
