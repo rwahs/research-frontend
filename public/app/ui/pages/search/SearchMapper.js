@@ -30,10 +30,11 @@
                                 return {
                                     key: key,
                                     value: value,
-                                    displayValue: _.isFunction(field.displayValue) ? field.displayValue(value) : value
+                                    displayValue: _.isFunction(field.displayValue) ? field.displayValue(value) : '' + value
                                 };
                             })
                             .merge({
+                                // jshint sub: true
                                 detailUrl: detailUrlTemplate.replace(':id', result['object_id'])
                             })
                             .value();
