@@ -10,7 +10,7 @@
         ],
         function (_, ko, container, SearchMapper) {
             return function (context, parameters) {
-                var mapper, selectedSearchType;
+                var search, selectedSearchType, mapper, searchParameters;
 
                 this.searchText = ko.observable('');
                 this.searchTypes = ko.observableArray();
@@ -19,8 +19,16 @@
                 this.loading = ko.observable(false);
                 this.displayResults = ko.observable(false);
 
+                search = container.resolve(parameters.searchServiceKey);
                 selectedSearchType = ko.observable();
                 mapper = new SearchMapper(selectedSearchType, this.resultFields, parameters.detailUrlTemplate);
+
+                searchParameters = ko.pureComputed(function () {
+                    return _.zipObject(
+                        [ selectedSearchType() ],
+                        [ this.searchText() || '*' ]
+                    );
+                }.bind(this));
 
                 this.heading = ko.pureComputed(function () {
                     return parameters.collectionName + ' Search';
@@ -55,11 +63,8 @@
                     this.loading(true);
                     this.displayResults(false);
                     this.results([]);
-                    container.resolve(parameters.searchServiceKey)(
-                        _.zipObject(
-                            [ selectedSearchType() ],
-                            [ this.searchText() || '*' ]
-                        ),
+                    search(
+                        searchParameters(),
                         function (err, results) {
                             this.loading(false);
                             if (err) {
