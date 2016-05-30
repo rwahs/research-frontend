@@ -60,6 +60,7 @@
         function (mocha) {
             require(
                 [
+                    'spec/config/env/development.spec',
                     'spec/services/searchService.spec',
                     'spec/ui/pages/detail/DetailPage.spec',
                     'spec/ui/pages/error/ErrorPage.spec',
