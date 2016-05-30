@@ -34,7 +34,7 @@
                                 return {
                                     key: key,
                                     value: value,
-                                    displayValue: _.isFunction(field.displayValue) ? field.displayValue(value) : '' + value
+                                    displayValue: '' + (_.isFunction(field.displayValue) ? field.displayValue(value) : value)
                                 };
                             })
                             .merge({
