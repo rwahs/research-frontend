@@ -25,6 +25,10 @@
 
                     mapResult: function (result) {
                         return _(result)
+                            .defaults(_.zipObject(
+                                _.map(resultFieldsObservable(), 'key'),
+                                _.map(Object.keys(resultFieldsObservable()), _.constant(''))
+                            ))
                             .mapValues(function (value, key) {
                                 var field = _.find(resultFieldsObservable(), { key: key }) || {};
                                 return {
