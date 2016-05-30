@@ -19,12 +19,13 @@
 
                 return function (parameters, callback) {
                     $.ajax(_.merge({}, ajaxOptions, {
-                        url: baseUrl + '?q=' + queryString(parameters),
+                        url: baseUrl + '?q=' + queryString(parameters || {}),
                         success: function (result) {
-                            if (result.ok) {
-                                delete result.ok;
-                                callback(undefined, _.values(result));
+                            if (!result.ok) {
+                                return callback(new Error('Invalid response received from server'));
                             }
+                            delete result.ok;
+                            callback(undefined, _.values(result));
                         },
                         error: function (jqXHR, textStatus, err) {
                             callback(err);

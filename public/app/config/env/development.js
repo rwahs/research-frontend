@@ -4,17 +4,17 @@
     define(
         [
             'util/container',
-            'services/SearchService'
+            'services/searchService'
         ],
-        function (container, SearchService) {
+        function (container, searchService) {
             var simpleApiBaseUrl = 'http://localhost/providence/service.php/simple',
                 enableCORS = { xhrFields: { withCredentials: true } };
 
             return function () {
-                container.register('LibrarySearchService', new SearchService(simpleApiBaseUrl + '/library_search', enableCORS));
-                container.register('PhotographsSearchService', new SearchService(simpleApiBaseUrl + '/photographs_search', enableCORS));
-                container.register('MuseumSearchService', new SearchService(simpleApiBaseUrl + '/museum_search', enableCORS));
-                container.register('MemorialsSearchService', new SearchService(simpleApiBaseUrl + '/memorials_search', enableCORS));
+                container.register('LibrarySearchService', searchService(simpleApiBaseUrl + '/library_search', enableCORS));
+                container.register('PhotographsSearchService', searchService(simpleApiBaseUrl + '/photographs_search', enableCORS));
+                container.register('MuseumSearchService', searchService(simpleApiBaseUrl + '/museum_search', enableCORS));
+                container.register('MemorialsSearchService', searchService(simpleApiBaseUrl + '/memorials_search', enableCORS));
                 container.seal();
             };
         }
