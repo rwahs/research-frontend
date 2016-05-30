@@ -14,7 +14,7 @@
                     expect(searchTypes).to.be.an('array');
                     expect(searchTypes).to.have.length(4);
                 });
-                it('Defines the `Title` field', function () {
+                it('Defines the `Keyword` field', function () {
                     expect(searchTypes[0].key).to.equal('_fulltext');
                     expect(searchTypes[0].labelText).to.equal('Keyword');
                     expect(searchTypes[0].glyphicon).to.equal('search');
