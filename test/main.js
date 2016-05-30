@@ -69,6 +69,12 @@
                     'spec/ui/pages/search/SearchMapper.spec',
                     'spec/ui/pages/search/library/resultFields.spec',
                     'spec/ui/pages/search/library/searchTypes.spec',
+                    'spec/ui/pages/search/memorials/resultFields.spec',
+                    'spec/ui/pages/search/memorials/searchTypes.spec',
+                    'spec/ui/pages/search/museum/resultFields.spec',
+                    'spec/ui/pages/search/museum/searchTypes.spec',
+                    'spec/ui/pages/search/photographs/resultFields.spec',
+                    'spec/ui/pages/search/photographs/searchTypes.spec',
                     'spec/util/container.spec',
                     'spec/util/router.spec'
                 ],
