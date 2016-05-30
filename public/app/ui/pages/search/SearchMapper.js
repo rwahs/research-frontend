@@ -23,23 +23,20 @@
                         };
                     },
 
-                    mapResult: function (results) {
-                        return _.map(results, function (result) {
-                            return _(result)
-                                .mapValues(function (value, key) {
-                                    var field = _.find(resultFieldsObservable(), { key: key }) || {};
-                                    return {
-                                        key: key,
-                                        value: value,
-                                        displayValue: _.isFunction(field.displayValue) ? field.displayValue(value) : value
-                                    };
-                                })
-                                .merge({
-                                    // jshint sub: true
-                                    detailUrl: detailUrlTemplate.replace(':id', result['object_id'])
-                                })
-                                .value();
-                        });
+                    mapResult: function (result) {
+                        return _(result)
+                            .mapValues(function (value, key) {
+                                var field = _.find(resultFieldsObservable(), { key: key }) || {};
+                                return {
+                                    key: key,
+                                    value: value,
+                                    displayValue: _.isFunction(field.displayValue) ? field.displayValue(value) : value
+                                };
+                            })
+                            .merge({
+                                detailUrl: detailUrlTemplate.replace(':id', result['object_id'])
+                            })
+                            .value();
                     }
                 };
             };

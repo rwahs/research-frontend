@@ -66,7 +66,7 @@
                                 // TODO Display error
                                 return;
                             }
-                            this.results(mapper.mapResult(results));
+                            this.results(_.map(results, mapper.mapResult));
                             this.displayResults(true);
                         }.bind(this)
                     );
