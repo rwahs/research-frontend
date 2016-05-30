@@ -4,7 +4,7 @@ Public research frontend SPA for CollectiveAccess.
 
 ## Development Environment Setup
 
-You need Node.js 6.x installed.  It may work on previous versions (5.x) but this is untested.  For development  
+You need Node.js 6.x installed.  It may work on previous versions (5.x) but this is untested.  For Linux development  
 environments, `nvm` is recommended: https://github.com/creationix/nvm.  
 
 To install dependencies, execute the following commands in the project's root directory:
