@@ -4,14 +4,14 @@
     define(
         [
             'chai',
-            'ui/page/Page'
+            'ui/pages/search/SearchPage'
         ],
-        function (chai, Page) {
+        function (chai, SearchPage) {
             var expect = chai.expect;
 
-            describe('The `Page` module', function () {
+            describe('The `SearchPage` module', function () {
                 it('Defines a constructor function', function () {
-                    expect(Page).to.be.a('function');
+                    expect(SearchPage).to.be.a('function');
                 });
             });
         }

@@ -57,10 +57,10 @@
         function (mocha) {
             require(
                 [
-                    'spec/ui/detail/Detail.spec',
-                    'spec/ui/error/Error.spec',
-                    'spec/ui/page/Page.spec',
-                    'spec/ui/search/Search.spec',
+                    'spec/ui/pages/detail/DetailPage.spec',
+                    'spec/ui/pages/error/ErrorPage.spec',
+                    'spec/ui/pages/static/StaticPage.spec',
+                    'spec/ui/pages/search/SearchPage.spec',
                     'spec/util/router.spec'
                 ],
                 function () {

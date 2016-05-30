@@ -4,14 +4,14 @@
     define(
         [
             'chai',
-            'ui/error/Error'
+            'ui/pages/error/ErrorPage'
         ],
-        function (chai, Error) {
+        function (chai, ErrorPage) {
             var expect = chai.expect;
 
-            describe('The `Error` module', function () {
+            describe('The `ErrorPage` module', function () {
                 it('Defines a constructor function', function () {
-                    expect(Error).to.be.a('function');
+                    expect(ErrorPage).to.be.a('function');
                 });
             });
         }
