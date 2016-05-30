@@ -11,7 +11,7 @@
                 key: 'Author',
                 labelText: 'Author',
                 displayValue: function (value) {
-                    return '<ul><li>' + value.replace(';', '</li><li>') + '</li></ul>';
+                    return '<ul class="list-unstyled"><li>' + value.replace(';', '</li><li>') + '</li></ul>';
                 }
             },
             {
@@ -30,7 +30,7 @@
                 key: 'Subjects',
                 labelText: 'Subjects',
                 displayValue: function (value) {
-                    return '<ul><li>' + value.replace(';', '</li><li>') + '</li></ul>';
+                    return '<ul class="list-unstyled"><li>' + value.replace(';', '</li><li>') + '</li></ul>';
                 }
             }
         ];
