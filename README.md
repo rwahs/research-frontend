@@ -2,6 +2,8 @@
 
 Public research frontend SPA for CollectiveAccess.
 
+[![Build Status](https://secure.travis-ci.org/rwahs/research-frontend.png?branch=master)](http://travis-ci.org/rwahs/research-frontend)
+
 ## Development Environment Setup
 
 You need Node.js 6.x installed.  It may work on previous versions (5.x) but this is untested.  For Linux development  
