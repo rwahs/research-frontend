@@ -27,6 +27,10 @@
                 }
             },
             {
+                key: 'PlaceOfPublication',
+                labelText: 'Place of Publication'
+            },
+            {
                 key: 'PublicationType',
                 labelText: 'Type'
             },
