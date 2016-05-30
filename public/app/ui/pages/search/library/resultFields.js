@@ -20,7 +20,11 @@
             },
             {
                 key: 'DateOfPublication',
-                labelText: 'Date of Publication'
+                labelText: 'Date of Publication',
+                displayValue: function (value) {
+                    var date = new Date(Date.parse(value));
+                    return '<span title="' + date.toDateString() + '" data-microtime="' + date.getTime() + '">' + date.toLocaleDateString() + '</span>';
+                }
             },
             {
                 key: 'PublicationType',
