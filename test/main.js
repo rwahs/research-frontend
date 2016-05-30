@@ -7,6 +7,7 @@
             // Test modules
             mocha: '../node_modules/mocha/mocha',
             chai: '../node_modules/chai/chai',
+            sinon: '../node_modules/sinon/lib/sinon',
 
             // RequireJS extensions
             text: '../public/lib/text/text',
@@ -27,8 +28,10 @@
             ui: '../public/app/ui/',
             util: '../public/app/util/',
 
-            // Test specs
-            spec: 'spec/'
+            // Test specs, mocks and fixtures
+            spec: 'spec/',
+            mock: 'mock/',
+            fixtures: 'fixtures/'
         },
         shim: {
             bloodhound: {
