@@ -156,7 +156,7 @@
             }
             return gulp
                 .src('public/images/**/*')
-                .pipe(gulp.dest('dist/' + environment));
+                .pipe(gulp.dest('dist/' + environment + '/images'));
         }
     );
 
