@@ -6,7 +6,7 @@ Public research frontend SPA for CollectiveAccess.
 
 ## Development Environment Setup
 
-You need Node.js 6.x installed.  It may work on previous versions (5.x) but this is untested.  For Linux development  
+You need Node.js 6.x installed.  It may work on previous versions (5.x) but this is untested.  For Linux development
 environments, `nvm` is recommended: https://github.com/creationix/nvm.  
 
 To install dependencies, execute the following commands in the project's root directory:
@@ -15,8 +15,23 @@ To install dependencies, execute the following commands in the project's root di
     npm install
     bower install
 
-This (1) installs global dependencies, (2) installs local development and automation dependencies, and (3) installs 
+This (1) installs global dependencies, (2) installs local development and automation dependencies, and (3) installs
 application dependencies.  You can check `package.json` and `bower.json` to see what will be installed.
+
+### CA Web Server setup
+
+In order to perform operations via the web services, the web server running Collective Access needs to allow
+Cross-Origin Resource Sharing (CORS) requests.  Assuming you are using Apache2, use the following in the relevant
+`VirtualHost` directive:
+
+    Header set Access-Control-Allow-Credentials "true"
+    Header set Access-Control-Allow-Origin "http://localhost:8888"
+
+You also need to enable the `headers` module:
+
+    a2enmod headers
+
+And restart the web server service.
 
 ## Development Environment Automation
 

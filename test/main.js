@@ -7,6 +7,7 @@
             // Test modules
             mocha: '../node_modules/mocha/mocha',
             chai: '../node_modules/chai/chai',
+            sinon: '../node_modules/sinon/lib/sinon',
 
             // RequireJS extensions
             text: '../public/lib/text/text',
@@ -27,8 +28,10 @@
             ui: '../public/app/ui/',
             util: '../public/app/util/',
 
-            // Test specs
-            spec: 'spec/'
+            // Test specs, mocks and fixtures
+            spec: 'spec/',
+            mock: 'mock/',
+            fixtures: 'fixtures/'
         },
         shim: {
             bloodhound: {
@@ -57,10 +60,22 @@
         function (mocha) {
             require(
                 [
-                    'spec/ui/detail/Detail.spec',
-                    'spec/ui/error/Error.spec',
-                    'spec/ui/page/Page.spec',
-                    'spec/ui/search/Search.spec',
+                    'spec/config/env/development.spec',
+                    'spec/config/search/library/resultFields.spec',
+                    'spec/config/search/library/searchTypes.spec',
+                    'spec/config/search/memorials/resultFields.spec',
+                    'spec/config/search/memorials/searchTypes.spec',
+                    'spec/config/search/museum/resultFields.spec',
+                    'spec/config/search/museum/searchTypes.spec',
+                    'spec/config/search/photographs/resultFields.spec',
+                    'spec/config/search/photographs/searchTypes.spec',
+                    'spec/services/searchService.spec',
+                    'spec/ui/pages/detail/DetailPage.spec',
+                    'spec/ui/pages/error/ErrorPage.spec',
+                    'spec/ui/pages/static/StaticPage.spec',
+                    'spec/ui/pages/search/SearchPage.spec',
+                    'spec/ui/pages/search/SearchMapper.spec',
+                    'spec/util/container.spec',
                     'spec/util/router.spec'
                 ],
                 function () {
