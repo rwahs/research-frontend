@@ -1,7 +1,18 @@
 /* global __dirname */
 
-(function (gulp, jshint, jscs, stylish, mocha, connect, less) {
+(function (pkg, gulp, jshint, jscs, stylish, mocha, connect, less, requirejs, uglify, replace, header, yargs, rimraf, mkdirp, recursive) {
     'use strict';
+
+    var environment = yargs.argv.env || 'development',
+        headerTemplate =
+            '/**\n' +
+            ' * ${pkg.name}\n' +
+            ' * ${pkg.description}\n' +
+            ' * \n' +
+            ' * @version ${pkg.version}\n' +
+            ' * @link ${pkg.homepage}\n' +
+            ' * @license ${pkg.license}\n' +
+            ' */\n\n';
 
     gulp.task(
         'qa:lint',
@@ -40,13 +51,124 @@
     );
 
     gulp.task(
-        'less',
+        'build:clean',
+        function (callback) {
+            rimraf('public/css', callback);
+        }
+    );
+
+    gulp.task(
+        'build:less',
         function () {
             return gulp
                 .src('public/less/main.less')
-                .pipe(less({ paths: [ __dirname + '/public/less' ] }))
+                .pipe(less({
+                    paths: [ 'public/less' ]
+                }))
                 .pipe(gulp.dest('public/css'));
         }
+    );
+
+    gulp.task(
+        'build',
+        [
+            'build:clean',
+            'build:less'
+        ]
+    );
+
+    gulp.task(
+        'package:clean',
+        function (callback) {
+            if (environment === 'development') {
+                throw new Error('Cannot use "package" tasks in development environment');
+            }
+            rimraf('dist/' + environment, function () {
+                mkdirp('dist/' + environment, callback);
+            });
+        }
+    );
+
+    gulp.task(
+        'package:less',
+        function () {
+            if (environment === 'development') {
+                throw new Error('Cannot use "package" tasks in development environment');
+            }
+            return gulp
+                .src('public/less/main.less')
+                .pipe(less({
+                    paths: [ 'public/less' ],
+                    optimize: true
+                }))
+                .pipe(gulp.dest('dist/' + environment));
+        }
+    );
+
+    gulp.task(
+        'package:javascript',
+        function () {
+            if (environment === 'development') {
+                throw new Error('Cannot use "package" tasks in development environment');
+            }
+            // Dynamically generate the `include` list, because most of the modules are dynamically `require`d.
+            recursive('public/app', function (err, files) {
+                return gulp
+                    .src('public/app/main.js')
+                    .pipe(requirejs({
+                        mainConfigFile: 'public/app/main.js',
+                        name: '../lib/requirejs/require',
+                        optimize: 'none',
+                        out: 'application.js',
+                        include: files.map(function (file) {
+                            // Strip common path prefix; return .js files without extension, and others via text plugin.
+                            file = file.replace(/^public\/app\//, '');
+                            return file.match(/\.js$/) ? file.replace(/\.js$/, '') : 'text!' + file;
+                        })
+                    }))
+                    .pipe(replace(/var environment = 'development';/g, 'var environment = "' + environment + '";'))
+                    .pipe(uglify())
+                    .pipe(header(headerTemplate, { pkg: pkg }))
+                    .pipe(gulp.dest('dist/' + environment));
+            });
+        }
+    );
+
+    gulp.task(
+        'package:html',
+        function () {
+            if (environment === 'development') {
+                throw new Error('Cannot use "package" tasks in development environment');
+            }
+            return gulp
+                .src('public/index.html')
+                .pipe(replace(/src="\/lib\/requirejs\/require\.js"/g, 'src="/application.js"'))
+                .pipe(replace(/href="\/css\/main\.css"/g, 'href="/main.css"'))
+                .pipe(gulp.dest('dist/' + environment));
+        }
+    );
+
+    gulp.task(
+        'package:images',
+        function () {
+            if (environment === 'development') {
+                throw new Error('Cannot use "package" tasks in development environment');
+            }
+            return gulp
+                .src('public/images/**/*')
+                .pipe(gulp.dest('dist/' + environment));
+        }
+    );
+
+    gulp.task(
+        'package',
+        [
+            'package:clean',
+            'package:less',
+            'package:javascript',
+            'package:html',
+            'package:images'
+        ]
     );
 
     gulp.task(
@@ -56,6 +178,17 @@
                 port: 8888,
                 root: 'public',
                 fallback: 'public/index.html'
+            });
+        }
+    );
+
+    gulp.task(
+        'dist-server',
+        function () {
+            connect.server({
+                port: 8889,
+                root: 'dist/' + environment,
+                fallback: 'dist/' + environment + '/index.html'
             });
         }
     );
@@ -86,7 +219,7 @@
                         'public/less/**/*.less'
                     ],
                     [
-                        'less'
+                        'build:less'
                     ]
                 );
         }
@@ -104,16 +237,25 @@
         'default',
         [
             'qa',
-            'less',
+            'build',
             'watch'
         ]
     );
 }(
+    require('./package.json'),
     require('gulp'),
     require('gulp-jshint'),
     require('gulp-jscs'),
     require('gulp-jscs-stylish'),
     require('gulp-mocha-phantomjs'),
     require('gulp-connect'),
-    require('gulp-less')
+    require('gulp-less'),
+    require('gulp-requirejs-optimize'),
+    require('gulp-uglify'),
+    require('gulp-replace'),
+    require('gulp-header'),
+    require('yargs'),
+    require('rimraf'),
+    require('mkdirp'),
+    require('recursive-readdir')
 ));

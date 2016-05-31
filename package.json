@@ -20,12 +20,20 @@
     "chai": "^3.5.0",
     "gulp": "^3.9.1",
     "gulp-connect": "^4.0.0",
+    "gulp-header": "^1.8.2",
     "gulp-jscs": "^3.0.2",
     "gulp-jscs-stylish": "^1.4.0",
     "gulp-jshint": "^2.0.1",
     "gulp-less": "^3.1.0",
     "gulp-mocha-phantomjs": "^0.11.0",
+    "gulp-replace": "^0.5.4",
+    "gulp-requirejs-optimize": "^1.0.0",
+    "gulp-uglify": "^1.5.3",
     "jshint": "^2.9.2",
-    "mocha": "^2.5.3"
+    "mkdirp": "^0.5.1",
+    "mocha": "^2.5.3",
+    "recursive-readdir": "^2.0.0",
+    "rimraf": "^2.5.2",
+    "yargs": "^4.7.1"
   }
 }
