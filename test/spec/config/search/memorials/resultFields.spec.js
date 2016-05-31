@@ -12,7 +12,7 @@
             describe('The `memorials/resultFields` module', function () {
                 it('Defines a static array', function () {
                     expect(resultFields).to.be.an('array');
-                    expect(resultFields).to.have.length(5);
+                    expect(resultFields).to.have.length(6);
                 });
                 it('Defines the `idno` field', function () {
                     expect(resultFields[0].key).to.equal('idno');
@@ -27,14 +27,19 @@
                     expect(resultFields[2].labelText).to.equal('Creator');
                     expect(resultFields[2].displayValue).to.be.a('function');
                 });
+                it('Defines the `Location` field', function () {
+                    expect(resultFields[3].key).to.equal('Location');
+                    expect(resultFields[3].labelText).to.equal('Location');
+                    expect(resultFields[3].displayValue).to.be.a('function');
+                });
                 it('Defines the `ErectedBy` field', function () {
-                    expect(resultFields[3].key).to.equal('ErectedBy');
-                    expect(resultFields[3].labelText).to.equal('Erected By');
+                    expect(resultFields[4].key).to.equal('ErectedBy');
+                    expect(resultFields[4].labelText).to.equal('Erected By');
                 });
                 it('Defines the `Subjects` field', function () {
-                    expect(resultFields[4].key).to.equal('Subjects');
-                    expect(resultFields[4].labelText).to.equal('Subjects');
-                    expect(resultFields[4].displayValue).to.be.a('function');
+                    expect(resultFields[5].key).to.equal('Subjects');
+                    expect(resultFields[5].labelText).to.equal('Subjects');
+                    expect(resultFields[5].displayValue).to.be.a('function');
                 });
             });
         }

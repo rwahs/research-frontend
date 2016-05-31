@@ -17,22 +17,27 @@
                 it('Defines the `type` field', function () {
                     expect(resultFields[0].key).to.equal('type');
                     expect(resultFields[0].labelText).to.equal('Item Type');
+                    expect(resultFields[0].displayValue).to.equal(undefined);
                 });
                 it('Defines the `idno` field', function () {
                     expect(resultFields[1].key).to.equal('idno');
                     expect(resultFields[1].labelText).to.equal('Accession Number');
+                    expect(resultFields[1].displayValue).to.equal(undefined);
                 });
                 it('Defines the `ItemName` field', function () {
                     expect(resultFields[2].key).to.equal('ItemName');
                     expect(resultFields[2].labelText).to.equal('Item Name');
+                    expect(resultFields[2].displayValue).to.equal(undefined);
                 });
                 it('Defines the `Dates` field', function () {
                     expect(resultFields[3].key).to.equal('Dates');
                     expect(resultFields[3].labelText).to.equal('Dates');
+                    expect(resultFields[3].displayValue).to.equal(undefined);
                 });
                 it('Defines the `Importance` field', function () {
                     expect(resultFields[4].key).to.equal('Importance');
                     expect(resultFields[4].labelText).to.equal('Importance');
+                    expect(resultFields[4].displayValue).to.equal(undefined);
                 });
                 it('Defines the `Subjects` field', function () {
                     expect(resultFields[5].key).to.equal('Subjects');
@@ -42,6 +47,7 @@
                 it('Defines the `Classification` field', function () {
                     expect(resultFields[6].key).to.equal('Classification');
                     expect(resultFields[6].labelText).to.equal('Classification');
+                    expect(resultFields[6].displayValue).to.be.a('function');
                 });
             });
         }
