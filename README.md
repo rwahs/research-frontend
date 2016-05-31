@@ -111,6 +111,17 @@ There is a task that cleans up a previous packaging result, as above this must b
 
     gulp --env=staging package:clean
 
+### Local Package Server
+
+It is possible to run the packaged application locally; again the environment is required:
+
+    gulp --env=staging dist-server
+
+This server runs on a different port at http://localhost:8889/.  This is intended for final integration testing before
+a deployment.  Note that the environment-specific configuration within the application, i.e. the selection of a module
+under `config/env`, will also be determined by the environment setting.  This means that the module must exist and the
+target CA instance must be accessible, in order for the application to run correctly.
+
 ### Deployment
 
 TODO
