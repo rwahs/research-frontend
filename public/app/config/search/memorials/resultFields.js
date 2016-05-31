@@ -3,9 +3,10 @@
 
     define(
         [
-            'lodash'
+            'lodash',
+            'jquery'
         ],
-        function (_) {
+        function (_, $) {
             return [
                 {
                     key: 'idno',
@@ -19,13 +20,14 @@
                     key: 'Creator',
                     labelText: 'Creator',
                     displayValue: function (value) {
-                        return '<div>' + _(value.split(';'))
-                            .chunk(2)
-                            .map(function (tuple) {
-                                return tuple[0] + ': ' + tuple[1];
-                            })
-                            .uniq()
-                            .join('</div><div>') + '</div>';
+                        return $('<ul class="list-unstyled"></ul>')
+                            .append(_.map(
+                                JSON.parse(value),
+                                function (valueItem, key) {
+                                    return $('<li></li>').text(key + ': ' + valueItem);
+                                }
+                            ))
+                            .prop('outerHTML');
                     }
                 },
                 {
@@ -36,7 +38,14 @@
                     key: 'Subjects',
                     labelText: 'Subjects',
                     displayValue: function (value) {
-                        return '<ul class="list-unstyled"><li>' + value.replace(';', '</li><li>') + '</li></ul>';
+                        return $('<ul class="list-unstyled"></ul>')
+                            .append(_.map(
+                                JSON.parse(value),
+                                function (valueItem) {
+                                    return $('<li></li>').text(valueItem);
+                                }
+                            ))
+                            .prop('outerHTML');
                     }
                 }
             ];

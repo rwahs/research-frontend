@@ -2,8 +2,11 @@
     'use strict';
 
     define(
-        [],
-        function () {
+        [
+            'lodash',
+            'jquery'
+        ],
+        function (_, $) {
             return [
                 {
                     key: 'type',
@@ -29,7 +32,14 @@
                     key: 'Subjects',
                     labelText: 'Subjects',
                     displayValue: function (value) {
-                        return '<ul class="list-unstyled"><li>' + value.replace(';', '</li><li>') + '</li></ul>';
+                        return $('<ul class="list-unstyled"></ul>')
+                            .append(_.map(
+                                JSON.parse(value),
+                                function (valueItem) {
+                                    return $('<li></li>').text(valueItem);
+                                }
+                            ))
+                            .prop('outerHTML');
                     }
                 },
                 {

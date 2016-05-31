@@ -2,8 +2,11 @@
     'use strict';
 
     define(
-        [],
-        function () {
+        [
+            'lodash',
+            'jquery'
+        ],
+        function (_, $) {
             return [
                 {
                     key: 'Title',
@@ -13,7 +16,14 @@
                     key: 'Author',
                     labelText: 'Author',
                     displayValue: function (value) {
-                        return '<ul class="list-unstyled"><li>' + value.replace(';', '</li><li>') + '</li></ul>';
+                        return $('<ul class="list-unstyled"></ul>')
+                            .append(_.map(
+                                JSON.parse(value),
+                                function (valueItem) {
+                                    return $('<li></li>').text(valueItem);
+                                }
+                            ))
+                            .prop('outerHTML');
                     }
                 },
                 {
@@ -22,11 +32,7 @@
                 },
                 {
                     key: 'DateOfPublication',
-                    labelText: 'Date of Publication',
-                    displayValue: function (value) {
-                        var date = new Date(Date.parse(value));
-                        return '<span title="' + date.toDateString() + '" data-microtime="' + date.getTime() + '">' + date.toLocaleDateString() + '</span>';
-                    }
+                    labelText: 'Date of Publication'
                 },
                 {
                     key: 'PlaceOfPublication',
@@ -40,7 +46,14 @@
                     key: 'Subjects',
                     labelText: 'Subjects',
                     displayValue: function (value) {
-                        return '<ul class="list-unstyled"><li>' + value.replace(';', '</li><li>') + '</li></ul>';
+                        return $('<ul class="list-unstyled"></ul>')
+                            .append(_.map(
+                                JSON.parse(value),
+                                function (valueItem) {
+                                    return $('<li></li>').text(valueItem);
+                                }
+                            ))
+                            .prop('outerHTML');
                     }
                 }
             ];
