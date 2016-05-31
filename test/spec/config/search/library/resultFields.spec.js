@@ -4,7 +4,7 @@
     define(
         [
             'chai',
-            'ui/pages/search/library/resultFields'
+            'config/search/library/resultFields'
         ],
         function (chai, resultFields) {
             var expect = chai.expect;
