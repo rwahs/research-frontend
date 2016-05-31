@@ -17,12 +17,14 @@
                     labelText: 'Creator',
                     displayValue: function (value) {
                         return $('<ul class="list-unstyled"></ul>')
-                            .append(_.map(
-                                JSON.parse(value),
-                                function (valueItem, key) {
-                                    return $('<li></li>').text(key + ': ' + valueItem);
-                                }
-                            ))
+                            .append(_(JSON.parse(value))
+                                .map(function (valueItem) {
+                                    return $('<li></li>')
+                                        .text(valueItem.Name)
+                                        .append($('<span class="small"></span>').text(' (' + valueItem.CreatorType + ')'));
+                                })
+                                .value()
+                            )
                             .prop('outerHTML');
                     }
                 },
@@ -51,12 +53,12 @@
                     labelText: 'Subjects',
                     displayValue: function (value) {
                         return $('<ul class="list-unstyled"></ul>')
-                            .append(_.map(
-                                JSON.parse(value),
-                                function (valueItem) {
+                            .append(_(JSON.parse(value))
+                                .drop()
+                                .map(function (valueItem) {
                                     return $('<li></li>').text(valueItem);
-                                }
-                            ))
+                                })
+                            )
                             .prop('outerHTML');
                     }
                 }

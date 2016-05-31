@@ -33,18 +33,27 @@
                     labelText: 'Subjects',
                     displayValue: function (value) {
                         return $('<ul class="list-unstyled"></ul>')
-                            .append(_.map(
-                                JSON.parse(value),
-                                function (valueItem) {
+                            .append(_(JSON.parse(value))
+                                .drop()
+                                .map(function (valueItem) {
                                     return $('<li></li>').text(valueItem);
-                                }
-                            ))
+                                })
+                            )
                             .prop('outerHTML');
                     }
                 },
                 {
                     key: 'Classification',
-                    labelText: 'Classification'
+                    labelText: 'Classification',
+                    displayValue: function (value) {
+                        return $('<ul class="list-unstyled"></ul>')
+                            .append(_(JSON.parse(value))
+                                .map(function (valueItem) {
+                                    return $('<li></li>').html(_(valueItem).drop().join(' &rArr; '));
+                                })
+                            )
+                            .prop('outerHTML');
+                    }
                 }
             ];
         }

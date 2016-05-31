@@ -17,12 +17,12 @@
                     labelText: 'Author',
                     displayValue: function (value) {
                         return $('<ul class="list-unstyled"></ul>')
-                            .append(_.map(
-                                JSON.parse(value),
-                                function (valueItem) {
+                            .append(_(JSON.parse(value))
+                                .drop()
+                                .map(function (valueItem) {
                                     return $('<li></li>').text(valueItem);
-                                }
-                            ))
+                                })
+                            )
                             .prop('outerHTML');
                     }
                 },
@@ -47,12 +47,12 @@
                     labelText: 'Subjects',
                     displayValue: function (value) {
                         return $('<ul class="list-unstyled"></ul>')
-                            .append(_.map(
-                                JSON.parse(value),
-                                function (valueItem) {
+                            .append(_(JSON.parse(value))
+                                .drop()
+                                .map(function (valueItem) {
                                     return $('<li></li>').text(valueItem);
-                                }
-                            ))
+                                })
+                            )
                             .prop('outerHTML');
                     }
                 }
