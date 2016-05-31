@@ -59,6 +59,13 @@
                     );
                 };
 
+                this.reset = function () {
+                    this.displayResults(false);
+                    this.results([]);
+                    this.searchText('');
+                    this.searchTypes()[0].makeActive();
+                };
+
                 this.submit = function () {
                     this.loading(true);
                     this.displayResults(false);

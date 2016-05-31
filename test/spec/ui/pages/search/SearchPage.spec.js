@@ -60,6 +60,7 @@
                         });
                         it('Exposes event handlers', function () {
                             expect(page.submit).to.be.a('function');
+                            expect(page.reset).to.be.a('function');
                         });
                         it('Gives the correct default values', function () {
                             expect(page.searchText()).to.equal('');
@@ -120,6 +121,21 @@
                                     page.searchTypes()[0].makeActive();
                                     page.searchText('');
                                 });
+                                describe('When the search form is reset', function () {
+                                    beforeEach(function () {
+                                        page.reset();
+                                    });
+                                    it('Resets the search query', function () {
+                                        expect(page.searchText()).to.equal('');
+                                    });
+                                    it('Resets the search type', function () {
+                                        expect(page.searchTypes()[0].active()).to.equal(true);
+                                    });
+                                    it('Is not loading or displaying results', function () {
+                                        expect(page.loading()).to.equal(false);
+                                        expect(page.displayResults()).to.equal(false);
+                                    });
+                                });
                                 describe('When the search form is submitted', function () {
                                     beforeEach(function () {
                                         page.submit();
@@ -141,6 +157,21 @@
                                 beforeEach(function () {
                                     page.searchTypes()[1].makeActive();
                                     page.searchText('query');
+                                });
+                                describe('When the search form is reset', function () {
+                                    beforeEach(function () {
+                                        page.reset();
+                                    });
+                                    it('Resets the search query', function () {
+                                        expect(page.searchText()).to.equal('');
+                                    });
+                                    it('Resets the search type', function () {
+                                        expect(page.searchTypes()[0].active()).to.equal(true);
+                                    });
+                                    it('Is not loading or displaying results', function () {
+                                        expect(page.loading()).to.equal(false);
+                                        expect(page.displayResults()).to.equal(false);
+                                    });
                                 });
                                 describe('When the search form is submitted', function () {
                                     beforeEach(function () {
