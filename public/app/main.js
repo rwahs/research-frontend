@@ -38,7 +38,9 @@
     // Boot the application
     require([ 'jquery' ], function () {
         require([ 'bootstrap' ], function () {
-            require([ 'util/router' ], function (router) {
+            // TODO Environments other than `development` via build process.
+            require([ 'config/env/development', 'util/router' ], function (environment, router) {
+                environment();
                 router();
             });
         });

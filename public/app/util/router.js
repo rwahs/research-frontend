@@ -21,7 +21,7 @@
             };
 
             // Attach the view and view model specified by paths, using the given router context.
-            attach = function (viewPath, viewModelPath, context) {
+            attach = function (viewPath, viewModelPath, context, parameters) {
                 var container, vm, _attach;
 
                 _attach = function () {
@@ -39,7 +39,7 @@
                 require([ 'text!' + viewPath + '.html', viewModelPath ], function (view, ViewModel) {
                     container = document.createElement('div');
                     container.innerHTML = view;
-                    vm = new ViewModel(context);
+                    vm = new ViewModel(context, parameters);
                     if (current) {
                         return runHook(current.vm, 'detaching', current.container, _attach);
                     }
@@ -50,45 +50,125 @@
             // Configure and start the router.
             return function () {
                 page('/', function (context) {
-                    return attach('ui/page/home', 'ui/page/Page', context);
+                    return attach(
+                        'ui/pages/static/home',
+                        'ui/pages/static/StaticPage',
+                        context
+                    );
                 });
 
                 page('/about', function (context) {
-                    return attach('ui/page/about', 'ui/page/Page', context);
+                    return attach(
+                        'ui/pages/static/about',
+                        'ui/pages/static/StaticPage',
+                        context
+                    );
                 });
 
                 page('/:type/search/:query?', function (context) {
                     switch (context.params.type) {
                         case 'library':
-                            return attach('ui/search/library', 'ui/search/Search', context);
+                            return attach(
+                                'ui/pages/search/index',
+                                'ui/pages/search/SearchPage',
+                                context,
+                                {
+                                    collectionName: 'Library',
+                                    searchServiceKey: 'LibrarySearchService',
+                                    detailUrlTemplate: '/library/detail/:id',
+                                    searchTypes: 'config/search/library/searchTypes',
+                                    resultFields: 'config/search/library/resultFields'
+                                }
+                            );
                         case 'photographs':
-                            return attach('ui/search/photographs', 'ui/search/Search', context);
+                            return attach(
+                                'ui/pages/search/index',
+                                'ui/pages/search/SearchPage',
+                                context,
+                                {
+                                    collectionName: 'Photographs',
+                                    searchServiceKey: 'PhotographsSearchService',
+                                    detailUrlTemplate: '/photographs/detail/:id',
+                                    searchTypes: 'config/search/photographs/searchTypes',
+                                    resultFields: 'config/search/photographs/resultFields'
+                                }
+                            );
                         case 'museum':
-                            return attach('ui/search/museum', 'ui/search/Search', context);
+                            return attach(
+                                'ui/pages/search/index',
+                                'ui/pages/search/SearchPage',
+                                context,
+                                {
+                                    collectionName: 'Museum',
+                                    searchServiceKey: 'MuseumSearchService',
+                                    detailUrlTemplate: '/museum/detail/:id',
+                                    searchTypes: 'config/search/museum/searchTypes',
+                                    resultFields: 'config/search/museum/resultFields'
+                                }
+                            );
                         case 'memorials':
-                            return attach('ui/search/memorials', 'ui/search/Search', context);
+                            return attach(
+                                'ui/pages/search/index',
+                                'ui/pages/search/SearchPage',
+                                context,
+                                {
+                                    collectionName: 'Memorials',
+                                    searchServiceKey: 'MemorialsSearchService',
+                                    detailUrlTemplate: '/memorials/detail/:id',
+                                    searchTypes: 'config/search/memorials/searchTypes',
+                                    resultFields: 'config/search/memorials/resultFields'
+                                }
+                            );
                         default:
-                            return attach('ui/error/404', 'ui/error/Error', context);
+                            return attach(
+                                'ui/pages/error/404',
+                                'ui/pages/error/ErrorPage',
+                                context
+                            );
                     }
                 });
 
                 page('/:type/detail/:id', function (context) {
                     switch (context.params.type) {
                         case 'library':
-                            return attach('ui/detail/library', 'ui/detail/Detail', context);
+                            return attach(
+                                'ui/pages/detail/library',
+                                'ui/pages/detail/DetailPage',
+                                context
+                            );
                         case 'photographs':
-                            return attach('ui/detail/photographs', 'ui/detail/Detail', context);
+                            return attach(
+                                'ui/pages/detail/photographs',
+                                'ui/pages/detail/DetailPage',
+                                context
+                            );
                         case 'museum':
-                            return attach('ui/detail/museum', 'ui/detail/Detail', context);
+                            return attach(
+                                'ui/pages/detail/museum',
+                                'ui/pages/detail/DetailPage',
+                                context
+                            );
                         case 'memorials':
-                            return attach('ui/detail/memorials', 'ui/detail/Detail', context);
+                            return attach(
+                                'ui/pages/detail/memorials',
+                                'ui/pages/detail/DetailPage',
+                                context
+                            );
                         default:
-                            return attach('ui/error/404', 'ui/error/Error', context);
+                            return attach(
+                                'ui/pages/error/404',
+                                'ui/pages/error/ErrorPage',
+                                context
+                            );
                     }
                 });
 
                 page('*', function (context) {
-                    return attach('ui/error/404', 'ui/error/Error', context);
+                    return attach(
+                        'ui/pages/error/404',
+                        'ui/pages/error/ErrorPage',
+                        context
+                    );
                 });
 
                 page.start();
