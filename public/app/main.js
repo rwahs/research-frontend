@@ -39,6 +39,10 @@
     require([ 'jquery' ], function () {
         require([ 'bootstrap' ], function () {
             require([ 'util/router' ], function (router) {
+                var environment = 'development';
+                if (environment !== 'production') {
+                    console.log('Running in "' + environment + '" environment');
+                }
                 router();
             });
         });
