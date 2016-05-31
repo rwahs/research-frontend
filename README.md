@@ -22,6 +22,13 @@ application dependencies.  You can check `package.json` and `bower.json` to see 
 
 The project uses `gulp` to automate many processes in the development environment.
 
+### Default (no arguments)
+
+Running `gulp` without any arguments is the equivalent to running `gulp qa`, `gulp less` and `gulp watch`, as described
+below.
+
+    gulp
+
 ### Performing QA
 
 To run linter, code style checker and unit tests:

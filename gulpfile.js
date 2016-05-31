@@ -21,6 +21,9 @@
 
     gulp.task(
         'qa:test',
+        [
+            'qa:lint'
+        ],
         function () {
             return gulp
                 .src('test/runner.html')
@@ -100,7 +103,9 @@
     gulp.task(
         'default',
         [
-            'qa'
+            'qa',
+            'less',
+            'watch'
         ]
     );
 }(
