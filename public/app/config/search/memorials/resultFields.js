@@ -40,7 +40,14 @@
                     key: 'Location',
                     labelText: 'Location',
                     displayValue: function (value) {
-                        return _(parse(value)).drop().join(' &rArr; ');
+                        return _(parse(value))
+                            .drop()
+                            .map(function (hierarchyNodeItem, depth) {
+                                return depth === 0 ?
+                                    hierarchyNodeItem :
+                                _.repeat('&nbsp;', 2 * depth) + '&rArr; ' + hierarchyNodeItem;
+                            })
+                            .join('<br/>');
                     }
                 },
                 {
