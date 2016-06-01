@@ -4,9 +4,10 @@
     define(
         [
             'lodash',
-            'jquery'
+            'jquery',
+            'util/safelyParseJson'
         ],
-        function (_, $) {
+        function (_, $, parse) {
             return [
                 {
                     key: 'type',
@@ -33,7 +34,7 @@
                     labelText: 'Subjects',
                     displayValue: function (value) {
                         return $('<ul class="list-unstyled"></ul>')
-                            .append(_(JSON.parse(value))
+                            .append(_(parse(value))
                                 .reject(function (valueItem) {
                                     return !valueItem;
                                 })
@@ -50,7 +51,7 @@
                     labelText: 'Classification',
                     displayValue: function (value) {
                         return $('<ul class="list-unstyled"></ul>')
-                            .append(_(JSON.parse(value))
+                            .append(_(parse(value))
                                 .map(function (valueItem) {
                                     return $('<li></li>').html(_(valueItem)
                                         .drop()
