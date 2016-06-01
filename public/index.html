@@ -12,17 +12,23 @@
     <link href="/css/main.css" rel="stylesheet" />
 </head>
 <body>
-    <header class="navbar navbar-default navbar-fixed-top">
+    <header class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <a href="/">Research @ Royal Western Australian Historical Society</a>
+            <a href="/"><img src="/images/logo-small.png" alt="Royal Western Australian Historical Society" /></a>
         </div>
     </header>
     <div id="application-container" class="container"></div>
     <footer class="navbar navbar-default navbar-fixed-bottom">
-        <div class="container">
-            <span class="text-muted small">Copyright &copy; 2016 Royal Western Australian Historical Society, Inc.</span>
+        <div class="container small">
+            <div class="pull-right">
+                <a href="/about" title="About this public research software">About</a>
+            </div>
+            <div class="text-muted">
+                Copyright &copy; 2016
+                <a href="https://histwest.org.au/">Royal Western Australian Historical Society, Inc.</a>
+            </div>
         </div>
     </footer>
-<script src="/lib/requirejs/require.js" data-main="/app/main"></script>
+    <script src="/lib/requirejs/require.js" data-main="/app/main"></script>
 </body>
 </html>
