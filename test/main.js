@@ -76,7 +76,8 @@
                     'spec/ui/pages/search/SearchPage.spec',
                     'spec/ui/pages/search/SearchMapper.spec',
                     'spec/util/container.spec',
-                    'spec/util/router.spec'
+                    'spec/util/router.spec',
+                    'spec/util/safelyParseJson.spec'
                 ],
                 function () {
                     // See https://github.com/nathanboktae/mocha-phantomjs-core/issues/12
