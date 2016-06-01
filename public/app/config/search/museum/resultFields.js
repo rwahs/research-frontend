@@ -34,10 +34,13 @@
                     displayValue: function (value) {
                         return $('<ul class="list-unstyled"></ul>')
                             .append(_(JSON.parse(value))
-                                .drop()
+                                .reject(function (valueItem) {
+                                    return !valueItem;
+                                })
                                 .map(function (valueItem) {
                                     return $('<li></li>').text(valueItem);
                                 })
+                                .value()
                             )
                             .prop('outerHTML');
                     }
@@ -49,8 +52,16 @@
                         return $('<ul class="list-unstyled"></ul>')
                             .append(_(JSON.parse(value))
                                 .map(function (valueItem) {
-                                    return $('<li></li>').html(_(valueItem).drop().join(' &rArr; '));
+                                    return $('<li></li>').html(_(valueItem)
+                                        .drop()
+                                        .map(function (hierarchyNodeItem, depth) {
+                                            return depth === 0 ?
+                                                hierarchyNodeItem :
+                                                _.repeat('&nbsp;', 2 * depth) + '&rArr; ' + hierarchyNodeItem;
+                                        })
+                                        .join('<br/>'));
                                 })
+                                .value()
                             )
                             .prop('outerHTML');
                     }

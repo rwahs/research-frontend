@@ -18,10 +18,13 @@
                     displayValue: function (value) {
                         return $('<ul class="list-unstyled"></ul>')
                             .append(_(JSON.parse(value))
-                                .drop()
+                                .reject(function (valueItem) {
+                                    return !valueItem;
+                                })
                                 .map(function (valueItem) {
                                     return $('<li></li>').text(valueItem);
                                 })
+                                .value()
                             )
                             .prop('outerHTML');
                     }
@@ -48,10 +51,13 @@
                     displayValue: function (value) {
                         return $('<ul class="list-unstyled"></ul>')
                             .append(_(JSON.parse(value))
-                                .drop()
+                                .reject(function (valueItem) {
+                                    return !valueItem;
+                                })
                                 .map(function (valueItem) {
                                     return $('<li></li>').text(valueItem);
                                 })
+                                .value()
                             )
                             .prop('outerHTML');
                     }
