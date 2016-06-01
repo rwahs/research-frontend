@@ -74,7 +74,7 @@
                                 context,
                                 {
                                     collectionName: 'Library',
-                                    searchServiceKey: 'LibrarySearchService',
+                                    searchServiceKey: 'search.library',
                                     detailUrlTemplate: '/library/detail/:id',
                                     searchTypes: 'config/search/library/searchTypes',
                                     resultFields: 'config/search/library/resultFields'
@@ -87,7 +87,7 @@
                                 context,
                                 {
                                     collectionName: 'Photographs',
-                                    searchServiceKey: 'PhotographsSearchService',
+                                    searchServiceKey: 'search.photographs',
                                     detailUrlTemplate: '/photographs/detail/:id',
                                     searchTypes: 'config/search/photographs/searchTypes',
                                     resultFields: 'config/search/photographs/resultFields'
@@ -100,7 +100,7 @@
                                 context,
                                 {
                                     collectionName: 'Museum',
-                                    searchServiceKey: 'MuseumSearchService',
+                                    searchServiceKey: 'search.museum',
                                     detailUrlTemplate: '/museum/detail/:id',
                                     searchTypes: 'config/search/museum/searchTypes',
                                     resultFields: 'config/search/museum/resultFields'
@@ -113,7 +113,7 @@
                                 context,
                                 {
                                     collectionName: 'Memorials',
-                                    searchServiceKey: 'MemorialsSearchService',
+                                    searchServiceKey: 'search.memorials',
                                     detailUrlTemplate: '/memorials/detail/:id',
                                     searchTypes: 'config/search/memorials/searchTypes',
                                     resultFields: 'config/search/memorials/resultFields'
