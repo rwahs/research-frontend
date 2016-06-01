@@ -11,10 +11,10 @@
                 enableCORS = { xhrFields: { withCredentials: true } };
 
             return function () {
-                container.register('LibrarySearchService', searchService(simpleApiBaseUrl + '/library_search', enableCORS));
-                container.register('PhotographsSearchService', searchService(simpleApiBaseUrl + '/photographs_search', enableCORS));
-                container.register('MuseumSearchService', searchService(simpleApiBaseUrl + '/museum_search', enableCORS));
-                container.register('MemorialsSearchService', searchService(simpleApiBaseUrl + '/memorials_search', enableCORS));
+                container.register('LibrarySearchService', searchService(simpleApiBaseUrl + '/library_search', enableCORS, true));
+                container.register('PhotographsSearchService', searchService(simpleApiBaseUrl + '/photographs_search', enableCORS, true));
+                container.register('MuseumSearchService', searchService(simpleApiBaseUrl + '/museum_search', enableCORS, true));
+                container.register('MemorialsSearchService', searchService(simpleApiBaseUrl + '/memorials_search', enableCORS, true));
                 container.seal();
             };
         }
