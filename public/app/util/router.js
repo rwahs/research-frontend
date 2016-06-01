@@ -112,7 +112,7 @@
                                 'ui/pages/search/SearchPage',
                                 context,
                                 {
-                                    collectionName: 'Memorials',
+                                    collectionName: 'Public Memorials',
                                     searchServiceKey: 'search.memorials',
                                     detailUrlTemplate: '/memorials/detail/:id',
                                     searchTypes: 'config/search/memorials/searchTypes',
@@ -134,25 +134,37 @@
                             return attach(
                                 'ui/pages/detail/library',
                                 'ui/pages/detail/DetailPage',
-                                context
+                                context,
+                                {
+                                    detailServiceKey: 'detail.library'
+                                }
                             );
                         case 'photographs':
                             return attach(
                                 'ui/pages/detail/photographs',
                                 'ui/pages/detail/DetailPage',
-                                context
+                                context,
+                                {
+                                    detailServiceKey: 'detail.photographs'
+                                }
                             );
                         case 'museum':
                             return attach(
                                 'ui/pages/detail/museum',
                                 'ui/pages/detail/DetailPage',
-                                context
+                                context,
+                                {
+                                    detailServiceKey: 'detail.museum'
+                                }
                             );
                         case 'memorials':
                             return attach(
                                 'ui/pages/detail/memorials',
                                 'ui/pages/detail/DetailPage',
-                                context
+                                context,
+                                {
+                                    detailServiceKey: 'detail.memorials'
+                                }
                             );
                         default:
                             return attach(
