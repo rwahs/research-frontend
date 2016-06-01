@@ -5,12 +5,12 @@
         [
             'chai',
             'util/container',
-            'config/env/development'
+            'config/env/staging'
         ],
         function (chai, container, configure) {
             var expect = chai.expect;
 
-            describe('The `config/env/development` module', function () {
+            describe('The `config/env/staging` module', function () {
                 it('Defines a function', function () {
                     expect(configure).to.be.a('function');
                 });

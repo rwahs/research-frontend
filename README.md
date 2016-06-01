@@ -33,14 +33,14 @@ You also need to enable the `headers` module:
 
 And restart the web server service.
 
-## Automation
+## Development Environment Automation
 
 The project uses `gulp` to automate many processes in the development environment.
 
 ### Default (no arguments)
 
-Running `gulp` without any arguments is the equivalent to running `gulp qa`, `gulp less` and `gulp watch`, as described
-below.
+Running `gulp` without any arguments is the equivalent to running `gulp clean`, `gulp qa`, `gulp build` and 
+`gulp watch`, as described below.
 
     gulp
 
@@ -50,15 +50,21 @@ To run linter, code style checker and unit tests:
 
     gulp qa
 
-### Compiling LESS
+### Local Builds
 
-To convert LESS, including the Bootstrap LESS source, into a single CSS file for use in the browser:
+A local build refers to the processing required to run the applicaiton locally.  Currently this consists solely of
+compiling LESS, including the Bootstrap LESS source, into a single CSS file for use in the browser:
 
-    gulp less
+    gulp build
+
+There is a subtask that is called automatically when required, but which can also be used to clean up "manually",
+without performing another build:
+
+    gulp build:clean
 
 ### Watching files for changes
 
-To watch files for changes and perform either QA or LESS compilation as required (depending on the file modified), use:
+To watch files for changes and perform either QA or local builds as required (depending on the file modified), use:
 
     gulp watch
 
@@ -74,3 +80,48 @@ To run a local server:
     gulp server
 
 Then access the site on http://localhost:8888/.
+
+## Packaging
+
+When running on a server, the application is expected to consist of only a small number of files:
+
+* `index.html`, the container web page
+* `application.js`, the compiled, concatenated and compressed javascript application
+* `main.css`, the compiled, concatenated and compressed CSS file
+* `images` directory containing images
+
+### Environments
+
+An environment is a string that identifies the setting of the application.  You can pass an `--env` argument to any
+`gulp` task to set the environment.  However the local development related tasks will ignore the environment setting;
+this is used for packaging only.  
+
+The following examples use an environment of `staging`.
+
+### Packaging Automation
+
+To generate the package files, use the `package` task in the desired environment (see above):
+
+    gulp --env=staging package
+
+This actually runs a suite of separate packaging processes (see `gulpfile.js` for details), which results in the files
+mentioned above being created in an environment-specific subdirectory of the `dist` directory, e.g. `dist/staging`.
+
+There is a task that cleans up a previous packaging result, as above this must be run in the relevant environment:
+
+    gulp --env=staging package:clean
+
+### Local Package Server
+
+It is possible to run the packaged application locally; again the environment is required:
+
+    gulp --env=staging dist-server
+
+This server runs on a different port at http://localhost:8889/.  This is intended for final integration testing before
+a deployment.  Note that the environment-specific configuration within the application, i.e. the selection of a module
+under `config/env`, will also be determined by the environment setting.  This means that the module must exist and the
+target CA instance must be accessible, in order for the application to run correctly.
+
+### Deployment
+
+TODO

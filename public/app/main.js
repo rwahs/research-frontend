@@ -20,7 +20,6 @@
 
             // Application modules
             config: 'config/',
-            models: 'models/',
             services: 'services/',
             ui: 'ui/',
             util: 'util/'
@@ -38,9 +37,12 @@
     // Boot the application
     require([ 'jquery' ], function () {
         require([ 'bootstrap' ], function () {
-            // TODO Environments other than `development` via build process.
-            require([ 'config/env/development', 'util/router' ], function (environment, router) {
-                environment();
+            var environment = 'development';
+            if (environment !== 'production' && console && typeof console.log === 'function') {
+                console.log('Running in "' + environment + '" environment');
+            }
+            require([ 'config/env/' + environment, 'util/router' ], function (configure, router) {
+                configure();
                 router();
             });
         });
