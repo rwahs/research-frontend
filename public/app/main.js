@@ -39,7 +39,7 @@
     require([ 'jquery' ], function () {
         require([ 'bootstrap' ], function () {
             var environment = 'development';
-            if (environment !== 'production') {
+            if (environment !== 'production' && console && typeof console.log === 'function') {
                 console.log('Running in "' + environment + '" environment');
             }
             require([ 'config/env/' + environment, 'util/router' ], function (configure, router) {
