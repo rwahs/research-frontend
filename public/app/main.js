@@ -20,7 +20,6 @@
 
             // Application modules
             config: 'config/',
-            models: 'models/',
             services: 'services/',
             ui: 'ui/',
             util: 'util/'
