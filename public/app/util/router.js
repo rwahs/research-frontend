@@ -12,36 +12,36 @@
                 applicationContainer = document.getElementById('application-container');
 
             // Run the given named hook for the given vm.
-            runHook = function (vm, hook, container, callback) {
+            runHook = function (vm, hook, element, callback) {
                 callback = callback || _.noop;
                 if (_.isFunction(vm[hook])) {
-                    return vm[hook](container, callback);
+                    return vm[hook](element, callback);
                 }
                 callback();
             };
 
             // Attach the view and view model specified by paths, using the given router context.
             attach = function (viewPath, viewModelPath, context, parameters) {
-                var container, vm, _attach;
+                var element, vm, _attach;
 
                 _attach = function () {
-                    runHook(vm, 'attaching', container, function () {
+                    runHook(vm, 'attaching', element, function () {
                         applicationContainer.innerHTML = '';
-                        applicationContainer.appendChild(container);
-                        runHook(vm, 'binding', container, function () {
-                            ko.applyBindings(vm, container);
-                            current = { vm: vm, container: container };
-                            runHook(vm, 'ready', container);
+                        applicationContainer.appendChild(element);
+                        runHook(vm, 'binding', element, function () {
+                            ko.applyBindings(vm, element);
+                            current = { vm: vm, element: element };
+                            runHook(vm, 'ready', element);
                         });
                     });
                 };
 
                 require([ 'text!' + viewPath + '.html', viewModelPath ], function (view, ViewModel) {
-                    container = document.createElement('div');
-                    container.innerHTML = view;
+                    element = document.createElement('div');
+                    element.innerHTML = view;
                     vm = new ViewModel(context, parameters);
                     if (current) {
-                        return runHook(current.vm, 'detaching', current.container, _attach);
+                        return runHook(current.vm, 'detaching', current.element, _attach);
                     }
                     _attach();
                 });
