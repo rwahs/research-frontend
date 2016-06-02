@@ -4,9 +4,10 @@
     define(
         [
             'lodash',
-            'jquery'
+            'jquery',
+            'util/safelyParseJson'
         ],
-        function (_, $) {
+        function (_, $, parse) {
             return [
                 {
                     key: 'Title',
@@ -17,11 +18,14 @@
                     labelText: 'Author',
                     displayValue: function (value) {
                         return $('<ul class="list-unstyled"></ul>')
-                            .append(_(JSON.parse(value))
-                                .drop()
+                            .append(_(parse(value))
+                                .reject(function (valueItem) {
+                                    return !valueItem;
+                                })
                                 .map(function (valueItem) {
                                     return $('<li></li>').text(valueItem);
                                 })
+                                .value()
                             )
                             .prop('outerHTML');
                     }
@@ -47,11 +51,14 @@
                     labelText: 'Subjects',
                     displayValue: function (value) {
                         return $('<ul class="list-unstyled"></ul>')
-                            .append(_(JSON.parse(value))
-                                .drop()
+                            .append(_(parse(value))
+                                .reject(function (valueItem) {
+                                    return !valueItem;
+                                })
                                 .map(function (valueItem) {
                                     return $('<li></li>').text(valueItem);
                                 })
+                                .value()
                             )
                             .prop('outerHTML');
                     }
