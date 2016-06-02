@@ -216,7 +216,8 @@
             return gulp
                 .watch(
                     [
-                        'public/less/**/*.less'
+                        'public/less/**/*.less',
+                        'public/app/ui/**/*.less'
                     ],
                     [
                         'build:less'

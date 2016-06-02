@@ -44,7 +44,7 @@
                     return this.results().length > 0;
                 }.bind(this));
 
-                this.binding = function (container, callback) {
+                this.binding = function (element, callback) {
                     require(
                         [
                             parameters.searchTypes,

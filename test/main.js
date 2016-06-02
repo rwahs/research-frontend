@@ -61,6 +61,7 @@
             require(
                 [
                     'spec/config/env/development.spec',
+                    'spec/config/env/staging.spec',
                     'spec/config/search/library/resultFields.spec',
                     'spec/config/search/library/searchTypes.spec',
                     'spec/config/search/memorials/resultFields.spec',
@@ -70,6 +71,7 @@
                     'spec/config/search/photographs/resultFields.spec',
                     'spec/config/search/photographs/searchTypes.spec',
                     'spec/services/searchService.spec',
+                    'spec/services/detailService.spec',
                     'spec/ui/pages/detail/DetailPage.spec',
                     'spec/ui/pages/error/ErrorPage.spec',
                     'spec/ui/pages/static/StaticPage.spec',

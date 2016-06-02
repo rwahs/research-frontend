@@ -18,24 +18,28 @@
                     expect(SearchPage).to.be.a('function');
                 });
                 describe('When the search service is returning valid results', function () {
-                    var collectionSearchService;
+                    var searchService;
                     beforeEach(function () {
                         // jshint camelcase: false
-                        collectionSearchService = new MockSearchService(undefined, [
+                        searchService = new MockSearchService(undefined, [
                             { object_id: 1, first: 'First 1', second: 'Second 1', third: 'Third 1' },
                             { object_id: 2, first: 'First 2', second: 'Second 2', third: 'Third 2' },
                             { object_id: 3, first: 'First 3', second: 'Second 3', third: 'Third 3' }
                         ]);
-                        container.register('CollectionSearchService', collectionSearchService);
+                        container.register('search', searchService);
                         container.seal();
                     });
                     describe('When constructed with correct parameters', function () {
                         var context, page;
                         beforeEach(function () {
-                            context = {};
+                            context = {
+                                params: {
+                                    type: 'collection'
+                                }
+                            };
                             page = new SearchPage(context, {
                                 collectionName: 'Collection',
-                                searchServiceKey: 'CollectionSearchService',
+                                searchServiceKey: 'search',
                                 detailUrlTemplate: 'path/to/detail/:id',
                                 searchTypes: 'fixtures/search/searchTypes',
                                 resultFields: 'fixtures/search/resultFields'
@@ -64,9 +68,9 @@
                         });
                         it('Gives the correct default values', function () {
                             expect(page.searchText()).to.equal('');
-                            expect(page.searchTypes()).to.have.length(0);
-                            expect(page.resultFields()).to.have.length(0);
-                            expect(page.results()).to.have.length(0);
+                            expect(page.searchTypes()).to.deep.equal([]);
+                            expect(page.resultFields()).to.deep.equal([]);
+                            expect(page.results()).to.deep.equal([]);
                         });
                         it('Is not loading or displaying results', function () {
                             expect(page.loading()).to.equal(false);
@@ -141,8 +145,8 @@
                                         page.submit();
                                     });
                                     it('Calls the specified search service with a wildcard', function () {
-                                        sinon.assert.calledOnce(collectionSearchService);
-                                        sinon.assert.calledWith(collectionSearchService, { first: '*' });
+                                        sinon.assert.calledOnce(searchService);
+                                        sinon.assert.calledWith(searchService, { first: '*' });
                                     });
                                     it('Is not loading but is displaying results', function () {
                                         expect(page.loading()).to.equal(false);
@@ -178,8 +182,8 @@
                                         page.submit();
                                     });
                                     it('Calls the specified search service with the given search text', function () {
-                                        sinon.assert.calledOnce(collectionSearchService);
-                                        sinon.assert.calledWith(collectionSearchService, { second: 'query' });
+                                        sinon.assert.calledOnce(searchService);
+                                        sinon.assert.calledWith(searchService, { second: 'query' });
                                     });
                                     it('Is not loading but is displaying results', function () {
                                         expect(page.loading()).to.equal(false);
@@ -197,37 +201,41 @@
                     });
                 });
                 describe('When the search service is returning errors', function () {
-                    var collectionSearchService;
+                    var searchService;
                     beforeEach(function () {
                         // jshint camelcase: false
-                        collectionSearchService = new MockSearchService(new Error('Search Error'));
-                        container.register('CollectionSearchService', collectionSearchService);
+                        searchService = new MockSearchService(new Error('Search Error'));
+                        container.register('search', searchService);
                         container.seal();
                     });
-                    describe('When constructed with correct parameters', function () {
+                    describe('When constructed with valid parameters', function () {
                         var context, page;
                         beforeEach(function () {
-                            context = {};
+                            context = {
+                                params: {
+                                    type: 'collection'
+                                }
+                            };
                             page = new SearchPage(context, {
                                 collectionName: 'Collection',
-                                searchServiceKey: 'CollectionSearchService',
+                                searchServiceKey: 'search',
                                 detailUrlTemplate: 'path/to/detail/:id',
                                 searchTypes: 'fixtures/search/searchTypes',
                                 resultFields: 'fixtures/search/resultFields'
                             });
                         });
                         describe('When bound to the view', function () {
-                            var container;
+                            var element;
                             beforeEach(function (done) {
-                                container = document.createElement('div');
-                                page.binding(container, done);
+                                element = document.createElement('div');
+                                page.binding(element, done);
                             });
                             describe('When the search form is submitted', function () {
                                 beforeEach(function () {
                                     page.submit();
                                 });
                                 it('Calls the specified search service', function () {
-                                    sinon.assert.calledOnce(collectionSearchService);
+                                    sinon.assert.calledOnce(searchService);
                                 });
                                 it('Is not loading or displaying results', function () {
                                     expect(page.loading()).to.equal(false);

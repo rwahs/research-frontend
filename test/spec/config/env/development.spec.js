@@ -19,10 +19,16 @@
                         configure();
                     });
                     it('Registers search services', function () {
-                        expect(container.isRegistered('LibrarySearchService')).to.equal(true);
-                        expect(container.isRegistered('PhotographsSearchService')).to.equal(true);
-                        expect(container.isRegistered('MuseumSearchService')).to.equal(true);
-                        expect(container.isRegistered('MemorialsSearchService')).to.equal(true);
+                        expect(container.isRegistered('search.library')).to.equal(true);
+                        expect(container.isRegistered('search.photographs')).to.equal(true);
+                        expect(container.isRegistered('search.museum')).to.equal(true);
+                        expect(container.isRegistered('search.memorials')).to.equal(true);
+                    });
+                    it('Registers detail services', function () {
+                        expect(container.isRegistered('detail.library')).to.equal(true);
+                        expect(container.isRegistered('detail.photographs')).to.equal(true);
+                        expect(container.isRegistered('detail.museum')).to.equal(true);
+                        expect(container.isRegistered('detail.memorials')).to.equal(true);
                     });
                     it('Seals the container', function () {
                         expect(container.isSealed()).to.equal(true);

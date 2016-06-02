@@ -12,36 +12,36 @@
                 applicationContainer = document.getElementById('application-container');
 
             // Run the given named hook for the given vm.
-            runHook = function (vm, hook, container, callback) {
+            runHook = function (vm, hook, element, callback) {
                 callback = callback || _.noop;
                 if (_.isFunction(vm[hook])) {
-                    return vm[hook](container, callback);
+                    return vm[hook](element, callback);
                 }
                 callback();
             };
 
             // Attach the view and view model specified by paths, using the given router context.
             attach = function (viewPath, viewModelPath, context, parameters) {
-                var container, vm, _attach;
+                var element, vm, _attach;
 
                 _attach = function () {
-                    runHook(vm, 'attaching', container, function () {
+                    runHook(vm, 'attaching', element, function () {
                         applicationContainer.innerHTML = '';
-                        applicationContainer.appendChild(container);
-                        runHook(vm, 'binding', container, function () {
-                            ko.applyBindings(vm, container);
-                            current = { vm: vm, container: container };
-                            runHook(vm, 'ready', container);
+                        applicationContainer.appendChild(element);
+                        runHook(vm, 'binding', element, function () {
+                            ko.applyBindings(vm, element);
+                            current = { vm: vm, element: element };
+                            runHook(vm, 'ready', element);
                         });
                     });
                 };
 
                 require([ 'text!' + viewPath + '.html', viewModelPath ], function (view, ViewModel) {
-                    container = document.createElement('div');
-                    container.innerHTML = view;
+                    element = document.createElement('div');
+                    element.innerHTML = view;
                     vm = new ViewModel(context, parameters);
                     if (current) {
-                        return runHook(current.vm, 'detaching', current.container, _attach);
+                        return runHook(current.vm, 'detaching', current.element, _attach);
                     }
                     _attach();
                 });
@@ -74,7 +74,7 @@
                                 context,
                                 {
                                     collectionName: 'Library',
-                                    searchServiceKey: 'LibrarySearchService',
+                                    searchServiceKey: 'search.library',
                                     detailUrlTemplate: '/library/detail/:id',
                                     searchTypes: 'config/search/library/searchTypes',
                                     resultFields: 'config/search/library/resultFields'
@@ -87,7 +87,7 @@
                                 context,
                                 {
                                     collectionName: 'Photographs',
-                                    searchServiceKey: 'PhotographsSearchService',
+                                    searchServiceKey: 'search.photographs',
                                     detailUrlTemplate: '/photographs/detail/:id',
                                     searchTypes: 'config/search/photographs/searchTypes',
                                     resultFields: 'config/search/photographs/resultFields'
@@ -100,7 +100,7 @@
                                 context,
                                 {
                                     collectionName: 'Museum',
-                                    searchServiceKey: 'MuseumSearchService',
+                                    searchServiceKey: 'search.museum',
                                     detailUrlTemplate: '/museum/detail/:id',
                                     searchTypes: 'config/search/museum/searchTypes',
                                     resultFields: 'config/search/museum/resultFields'
@@ -112,8 +112,8 @@
                                 'ui/pages/search/SearchPage',
                                 context,
                                 {
-                                    collectionName: 'Memorials',
-                                    searchServiceKey: 'MemorialsSearchService',
+                                    collectionName: 'Public Memorials',
+                                    searchServiceKey: 'search.memorials',
                                     detailUrlTemplate: '/memorials/detail/:id',
                                     searchTypes: 'config/search/memorials/searchTypes',
                                     resultFields: 'config/search/memorials/resultFields'
@@ -134,25 +134,37 @@
                             return attach(
                                 'ui/pages/detail/library',
                                 'ui/pages/detail/DetailPage',
-                                context
+                                context,
+                                {
+                                    detailServiceKey: 'detail.library'
+                                }
                             );
                         case 'photographs':
                             return attach(
                                 'ui/pages/detail/photographs',
                                 'ui/pages/detail/DetailPage',
-                                context
+                                context,
+                                {
+                                    detailServiceKey: 'detail.photographs'
+                                }
                             );
                         case 'museum':
                             return attach(
                                 'ui/pages/detail/museum',
                                 'ui/pages/detail/DetailPage',
-                                context
+                                context,
+                                {
+                                    detailServiceKey: 'detail.museum'
+                                }
                             );
                         case 'memorials':
                             return attach(
                                 'ui/pages/detail/memorials',
                                 'ui/pages/detail/DetailPage',
-                                context
+                                context,
+                                {
+                                    detailServiceKey: 'detail.memorials'
+                                }
                             );
                         default:
                             return attach(
