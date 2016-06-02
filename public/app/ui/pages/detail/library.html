@@ -1,5 +1,5 @@
 <article id="library-detail" class="detail">
-    <div class="type-header">Library Record</div>
+    <div class="type-header">Library record</div>
     <!-- ko if: loading -->
     <div class="loading text-muted">
         <img src="/images/loading.gif" alt="" title="Loading animation" />
@@ -20,7 +20,7 @@
             <div class="name" data-bind="text: parse(data().Author).length > 1 ? 'Authors' : 'Author'"></div>
             <div class="value">
                 <!-- ko if: parse(data().Author).length > 0 -->
-                <ul class="list-inline authors">
+                <ul class="list-unstyled authors">
                     <!-- ko foreach: { data: parse(data().Author), as: 'author' } -->
                     <li data-bind="text: author"></li>
                     <!-- /ko -->
