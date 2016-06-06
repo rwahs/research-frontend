@@ -20,6 +20,7 @@
 
             // Application modules
             config: 'config/',
+            models: 'models/',
             services: 'services/',
             ui: 'ui/',
             util: 'util/'
@@ -41,8 +42,9 @@
             if (environment !== 'production' && console && typeof console.log === 'function') {
                 console.log('Running in "' + environment + '" environment');
             }
-            require([ 'config/env/' + environment, 'util/router' ], function (configure, router) {
+            require([ 'config/env/' + environment, 'config/components', 'util/router' ], function (configure, components, router) {
                 configure();
+                components();
                 router();
             });
         });
