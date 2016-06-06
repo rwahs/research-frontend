@@ -1,0 +1,17 @@
+<!-- ko if: hasValue -->
+<ul>
+    <!-- ko foreach: { data: value, as: 'item' } -->
+    <li>
+        <!-- ko foreach: { data: value, as: 'hierarchyNode' } -->
+        <div>
+            <span data-bind="html: $parent.indent($index())"></span><!-- ko if: $index() > 0 -->&rArr;<!-- /ko -->
+            <span data-bind="text: hierarchyNode"></span>
+        </div>
+        <!-- /ko -->
+    </li>
+    <!-- /ko -->
+</ul>
+<!-- /ko -->
+<!-- ko ifnot: hasValue -->
+<span class="text-muted" data-bind="html: placeholder"></span>
+<!-- /ko -->
