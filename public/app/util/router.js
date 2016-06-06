@@ -76,8 +76,8 @@
                                     collectionName: 'Library',
                                     searchServiceKey: 'search.library',
                                     detailUrlTemplate: '/library/detail/:id',
-                                    searchTypes: 'config/search/library/searchTypes',
-                                    resultFields: 'config/search/library/resultFields'
+                                    searchTypes: 'config/collections/library/searchTypes',
+                                    searchResultFields: 'config/collections/library/searchResultFields'
                                 }
                             );
                         case 'photographs':
@@ -89,8 +89,8 @@
                                     collectionName: 'Photographs',
                                     searchServiceKey: 'search.photographs',
                                     detailUrlTemplate: '/photographs/detail/:id',
-                                    searchTypes: 'config/search/photographs/searchTypes',
-                                    resultFields: 'config/search/photographs/resultFields'
+                                    searchTypes: 'config/collections/photographs/searchTypes',
+                                    searchResultFields: 'config/collections/photographs/searchResultFields'
                                 }
                             );
                         case 'museum':
@@ -102,8 +102,8 @@
                                     collectionName: 'Museum',
                                     searchServiceKey: 'search.museum',
                                     detailUrlTemplate: '/museum/detail/:id',
-                                    searchTypes: 'config/search/museum/searchTypes',
-                                    resultFields: 'config/search/museum/resultFields'
+                                    searchTypes: 'config/collections/museum/searchTypes',
+                                    searchResultFields: 'config/collections/museum/searchResultFields'
                                 }
                             );
                         case 'memorials':
@@ -115,8 +115,8 @@
                                     collectionName: 'Public Memorials',
                                     searchServiceKey: 'search.memorials',
                                     detailUrlTemplate: '/memorials/detail/:id',
-                                    searchTypes: 'config/search/memorials/searchTypes',
-                                    resultFields: 'config/search/memorials/resultFields'
+                                    searchTypes: 'config/collections/memorials/searchTypes',
+                                    searchResultFields: 'config/collections/memorials/searchResultFields'
                                 }
                             );
                         default:
@@ -136,7 +136,8 @@
                                 'ui/pages/detail/DetailPage',
                                 context,
                                 {
-                                    detailServiceKey: 'detail.library'
+                                    detailServiceKey: 'detail.library',
+                                    detailFields: 'config/collections/library/detailFields'
                                 }
                             );
                         case 'photographs':
@@ -145,7 +146,8 @@
                                 'ui/pages/detail/DetailPage',
                                 context,
                                 {
-                                    detailServiceKey: 'detail.photographs'
+                                    detailServiceKey: 'detail.photographs',
+                                    detailFields: 'config/collections/photographs/detailFields'
                                 }
                             );
                         case 'museum':
@@ -154,7 +156,8 @@
                                 'ui/pages/detail/DetailPage',
                                 context,
                                 {
-                                    detailServiceKey: 'detail.museum'
+                                    detailServiceKey: 'detail.museum',
+                                    detailFields: 'config/collections/museum/detailFields'
                                 }
                             );
                         case 'memorials':
@@ -163,7 +166,8 @@
                                 'ui/pages/detail/DetailPage',
                                 context,
                                 {
-                                    detailServiceKey: 'detail.memorials'
+                                    detailServiceKey: 'detail.memorials',
+                                    detailFields: 'config/collections/memorials/detailFields'
                                 }
                             );
                         default:
