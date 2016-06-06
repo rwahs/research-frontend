@@ -60,6 +60,7 @@
         function (mocha) {
             require(
                 [
+                    // TODO Dynamically generate this list using `gulp`.
                     'spec/config/env/development.spec',
                     'spec/config/env/staging.spec',
                     'spec/config/collections/library/detailFields.spec',
