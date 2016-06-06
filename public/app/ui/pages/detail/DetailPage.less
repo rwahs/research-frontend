@@ -1,4 +1,12 @@
 article.detail {
+    h1 {
+        .idno {
+            display: block;
+            font-size: @font-size-small;
+            padding: @padding-small-vertical 0;
+        }
+    }
+
     .type-header {
         &:extend(.text-muted);
         text-transform: uppercase;
@@ -13,6 +21,10 @@ article.detail {
 
         .value {
             font-size: @font-size-large;
+        }
+
+        .list-unstyled {
+            margin-bottom: 0;
         }
     }
 }
