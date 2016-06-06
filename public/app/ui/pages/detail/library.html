@@ -1,208 +1,95 @@
 <article id="library-detail" class="detail">
-    <div class="type-header">Library record</div>
     <!-- ko if: loading -->
     <div class="loading text-muted">
         <img src="/images/loading.gif" alt="" title="Loading animation" />
-        Loading record, please wait...
+        Loading Library record, please wait...
     </div>
     <!-- /ko -->
-    <!-- ko ifnot: loading -->
-    <h1>
-        <!-- ko if: data().Title -->
-        <span data-bind="text: data().Title"></span>
-        <!-- /ko -->
-        <!-- ko ifnot: data().Title -->
-        <span class="text-muted">(untitled)</span>
-        <!-- /ko -->
-    </h1>
+    <!-- ko if: displayRecord -->
+    <div class="type-header">Library record <span data-bind="text: idno"></span></div>
+    <h1 data-bind="component: displayFor('Title')"></h1>
     <div class="row">
         <div class="col-md-12">
-            <div class="name" data-bind="text: parse(data().Author).length > 1 ? 'Authors' : 'Author'"></div>
-            <div class="value">
-                <!-- ko if: parse(data().Author).length > 0 -->
-                <ul class="list-unstyled authors">
-                    <!-- ko foreach: { data: parse(data().Author), as: 'author' } -->
-                    <li data-bind="text: author"></li>
-                    <!-- /ko -->
-                </ul>
-                <!-- /ko -->
-                <!-- ko ifnot: parse(data().Author).length > 0 -->
-                <span class="text-muted">&mdash;</span>
-                <!-- /ko -->
-            </div>
+            <div class="name" data-bind="text: labelFor('Author')"></div>
+            <div class="value" data-bind="component: displayFor('Author')"></div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="name">Type</div>
-            <div class="value">
-                <!-- ko if: data().PublicationType -->
-                <span data-bind="text: data().PublicationType"></span>
-                <!-- /ko -->
-                <!-- ko ifnot: data().PublicationType -->
-                <span class="text-muted">&mdash;</span>
-                <!-- /ko -->
-            </div>
+            <div class="name" data-bind="text: labelFor('PublicationType')"></div>
+            <div class="value" data-bind="component: displayFor('PublicationType')"></div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="name">Publisher</div>
-            <div class="value">
-                <!-- ko if: data().Publisher -->
-                <span data-bind="text: data().Publisher"></span>
-                <!-- /ko -->
-                <!-- ko ifnot: data().Publisher -->
-                <span class="text-muted">&mdash;</span>
-                <!-- /ko -->
-            </div>
+            <div class="name" data-bind="text: labelFor('Publisher')"></div>
+            <div class="value" data-bind="component: displayFor('Publisher')"></div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="name">Date of Publication</div>
-            <div class="value">
-                <!-- ko if: data().DateOfPublication -->
-                <span data-bind="text: data().DateOfPublication"></span>
-                <!-- /ko -->
-                <!-- ko ifnot: data().DateOfPublication -->
-                <span class="text-muted">&mdash;</span>
-                <!-- /ko -->
-            </div>
+            <div class="name" data-bind="text: labelFor('DateOfPublication')"></div>
+            <div class="value" data-bind="component: displayFor('DateOfPublication')"></div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="name">Place of Publication</div>
-            <div class="value">
-                <!-- ko if: data().PlaceOfPublication -->
-                <span data-bind="text: data().PlaceOfPublication"></span>
-                <!-- /ko -->
-                <!-- ko ifnot: data().PlaceOfPublication -->
-                <span class="text-muted">&mdash;</span>
-                <!-- /ko -->
-            </div>
+            <div class="name" data-bind="text: labelFor('PlaceOfPublication')"></div>
+            <div class="value" data-bind="component: displayFor('PlaceOfPublication')"></div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="name">Edition</div>
-            <div class="value">
-                <!-- ko if: data().Edition -->
-                <span data-bind="text: data().Edition"></span>
-                <!-- /ko -->
-                <!-- ko ifnot: data().Edition -->
-                <span class="text-muted">&mdash;</span>
-                <!-- /ko -->
-            </div>
+            <div class="name" data-bind="text: labelFor('Edition')"></div>
+            <div class="value" data-bind="component: displayFor('Edition')"></div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="name">Size</div>
-            <div class="value">
-                <!-- ko if: data().Size -->
-                <span data-bind="text: data().Size"></span>
-                <!-- /ko -->
-                <!-- ko ifnot: data().Size -->
-                <span class="text-muted">&mdash;</span>
-                <!-- /ko -->
-            </div>
+            <div class="name" data-bind="text: labelFor('Size')"></div>
+            <div class="value" data-bind="component: displayFor('Size')"></div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="name">Series</div>
-            <div class="value">
-                <!-- ko if: data().Series -->
-                <span data-bind="text: data().Series"></span>
-                <!-- /ko -->
-                <!-- ko ifnot: data().Series -->
-                <span class="text-muted">&mdash;</span>
-                <!-- /ko -->
-            </div>
+            <div class="name" data-bind="text: labelFor('Series')"></div>
+            <div class="value" data-bind="component: displayFor('Series')"></div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="name">Subjects</div>
-            <div class="value">
-                <!-- ko if: parse(data().Subjects).length > 0 -->
-                <ul class="list-unstyled subjects">
-                    <!-- ko foreach: { data: parse(data().Subjects), as: 'subject' } -->
-                    <li data-bind="text: subject"></li>
-                    <!-- /ko -->
-                </ul>
-                <!-- /ko -->
-                <!-- ko ifnot: parse(data().Subjects).length > 0 -->
-                <span class="text-muted">&mdash;</span>
-                <!-- /ko -->
-            </div>
+            <div class="name" data-bind="text: labelFor('Subjects')"></div>
+            <div class="value" data-bind="component: displayFor('Subjects')"></div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="name">Collation</div>
-            <div class="value">
-                <!-- ko if: data().Collation -->
-                <span data-bind="text: data().Collation"></span>
-                <!-- /ko -->
-                <!-- ko ifnot: data().Collation -->
-                <span class="text-muted">&mdash;</span>
-                <!-- /ko -->
-            </div>
+            <div class="name" data-bind="text: labelFor('Collation')"></div>
+            <div class="value" data-bind="component: displayFor('Collation')"></div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="name">ISBN / ISSN</div>
-            <div class="value">
-                <!-- ko if: data().ISBNISSN -->
-                <span data-bind="text: data().ISBNISSN"></span>
-                <!-- /ko -->
-                <!-- ko ifnot: data().ISBNISSN -->
-                <span class="text-muted">&mdash;</span>
-                <!-- /ko -->
-            </div>
+            <div class="name" data-bind="text: labelFor('ISBNISSN')"></div>
+            <div class="value" data-bind="component: displayFor('ISBNISSN')"></div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="name">Library Number</div>
-            <div class="value">
-                <!-- ko if: data().LibraryNumber -->
-                <span data-bind="text: data().LibraryNumber"></span>
-                <!-- /ko -->
-                <!-- ko ifnot: data().LibraryNumber -->
-                <span class="text-muted">&mdash;</span>
-                <!-- /ko -->
-            </div>
+            <div class="name" data-bind="text: labelFor('LibraryNumber')"></div>
+            <div class="value" data-bind="component: displayFor('LibraryNumber')"></div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="name">Donated</div>
-            <div class="value">
-                <!-- ko if: data().Donated -->
-                <span data-bind="text: data().Donated"></span>
-                <!-- /ko -->
-                <!-- ko ifnot: data().Donated -->
-                <span class="text-muted">&mdash;</span>
-                <!-- /ko -->
-            </div>
+            <div class="name" data-bind="text: labelFor('Donated')"></div>
+            <div class="value" data-bind="component: displayFor('Donated')"></div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="name">Purchased</div>
-            <div class="value">
-                <!-- ko if: data().Purchased -->
-                <span data-bind="text: data().Purchased"></span>
-                <!-- /ko -->
-                <!-- ko ifnot: data().Purchased -->
-                <span class="text-muted">&mdash;</span>
-                <!-- /ko -->
-            </div>
+            <div class="name" data-bind="text: labelFor('Purchased')"></div>
+            <div class="value" data-bind="component: displayFor('Purchased')"></div>
         </div>
     </div>
     <!-- /ko -->

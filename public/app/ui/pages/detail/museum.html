@@ -1,31 +1,77 @@
 <article id="museum-detail" class="detail">
-    <div class="type-header">Museum record</div>
     <!-- ko if: loading -->
     <div class="loading text-muted">
         <img src="/images/loading.gif" alt="" title="Loading animation" />
-        Loading record, please wait...
+        Loading Museum record, please wait...
     </div>
     <!-- /ko -->
-    <!-- ko ifnot: loading -->
-    <h1>
-        <!-- ko if: data().ItemName -->
-        <span data-bind="text: data().ItemName"></span>
-        <!-- /ko -->
-        <!-- ko ifnot: data().ItemName -->
-        <span class="text-muted">(untitled)</span>
-        <!-- /ko -->
-    </h1>
+    <!-- ko if: displayRecord -->
+    <div class="type-header">Museum record <span data-bind="text: idno"></span></div>
+    <h1 data-bind="component: displayFor('ItemName')"></h1>
     <div class="row">
         <div class="col-md-12">
-            <div class="name">Accession Number</div>
-            <div class="value">
-                <!-- ko if: data().idno -->
-                <span data-bind="text: data().idno"></span>
-                <!-- /ko -->
-                <!-- ko ifnot: data().idno -->
-                <span class="text-muted">&mdash;</span>
-                <!-- /ko -->
-            </div>
+            <div class="name" data-bind="text: labelFor('Description')"></div>
+            <div class="value" data-bind="component: displayFor('Description')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('MakersMarks')"></div>
+            <div class="value" data-bind="component: displayFor('MakersMarks')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('Dates')"></div>
+            <div class="value" data-bind="component: displayFor('Dates')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('EarliestYear')"></div>
+            <div class="value" data-bind="component: displayFor('EarliestYear')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('LatestYear')"></div>
+            <div class="value" data-bind="component: displayFor('LatestYear')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('HistoricalDetails')"></div>
+            <div class="value" data-bind="component: displayFor('HistoricalDetails')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('BibliographReferences')"></div>
+            <div class="value" data-bind="component: displayFor('BibliographReferences')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('Subjects')"></div>
+            <div class="value" data-bind="component: displayFor('Subjects')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('Importance')"></div>
+            <div class="value" data-bind="component: displayFor('Importance')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('StatementOfSignificance')"></div>
+            <div class="value" data-bind="component: displayFor('StatementOfSignificance')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('Classification')"></div>
+            <div class="value" data-bind="component: displayFor('Classification')"></div>
         </div>
     </div>
     <!-- /ko -->
