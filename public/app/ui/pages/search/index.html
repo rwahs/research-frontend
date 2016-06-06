@@ -51,7 +51,7 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <!-- ko foreach: { data: resultFields, as: 'field' } -->
+                    <!-- ko foreach: { data: searchResultFields, as: 'field' } -->
                     <th data-bind="text: field.labelText"></th>
                     <!-- /ko -->
                     <th>Actions</th>
@@ -61,10 +61,10 @@
                 <!-- ko foreach: { data: results, as: 'result' } -->
                 <tr>
                     <td data-bind="text: $index() + 1"></td>
-                    <!-- ko foreach: { data: $parent.resultFields, as: 'field' } -->
-                    <td data-bind="html: result[field.key].displayValue"></td>
+                    <!-- ko foreach: { data: $parent.searchResultFields, as: 'field' } -->
+                    <td data-bind="component: $parents[1].displayFor(field, result)"></td>
                     <!-- /ko -->
-                    <td><a data-bind="attr: { href: result.detailUrl }">View</a></td>
+                    <td><a data-bind="attr: { href: $parent.detailUrlFor(result) }">View</a></td>
                 </tr>
                 <!-- /ko -->
                 </tbody>

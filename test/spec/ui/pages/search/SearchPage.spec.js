@@ -41,8 +41,8 @@
                                 collectionName: 'Collection',
                                 searchServiceKey: 'search',
                                 detailUrlTemplate: 'path/to/detail/:id',
-                                searchTypes: 'fixtures/search/searchTypes',
-                                resultFields: 'fixtures/search/resultFields'
+                                searchTypes: 'fixtures/collections/searchTypes',
+                                searchResultFields: 'fixtures/collections/searchResultFields'
                             });
                         });
                         it('Returns an object', function () {
@@ -51,7 +51,7 @@
                         it('Exposes the correct observables and computed observables', function () {
                             expect(ko.isObservable(page.searchText)).to.equal(true);
                             expect(ko.isObservable(page.searchTypes)).to.equal(true);
-                            expect(ko.isObservable(page.resultFields)).to.equal(true);
+                            expect(ko.isObservable(page.searchResultFields)).to.equal(true);
                             expect(ko.isObservable(page.results)).to.equal(true);
                             expect(ko.isObservable(page.loading)).to.equal(true);
                             expect(ko.isObservable(page.displayResults)).to.equal(true);
@@ -69,7 +69,7 @@
                         it('Gives the correct default values', function () {
                             expect(page.searchText()).to.equal('');
                             expect(page.searchTypes()).to.deep.equal([]);
-                            expect(page.resultFields()).to.deep.equal([]);
+                            expect(page.searchResultFields()).to.deep.equal([]);
                             expect(page.results()).to.deep.equal([]);
                         });
                         it('Is not loading or displaying results', function () {
@@ -88,7 +88,7 @@
                                 page.binding(container, done);
                             });
                             it('Sets the search types', function () {
-                                expect(page.searchTypes()).to.have.length(2); // see fixtures/search/searchTypes.js
+                                expect(page.searchTypes()).to.have.length(2); // see fixtures/collections/searchTypes.js
                             });
                             it('Sets the active search type', function () {
                                 expect(page.searchTypes()[0].active()).to.equal(true);
@@ -98,7 +98,7 @@
                                 expect(page.placeholder()).to.equal('Search by Field One...');
                             });
                             it('Sets the result fields', function () {
-                                expect(page.resultFields()).to.have.length(3); // see fixtures/search/resultFields.js
+                                expect(page.searchResultFields()).to.have.length(3); // see fixtures/collections/searchResultFields.js
                             });
                             it('Is not loading or displaying results', function () {
                                 expect(page.loading()).to.equal(false);
@@ -220,8 +220,8 @@
                                 collectionName: 'Collection',
                                 searchServiceKey: 'search',
                                 detailUrlTemplate: 'path/to/detail/:id',
-                                searchTypes: 'fixtures/search/searchTypes',
-                                resultFields: 'fixtures/search/resultFields'
+                                searchTypes: 'fixtures/collections/searchTypes',
+                                searchResultFields: 'fixtures/collections/searchResultFields'
                             });
                         });
                         describe('When bound to the view', function () {
