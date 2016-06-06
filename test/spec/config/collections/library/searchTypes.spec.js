@@ -4,7 +4,7 @@
     define(
         [
             'chai',
-            'config/search/library/searchTypes'
+            'config/collections/library/searchTypes'
         ],
         function (chai, searchTypes) {
             var expect = chai.expect;

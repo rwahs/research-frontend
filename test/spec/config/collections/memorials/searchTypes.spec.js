@@ -4,7 +4,7 @@
     define(
         [
             'chai',
-            'config/search/memorials/searchTypes'
+            'config/collections/memorials/searchTypes'
         ],
         function (chai, searchTypes) {
             var expect = chai.expect;
