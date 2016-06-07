@@ -32,10 +32,6 @@
                 this.placeholder = ko.pureComputed(function () {
                     return parameters.placeholder || '&mdash;';
                 }.bind(this));
-
-                this.indent = function (index) {
-                    return _.repeat('&nbsp;', 2 * index);
-                };
             };
         }
     );
