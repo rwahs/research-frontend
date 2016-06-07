@@ -27,6 +27,11 @@
                                 if (field.skip) {
                                     value = _.drop(value, field.skip);
                                 }
+                                if (field.skipNested) {
+                                    value = _.map(value, function (item) {
+                                        return _.drop(item, field.skip);
+                                    });
+                                }
                                 if (field.filter === true) {
                                     value = _.filter(value);
                                 } else if (_.isString(field.filter)) {
