@@ -2,11 +2,9 @@
 <ul>
     <!-- ko foreach: { data: value, as: 'item' } -->
     <li>
-        <!-- ko foreach: { data: value, as: 'hierarchyNode' } -->
-        <div>
-            <span data-bind="html: $parent.indent($index())"></span><!-- ko if: $index() > 0 -->&rArr;<!-- /ko -->
-            <span data-bind="text: hierarchyNode"></span>
-        </div>
+        <!-- ko foreach: { data: item, as: 'hierarchyNode' } -->
+        <!-- ko if: $index() > 0 -->&rArr;<!-- /ko -->
+        <span data-bind="text: hierarchyNode"></span>
         <!-- /ko -->
     </li>
     <!-- /ko -->
