@@ -6,8 +6,11 @@
     </div>
     <!-- /ko -->
     <!-- ko if: displayRecord -->
-    <div class="type-header">Library record <span data-bind="text: idno"></span></div>
-    <h1 data-bind="component: displayFor('Title')"></h1>
+    <div class="type-header">Library record</div>
+    <h1>
+        <span data-bind="component: displayFor('Title')"></span>
+        <span class="idno" data-bind="text: idno"></span>
+    </h1>
     <div class="row">
         <div class="col-md-12">
             <div class="name" data-bind="text: labelFor('Author')"></div>
