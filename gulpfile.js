@@ -181,6 +181,9 @@
             'package:clean'
         ],
         function () {
+            if (environment === 'development') {
+                throw new Error('Cannot use "package" tasks in development environment');
+            }
             return gulp
                 .src('public/lib/bootstrap/fonts/**/*')
                 .pipe(gulp.dest('dist/' + environment + '/lib/bootstrap/fonts'));
