@@ -96,7 +96,8 @@ An environment is a string that identifies the setting of the application.  You 
 `gulp` task to set the environment.  However the local development related tasks will ignore the environment setting;
 this is used for packaging only.  
 
-The following examples use an environment of `staging`.
+The following examples use an environment of `staging`.  The other accepted value is `uat`, and `production` will be
+supported in future.
 
 ### Packaging Automation
 
