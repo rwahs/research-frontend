@@ -64,7 +64,8 @@
                 key: 'Classification',
                 labelText: 'Classification',
                 parse: true,
-                filter: 'Name',
+                skipNested: 1,
+                filter: true,
                 display: 'hierarchy-list'
             }
         ];

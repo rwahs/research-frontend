@@ -74,7 +74,8 @@
                     expect(detailFields[13].key).to.equal('Classification');
                     expect(detailFields[13].labelText).to.equal('Classification');
                     expect(detailFields[13].parse).to.equal(true);
-                    expect(detailFields[13].filter).to.equal('Name');
+                    expect(detailFields[13].skipNested).to.equal(1);
+                    expect(detailFields[13].filter).to.equal(true);
                     expect(detailFields[13].display).to.equal('hierarchy-list');
                 });
             });
