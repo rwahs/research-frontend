@@ -1,3 +1,75 @@
 <article id="photographs-detail" class="detail">
-    <h1>Photographs Record</h1>
+    <!-- ko if: loading -->
+    <div class="loading text-muted">
+        <img src="/images/loading.gif" alt="" title="Loading animation" />
+        Loading Photographs record, please wait...
+    </div>
+    <!-- /ko -->
+    <!-- ko if: displayRecord -->
+    <div class="type-header">Photographs record</div>
+    <h1>
+        <span data-bind="component: displayFor('Title')"></span>
+        <span class="idno" data-bind="text: idno"></span>
+    </h1>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('Creator')"></div>
+            <div class="value" data-bind="component: displayFor('Creator')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('DateOfCreation')"></div>
+            <div class="value" data-bind="component: displayFor('DateOfCreation')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('Publisher')"></div>
+            <div class="value" data-bind="component: displayFor('Publisher')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('DateOfPublication')"></div>
+            <div class="value" data-bind="component: displayFor('DateOfPublication')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('PlaceOfPublication')"></div>
+            <div class="value" data-bind="component: displayFor('PlaceOfPublication')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('Medium')"></div>
+            <div class="value" data-bind="component: displayFor('Medium')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('PhysicalDescription')"></div>
+            <div class="value" data-bind="component: displayFor('PhysicalDescription')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('Subjects')"></div>
+            <div class="value" data-bind="component: displayFor('Subjects')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('Summary')"></div>
+            <div class="value" data-bind="component: displayFor('Summary')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('Notes')"></div>
+            <div class="value" data-bind="component: displayFor('Notes')"></div>
+        </div>
+    </div>
+    <!-- /ko -->
 </article>

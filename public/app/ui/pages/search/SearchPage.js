@@ -6,22 +6,22 @@
             'lodash',
             'knockout',
             'util/container',
-            'ui/pages/search/SearchMapper'
+            'models/DynamicRecord',
+            'ui/pages/search/SearchType'
         ],
-        function (_, ko, container, SearchMapper) {
+        function (_, ko, container, DynamicRecord, SearchType) {
             return function (context, parameters) {
-                var search, selectedSearchType, mapper, searchParameters;
+                var search, selectedSearchType, searchParameters;
 
                 this.searchText = ko.observable('');
                 this.searchTypes = ko.observableArray();
-                this.resultFields = ko.observableArray();
+                this.searchResultFields = ko.observableArray();
                 this.results = ko.observableArray();
                 this.loading = ko.observable(false);
                 this.displayResults = ko.observable(false);
 
                 search = container.resolve(parameters.searchServiceKey);
                 selectedSearchType = ko.observable();
-                mapper = new SearchMapper(selectedSearchType, this.resultFields, parameters.detailUrlTemplate);
 
                 searchParameters = ko.pureComputed(function () {
                     return _.zipObject(
@@ -44,16 +44,18 @@
                     return this.results().length > 0;
                 }.bind(this));
 
-                this.binding = function (container, callback) {
+                this.binding = function (element, callback) {
                     require(
                         [
                             parameters.searchTypes,
-                            parameters.resultFields
+                            parameters.searchResultFields
                         ],
-                        function (searchTypes, resultFields) {
-                            this.searchTypes(_.map(searchTypes, mapper.mapType));
+                        function (searchTypes, searchResultFields) {
+                            this.searchTypes(_.map(searchTypes, function (type) {
+                                return new SearchType(type, selectedSearchType);
+                            }));
                             this.searchTypes()[0].makeActive();
-                            this.resultFields(resultFields);
+                            this.searchResultFields(searchResultFields);
                             callback();
                         }.bind(this)
                     );
@@ -78,11 +80,27 @@
                                 // TODO Display error
                                 return;
                             }
-                            this.results(_.map(results, mapper.mapResult));
+                            this.results(_.map(results, function (result) {
+                                return new DynamicRecord(result, this.searchResultFields);
+                            }.bind(this)));
                             this.displayResults(true);
                         }.bind(this)
                     );
                     return false;
+                };
+
+                this.displayFor = function (field, result) {
+                    return {
+                        name: 'display/' + (field.display || 'text'),
+                        params: {
+                            data: result.data,
+                            name: field.key
+                        }
+                    };
+                };
+
+                this.detailUrlFor = function (result) {
+                    return parameters.detailUrlTemplate.replace(':id', result.id());
                 };
             };
         }

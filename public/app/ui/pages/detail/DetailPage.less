@@ -1,0 +1,32 @@
+article.detail {
+    h1 {
+        .idno {
+            &:extend(.text-muted);
+            display: block;
+            font-size: @font-size-small;
+            font-weight: bold;
+            padding: @padding-small-vertical 0;
+        }
+    }
+
+    .type-header {
+        &:extend(.text-muted);
+        text-transform: uppercase;
+    }
+
+    .row {
+        margin-bottom: 1em;
+
+        .name {
+            font-weight: bold;
+        }
+
+        .value {
+            font-size: @font-size-large;
+        }
+
+        .list-unstyled {
+            margin-bottom: 0;
+        }
+    }
+}

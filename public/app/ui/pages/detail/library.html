@@ -1,3 +1,99 @@
 <article id="library-detail" class="detail">
-    <h1>Library Record</h1>
+    <!-- ko if: loading -->
+    <div class="loading text-muted">
+        <img src="/images/loading.gif" alt="" title="Loading animation" />
+        Loading Library record, please wait...
+    </div>
+    <!-- /ko -->
+    <!-- ko if: displayRecord -->
+    <div class="type-header">Library record</div>
+    <h1>
+        <span data-bind="component: displayFor('Title')"></span>
+        <span class="idno" data-bind="text: idno"></span>
+    </h1>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('Author')"></div>
+            <div class="value" data-bind="component: displayFor('Author')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('PublicationType')"></div>
+            <div class="value" data-bind="component: displayFor('PublicationType')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('Publisher')"></div>
+            <div class="value" data-bind="component: displayFor('Publisher')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('DateOfPublication')"></div>
+            <div class="value" data-bind="component: displayFor('DateOfPublication')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('PlaceOfPublication')"></div>
+            <div class="value" data-bind="component: displayFor('PlaceOfPublication')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('Edition')"></div>
+            <div class="value" data-bind="component: displayFor('Edition')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('Size')"></div>
+            <div class="value" data-bind="component: displayFor('Size')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('Series')"></div>
+            <div class="value" data-bind="component: displayFor('Series')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('Subjects')"></div>
+            <div class="value" data-bind="component: displayFor('Subjects')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('Collation')"></div>
+            <div class="value" data-bind="component: displayFor('Collation')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('ISBNISSN')"></div>
+            <div class="value" data-bind="component: displayFor('ISBNISSN')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('LibraryNumber')"></div>
+            <div class="value" data-bind="component: displayFor('LibraryNumber')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('Donated')"></div>
+            <div class="value" data-bind="component: displayFor('Donated')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name" data-bind="text: labelFor('Purchased')"></div>
+            <div class="value" data-bind="component: displayFor('Purchased')"></div>
+        </div>
+    </div>
+    <!-- /ko -->
 </article>

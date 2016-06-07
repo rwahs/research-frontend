@@ -1,0 +1,13 @@
+<!-- ko if: hasValue -->
+<ul>
+    <!-- ko foreach: { data: value, as: 'item' } -->
+    <li class="text-nowrap">
+        <span data-bind="html: item.Value"></span>
+        <span class="small">(<span data-bind="html: item.Type"></span>)</span>
+    </li>
+    <!-- /ko -->
+</ul>
+<!-- /ko -->
+<!-- ko ifnot: hasValue -->
+<span class="text-muted" data-bind="html: placeholder"></span>
+<!-- /ko -->
