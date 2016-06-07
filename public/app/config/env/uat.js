@@ -1,0 +1,29 @@
+(function () {
+    'use strict';
+
+    define(
+        [
+            'util/container',
+            'services/searchService',
+            'services/detailService'
+        ],
+        function (container, searchService, detailService) {
+            var simpleApiBaseUrl = 'https://uat-collections.histwest.org.au/service.php/simple',
+                enableCORS = { xhrFields: { withCredentials: true } };
+
+            return function () {
+                container.register('search.library', searchService(simpleApiBaseUrl + '/library_search', enableCORS));
+                container.register('search.photographs', searchService(simpleApiBaseUrl + '/photographs_search', enableCORS));
+                container.register('search.museum', searchService(simpleApiBaseUrl + '/museum_search', enableCORS));
+                container.register('search.memorials', searchService(simpleApiBaseUrl + '/memorials_search', enableCORS));
+
+                container.register('detail.library', detailService(simpleApiBaseUrl + '/library_detail', enableCORS));
+                container.register('detail.photographs', detailService(simpleApiBaseUrl + '/photographs_detail', enableCORS));
+                container.register('detail.museum', detailService(simpleApiBaseUrl + '/museum_detail', enableCORS));
+                container.register('detail.memorials', detailService(simpleApiBaseUrl + '/memorials_detail', enableCORS));
+
+                container.seal();
+            };
+        }
+    );
+}());

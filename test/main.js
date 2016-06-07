@@ -63,6 +63,7 @@
                     // TODO Dynamically generate this list using `gulp`.
                     'spec/config/env/development.spec',
                     'spec/config/env/staging.spec',
+                    'spec/config/env/uat.spec',
                     'spec/config/collections/library/detailFields.spec',
                     'spec/config/collections/library/searchResultFields.spec',
                     'spec/config/collections/library/searchTypes.spec',
