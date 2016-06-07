@@ -1,6 +1,6 @@
 /* global __dirname */
 
-(function (pkg, gulp, jshint, jscs, stylish, mocha, connect, less, requirejs, uglify, replace, header, yargs, rimraf, mkdirp, recursive) {
+(function (pkg, gulp, jshint, jscs, stylish, mocha, connect, less, requirejs, uglify, replace, header, awspublish, aws, yargs, rimraf, mkdirp, recursive) {
     'use strict';
 
     var environment = yargs.argv.env || 'development',
@@ -203,6 +203,36 @@
     );
 
     gulp.task(
+        'deploy',
+        [
+            'package'
+        ],
+        function () {
+            var publisher;
+            if (environment === 'development') {
+                throw new Error('Cannot use "deploy" task in development environment');
+            }
+            publisher = awspublish.create(
+                {
+                    region: 'ap-southeast-2',
+                    params: {
+                        Bucket: 'rwahs.' + environment + '.research-frontend'
+                    },
+                    credentials: new aws.SharedIniFileCredentials({ profile: 'rwahs' })
+                },
+                {
+                    cacheFile: '.aws-cache/'
+                }
+            );
+            return gulp
+                .src('dist/' + environment + '/**/*')
+                .pipe(publisher.publish())
+                .pipe(publisher.cache())
+                .pipe(awspublish.reporter());
+        }
+    );
+
+    gulp.task(
         'server',
         function () {
             connect.server({
@@ -286,6 +316,8 @@
     require('gulp-uglify'),
     require('gulp-replace'),
     require('gulp-header'),
+    require('gulp-awspublish'),
+    require('aws-sdk'),
     require('yargs'),
     require('rimraf'),
     require('mkdirp'),

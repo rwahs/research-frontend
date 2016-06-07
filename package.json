@@ -17,8 +17,10 @@
   },
   "homepage": "https://github.com/rwahs/research-frontend#readme",
   "devDependencies": {
+    "aws-sdk": "^2.3.17",
     "chai": "^3.5.0",
     "gulp": "^3.9.1",
+    "gulp-awspublish": "^3.2.0",
     "gulp-connect": "^4.0.0",
     "gulp-header": "^1.8.2",
     "gulp-jscs": "^3.0.2",
