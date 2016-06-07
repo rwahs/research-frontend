@@ -52,8 +52,7 @@
             },
             {
                 key: 'Summary',
-                labelText: 'Summary',
-                display: 'html'
+                labelText: 'Summary'
             },
             {
                 key: 'Notes',

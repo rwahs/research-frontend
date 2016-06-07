@@ -18,8 +18,7 @@
             },
             {
                 key: 'Description',
-                labelText: 'Description',
-                display: 'html'
+                labelText: 'Description'
             },
             {
                 key: 'MakersMarks',

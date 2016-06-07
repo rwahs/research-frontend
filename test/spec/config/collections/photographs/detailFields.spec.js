@@ -64,7 +64,6 @@
                 it('Defines the `Summary` field', function () {
                     expect(detailFields[10].key).to.equal('Summary');
                     expect(detailFields[10].labelText).to.equal('Summary');
-                    expect(detailFields[10].display).to.equal('html');
                 });
                 it('Defines the `Notes` field', function () {
                     expect(detailFields[11].key).to.equal('Notes');

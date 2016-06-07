@@ -26,7 +26,6 @@
                 it('Defines the `Description` field', function () {
                     expect(detailFields[2].key).to.equal('Description');
                     expect(detailFields[2].labelText).to.equal('Description');
-                    expect(detailFields[2].display).to.equal('html');
                 });
                 it('Defines the `Inscription` field', function () {
                     expect(detailFields[3].key).to.equal('Inscription');

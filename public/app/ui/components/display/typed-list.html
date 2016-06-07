@@ -2,8 +2,8 @@
 <ul>
     <!-- ko foreach: { data: value, as: 'item' } -->
     <li class="text-nowrap">
-        <span data-bind="text: item.Value"></span>
-        <span class="small">(<span data-bind="text: item.Type"></span>)</span>
+        <span data-bind="html: item.Value"></span>
+        <span class="small">(<span data-bind="html: item.Type"></span>)</span>
     </li>
     <!-- /ko -->
 </ul>
