@@ -59,6 +59,9 @@
 
     gulp.task(
         'build:less',
+        [
+            'build:clean'
+        ],
         function () {
             return gulp
                 .src('public/less/main.less')
@@ -91,6 +94,9 @@
 
     gulp.task(
         'package:less',
+        [
+            'package:clean'
+        ],
         function () {
             if (environment === 'development') {
                 throw new Error('Cannot use "package" tasks in development environment');
@@ -107,6 +113,9 @@
 
     gulp.task(
         'package:javascript',
+        [
+            'package:clean'
+        ],
         function () {
             if (environment === 'development') {
                 throw new Error('Cannot use "package" tasks in development environment');
@@ -138,6 +147,9 @@
 
     gulp.task(
         'package:html',
+        [
+            'package:clean'
+        ],
         function () {
             if (environment === 'development') {
                 throw new Error('Cannot use "package" tasks in development environment');
@@ -152,6 +164,9 @@
 
     gulp.task(
         'package:images',
+        [
+            'package:clean'
+        ],
         function () {
             if (environment === 'development') {
                 throw new Error('Cannot use "package" tasks in development environment');
