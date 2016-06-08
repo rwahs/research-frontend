@@ -178,13 +178,29 @@
     );
 
     gulp.task(
+        'package:fonts',
+        [
+            'package:clean'
+        ],
+        function () {
+            if (environment === 'development') {
+                throw new Error('Cannot use "package" tasks in development environment');
+            }
+            return gulp
+                .src('public/lib/bootstrap/fonts/**/*')
+                .pipe(gulp.dest('dist/' + environment + '/lib/bootstrap/fonts'));
+        }
+    );
+
+    gulp.task(
         'package',
         [
             'package:clean',
             'package:less',
             'package:javascript',
             'package:html',
-            'package:images'
+            'package:images',
+            'package:fonts'
         ]
     );
 
