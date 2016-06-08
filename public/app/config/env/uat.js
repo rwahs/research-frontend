@@ -8,7 +8,7 @@
             'services/detailService'
         ],
         function (container, searchService, detailService) {
-            var simpleApiBaseUrl = 'https://uat-collections.histwest.org.au/service.php/simple',
+            var simpleApiBaseUrl = 'https://research-frontend:NotReallySecret@uat-collections.histwest.org.au/service.php/simple',
                 enableCORS = { xhrFields: { withCredentials: true } };
 
             return function () {
