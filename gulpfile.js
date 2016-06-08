@@ -113,6 +113,12 @@
             }
             // Dynamically generate the `include` list, because most of the modules are dynamically `require`d.
             recursive('public/app', function (err, files) {
+                files = files.map(function (file) {
+                    // Strip common path prefix; return .js files without extension, and others via text plugin.
+                    file = file.replace(/^public\/app\//, '');
+                    return file.match(/\.js$/) ? file.replace(/\.js$/, '') : 'text!' + file;
+                });
+                files.push('bootstrap');
                 return gulp
                     .src('public/app/main.js')
                     .pipe(requirejs({
@@ -120,11 +126,7 @@
                         name: '../lib/requirejs/require',
                         optimize: 'none',
                         out: 'application.js',
-                        include: files.map(function (file) {
-                            // Strip common path prefix; return .js files without extension, and others via text plugin.
-                            file = file.replace(/^public\/app\//, '');
-                            return file.match(/\.js$/) ? file.replace(/\.js$/, '') : 'text!' + file;
-                        })
+                        include: files
                     }))
                     .pipe(replace(/var environment = 'development';/g, 'var environment = "' + environment + '";'))
                     .pipe(uglify())
