@@ -17,8 +17,6 @@
             lodash: '../public/lib/lodash/lodash',
             jquery: '../public/lib/jquery/dist/jquery',
             bootstrap: '../public/lib/bootstrap/dist/js/bootstrap',
-            typeahead: '../public/lib/typeahead.js/dist/typeahead.jquery',
-            bloodhound: '../public/lib/typeahead.js/dist/bloodhound',
             page: '../public/lib/page/page',
 
             // Application modules
@@ -34,12 +32,6 @@
             fixtures: 'fixtures/'
         },
         shim: {
-            bloodhound: {
-                exports: 'Bloodhound'
-            },
-            typeahead: {
-                deps: [ 'jquery' ]
-            },
             mocha: {
                 init: function () {
                     // https://gist.github.com/michaelcox/3800736

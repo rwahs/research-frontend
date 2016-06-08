@@ -14,8 +14,6 @@
             lodash: '../lib/lodash/lodash',
             jquery: '../lib/jquery/dist/jquery',
             bootstrap: '../lib/bootstrap/dist/js/bootstrap',
-            typeahead: '../lib/typeahead.js/dist/typeahead.jquery',
-            bloodhound: '../lib/typeahead.js/dist/bloodhound',
             page: '../lib/page/page',
 
             // Application modules
@@ -24,14 +22,6 @@
             services: 'services/',
             ui: 'ui/',
             util: 'util/'
-        },
-        shim: {
-            bloodhound: {
-                exports: 'Bloodhound'
-            },
-            typeahead: {
-                deps: [ 'jquery' ]
-            }
         }
     });
 
