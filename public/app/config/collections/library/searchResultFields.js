@@ -4,6 +4,12 @@
     define(function () {
         return [
             {
+                key: 'Media',
+                labelText: 'Image',
+                display: 'image',
+                placeholder: '(No image available)'
+            },
+            {
                 key: 'Title',
                 labelText: 'Title'
             },
@@ -36,12 +42,6 @@
                 parse: true,
                 filter: true,
                 display: 'list'
-            },
-            {
-                key: 'Media',
-                labelText: 'Image',
-                display: 'image',
-                placeholder: '(No image available)'
             }
         ];
     });

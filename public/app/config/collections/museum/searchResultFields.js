@@ -4,6 +4,12 @@
     define(function () {
         return [
             {
+                key: 'Media',
+                labelText: 'Image',
+                display: 'image',
+                placeholder: '(No image available)'
+            },
+            {
                 key: 'type',
                 labelText: 'Item Type'
             },
@@ -37,12 +43,6 @@
                 skipNested: 1,
                 filter: true,
                 display: 'hierarchy-list'
-            },
-            {
-                key: 'Media',
-                labelText: 'Image',
-                display: 'image',
-                placeholder: '(No image available)'
             }
         ];
     });
