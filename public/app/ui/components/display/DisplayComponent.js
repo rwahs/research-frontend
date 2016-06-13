@@ -30,7 +30,7 @@
                 });
 
                 this.placeholder = ko.pureComputed(function () {
-                    return parameters.placeholder || '&mdash;';
+                    return parameters.placeholder === false ? false : (parameters.placeholder || '&mdash;');
                 }.bind(this));
             };
         }
