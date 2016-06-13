@@ -94,7 +94,8 @@
                         name: 'display/' + (field.display || 'text'),
                         params: {
                             data: result.data,
-                            name: field.key
+                            name: field.key,
+                            placeholder: field.placeholder
                         }
                     };
                 };
