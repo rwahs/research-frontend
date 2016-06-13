@@ -66,6 +66,10 @@
                             expect(page.submit).to.be.a('function');
                             expect(page.reset).to.be.a('function');
                         });
+                        it('Exposes view helper methods', function () {
+                            expect(page.displayFor).to.be.a('function');
+                            expect(page.detailUrlFor).to.be.a('function');
+                        });
                         it('Gives the correct default values', function () {
                             expect(page.searchText()).to.equal('');
                             expect(page.searchTypes()).to.deep.equal([]);
@@ -193,6 +197,59 @@
                                         expect(page.results()).to.have.length(3); // 3 records in mock data
                                     });
                                 });
+                            });
+                        });
+                        describe('The `displayFor` view helper method', function () {
+                            describe('When passed a minimal field definition', function () {
+                                var field, result, returnValue;
+                                beforeEach(function () {
+                                    field = {
+                                        key: 'field'
+                                    };
+                                    result = {
+                                        data: 'This is the data'
+                                    };
+                                    returnValue = page.displayFor(field, result);
+                                });
+                                it('Returns the correct object structure', function () {
+                                    expect(returnValue).to.deep.equal({
+                                        name: 'display/text',
+                                        params: {
+                                            data: 'This is the data',
+                                            name: 'field',
+                                            placeholder: undefined
+                                        }
+                                    });
+                                });
+                            });
+                            describe('When passed a complete field definition', function () {
+                                var field, result, returnValue;
+                                beforeEach(function () {
+                                    field = {
+                                        key: 'field',
+                                        display: 'fancy',
+                                        placeholder: 'No data'
+                                    };
+                                    result = {
+                                        data: 'This is the data'
+                                    };
+                                    returnValue = page.displayFor(field, result);
+                                });
+                                it('Returns the correct object structure', function () {
+                                    expect(returnValue).to.deep.equal({
+                                        name: 'display/fancy',
+                                        params: {
+                                            data: 'This is the data',
+                                            name: 'field',
+                                            placeholder: 'No data'
+                                        }
+                                    });
+                                });
+                            });
+                        });
+                        describe('The `detailUrlFor` view helper method', function () {
+                            it('Returns the correct URL', function () {
+                                expect(page.detailUrlFor({ id: ko.observable(42) })).to.equal('path/to/detail/42');
                             });
                         });
                     });
