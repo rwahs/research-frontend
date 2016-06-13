@@ -13,6 +13,11 @@
     </h1>
     <div class="row">
         <div class="col-md-12">
+            <div data-bind="component: displayFor('Media')"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <div class="name" data-bind="text: labelFor('Description')"></div>
             <div class="value" data-bind="component: displayFor('Description')"></div>
         </div>

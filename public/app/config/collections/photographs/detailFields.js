@@ -57,6 +57,11 @@
             {
                 key: 'Notes',
                 labelText: 'Notes'
+            },
+            {
+                key: 'Media',
+                display: 'image',
+                placeholder: false
             }
         ];
     });

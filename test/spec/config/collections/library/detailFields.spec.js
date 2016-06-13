@@ -12,7 +12,7 @@
             describe('The `library/detailFields` module', function () {
                 it('Defines a static array', function () {
                     expect(detailFields).to.be.an('array');
-                    expect(detailFields).to.have.length(16);
+                    expect(detailFields).to.have.length(17);
                 });
                 it('Defines the `idno` field', function () {
                     expect(detailFields[0].key).to.equal('idno');
@@ -84,6 +84,11 @@
                 it('Defines the `Purchased` field', function () {
                     expect(detailFields[15].key).to.equal('Purchased');
                     expect(detailFields[15].labelText).to.equal('Purchased');
+                });
+                it('Defines the `Media` field', function () {
+                    expect(detailFields[16].key).to.equal('Media');
+                    expect(detailFields[16].display).to.equal('image');
+                    expect(detailFields[16].placeholder).to.equal(false);
                 });
             });
         }

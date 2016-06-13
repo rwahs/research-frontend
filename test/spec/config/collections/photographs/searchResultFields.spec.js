@@ -12,7 +12,7 @@
             describe('The `photographs/searchResultFields` module', function () {
                 it('Defines a static array', function () {
                     expect(searchResultFields).to.be.an('array');
-                    expect(searchResultFields).to.have.length(9);
+                    expect(searchResultFields).to.have.length(10);
                 });
                 it('Defines the `idno` field', function () {
                     expect(searchResultFields[0].key).to.equal('idno');
@@ -55,6 +55,12 @@
                     expect(searchResultFields[8].parse).to.equal(true);
                     expect(searchResultFields[8].filter).to.equal(true);
                     expect(searchResultFields[8].display).to.equal('list');
+                });
+                it('Defines the `Media` field', function () {
+                    expect(searchResultFields[9].key).to.equal('Media');
+                    expect(searchResultFields[9].labelText).to.equal('Image');
+                    expect(searchResultFields[9].display).to.equal('image');
+                    expect(searchResultFields[9].placeholder).to.equal('(No image available)');
                 });
             });
         }

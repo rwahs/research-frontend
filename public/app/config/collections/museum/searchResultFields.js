@@ -37,6 +37,12 @@
                 skipNested: 1,
                 filter: true,
                 display: 'hierarchy-list'
+            },
+            {
+                key: 'Media',
+                labelText: 'Image',
+                display: 'image',
+                placeholder: '(No image available)'
             }
         ];
     });

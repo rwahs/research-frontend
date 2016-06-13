@@ -12,7 +12,7 @@
             describe('The `museum/detailFields` module', function () {
                 it('Defines a static array', function () {
                     expect(detailFields).to.be.an('array');
-                    expect(detailFields).to.have.length(14);
+                    expect(detailFields).to.have.length(15);
                 });
                 it('Defines the `type` field', function () {
                     expect(detailFields[0].key).to.equal('type');
@@ -77,6 +77,11 @@
                     expect(detailFields[13].skipNested).to.equal(1);
                     expect(detailFields[13].filter).to.equal(true);
                     expect(detailFields[13].display).to.equal('hierarchy-list');
+                });
+                it('Defines the `Media` field', function () {
+                    expect(detailFields[14].key).to.equal('Media');
+                    expect(detailFields[14].display).to.equal('image');
+                    expect(detailFields[14].placeholder).to.equal(false);
                 });
             });
         }

@@ -73,6 +73,11 @@
             {
                 key: 'Purchased',
                 labelText: 'Purchased'
+            },
+            {
+                key: 'Media',
+                display: 'image',
+                placeholder: false
             }
         ];
     });

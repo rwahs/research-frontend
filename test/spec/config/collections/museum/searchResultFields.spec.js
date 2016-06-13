@@ -12,7 +12,7 @@
             describe('The `museum/searchResultFields` module', function () {
                 it('Defines a static array', function () {
                     expect(searchResultFields).to.be.an('array');
-                    expect(searchResultFields).to.have.length(7);
+                    expect(searchResultFields).to.have.length(8);
                 });
                 it('Defines the `type` field', function () {
                     expect(searchResultFields[0].key).to.equal('type');
@@ -48,6 +48,12 @@
                     expect(searchResultFields[6].skipNested).to.equal(1);
                     expect(searchResultFields[6].filter).to.equal(true);
                     expect(searchResultFields[6].display).to.equal('hierarchy-list');
+                });
+                it('Defines the `Media` field', function () {
+                    expect(searchResultFields[7].key).to.equal('Media');
+                    expect(searchResultFields[7].labelText).to.equal('Image');
+                    expect(searchResultFields[7].display).to.equal('image');
+                    expect(searchResultFields[7].placeholder).to.equal('(No image available)');
                 });
             });
         }
