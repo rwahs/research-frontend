@@ -7,7 +7,7 @@
             'jquery'
         ],
         function (_, $) {
-            return function (baseUrl, ajaxOptions, noCache) {
+            return function (baseUrl, ajaxOptions, noCache, logErrors) {
                 var queryString;
 
                 queryString = function (parameters) {
@@ -28,6 +28,9 @@
                             callback(undefined, _.values(result));
                         },
                         error: function (jqXHR, textStatus, err) {
+                            if (logErrors && console && typeof console.error === 'function') {
+                                console.error(err);
+                            }
                             callback(err);
                         }
                     }));

@@ -7,7 +7,7 @@
             'jquery'
         ],
         function (_, $) {
-            return function (baseUrl, ajaxOptions, noCache) {
+            return function (baseUrl, ajaxOptions, noCache, logErrors) {
                 return function (id, callback) {
                     if (!id) {
                         return callback(new Error('Missing required "id" parameter in detail service'));
@@ -22,6 +22,9 @@
                             callback(undefined, result);
                         },
                         error: function (jqXHR, textStatus, err) {
+                            if (logErrors && console && typeof console.error === 'function') {
+                                console.error(err);
+                            }
                             callback(err);
                         }
                     }));
