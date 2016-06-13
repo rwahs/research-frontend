@@ -64,6 +64,11 @@
             {
                 key: 'Provenance',
                 labelText: 'Provenance'
+            },
+            {
+                key: 'Media',
+                display: 'image',
+                placeholder: false
             }
         ];
     });

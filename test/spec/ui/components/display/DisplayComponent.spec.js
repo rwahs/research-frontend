@@ -82,6 +82,24 @@
                             expect(display.placeholder()).to.equal('No value');
                         });
                     });
+                    describe('With the `placeholder` explicitly set to `false`', function () {
+                        beforeEach(function () {
+                            display = new DisplayComponent({
+                                name: 'field',
+                                data: {
+                                    idno: '42a',
+                                    title: 'Title of the Record',
+                                    field: 'value of field'
+                                },
+                                labelText: 'Label Text',
+                                placeholder: false
+                            });
+                        });
+                        it('Exposes the correct label and placeholder values', function () {
+                            expect(display.labelText()).to.equal('Label Text');
+                            expect(display.placeholder()).to.equal(false);
+                        });
+                    });
                 });
                 describe('When constructed without a `name` parameter', function () {
                     var display;

@@ -66,6 +66,11 @@
                 skipNested: 1,
                 filter: true,
                 display: 'hierarchy-list'
+            },
+            {
+                key: 'Media',
+                display: 'image',
+                placeholder: false
             }
         ];
     });

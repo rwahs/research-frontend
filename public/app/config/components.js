@@ -54,6 +54,14 @@
                         template: { require: 'text!ui/components/display/hierarchy-list.html' }
                     }
                 );
+
+                ko.components.register(
+                    'display/image',
+                    {
+                        viewModel: { require: 'ui/components/display/DisplayComponent' },
+                        template: { require: 'text!ui/components/display/image.html' }
+                    }
+                );
             };
         }
     );
