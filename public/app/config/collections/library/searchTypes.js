@@ -19,7 +19,7 @@
                 glyphicon: 'certificate'
             },
             {
-                key: 'ca_occurrences',
+                key: 'ca_occurrences.preferred_labels',
                 labelText: 'Subject',
                 glyphicon: 'paperclip'
             }
