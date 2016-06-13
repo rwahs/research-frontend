@@ -3,12 +3,11 @@
 
     define(
         [
-            'jquery',
             'util/container',
             'services/searchService',
             'services/detailService'
         ],
-        function ($, container, searchService, detailService) {
+        function (container, searchService, detailService) {
             var simpleApiBaseUrl = 'http://localhost/providence/service.php/simple',
                 ajaxOptions = {
                     xhrFields: {
