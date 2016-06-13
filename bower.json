@@ -27,6 +27,7 @@
     "jquery": "^2.2.4",
     "lodash": "^4.13.1",
     "knockout": "^3.4.0",
-    "text": "requirejs-text#^2.0.15"
+    "text": "requirejs-text#^2.0.15",
+    "querystring": "^3.46.1"
   }
 }

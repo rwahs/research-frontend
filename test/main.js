@@ -18,6 +18,7 @@
             jquery: '../public/lib/jquery/dist/jquery',
             bootstrap: '../public/lib/bootstrap/dist/js/bootstrap',
             page: '../public/lib/page/page',
+            querystring: '../public/lib/querystring/querystring',
 
             // Application modules
             config: '../public/app/config/',
