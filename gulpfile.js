@@ -158,6 +158,7 @@
                 .src('public/index.html')
                 .pipe(replace(/src="\/lib\/requirejs\/require\.js"/g, 'src="/application.js"'))
                 .pipe(replace(/href="\/css\/main\.css"/g, 'href="/main.css"'))
+                .pipe(replace(/<a href="(https?:\/\/)(.*)" class="cross-site-link">/g, '<a href="$1' + environment + '-$2" class="cross-site-link">'))
                 .pipe(gulp.dest('dist/' + environment));
         }
     );
