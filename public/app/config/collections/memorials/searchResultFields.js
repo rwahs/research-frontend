@@ -4,10 +4,17 @@
     define(function () {
         return [
             {
-                key: 'Media',
+                key: 'MediaThumbnail',
                 labelText: 'Image',
                 display: 'image',
                 placeholder: '(No image available)'
+            },
+            {
+                key: 'MediaSmall',
+                labelText: 'Image',
+                display: 'image',
+                placeholder: '(No image available)',
+                tableColumn: false
             },
             {
                 key: 'idno',

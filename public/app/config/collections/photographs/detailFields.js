@@ -59,7 +59,7 @@
                 labelText: 'Notes'
             },
             {
-                key: 'Media',
+                key: 'MediaMedium',
                 display: 'image',
                 placeholder: false
             }

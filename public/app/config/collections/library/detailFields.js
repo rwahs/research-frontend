@@ -75,7 +75,7 @@
                 labelText: 'Purchased'
             },
             {
-                key: 'Media',
+                key: 'MediaMedium',
                 display: 'image',
                 placeholder: false
             }
