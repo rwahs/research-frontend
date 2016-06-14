@@ -46,7 +46,7 @@
                                 });
                                 it('Makes an AJAX call', function () {
                                     sinon.assert.calledOnce($.ajax);
-                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=&limit=500');
+                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=');
                                     expect($.ajax.args[0][0].foo).to.equal('bar');
                                     expect($.ajax.args[0][0].success).to.be.a('function');
                                     expect($.ajax.args[0][0].error).to.be.a('function');
@@ -68,7 +68,7 @@
                                 });
                                 it('Makes an AJAX call', function () {
                                     sinon.assert.calledOnce($.ajax);
-                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:value)&limit=500');
+                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:value)');
                                     expect($.ajax.args[0][0].foo).to.equal('bar');
                                     expect($.ajax.args[0][0].success).to.be.a('function');
                                     expect($.ajax.args[0][0].error).to.be.a('function');
@@ -90,7 +90,7 @@
                                 });
                                 it('Makes an AJAX call', function () {
                                     sinon.assert.calledOnce($.ajax);
-                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:value) AND (another:search this)&limit=500');
+                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:value) AND (another:search this)');
                                     expect($.ajax.args[0][0].foo).to.equal('bar');
                                     expect($.ajax.args[0][0].success).to.be.a('function');
                                     expect($.ajax.args[0][0].error).to.be.a('function');
@@ -127,7 +127,7 @@
                                 });
                                 it('Makes an AJAX call', function () {
                                     sinon.assert.calledOnce($.ajax);
-                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=&limit=500');
+                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=');
                                     expect($.ajax.args[0][0].foo).to.equal('bar');
                                     expect($.ajax.args[0][0].success).to.be.a('function');
                                     expect($.ajax.args[0][0].error).to.be.a('function');
@@ -158,7 +158,7 @@
                                 });
                                 it('Makes an AJAX call', function () {
                                     sinon.assert.calledOnce($.ajax);
-                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=&limit=500');
+                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=');
                                     expect($.ajax.args[0][0].foo).to.equal('bar');
                                     expect($.ajax.args[0][0].success).to.be.a('function');
                                     expect($.ajax.args[0][0].error).to.be.a('function');
@@ -205,7 +205,7 @@
                                 });
                                 it('Makes an AJAX call', function () {
                                     sinon.assert.calledOnce($.ajax);
-                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=&noCache=1&limit=500');
+                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=&noCache=1');
                                     expect($.ajax.args[0][0].foo).to.equal('bar');
                                     expect($.ajax.args[0][0].success).to.be.a('function');
                                     expect($.ajax.args[0][0].error).to.be.a('function');
@@ -227,7 +227,7 @@
                                 });
                                 it('Makes an AJAX call', function () {
                                     sinon.assert.calledOnce($.ajax);
-                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:value)&noCache=1&limit=500');
+                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:value)&noCache=1');
                                     expect($.ajax.args[0][0].foo).to.equal('bar');
                                     expect($.ajax.args[0][0].success).to.be.a('function');
                                     expect($.ajax.args[0][0].error).to.be.a('function');
@@ -249,7 +249,7 @@
                                 });
                                 it('Makes an AJAX call', function () {
                                     sinon.assert.calledOnce($.ajax);
-                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:value) AND (another:search this)&noCache=1&limit=500');
+                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:value) AND (another:search this)&noCache=1');
                                     expect($.ajax.args[0][0].foo).to.equal('bar');
                                     expect($.ajax.args[0][0].success).to.be.a('function');
                                     expect($.ajax.args[0][0].error).to.be.a('function');

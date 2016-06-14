@@ -4,15 +4,16 @@
     define(
         [
             'chai',
-            'util/router'
+            'util/bind'
         ],
-        function (chai, router) {
+        function (chai, bind) {
             var expect = chai.expect;
 
-            describe('The `router` module', function () {
+            describe('The `bind` module', function () {
                 it('Defines a function', function () {
-                    expect(router).to.be.a('function');
+                    expect(bind).to.be.a('function');
                 });
+                // TODO Tests for this
             });
         }
     );

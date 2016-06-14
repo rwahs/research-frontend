@@ -3,12 +3,13 @@
 
     define(
         [
+            'lodash',
             'chai',
             'sinon',
             'knockout',
             'config/components'
         ],
-        function (chai, sinon, ko, components) {
+        function (_, chai, sinon, ko, components) {
             var expect = chai.expect;
 
             describe('The `components` configuration module', function () {
@@ -20,35 +21,100 @@
                         sinon.stub(ko.components, 'register');
                         components();
                     });
+                    it('Configures the "library detail" collections component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'collections/library/detail' });
+                        expect(args[1].viewModel).to.equal(undefined);
+                        expect(args[1].template.require).to.equal('text!ui/components/collections/library/detail.html');
+                    });
+                    it('Configures the "library list-result" collections component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'collections/library/list-result' });
+                        expect(args[1].viewModel).to.equal(undefined);
+                        expect(args[1].template.require).to.equal('text!ui/components/collections/library/list-result.html');
+                    });
+                    it('Configures the "library thumbnails-result" collections component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'collections/library/thumbnails-result' });
+                        expect(args[1].viewModel).to.equal(undefined);
+                        expect(args[1].template.require).to.equal('text!ui/components/collections/library/thumbnails-result.html');
+                    });
+                    it('Configures the "memorials detail" collections component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'collections/memorials/detail' });
+                        expect(args[1].viewModel).to.equal(undefined);
+                        expect(args[1].template.require).to.equal('text!ui/components/collections/memorials/detail.html');
+                    });
+                    it('Configures the "memorials list-result" collections component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'collections/memorials/list-result' });
+                        expect(args[1].viewModel).to.equal(undefined);
+                        expect(args[1].template.require).to.equal('text!ui/components/collections/memorials/list-result.html');
+                    });
+                    it('Configures the "memorials thumbnails-result" collections component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'collections/memorials/thumbnails-result' });
+                        expect(args[1].viewModel).to.equal(undefined);
+                        expect(args[1].template.require).to.equal('text!ui/components/collections/memorials/thumbnails-result.html');
+                    });
+                    it('Configures the "museum detail" collections component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'collections/museum/detail' });
+                        expect(args[1].viewModel).to.equal(undefined);
+                        expect(args[1].template.require).to.equal('text!ui/components/collections/museum/detail.html');
+                    });
+                    it('Configures the "museum list-result" collections component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'collections/museum/list-result' });
+                        expect(args[1].viewModel).to.equal(undefined);
+                        expect(args[1].template.require).to.equal('text!ui/components/collections/museum/list-result.html');
+                    });
+                    it('Configures the "museum thumbnails-result" collections component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'collections/museum/thumbnails-result' });
+                        expect(args[1].viewModel).to.equal(undefined);
+                        expect(args[1].template.require).to.equal('text!ui/components/collections/museum/thumbnails-result.html');
+                    });
+                    it('Configures the "photographs detail" collections component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'collections/photographs/detail' });
+                        expect(args[1].viewModel).to.equal(undefined);
+                        expect(args[1].template.require).to.equal('text!ui/components/collections/photographs/detail.html');
+                    });
+                    it('Configures the "photographs list-result" collections component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'collections/photographs/list-result' });
+                        expect(args[1].viewModel).to.equal(undefined);
+                        expect(args[1].template.require).to.equal('text!ui/components/collections/photographs/list-result.html');
+                    });
+                    it('Configures the "photographs thumbnails-result" collections component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'collections/photographs/thumbnails-result' });
+                        expect(args[1].viewModel).to.equal(undefined);
+                        expect(args[1].template.require).to.equal('text!ui/components/collections/photographs/thumbnails-result.html');
+                    });
+                    it('Configures the "table-results" collections component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'collections/table-results' });
+                        expect(args[1].viewModel).to.equal(undefined);
+                        expect(args[1].template.require).to.equal('text!ui/components/collections/table-results.html');
+                    });
                     it('Configures the "text" display component', function () {
-                        expect(ko.components.register.args[0][0]).to.equal('display/text');
-                        expect(ko.components.register.args[0][1].viewModel.require).to.equal('ui/components/display/DisplayComponent');
-                        expect(ko.components.register.args[0][1].template.require).to.equal('text!ui/components/display/text.html');
+                        var args = _.find(ko.components.register.args, { 0: 'display/text' });
+                        expect(args[1].viewModel.require).to.equal('ui/components/display/DisplayComponent');
+                        expect(args[1].template.require).to.equal('text!ui/components/display/text.html');
                     });
                     it('Configures the "html" display component', function () {
-                        expect(ko.components.register.args[1][0]).to.equal('display/html');
-                        expect(ko.components.register.args[1][1].viewModel.require).to.equal('ui/components/display/DisplayComponent');
-                        expect(ko.components.register.args[1][1].template.require).to.equal('text!ui/components/display/html.html');
+                        var args = _.find(ko.components.register.args, { 0: 'display/html' });
+                        expect(args[1].viewModel.require).to.equal('ui/components/display/DisplayComponent');
+                        expect(args[1].template.require).to.equal('text!ui/components/display/html.html');
                     });
                     it('Configures the "list" display component', function () {
-                        expect(ko.components.register.args[2][0]).to.equal('display/list');
-                        expect(ko.components.register.args[2][1].viewModel.require).to.equal('ui/components/display/DisplayComponent');
-                        expect(ko.components.register.args[2][1].template.require).to.equal('text!ui/components/display/list.html');
+                        var args = _.find(ko.components.register.args, { 0: 'display/list' });
+                        expect(args[1].viewModel.require).to.equal('ui/components/display/DisplayComponent');
+                        expect(args[1].template.require).to.equal('text!ui/components/display/list.html');
                     });
                     it('Configures the "typed-list" display component', function () {
-                        expect(ko.components.register.args[3][0]).to.equal('display/typed-list');
-                        expect(ko.components.register.args[3][1].viewModel.require).to.equal('ui/components/display/DisplayComponent');
-                        expect(ko.components.register.args[3][1].template.require).to.equal('text!ui/components/display/typed-list.html');
+                        var args = _.find(ko.components.register.args, { 0: 'display/typed-list' });
+                        expect(args[1].viewModel.require).to.equal('ui/components/display/DisplayComponent');
+                        expect(args[1].template.require).to.equal('text!ui/components/display/typed-list.html');
                     });
                     it('Configures the "hierarchy" display component', function () {
-                        expect(ko.components.register.args[4][0]).to.equal('display/hierarchy');
-                        expect(ko.components.register.args[4][1].viewModel.require).to.equal('ui/components/display/DisplayComponent');
-                        expect(ko.components.register.args[4][1].template.require).to.equal('text!ui/components/display/hierarchy.html');
+                        var args = _.find(ko.components.register.args, { 0: 'display/hierarchy' });
+                        expect(args[1].viewModel.require).to.equal('ui/components/display/DisplayComponent');
+                        expect(args[1].template.require).to.equal('text!ui/components/display/hierarchy.html');
                     });
                     it('Configures the "hierarchy-list" display component', function () {
-                        expect(ko.components.register.args[5][0]).to.equal('display/hierarchy-list');
-                        expect(ko.components.register.args[5][1].viewModel.require).to.equal('ui/components/display/DisplayComponent');
-                        expect(ko.components.register.args[5][1].template.require).to.equal('text!ui/components/display/hierarchy-list.html');
+                        var args = _.find(ko.components.register.args, { 0: 'display/hierarchy-list' });
+                        expect(args[1].viewModel.require).to.equal('ui/components/display/DisplayComponent');
+                        expect(args[1].template.require).to.equal('text!ui/components/display/hierarchy-list.html');
                     });
                     afterEach(function () {
                         ko.components.register.restore();

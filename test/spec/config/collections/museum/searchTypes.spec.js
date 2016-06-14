@@ -3,10 +3,11 @@
 
     define(
         [
+            'lodash',
             'chai',
             'config/collections/museum/searchTypes'
         ],
-        function (chai, searchTypes) {
+        function (_, chai, searchTypes) {
             var expect = chai.expect;
 
             describe('The `museum/searchTypes` module', function () {
