@@ -59,7 +59,7 @@
                 this.searchResultFields = ko.observableArray();
                 this.loading = ko.observable(false);
                 this.displayResults = ko.observable(false);
-                this.resultsMode = ko.observable('List');
+                this.resultsMode = ko.observable(query.mode || 'List');
 
                 this.type = ko.pureComputed(function () {
                     return context.params.type;
