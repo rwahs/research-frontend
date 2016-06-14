@@ -14,7 +14,14 @@
             return function (sourceObservable, start, size, availablePageSizes) {
                 this.start = ko.observable(start || 0);
                 this.pageSize = ko.observable(size || DEFAULT_PAGE_SIZE);
-                this.availablePageSizes = ko.observableArray(availablePageSizes || DEFAULT_AVAILABLE_PAGE_SIZES);
+
+                this.pageSize.subscribe(function () {
+                    this.start(0);
+                }.bind(this));
+
+                this.availablePageSizes = ko.pureComputed(function () {
+                    return availablePageSizes || DEFAULT_AVAILABLE_PAGE_SIZES;
+                });
 
                 this.fullResultsCount = ko.pureComputed(function () {
                     return sourceObservable().length;
@@ -33,10 +40,6 @@
                         start = this.start(),
                         pageSize = this.pageSize();
                     return data.slice(start, start + pageSize);
-                }.bind(this));
-
-                this.currentPageStart = ko.pureComputed(function () {
-                    return this.currentPage() * this.pageSize();
                 }.bind(this));
 
                 this.availableJumpPageNumbers = ko.pureComputed(function () {

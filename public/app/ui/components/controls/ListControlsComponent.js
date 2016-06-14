@@ -58,7 +58,6 @@
                                 click: function () {
                                     window.history.pushState({}, window.title, url);
                                     parent.pager.pageSize(size);
-                                    parent.pager.start(0);
                                     return false;
                                 }
                             };
