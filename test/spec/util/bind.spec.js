@@ -13,7 +13,7 @@
                 it('Defines a function', function () {
                     expect(bind).to.be.a('function');
                 });
-                // TODO Tests for this
+                // Further tests are difficult due to tight integration with the browser DOM
             });
         }
     );
