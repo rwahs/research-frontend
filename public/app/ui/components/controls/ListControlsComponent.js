@@ -38,9 +38,9 @@
                                     parent.resultsMode(mode);
                                     return false;
                                 }
-                            }
+                            };
                         }
-                    )
+                    );
                 });
 
                 this.availablePageSizes = ko.pureComputed(function () {
@@ -61,7 +61,7 @@
                                     parent.pager.start(0);
                                     return false;
                                 }
-                            }
+                            };
                         }
                     );
                 });
@@ -80,7 +80,6 @@
                                     return parent.pager.pageNumber() === n;
                                 }),
                                 click: function () {
-                                    console.log(target, url);
                                     window.history.pushState({}, window.title, url);
                                     parent.pager.start(target);
                                     return false;
