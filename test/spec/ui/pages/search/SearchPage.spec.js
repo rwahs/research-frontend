@@ -6,11 +6,12 @@
             'chai',
             'sinon',
             'knockout',
+            'config/routes',
             'util/container',
             'ui/pages/search/SearchPage',
             'mock/services/MockSearchService'
         ],
-        function (chai, sinon, ko, container, SearchPage, MockSearchService) {
+        function (chai, sinon, ko, routes, container, SearchPage, MockSearchService) {
             var expect = chai.expect;
 
             describe('The `SearchPage` module', function () {
@@ -20,6 +21,7 @@
                 describe('When the search service is returning valid results', function () {
                     var searchService;
                     beforeEach(function () {
+                        sinon.stub(routes, 'pushState');
                         // jshint camelcase: false
                         searchService = new MockSearchService(undefined, [
                             { object_id: 1, first: 'First 1', second: 'Second 1', third: 'Third 1' },
@@ -245,11 +247,13 @@
                     });
                     afterEach(function () {
                         container.reset();
+                        routes.pushState.restore();
                     });
                 });
                 describe('When the search service is returning errors', function () {
                     var searchService;
                     beforeEach(function () {
+                        sinon.stub(routes, 'pushState');
                         // jshint camelcase: false
                         searchService = new MockSearchService(new Error('Search Error'));
                         container.register('search.collection', searchService);
@@ -277,24 +281,24 @@
                                 page.binding(element, done);
                             });
                             describe('When the search form is submitted with a valid query', function () {
-                                // TODO Enable this after fixing history API integration
-                                //beforeEach(function () {
-                                //    page.searchText('query');
-                                //    page.submit();
-                                //});
-                                //it('Calls the specified search service', function () {
-                                //    sinon.assert.calledOnce(searchService);
-                                //});
-                                //it('Is not loading or displaying results', function () {
-                                //    expect(page.loading()).to.equal(false);
-                                //    expect(page.displayResults()).to.equal(false);
-                                //});
+                                beforeEach(function () {
+                                    page.searchText('query');
+                                    page.submit();
+                                });
+                                it('Calls the specified search service', function () {
+                                    sinon.assert.calledOnce(searchService);
+                                });
+                                it('Is not loading or displaying results', function () {
+                                    expect(page.loading()).to.equal(false);
+                                    expect(page.displayResults()).to.equal(false);
+                                });
                                 // TODO Displays the error
                             });
                         });
                     });
                     afterEach(function () {
                         container.reset();
+                        routes.pushState.restore();
                     });
                 });
             });

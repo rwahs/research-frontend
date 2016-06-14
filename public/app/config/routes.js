@@ -48,6 +48,10 @@
                 return '/' + type + '/detail/' + id;
             };
 
+            routes.pushState = function (url) {
+                return page(url);
+            };
+
             return routes;
         }
     );

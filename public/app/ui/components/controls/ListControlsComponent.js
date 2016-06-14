@@ -4,9 +4,10 @@
     define(
         [
             'lodash',
-            'knockout'
+            'knockout',
+            'config/routes'
         ],
-        function (_, ko) {
+        function (_, ko, routes) {
             var RESULTS_MODE_GLYPHICONS = {
                     List: 'glyphicon-list',
                     Thumbnails: 'glyphicon-th',
@@ -41,7 +42,7 @@
                                     return mode === parameters.resultsMode();
                                 }),
                                 click: function () {
-                                    window.history.pushState({}, window.title, url);
+                                    routes.pushState(url);
                                     parameters.resultsMode(mode);
                                     return false;
                                 }
@@ -63,7 +64,7 @@
                                     return size === parameters.pager.pageSize();
                                 }),
                                 click: function () {
-                                    window.history.pushState({}, window.title, url);
+                                    routes.pushState(url);
                                     parameters.pager.pageSize(size);
                                     return false;
                                 }
@@ -86,7 +87,7 @@
                                     return parameters.pager.pageNumber() === n;
                                 }),
                                 click: function () {
-                                    window.history.pushState({}, window.title, url);
+                                    routes.pushState(url);
                                     parameters.pager.start(target);
                                     return false;
                                 }
@@ -123,7 +124,7 @@
                     if (this.atFirstPage()) {
                         return false;
                     }
-                    window.history.pushState({}, window.title, this.firstPageUrl());
+                    routes.pushState(this.firstPageUrl());
                     parameters.pager.start(parameters.pager.firstPageStart());
                 }.bind(this);
 
@@ -131,7 +132,7 @@
                     if (this.atLastPage()) {
                         return false;
                     }
-                    window.history.pushState({}, window.title, this.lastPageUrl());
+                    routes.pushState(this.lastPageUrl());
                     parameters.pager.start(parameters.pager.lastPageStart());
                 }.bind(this);
 
@@ -139,7 +140,7 @@
                     if (this.atFirstPage()) {
                         return false;
                     }
-                    window.history.pushState({}, window.title, this.previousPageUrl());
+                    routes.pushState(this.previousPageUrl());
                     parameters.pager.start(parameters.pager.previousPageStart());
                 }.bind(this);
 
@@ -147,7 +148,7 @@
                     if (this.atLastPage()) {
                         return false;
                     }
-                    window.history.pushState({}, window.title, this.nextPageUrl());
+                    routes.pushState(this.nextPageUrl());
                     parameters.pager.start(parameters.pager.nextPageStart());
                 }.bind(this);
             };

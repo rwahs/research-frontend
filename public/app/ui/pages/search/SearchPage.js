@@ -124,7 +124,7 @@
                         return;
                     }
                     this.pager.start(0);
-                    window.history.pushState({}, window.title, this.searchUrlFor({ query: this.searchText() }));
+                    routes.pushState(this.searchUrlFor({ query: this.searchText() }));
                     doSearch(callback);
                     return false;
                 };

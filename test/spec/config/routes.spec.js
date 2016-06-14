@@ -18,6 +18,7 @@
                 it('Exposes utility functions', function () {
                     expect(routes.searchUrlFor).to.be.a('function');
                     expect(routes.detailUrlFor).to.be.a('function');
+                    expect(routes.pushState).to.be.a('function');
                 });
                 describe('The `searchUrlFor` function', function () {
                     describe('With no `query` parameter', function () {
