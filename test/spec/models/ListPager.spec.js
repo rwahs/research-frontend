@@ -5,14 +5,14 @@
         [
             'chai',
             'knockout',
-            'models/PaginatedList'
+            'models/ListPager'
         ],
-        function (chai, ko, PaginatedList) {
+        function (chai, ko, ListPager) {
             var expect = chai.expect;
 
-            describe('The `PaginatedList` module', function () {
+            describe('The `ListPager` module', function () {
                 it('Defines a constructor function', function () {
-                    expect(PaginatedList).to.be.a('function');
+                    expect(ListPager).to.be.a('function');
                 });
                 // TODO
             });

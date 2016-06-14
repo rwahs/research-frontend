@@ -40,14 +40,14 @@
                 page();
             };
 
-            routes.getSearchUrl = function (type, query) {
+            routes.searchUrlFor = function (type, query) {
                 if (types.indexOf(type) < 0) {
                     throw new Error('Cannot get search URL for unknown type "' + type + '"');
                 }
                 return '/' + type + '/search' + (query ? '?' + qs.stringify(query) : '');
             };
 
-            routes.getDetailUrl = function (type, id) {
+            routes.detailUrlFor = function (type, id) {
                 if (types.indexOf(type) < 0) {
                     throw new Error('Cannot get detail URL for unknown type "' + type + '"');
                 }
