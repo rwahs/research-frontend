@@ -6,7 +6,7 @@
                 <form data-bind="submit: submit">
                     <div class="panel-body">
                         <div class="form-group">
-                            <input name="query" placeholder="Search" class="form-control" data-bind="value: searchText, attr: { placeholder: placeholder }" />
+                            <input name="query" placeholder="Search" class="form-control" data-bind="textInput: searchText, attr: { placeholder: placeholder }" />
                         </div>
                         <div class="form-group">
                             <div class="btn-group btn-group-justified">
@@ -22,7 +22,7 @@
                                 <span class="glyphicon glyphicon-refresh"></span>
                                 Reset
                             </button>
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="btn btn-success" data-bind="enable: searchText">
                                 <span class="glyphicon glyphicon-search"></span>
                                 Search
                             </button>
@@ -47,94 +47,38 @@
     <!-- ko if: hasResults -->
     <div class="row">
         <div class="col-md-12 text-right">
-            <!-- TODO This is just a mock-up -->
-            <ul class="pagination pagination-sm">
-                <li>
-                    <a href="#" aria-label="Switch to thumbnails view">
-                        <span class="glyphicon glyphicon-th"></span> Thumbnails
-                    </a>
-                </li>
-                <li>
-                    <a href="#" aria-label="Switch to list view">
-                        <span class="glyphicon glyphicon-list"></span> List
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="#" aria-label="Switch to table view">
-                        <span class="glyphicon glyphicon-list-alt"></span> Table
-                    </a>
-                </li>
-            </ul>
-
-            <!-- TODO This is just a mock-up -->
-            <ul class="pagination pagination-sm">
-                <li>
-                    <a href="#" aria-label="Display 12 results per page">12</a>
-                </li>
-                <li class="active">
-                    <a href="#" aria-label="Display 24 results per page">24</a>
-                </li>
-                <li>
-                    <a href="#" aria-label="Display 48 results per page">48</a>
-                </li>
-                <li>
-                    <a href="#" aria-label="Display 96 results per page">96</a>
-                </li>
-            </ul>
-
-            <ul class="pagination pagination-sm" data-bind="with: paginatedResults">
-                <li data-bind="css: { disabled: atFirstPage }">
-                    <a href="#" aria-label="First page" data-bind="attr: { href: firstPageUrl }, click: jumpToFirstPage">
-                        <span class="glyphicon glyphicon-backward"></span>
-                    </a>
-                </li>
-                <li data-bind="css: { disabled: atFirstPage }">
-                    <a href="#" aria-label="Previous page" data-bind="attr: { href: previousPageUrl }, click: jumpToPreviousPage">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                    </a>
-                </li>
-                <!-- ko foreach: availableJumpPageNumbers -->
-                <li data-bind="css: { active: active }">
-                    <a href="#" data-bind="text: label, attr: { href: url, 'aria-label': longLabel }, click: jump" aria-label="Jump to Page"></a>
-                </li>
-                <!-- /ko -->
-                <li data-bind="css: { disabled: atLastPage }">
-                    <a href="#" aria-label="Next page" data-bind="attr: { href: nextPageUrl }, click: jumpToNextPage">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </a>
-                </li>
-                <li data-bind="css: { disabled: atLastPage }">
-                    <a href="#" aria-label="Last page" data-bind="attr: { href: lastPageUrl }, click: jumpToLastPage">
-                        <span class="glyphicon glyphicon-forward"></span>
-                    </a>
-                </li>
-            </ul>
+            <div data-bind="component: { name: 'controls/list', params: { parent: $data } }"></div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-bordered table-striped results-table">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <!-- ko foreach: { data: searchResultFields, as: 'field' } -->
-                    <th data-bind="text: field.labelText"></th>
+            <!-- TODO Apply resultsMode to switch views -->
+            <div data-bind="attr: { class: resultsModeClassName }">
+                <!-- ko if: resultsMode() === 'table' -->
+                <table class="table table-bordered table-striped results-table">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <!-- ko foreach: { data: searchResultFields, as: 'field' } -->
+                        <th data-bind="text: field.labelText"></th>
+                        <!-- /ko -->
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- ko foreach: { data: pager.currentPage, as: 'result' } -->
+                    <tr>
+                        <td data-bind="text: $index() + $parent.pager.start() + 1"></td>
+                        <!-- ko foreach: { data: $parent.searchResultFields, as: 'field' } -->
+                        <td data-bind="component: $parents[1].displayFor(field, result)"></td>
+                        <!-- /ko -->
+                        <td><a data-bind="attr: { href: $parent.detailUrlFor(result) }">View</a></td>
+                    </tr>
                     <!-- /ko -->
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <!-- ko foreach: { data: paginatedResults.currentPage, as: 'result' } -->
-                <tr>
-                    <td data-bind="text: $index() +  1"></td>
-                    <!-- ko foreach: { data: $parent.searchResultFields, as: 'field' } -->
-                    <td data-bind="component: $parents[1].displayFor(field, result)"></td>
-                    <!-- /ko -->
-                    <td><a data-bind="attr: { href: $parent.detailUrlFor(result) }">View</a></td>
-                </tr>
+                    </tbody>
+                </table>
                 <!-- /ko -->
-                </tbody>
-            </table>
+            </div>
         </div>
     </div>
     <!-- /ko -->

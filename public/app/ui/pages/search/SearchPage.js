@@ -9,21 +9,20 @@
             'config/routes',
             'util/container',
             'models/DynamicRecord',
-            'models/PaginatedList',
+            'models/ListPager',
             'ui/pages/search/SearchType'
         ],
-        function (_, ko, qs, routes, container, DynamicRecord, PaginatedList, SearchType) {
+        function (_, ko, qs, routes, container, DynamicRecord, ListPager, SearchType) {
+            var RESULTS_MODES = [ 'List', 'Thumbnails', 'Table' ];
+
             return function (context) {
-                var selectedSearchType,
-                    settings = container.resolve('settings.' + context.params.type),
+                var settings = container.resolve('settings.' + context.params.type),
+                    selectedSearchType = ko.observable(),
                     submittedQuery = ko.observable(),
                     results = ko.observableArray(),
                     query = qs.parse(window.location.search.replace(/^\?/, '')),
-                    pushState = function (url) {
-                        window.history.pushState({}, window.title, url);
-                    },
                     doSearch = function (callback) {
-                        submittedQuery(this.searchText() || '*');
+                        submittedQuery(this.searchText());
                         results([]);
                         this.loading(true);
                         this.displayResults(false);
@@ -49,15 +48,10 @@
                         );
                     }.bind(this);
 
-                // TODO Controls for page size
-                this.paginatedResults = new PaginatedList(
+                this.pager = new ListPager(
                     results,
                     query.start ? parseInt(query.start, 10) : undefined,
-                    query.size ? parseInt(query.size, 10) : undefined,
-                    function (start) {
-                        return routes.getSearchUrl(context.params.type, { query: submittedQuery(), start: start });
-                    }.bind(this),
-                    pushState
+                    query.size ? parseInt(query.size, 10) : undefined
                 );
 
                 this.searchText = ko.observable(query.query || '');
@@ -65,8 +59,15 @@
                 this.searchResultFields = ko.observableArray();
                 this.loading = ko.observable(false);
                 this.displayResults = ko.observable(false);
+                this.resultsMode = ko.observable('List');
 
-                selectedSearchType = ko.observable();
+                this.type = ko.pureComputed(function () {
+                    return context.params.type;
+                });
+
+                this.submittedQuery = ko.pureComputed(function () {
+                    return submittedQuery();
+                });
 
                 this.heading = ko.pureComputed(function () {
                     return settings.collectionName + ' Search';
@@ -81,6 +82,14 @@
                 this.hasResults = ko.pureComputed(function () {
                     return results().length > 0;
                 });
+
+                this.availableResultsModes = ko.pureComputed(function () {
+                    return RESULTS_MODES;
+                });
+
+                this.resultsModeClassName = ko.pureComputed(function () {
+                    return this.resultsMode().toLowerCase();
+                }.bind(this));
 
                 this.binding = function (element, callback) {
                     require(
@@ -111,8 +120,11 @@
                 };
 
                 this.submit = function (callback) {
-                    this.paginatedResults.start(0);
-                    pushState(routes.getSearchUrl(context.params.type, { query: this.searchText(), start: 0 }));
+                    if (!this.searchText()) {
+                        return;
+                    }
+                    this.pager.start(0);
+                    window.history.pushState({}, window.title, this.searchUrlFor({ query: this.searchText() }));
                     doSearch(callback);
                     return false;
                 };
@@ -128,8 +140,23 @@
                     };
                 };
 
+                this.searchUrlFor = function (overrides) {
+                    return routes.searchUrlFor(
+                        context.params.type,
+                        _.defaults(
+                            overrides,
+                            {
+                                query: submittedQuery(),
+                                start: this.pager.start(),
+                                size: this.pager.pageSize(),
+                                mode: this.resultsMode()
+                            }
+                        )
+                    );
+                };
+
                 this.detailUrlFor = function (result) {
-                    return routes.getDetailUrl(context.params.type, result.id());
+                    return routes.detailUrlFor(context.params.type, result.id());
                 };
             };
         }
