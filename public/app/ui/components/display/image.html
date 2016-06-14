@@ -1,8 +1,10 @@
-<!-- ko if: hasValue -->
-<img class="thumbnail" data-bind="attr: { src: value }" />
-<!-- /ko -->
-<!-- ko ifnot: hasValue -->
-<!-- ko if: placeholder -->
-<span class="text-muted" data-bind="html: placeholder"></span>
-<!-- /ko -->
-<!-- /ko -->
+<div class="display display-image">
+    <!-- ko if: hasValue -->
+    <img class="thumbnail" data-bind="attr: { src: value }" />
+    <!-- /ko -->
+    <!-- ko ifnot: hasValue -->
+    <!-- ko if: placeholder -->
+    <span class="text-muted" data-bind="html: placeholder"></span>
+    <!-- /ko -->
+    <!-- /ko -->
+</div>

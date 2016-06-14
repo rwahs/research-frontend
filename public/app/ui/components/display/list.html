@@ -1,10 +1,12 @@
-<!-- ko if: hasValue -->
-<ul>
-    <!-- ko foreach: { data: value, as: 'item' } -->
-    <li data-bind="html: item"></li>
+<div class="display display-list">
+    <!-- ko if: hasValue -->
+    <ul>
+        <!-- ko foreach: { data: value, as: 'item' } -->
+        <li data-bind="html: item"></li>
+        <!-- /ko -->
+    </ul>
     <!-- /ko -->
-</ul>
-<!-- /ko -->
-<!-- ko ifnot: hasValue -->
-<span class="text-muted" data-bind="html: placeholder"></span>
-<!-- /ko -->
+    <!-- ko ifnot: hasValue -->
+    <span class="text-muted" data-bind="html: placeholder"></span>
+    <!-- /ko -->
+</div>
