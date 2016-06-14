@@ -4,6 +4,11 @@
     'use strict';
 
     var environment = yargs.argv.env || 'development',
+        environmentPrefix = {
+            staging: 'staging-',
+            uat: 'uat-',
+            production: ''
+        },
         headerTemplate =
             '/**\n' +
             ' * ${pkg.name}\n' +
@@ -137,7 +142,10 @@
                         out: 'application.js',
                         include: files
                     }))
-                    .pipe(replace(/var environment = 'development';/g, 'var environment = "' + environment + '";'))
+                    .pipe(replace(
+                        /var environment = 'development';/g,
+                        'var environment = "' + environment + '";'
+                    ))
                     .pipe(uglify())
                     .pipe(header(headerTemplate, { pkg: pkg }))
                     .pipe(gulp.dest('dist/' + environment));
@@ -156,8 +164,18 @@
             }
             return gulp
                 .src('public/index.html')
-                .pipe(replace(/src="\/lib\/requirejs\/require\.js"/g, 'src="/application.js"'))
-                .pipe(replace(/href="\/css\/main\.css"/g, 'href="/main.css"'))
+                .pipe(replace(
+                    /src="\/lib\/requirejs\/require\.js"/g,
+                    'src="/application.js"'
+                ))
+                .pipe(replace(
+                    /href="\/css\/main\.css"/g,
+                    'href="/main.css"'
+                ))
+                .pipe(replace(
+                    /(<a href=['"]https?:\/\/)(.*?['"].*?class=['"]cross-site-link['"])/g,
+                    '$1' + environmentPrefix[environment] + '$2'
+                ))
                 .pipe(gulp.dest('dist/' + environment));
         }
     );
