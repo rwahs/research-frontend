@@ -1,16 +1,4 @@
-<article id="library-detail" class="detail">
-    <!-- ko if: loading -->
-    <div class="loading text-muted">
-        <img src="/images/loading.gif" alt="" title="Loading animation" />
-        Loading Library record, please wait...
-    </div>
-    <!-- /ko -->
-    <!-- ko if: displayRecord -->
-    <div class="type-header">Library record</div>
-    <h1>
-        <span data-bind="component: displayFor('Title')"></span>
-        <span class="idno" data-bind="text: idno"></span>
-    </h1>
+<section>
     <div class="row">
         <div class="col-md-12">
             <div data-bind="component: displayFor('MediaMedium')"></div>
@@ -100,5 +88,4 @@
             <div class="value" data-bind="component: displayFor('Purchased')"></div>
         </div>
     </div>
-    <!-- /ko -->
-</article>
+</section>

@@ -29,6 +29,14 @@
                     return !this.loading() && !!this.data();
                 }.bind(this));
 
+                this.typeHeader = ko.pureComputed(function () {
+                    return settings.collectionName + ' Record';
+                });
+
+                this.detail = ko.pureComputed(function () {
+                    return 'collections/' + context.params.type + '/detail';
+                });
+
                 this.binding = function (element, callback) {
                     record(undefined);
                     this.loading(true);
@@ -72,6 +80,10 @@
                             placeholder: field.placeholder
                         }
                     };
+                };
+
+                this.displayForLabelField = function () {
+                    return this.displayFor(settings.labelField);
                 };
             };
         }

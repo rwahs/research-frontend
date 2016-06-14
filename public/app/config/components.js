@@ -8,6 +8,26 @@
         function (ko) {
             return function () {
                 ko.components.register(
+                    'collections/library/detail',
+                    { template: { require: 'text!ui/components/collections/library/detail' } }
+                );
+
+                ko.components.register(
+                    'collections/memorials/detail',
+                    { template: { require: 'text!ui/components/collections/memorials/detail' } }
+                );
+
+                ko.components.register(
+                    'collections/museum/detail',
+                    { template: { require: 'text!ui/components/collections/museum/detail' } }
+                );
+
+                ko.components.register(
+                    'collections/photographs/detail',
+                    { template: { require: 'text!ui/components/collections/photographs/detail' } }
+                );
+
+                ko.components.register(
                     'controls/list',
                     {
                         viewModel: { require: 'ui/components/controls/ListControlsComponent' },
