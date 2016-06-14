@@ -1,0 +1,25 @@
+#cross-site {
+    background-color: @gray-lighter;
+    font-size: @font-size-small;
+
+    ul.nav-tabs {
+        padding-top: @padding-xs-vertical;
+        border-bottom: none;
+
+        li a {
+            padding: @padding-xs-vertical @padding-small-horizontal;
+            color: @brand-primary;
+        }
+
+        li a:hover {
+            border-color: @gray;
+            border-bottom: none;
+        }
+
+        li.active a {
+            background-color: @brand-primary;
+            border-bottom: 1px @brand-primary solid;
+            color: #fff;
+        }
+    }
+}
