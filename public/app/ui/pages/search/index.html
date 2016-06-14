@@ -1,4 +1,4 @@
-<article id="search">
+<article class="search">
     <h1 data-bind="text: heading"></h1>
     <div class="row">
         <div class="col-md-6">
@@ -50,22 +50,42 @@
             <div data-bind="component: { name: 'controls/list', params: { parent: $data } }"></div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div data-bind="attr: { class: resultsModeClassName }">
-                <!-- ko if: resultsMode() === 'List' -->
-                <p>TODO List view</p>
-                <!-- /ko -->
-                <!-- ko if: resultsMode() === 'Thumbnails' -->
-                <p>TODO Thumbnails view</p>
-                <!-- /ko -->
-                <!-- ko if: resultsMode() === 'Table' -->
+    <div data-bind="attr: { class: resultsModeContainerClassName }">
+        <!-- ko if: resultsMode() === 'List' -->
+        <!-- ko foreach: { data: pager.currentPage, as: 'result' } -->
+        <div class="row">
+            <div class="col-md-12">
+                <a class="thumbnail clearfix" data-bind="attr: { href: $parent.detailUrlFor(result) }">
+                    <span class="pull-left" data-bind="component: $parent.displayFor('MediaThumbnail', result)" style="height: 130px;"></span>
+                    <strong data-bind="component: $parent.displayFor('Title', result)"></strong>
+                </a>
+            </div>
+        </div>
+        <!-- /ko -->
+        <!-- /ko -->
+        <!-- ko if: resultsMode() === 'Thumbnails' -->
+        <div class="row">
+            <!-- ko foreach: { data: pager.currentPage, as: 'result' } -->
+            <div class="col-md-3">
+                <a class="thumbnail clearfix" data-bind="attr: { href: $parent.detailUrlFor(result) }">
+                    <span data-bind="component: $parent.displayFor('MediaSmall', result)" style="height: 250px;"></span>
+                    <span class="caption" data-bind="component: $parent.displayFor('Title', result)"></span>
+                </a>
+            </div>
+            <!-- /ko -->
+        </div>
+        <!-- /ko -->
+        <!-- ko if: resultsMode() === 'Table' -->
+        <div class="row">
+            <div class="col-md-12">
                 <table class="table table-bordered table-striped results-table">
                     <thead>
                     <tr>
                         <th>#</th>
                         <!-- ko foreach: { data: searchResultFields, as: 'field' } -->
+                        <!-- ko if: field.tableColumn !== false -->
                         <th data-bind="text: field.labelText"></th>
+                        <!-- /ko -->
                         <!-- /ko -->
                         <th>Actions</th>
                     </tr>
@@ -75,16 +95,18 @@
                     <tr>
                         <td data-bind="text: $index() + $parent.pager.start() + 1"></td>
                         <!-- ko foreach: { data: $parent.searchResultFields, as: 'field' } -->
+                        <!-- ko if: field.tableColumn !== false -->
                         <td data-bind="component: $parents[1].displayFor(field, result)"></td>
+                        <!-- /ko -->
                         <!-- /ko -->
                         <td><a data-bind="attr: { href: $parent.detailUrlFor(result) }">View</a></td>
                     </tr>
                     <!-- /ko -->
                     </tbody>
                 </table>
-                <!-- /ko -->
             </div>
         </div>
+        <!-- /ko -->
     </div>
     <!-- /ko -->
     <!-- /ko -->
