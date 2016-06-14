@@ -52,9 +52,14 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <!-- TODO Apply resultsMode to switch views -->
             <div data-bind="attr: { class: resultsModeClassName }">
-                <!-- ko if: resultsMode() === 'table' -->
+                <!-- ko if: resultsMode() === 'List' -->
+                <p>TODO List view</p>
+                <!-- /ko -->
+                <!-- ko if: resultsMode() === 'Thumbnails' -->
+                <p>TODO Thumbnails view</p>
+                <!-- /ko -->
+                <!-- ko if: resultsMode() === 'Table' -->
                 <table class="table table-bordered table-striped results-table">
                     <thead>
                     <tr>
