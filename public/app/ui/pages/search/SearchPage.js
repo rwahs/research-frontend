@@ -130,6 +130,9 @@
                 };
 
                 this.displayFor = function (field, result) {
+                    if (_.isString(field)) {
+                        field = _.find(this.searchResultFields(), { key: field });
+                    }
                     return {
                         name: 'display/' + (field.display || 'text'),
                         params: {
