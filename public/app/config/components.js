@@ -8,6 +8,14 @@
         function (ko) {
             return function () {
                 ko.components.register(
+                    'controls/list',
+                    {
+                        viewModel: { require: 'ui/components/controls/ListControlsComponent' },
+                        template: { require: 'text!ui/components/controls/list-controls.html' }
+                    }
+                );
+
+                ko.components.register(
                     'display/text',
                     {
                         viewModel: { require: 'ui/components/display/DisplayComponent' },
