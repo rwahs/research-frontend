@@ -11,9 +11,7 @@
             },
             {
                 key: 'MediaSmall',
-                labelText: 'Image',
                 display: 'image',
-                placeholder: '(No image available)',
                 tableColumn: false
             },
             {
