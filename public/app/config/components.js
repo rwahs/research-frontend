@@ -9,22 +9,42 @@
             return function () {
                 ko.components.register(
                     'collections/library/detail',
-                    { template: { require: 'text!ui/components/collections/library/detail' } }
+                    { template: { require: 'text!ui/components/collections/library/detail.html' } }
+                );
+
+                ko.components.register(
+                    'collections/library/list-result',
+                    { template: { require: 'text!ui/components/collections/library/list-result.html' } }
                 );
 
                 ko.components.register(
                     'collections/memorials/detail',
-                    { template: { require: 'text!ui/components/collections/memorials/detail' } }
+                    { template: { require: 'text!ui/components/collections/memorials/detail.html' } }
+                );
+
+                ko.components.register(
+                    'collections/memorials/list-result',
+                    { template: { require: 'text!ui/components/collections/memorials/list-result.html' } }
                 );
 
                 ko.components.register(
                     'collections/museum/detail',
-                    { template: { require: 'text!ui/components/collections/museum/detail' } }
+                    { template: { require: 'text!ui/components/collections/museum/detail.html' } }
+                );
+
+                ko.components.register(
+                    'collections/museum/list-result',
+                    { template: { require: 'text!ui/components/collections/museum/list-result.html' } }
                 );
 
                 ko.components.register(
                     'collections/photographs/detail',
-                    { template: { require: 'text!ui/components/collections/photographs/detail' } }
+                    { template: { require: 'text!ui/components/collections/photographs/detail.html' } }
+                );
+
+                ko.components.register(
+                    'collections/photographs/list-result',
+                    { template: { require: 'text!ui/components/collections/photographs/list-result.html' } }
                 );
 
                 ko.components.register(
