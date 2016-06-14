@@ -87,8 +87,8 @@
                     return RESULTS_MODES;
                 });
 
-                this.resultsModeClassName = ko.pureComputed(function () {
-                    return this.resultsMode().toLowerCase();
+                this.resultsModeContainerClassName = ko.pureComputed(function () {
+                    return 'results-container-' + this.resultsMode().toLowerCase();
                 }.bind(this));
 
                 this.binding = function (element, callback) {
