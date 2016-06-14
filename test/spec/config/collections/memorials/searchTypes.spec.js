@@ -25,7 +25,7 @@
                     expect(searchTypes[1].glyphicon).to.equal('certificate');
                 });
                 it('Defines the `Subject` field', function () {
-                    expect(searchTypes[2].key).to.equal('ca_occurrences');
+                    expect(searchTypes[2].key).to.equal('ca_occurrences.preferred_labels');
                     expect(searchTypes[2].labelText).to.equal('Subject');
                     expect(searchTypes[2].glyphicon).to.equal('paperclip');
                 });
