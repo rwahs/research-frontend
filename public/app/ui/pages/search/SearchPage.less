@@ -1,12 +1,32 @@
 article.search {
     .results-container-list {
-        img.img-thumbnail {
-            margin-right: @padding-base-horizontal;
+        .result {
+            &:extend(.thumbnail);
+
+            height: 120px + @thumbnail-padding * 4 + 2px;
+
+            img.img-thumbnail {
+                margin-right: @padding-base-horizontal;
+            }
         }
     }
 
     .results-container-thumbnails {
+        .result {
+            &:extend(.thumbnail);
 
+            height: 240px + @padding-large-vertical * 2 + @padding-small-vertical * 2 + @line-height-computed + 2px;
+
+            .caption {
+                &:extend(.thumbnail .caption);
+
+                display: block;
+
+                .display {
+                    display: inline;
+                }
+            }
+        }
     }
 
     .results-container-table {

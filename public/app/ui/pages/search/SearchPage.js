@@ -143,6 +143,18 @@
                     };
                 };
 
+                this.displayForLabelField = function (result) {
+                    return this.displayFor(settings.labelField, result);
+                };
+
+                this.resultFor = function (result) {
+                    console.log('collections/' + context.params.type + '/' + this.resultsMode().toLowerCase() + '-result');
+                    return {
+                        name: 'collections/' + context.params.type + '/' + this.resultsMode().toLowerCase() + '-result',
+                        params: this
+                    };
+                };
+
                 this.searchUrlFor = function (overrides) {
                     return routes.searchUrlFor(
                         context.params.type,
