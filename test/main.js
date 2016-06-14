@@ -73,6 +73,7 @@
                     'spec/config/routes.spec',
                     'spec/config/settings.spec',
                     'spec/models/DynamicRecord.spec',
+                    'spec/models/ListPager.spec',
                     'spec/services/searchService.spec',
                     'spec/services/detailService.spec',
                     'spec/ui/components/controls/ListControlsComponent.spec',
