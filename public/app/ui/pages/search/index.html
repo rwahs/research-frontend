@@ -47,7 +47,7 @@
     <!-- ko if: hasResults -->
     <div class="row">
         <div class="col-md-12 text-right">
-            <div data-bind="component: { name: 'controls/list', params: { parent: $data } }"></div>
+            <div data-bind="component: { name: 'controls/list', params: { pager: pager, resultsMode: resultsMode, availableResultsModes: availableResultsModes, searchUrlFor: searchUrlFor } }"></div>
         </div>
     </div>
     <div data-bind="attr: { class: resultsModeContainerClassName }">

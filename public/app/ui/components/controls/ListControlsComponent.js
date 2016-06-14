@@ -14,28 +14,35 @@
                 };
 
             return function (parameters) {
-                var parent = parameters.parent;
-
-                if (!parent) {
-                    throw new Error('ListControlsComponent missing required parameter: `parent`.');
+                if (!parameters || !parameters.pager) {
+                    throw new Error('ListControlsComponent missing required parameter: `pager`.');
+                }
+                if (!parameters.resultsMode) {
+                    throw new Error('ListControlsComponent missing required parameter: `resultsMode`.');
+                }
+                if (!parameters.availableResultsModes) {
+                    throw new Error('ListControlsComponent missing required parameter: `availableResultsModes`.');
+                }
+                if (!parameters.searchUrlFor) {
+                    throw new Error('ListControlsComponent missing required parameter: `searchUrlFor`.');
                 }
 
                 this.availableResultsModes = ko.pureComputed(function () {
                     return _.map(
-                        parent.availableResultsModes(),
+                        parameters.availableResultsModes(),
                         function (mode) {
-                            var url = parent.searchUrlFor({ mode: mode });
+                            var url = parameters.searchUrlFor({ mode: mode });
                             return {
                                 label: mode,
                                 glyphicon: 'glyphicon ' + RESULTS_MODE_GLYPHICONS[mode],
                                 longLabel: 'Display results in ' + mode + ' mode',
                                 url: url,
                                 active: ko.pureComputed(function () {
-                                    return mode === parent.resultsMode();
+                                    return mode === parameters.resultsMode();
                                 }),
                                 click: function () {
                                     window.history.pushState({}, window.title, url);
-                                    parent.resultsMode(mode);
+                                    parameters.resultsMode(mode);
                                     return false;
                                 }
                             };
@@ -45,19 +52,19 @@
 
                 this.availablePageSizes = ko.pureComputed(function () {
                     return _.map(
-                        parent.pager.availablePageSizes(),
+                        parameters.pager.availablePageSizes(),
                         function (size) {
-                            var url = parent.searchUrlFor({ start: 0, size: size });
+                            var url = parameters.searchUrlFor({ start: 0, size: size });
                             return {
                                 label: size,
                                 longLabel: 'Display ' + size + ' results per page',
                                 url: url,
                                 active: ko.pureComputed(function () {
-                                    return size === parent.pager.pageSize();
+                                    return size === parameters.pager.pageSize();
                                 }),
                                 click: function () {
                                     window.history.pushState({}, window.title, url);
-                                    parent.pager.pageSize(size);
+                                    parameters.pager.pageSize(size);
                                     return false;
                                 }
                             };
@@ -67,20 +74,20 @@
 
                 this.availableJumpPageNumbers = ko.pureComputed(function () {
                     return _.map(
-                        parent.pager.availableJumpPageNumbers(),
+                        parameters.pager.availableJumpPageNumbers(),
                         function (n) {
-                            var target = n * parent.pager.pageSize(),
-                                url = parent.searchUrlFor({ start: target });
+                            var target = n * parameters.pager.pageSize(),
+                                url = parameters.searchUrlFor({ start: target });
                             return {
                                 label: n + 1,
-                                longLabel: 'Jump to Page ' + (n + 1),
+                                longLabel: 'Jump to page ' + (n + 1),
                                 url: url,
                                 active: ko.pureComputed(function () {
-                                    return parent.pager.pageNumber() === n;
+                                    return parameters.pager.pageNumber() === n;
                                 }),
                                 click: function () {
                                     window.history.pushState({}, window.title, url);
-                                    parent.pager.start(target);
+                                    parameters.pager.start(target);
                                     return false;
                                 }
                             };
@@ -89,27 +96,27 @@
                 });
 
                 this.firstPageUrl = ko.pureComputed(function () {
-                    return parent.searchUrlFor({ start: parent.pager.firstPageStart() });
+                    return parameters.searchUrlFor({ start: parameters.pager.firstPageStart() });
                 });
 
                 this.lastPageUrl = ko.pureComputed(function () {
-                    return parent.searchUrlFor({ start: parent.pager.lastPageStart() });
+                    return parameters.searchUrlFor({ start: parameters.pager.lastPageStart() });
                 });
 
                 this.previousPageUrl = ko.pureComputed(function () {
-                    return parent.searchUrlFor({ start: parent.pager.previousPageStart() });
+                    return parameters.searchUrlFor({ start: parameters.pager.previousPageStart() });
                 });
 
                 this.nextPageUrl = ko.pureComputed(function () {
-                    return parent.searchUrlFor({ start: parent.pager.nextPageStart() });
+                    return parameters.searchUrlFor({ start: parameters.pager.nextPageStart() });
                 });
 
                 this.atFirstPage = ko.pureComputed(function () {
-                    return parent.pager.start() <= 0;
+                    return parameters.pager.start() <= 0;
                 });
 
                 this.atLastPage = ko.pureComputed(function () {
-                    return parent.pager.start() >= parent.pager.lastPageStart();
+                    return parameters.pager.start() >= parameters.pager.lastPageStart();
                 });
 
                 this.jumpToFirstPage = function () {
@@ -117,7 +124,7 @@
                         return false;
                     }
                     window.history.pushState({}, window.title, this.firstPageUrl());
-                    parent.pager.start(parent.pager.firstPageStart());
+                    parameters.pager.start(parameters.pager.firstPageStart());
                 }.bind(this);
 
                 this.jumpToLastPage = function () {
@@ -125,7 +132,7 @@
                         return false;
                     }
                     window.history.pushState({}, window.title, this.lastPageUrl());
-                    parent.pager.start(parent.pager.lastPageStart());
+                    parameters.pager.start(parameters.pager.lastPageStart());
                 }.bind(this);
 
                 this.jumpToPreviousPage = function () {
@@ -133,7 +140,7 @@
                         return false;
                     }
                     window.history.pushState({}, window.title, this.previousPageUrl());
-                    parent.pager.start(parent.pager.previousPageStart());
+                    parameters.pager.start(parameters.pager.previousPageStart());
                 }.bind(this);
 
                 this.jumpToNextPage = function () {
@@ -141,7 +148,7 @@
                         return false;
                     }
                     window.history.pushState({}, window.title, this.nextPageUrl());
-                    parent.pager.start(parent.pager.nextPageStart());
+                    parameters.pager.start(parameters.pager.nextPageStart());
                 }.bind(this);
             };
         }
