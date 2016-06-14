@@ -16,24 +16,24 @@
                     expect(searchTypes).to.have.length(4);
                 });
                 it('Defines the `Keyword` field', function () {
-                    expect(searchTypes[0].key).to.equal('_fulltext');
-                    expect(searchTypes[0].labelText).to.equal('Keyword');
-                    expect(searchTypes[0].glyphicon).to.equal('search');
+                    var searchType = _.find(searchTypes, { key: '_fulltext' });
+                    expect(searchType.labelText).to.equal('Keyword');
+                    expect(searchType.glyphicon).to.equal('search');
                 });
                 it('Defines the `Author` field', function () {
-                    expect(searchTypes[1].key).to.equal('ca_objects.Author');
-                    expect(searchTypes[1].labelText).to.equal('Author');
-                    expect(searchTypes[1].glyphicon).to.equal('user');
+                    var searchType = _.find(searchTypes, { key: 'ca_objects.Author' });
+                    expect(searchType.labelText).to.equal('Author');
+                    expect(searchType.glyphicon).to.equal('user');
                 });
                 it('Defines the `Title` field', function () {
-                    expect(searchTypes[2].key).to.equal('ca_objects.preferred_labels');
-                    expect(searchTypes[2].labelText).to.equal('Title');
-                    expect(searchTypes[2].glyphicon).to.equal('certificate');
+                    var searchType = _.find(searchTypes, { key: 'ca_objects.preferred_labels' });
+                    expect(searchType.labelText).to.equal('Title');
+                    expect(searchType.glyphicon).to.equal('certificate');
                 });
                 it('Defines the `Subject` field', function () {
-                    expect(searchTypes[3].key).to.equal('ca_occurrences.preferred_labels');
-                    expect(searchTypes[3].labelText).to.equal('Subject');
-                    expect(searchTypes[3].glyphicon).to.equal('paperclip');
+                    var searchType = _.find(searchTypes, { key: 'ca_occurrences.preferred_labels' });
+                    expect(searchType.labelText).to.equal('Subject');
+                    expect(searchType.glyphicon).to.equal('paperclip');
                 });
             });
         }
