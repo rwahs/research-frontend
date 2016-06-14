@@ -18,6 +18,11 @@
                 );
 
                 ko.components.register(
+                    'collections/library/thumbnails-result',
+                    { template: { require: 'text!ui/components/collections/library/thumbnails-result.html' } }
+                );
+
+                ko.components.register(
                     'collections/memorials/detail',
                     { template: { require: 'text!ui/components/collections/memorials/detail.html' } }
                 );
@@ -25,6 +30,11 @@
                 ko.components.register(
                     'collections/memorials/list-result',
                     { template: { require: 'text!ui/components/collections/memorials/list-result.html' } }
+                );
+
+                ko.components.register(
+                    'collections/memorials/thumbnails-result',
+                    { template: { require: 'text!ui/components/collections/memorials/thumbnails-result.html' } }
                 );
 
                 ko.components.register(
@@ -38,6 +48,11 @@
                 );
 
                 ko.components.register(
+                    'collections/museum/thumbnails-result',
+                    { template: { require: 'text!ui/components/collections/museum/thumbnails-result.html' } }
+                );
+
+                ko.components.register(
                     'collections/photographs/detail',
                     { template: { require: 'text!ui/components/collections/photographs/detail.html' } }
                 );
@@ -45,6 +60,16 @@
                 ko.components.register(
                     'collections/photographs/list-result',
                     { template: { require: 'text!ui/components/collections/photographs/list-result.html' } }
+                );
+
+                ko.components.register(
+                    'collections/photographs/thumbnails-result',
+                    { template: { require: 'text!ui/components/collections/photographs/thumbnails-result.html' } }
+                );
+
+                ko.components.register(
+                    'collections/table-results',
+                    { template: { require: 'text!ui/components/collections/table-results.html' } }
                 );
 
                 ko.components.register(

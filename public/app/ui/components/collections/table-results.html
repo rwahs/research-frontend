@@ -1,0 +1,26 @@
+<table class="table table-bordered table-striped results-table">
+    <thead>
+    <tr>
+        <th>#</th>
+        <!-- ko foreach: { data: searchResultFields, as: 'field' } -->
+        <!-- ko if: field.tableColumn !== false -->
+        <th data-bind="text: field.labelText"></th>
+        <!-- /ko -->
+        <!-- /ko -->
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- ko foreach: { data: pager.currentPage, as: 'result' } -->
+    <tr class="result">
+        <td data-bind="text: $index() + $parent.pager.start() + 1"></td>
+        <!-- ko foreach: { data: $parent.searchResultFields, as: 'field' } -->
+        <!-- ko if: field.tableColumn !== false -->
+        <td data-bind="component: $parents[1].displayFor(field, result)"></td>
+        <!-- /ko -->
+        <!-- /ko -->
+        <td><a data-bind="attr: { href: $parent.detailUrlFor(result) }">View</a></td>
+    </tr>
+    <!-- /ko -->
+    </tbody>
+</table>
