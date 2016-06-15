@@ -49,7 +49,7 @@
             };
 
             routes.pushState = function (url) {
-                return page(url);
+                return window.history.pushState({}, window.title, url);
             };
 
             return routes;
