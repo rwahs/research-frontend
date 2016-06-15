@@ -7,10 +7,9 @@
             'sinon',
             'knockout',
             'util/container',
-            'ui/pages/detail/DetailPage',
-            'mock/services/mockDetailService'
+            'ui/pages/detail/DetailPage'
         ],
-        function (chai, sinon, ko, container, DetailPage, mockDetailService) {
+        function (chai, sinon, ko, container, DetailPage) {
             var expect = chai.expect;
 
             describe('The `DetailPage` module', function () {
@@ -20,7 +19,7 @@
                 describe('When the detail service is returning valid results', function () {
                     var detailService;
                     beforeEach(function () {
-                        detailService = mockDetailService(undefined, {
+                        detailService = sinon.stub().callsArgWith(1, undefined, {
                             id: 42,
                             idno: '1984/42',
                             title: 'The Meaning of Life',
@@ -139,7 +138,7 @@
                 describe('When the detail service is returning errors', function () {
                     var detailService;
                     beforeEach(function () {
-                        detailService = mockDetailService(new Error('Service Error'));
+                        detailService = sinon.stub().callsArgWith(1, new Error('Service Error'));
                         container.register('detail.collection', detailService);
                         container.register('settings.collection', {
                             collectionName: 'Test',

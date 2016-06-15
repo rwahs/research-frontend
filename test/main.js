@@ -29,7 +29,6 @@
 
             // Test specs, mocks and fixtures
             spec: 'spec/',
-            mock: 'mock/',
             fixtures: 'fixtures/'
         },
         shim: {
