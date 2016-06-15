@@ -13,7 +13,7 @@
             describe('The `museum/searchResultFields` module', function () {
                 it('Defines a static array', function () {
                     expect(searchResultFields).to.be.an('array');
-                    expect(searchResultFields).to.have.length(9);
+                    expect(searchResultFields).to.have.length(8);
                 });
                 it('Defines the `MediaThumbnail` field', function () {
                     var mediaField = _.find(searchResultFields, { key: 'MediaThumbnail' });
