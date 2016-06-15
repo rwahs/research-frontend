@@ -16,23 +16,28 @@
             },
             {
                 key: 'type',
-                labelText: 'Item Type'
+                labelText: 'Item Type',
+                sort: true
             },
             {
                 key: 'idno',
-                labelText: 'Accession Number'
+                labelText: 'Accession Number',
+                sort: true
             },
             {
                 key: 'ItemName',
-                labelText: 'Item Name'
+                labelText: 'Item Name',
+                sort: true
             },
             {
                 key: 'Dates',
-                labelText: 'Dates'
+                labelText: 'Dates',
+                sort: true
             },
             {
                 key: 'Importance',
-                labelText: 'Importance'
+                labelText: 'Importance',
+                sort: true
             },
             {
                 key: 'Classification',
@@ -40,7 +45,10 @@
                 parse: true,
                 skipNested: 1,
                 filter: true,
-                display: 'hierarchy-list'
+                display: 'hierarchy-list',
+                sort: function (value) {
+                    return value.length > 0 && value[0].length > 0 ? value[0].join(' / ') : undefined;
+                }
             }
         ];
     });

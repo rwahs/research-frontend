@@ -16,38 +16,48 @@
             },
             {
                 key: 'idno',
-                labelText: 'Accession Number'
+                labelText: 'Accession Number',
+                sort: true
             },
             {
                 key: 'Title',
-                labelText: 'Title'
+                labelText: 'Title',
+                sort: true
             },
             {
                 key: 'Creator',
                 labelText: 'Creator',
                 parse: true,
                 filter: 'Value',
-                display: 'typed-list'
+                display: 'typed-list',
+                sort: function (value) {
+                    return value.length > 0 ? value[0].Value : undefined;
+                }
             },
             {
                 key: 'DateOfCreation',
-                labelText: 'Date of Creation'
+                labelText: 'Date of Creation',
+                sort: true
             },
             {
                 key: 'Publisher',
-                labelText: 'Publisher'
+                labelText: 'Publisher',
+                sort: true
             },
             {
                 key: 'DateOfPublication',
-                labelText: 'Date of Publication'
+                labelText: 'Date of Publication',
+                sort: true
             },
             {
                 key: 'PlaceOfPublication',
-                labelText: 'Place of Publication'
+                labelText: 'Place of Publication',
+                sort: true
             },
             {
                 key: 'Medium',
-                labelText: 'Medium'
+                labelText: 'Medium',
+                sort: true
             }
         ];
     });
