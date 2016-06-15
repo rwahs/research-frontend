@@ -9,9 +9,9 @@
             'config/routes',
             'util/container',
             'ui/pages/search/SearchPage',
-            'mock/services/MockSearchService'
+            'mock/services/mockSearchService'
         ],
-        function (chai, sinon, ko, routes, container, SearchPage, MockSearchService) {
+        function (chai, sinon, ko, routes, container, SearchPage, mockSearchService) {
             var expect = chai.expect;
 
             describe('The `SearchPage` module', function () {
@@ -23,7 +23,7 @@
                     beforeEach(function () {
                         sinon.stub(routes, 'pushState');
                         // jshint camelcase: false
-                        searchService = new MockSearchService(undefined, [
+                        searchService = mockSearchService(undefined, [
                             { object_id: 1, first: 'First 1', second: 'Second 1', third: 'Third 1' },
                             { object_id: 2, first: 'First 2', second: 'Second 2', third: 'Third 2' },
                             { object_id: 3, first: 'First 3', second: 'Second 3', third: 'Third 3' }
@@ -261,7 +261,7 @@
                     beforeEach(function () {
                         sinon.stub(routes, 'pushState');
                         // jshint camelcase: false
-                        searchService = new MockSearchService(new Error('Search Error'));
+                        searchService = mockSearchService(new Error('Search Error'));
                         container.register('search.collection', searchService);
                         container.register('settings.collection', {
                             collectionName: 'Collection',

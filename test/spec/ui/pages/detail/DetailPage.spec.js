@@ -8,9 +8,9 @@
             'knockout',
             'util/container',
             'ui/pages/detail/DetailPage',
-            'mock/services/MockDetailService'
+            'mock/services/mockDetailService'
         ],
-        function (chai, sinon, ko, container, DetailPage, MockDetailService) {
+        function (chai, sinon, ko, container, DetailPage, mockDetailService) {
             var expect = chai.expect;
 
             describe('The `DetailPage` module', function () {
@@ -20,7 +20,7 @@
                 describe('When the detail service is returning valid results', function () {
                     var detailService;
                     beforeEach(function () {
-                        detailService = new MockDetailService(undefined, {
+                        detailService = mockDetailService(undefined, {
                             id: 42,
                             idno: '1984/42',
                             title: 'The Meaning of Life',
@@ -139,7 +139,7 @@
                 describe('When the detail service is returning errors', function () {
                     var detailService;
                     beforeEach(function () {
-                        detailService = new MockDetailService(new Error('Service Error'));
+                        detailService = mockDetailService(new Error('Service Error'));
                         container.register('detail.collection', detailService);
                         container.register('settings.collection', {
                             collectionName: 'Test',
