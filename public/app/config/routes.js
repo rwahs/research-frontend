@@ -30,7 +30,7 @@
                     if (types.indexOf(context.params.type) < 0) {
                         return bind('ui/pages/error/404', 'ui/pages/error/ErrorPage', context);
                     }
-                    return bind('ui/pages/detail/' + context.params.type, 'ui/pages/detail/DetailPage', context);
+                    return bind('ui/pages/detail/index', 'ui/pages/detail/DetailPage', context);
                 });
 
                 page('*', function (context) {
