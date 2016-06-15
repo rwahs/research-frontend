@@ -121,35 +121,35 @@
                 });
 
                 this.jumpToFirstPage = function () {
-                    if (this.atFirstPage()) {
-                        return false;
+                    if (!this.atFirstPage()) {
+                        routes.pushState(this.firstPageUrl());
+                        parameters.pager.start(parameters.pager.firstPageStart());
                     }
-                    routes.pushState(this.firstPageUrl());
-                    parameters.pager.start(parameters.pager.firstPageStart());
+                    return false;
                 }.bind(this);
 
                 this.jumpToLastPage = function () {
-                    if (this.atLastPage()) {
-                        return false;
+                    if (!this.atLastPage()) {
+                        routes.pushState(this.lastPageUrl());
+                        parameters.pager.start(parameters.pager.lastPageStart());
                     }
-                    routes.pushState(this.lastPageUrl());
-                    parameters.pager.start(parameters.pager.lastPageStart());
+                    return false;
                 }.bind(this);
 
                 this.jumpToPreviousPage = function () {
-                    if (this.atFirstPage()) {
-                        return false;
+                    if (!this.atFirstPage()) {
+                        routes.pushState(this.previousPageUrl());
+                        parameters.pager.start(parameters.pager.previousPageStart());
                     }
-                    routes.pushState(this.previousPageUrl());
-                    parameters.pager.start(parameters.pager.previousPageStart());
+                    return false;
                 }.bind(this);
 
                 this.jumpToNextPage = function () {
-                    if (this.atLastPage()) {
-                        return false;
+                    if (!this.atLastPage()) {
+                        routes.pushState(this.nextPageUrl());
+                        parameters.pager.start(parameters.pager.nextPageStart());
                     }
-                    routes.pushState(this.nextPageUrl());
-                    parameters.pager.start(parameters.pager.nextPageStart());
+                    return false;
                 }.bind(this);
             };
         }
