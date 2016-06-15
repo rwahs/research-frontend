@@ -149,6 +149,54 @@
                             });
                         });
                     });
+                    describe('When the wrapped service is returning errors', function () {
+                        var wrappedService, service;
+                        beforeEach(function () {
+                            wrappedService = sinon.spy(function (key, callback) {
+                                callback('Error from wrapped service');
+                            });
+                            service = cachingService(wrappedService);
+                        });
+                        it('Returns a function', function () {
+                            expect(service).to.be.a('function');
+                        });
+                        describe('When invoked', function () {
+                            var err, result;
+                            beforeEach(function (done) {
+                                service('key-1', function (e, r) {
+                                    err = e;
+                                    result = r;
+                                    done();
+                                });
+                            });
+                            it('Calls the wrapped service', function () {
+                                sinon.assert.calledOnce(wrappedService);
+                                sinon.assert.calledWith(wrappedService, 'key-1');
+                            });
+                            it('Returns error from the wrapped service', function () {
+                                expect(err).to.equal('Error from wrapped service');
+                                expect(result).to.equal(undefined);
+                            });
+                            describe('When invoked again', function () {
+                                var err, result;
+                                beforeEach(function (done) {
+                                    service('key-1', function (e, r) {
+                                        err = e;
+                                        result = r;
+                                        done();
+                                    });
+                                });
+                                it('Calls the wrapped service again', function () {
+                                    sinon.assert.calledTwice(wrappedService);
+                                    sinon.assert.calledWith(wrappedService, 'key-1');
+                                });
+                                it('Returns error from the wrapped service', function () {
+                                    expect(err).to.equal('Error from wrapped service');
+                                    expect(result).to.equal(undefined);
+                                });
+                            });
+                        });
+                    });
                 });
             });
         }
