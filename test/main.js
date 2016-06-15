@@ -18,6 +18,7 @@
             jquery: '../public/lib/jquery/dist/jquery',
             bootstrap: '../public/lib/bootstrap/dist/js/bootstrap',
             page: '../public/lib/page/page',
+            querystring: '../public/lib/querystring/querystring',
 
             // Application modules
             config: '../public/app/config/',
@@ -69,17 +70,21 @@
                     'spec/config/collections/photographs/searchResultFields.spec',
                     'spec/config/collections/photographs/searchTypes.spec',
                     'spec/config/components.spec',
+                    'spec/config/routes.spec',
+                    'spec/config/settings.spec',
                     'spec/models/DynamicRecord.spec',
+                    'spec/models/ListPager.spec',
                     'spec/services/searchService.spec',
                     'spec/services/detailService.spec',
+                    'spec/ui/components/controls/ListControlsComponent.spec',
                     'spec/ui/components/display/DisplayComponent.spec',
                     'spec/ui/pages/detail/DetailPage.spec',
                     'spec/ui/pages/error/ErrorPage.spec',
-                    'spec/ui/pages/static/StaticPage.spec',
                     'spec/ui/pages/search/SearchPage.spec',
                     'spec/ui/pages/search/SearchType.spec',
+                    'spec/ui/pages/static/StaticPage.spec',
+                    'spec/util/bind.spec',
                     'spec/util/container.spec',
-                    'spec/util/router.spec',
                     'spec/util/safelyParseJson.spec'
                 ],
                 function () {

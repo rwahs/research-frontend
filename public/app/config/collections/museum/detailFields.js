@@ -68,7 +68,7 @@
                 display: 'hierarchy-list'
             },
             {
-                key: 'Media',
+                key: 'MediaMedium',
                 display: 'image',
                 placeholder: false
             }

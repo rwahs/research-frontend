@@ -1,0 +1,16 @@
+<article class="detail">
+    <!-- ko if: loading -->
+    <div class="loading text-muted">
+        <img src="/images/loading.gif" alt="" title="Loading animation" />
+        Loading Library record, please wait...
+    </div>
+    <!-- /ko -->
+    <!-- ko if: displayRecord -->
+    <div class="type-header" data-bind="text: typeHeader"></div>
+    <h1>
+        <span data-bind="component: displayForLabelField()"></span>
+        <span class="idno" data-bind="text: idno"></span>
+    </h1>
+    <div data-bind="component: { name: detail, params: $data }"></div>
+    <!-- /ko -->
+</article>

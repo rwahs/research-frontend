@@ -3,10 +3,11 @@
 
     define(
         [
+            'lodash',
             'chai',
             'config/collections/museum/detailFields'
         ],
-        function (chai, detailFields) {
+        function (_, chai, detailFields) {
             var expect = chai.expect;
 
             describe('The `museum/detailFields` module', function () {
@@ -19,69 +20,69 @@
                     expect(detailFields[0].labelText).to.equal('Item Type');
                 });
                 it('Defines the `idno` field', function () {
-                    expect(detailFields[1].key).to.equal('idno');
-                    expect(detailFields[1].labelText).to.equal('Accession Number');
+                    var idnoField = _.find(detailFields, { key: 'idno' });
+                    expect(idnoField.labelText).to.equal('Accession Number');
                 });
                 it('Defines the `ItemName` field', function () {
-                    expect(detailFields[2].key).to.equal('ItemName');
-                    expect(detailFields[2].labelText).to.equal('Item Name');
-                    expect(detailFields[2].placeholder).to.equal('(unnamed)');
+                    var itemNameField = _.find(detailFields, { key: 'ItemName' });
+                    expect(itemNameField.labelText).to.equal('Item Name');
+                    expect(itemNameField.placeholder).to.equal('(unnamed)');
                 });
                 it('Defines the `Description` field', function () {
-                    expect(detailFields[3].key).to.equal('Description');
-                    expect(detailFields[3].labelText).to.equal('Description');
+                    var descriptionField = _.find(detailFields, { key: 'Description' });
+                    expect(descriptionField.labelText).to.equal('Description');
                 });
                 it('Defines the `MakersMarks` field', function () {
-                    expect(detailFields[4].key).to.equal('MakersMarks');
-                    expect(detailFields[4].labelText).to.equal('Makers Marks');
+                    var makersMarksField = _.find(detailFields, { key: 'MakersMarks' });
+                    expect(makersMarksField.labelText).to.equal('Makers Marks');
                 });
                 it('Defines the `Dates` field', function () {
-                    expect(detailFields[5].key).to.equal('Dates');
-                    expect(detailFields[5].labelText).to.equal('Dates');
+                    var datesField = _.find(detailFields, { key: 'Dates' });
+                    expect(datesField.labelText).to.equal('Dates');
                 });
                 it('Defines the `EarliestYear` field', function () {
-                    expect(detailFields[6].key).to.equal('EarliestYear');
-                    expect(detailFields[6].labelText).to.equal('Earliest Year');
+                    var earliestYearField = _.find(detailFields, { key: 'EarliestYear' });
+                    expect(earliestYearField.labelText).to.equal('Earliest Year');
                 });
                 it('Defines the `LatestYear` field', function () {
-                    expect(detailFields[7].key).to.equal('LatestYear');
-                    expect(detailFields[7].labelText).to.equal('Latest Year');
+                    var latestYearField = _.find(detailFields, { key: 'LatestYear' });
+                    expect(latestYearField.labelText).to.equal('Latest Year');
                 });
                 it('Defines the `HistoricalDetails` field', function () {
-                    expect(detailFields[8].key).to.equal('HistoricalDetails');
-                    expect(detailFields[8].labelText).to.equal('Historical Details');
+                    var historicalDetailsField = _.find(detailFields, { key: 'HistoricalDetails' });
+                    expect(historicalDetailsField.labelText).to.equal('Historical Details');
                 });
                 it('Defines the `BibliographReferences` field', function () {
-                    expect(detailFields[9].key).to.equal('BibliographReferences');
-                    expect(detailFields[9].labelText).to.equal('Bibliographic References');
+                    var bibliographicReferencesField = _.find(detailFields, { key: 'BibliographReferences' });
+                    expect(bibliographicReferencesField.labelText).to.equal('Bibliographic References');
                 });
                 it('Defines the `Subjects` field', function () {
-                    expect(detailFields[10].key).to.equal('Subjects');
-                    expect(detailFields[10].labelText).to.equal('Subjects');
-                    expect(detailFields[10].parse).to.equal(true);
-                    expect(detailFields[10].filter).to.equal(true);
-                    expect(detailFields[10].display).to.equal('list');
+                    var subjectsField = _.find(detailFields, { key: 'Subjects' });
+                    expect(subjectsField.labelText).to.equal('Subjects');
+                    expect(subjectsField.parse).to.equal(true);
+                    expect(subjectsField.filter).to.equal(true);
+                    expect(subjectsField.display).to.equal('list');
                 });
                 it('Defines the `Importance` field', function () {
-                    expect(detailFields[11].key).to.equal('Importance');
-                    expect(detailFields[11].labelText).to.equal('Importance');
+                    var importanceField = _.find(detailFields, { key: 'Importance' });
+                    expect(importanceField.labelText).to.equal('Importance');
                 });
                 it('Defines the `StatementOfSignificance` field', function () {
-                    expect(detailFields[12].key).to.equal('StatementOfSignificance');
-                    expect(detailFields[12].labelText).to.equal('Statement of Significance');
+                    var statementOfSignificanceField = _.find(detailFields, { key: 'StatementOfSignificance' });
+                    expect(statementOfSignificanceField.labelText).to.equal('Statement of Significance');
                 });
                 it('Defines the `Classification` field', function () {
-                    expect(detailFields[13].key).to.equal('Classification');
-                    expect(detailFields[13].labelText).to.equal('Classification');
-                    expect(detailFields[13].parse).to.equal(true);
-                    expect(detailFields[13].skipNested).to.equal(1);
-                    expect(detailFields[13].filter).to.equal(true);
-                    expect(detailFields[13].display).to.equal('hierarchy-list');
+                    var classificationField = _.find(detailFields, { key: 'Classification' });
+                    expect(classificationField.labelText).to.equal('Classification');
+                    expect(classificationField.parse).to.equal(true);
+                    expect(classificationField.skipNested).to.equal(1);
+                    expect(classificationField.filter).to.equal(true);
+                    expect(classificationField.display).to.equal('hierarchy-list');
                 });
-                it('Defines the `Media` field', function () {
-                    expect(detailFields[14].key).to.equal('Media');
-                    expect(detailFields[14].display).to.equal('image');
-                    expect(detailFields[14].placeholder).to.equal(false);
+                it('Defines the `MediaMedium` field', function () {
+                    var purchasedField = _.find(detailFields, { key: 'MediaMedium' });
+                    expect(purchasedField.display).to.equal('image');
+                    expect(purchasedField.placeholder).to.equal(false);
                 });
             });
         }

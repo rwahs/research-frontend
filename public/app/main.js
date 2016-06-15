@@ -15,6 +15,7 @@
             jquery: '../lib/jquery/dist/jquery',
             bootstrap: '../lib/bootstrap/dist/js/bootstrap',
             page: '../lib/page/page',
+            querystring: '../lib/querystring/querystring',
 
             // Application modules
             config: 'config/',
@@ -28,15 +29,25 @@
     // Boot the application
     require([ 'jquery' ], function () {
         require([ 'bootstrap' ], function () {
+            // This value is replaced during the packaging process.
             var environment = 'development';
             if (environment !== 'production' && console && typeof console.log === 'function') {
                 console.log('Running in "' + environment + '" environment');
             }
-            require([ 'config/env/' + environment, 'config/components', 'util/router' ], function (configure, components, router) {
-                configure();
-                components();
-                router();
-            });
+            require(
+                [
+                    'config/settings',
+                    'config/env/' + environment,
+                    'config/components',
+                    'config/routes'
+                ],
+                function (settings, env, components, routes) {
+                    settings();
+                    env();
+                    components();
+                    routes();
+                }
+            );
         });
     });
 }());

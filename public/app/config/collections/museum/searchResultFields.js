@@ -4,10 +4,15 @@
     define(function () {
         return [
             {
-                key: 'Media',
+                key: 'MediaThumbnail',
                 labelText: 'Image',
                 display: 'image',
                 placeholder: '(No image available)'
+            },
+            {
+                key: 'MediaSmall',
+                display: 'image',
+                tableColumn: false
             },
             {
                 key: 'type',
@@ -28,13 +33,6 @@
             {
                 key: 'Importance',
                 labelText: 'Importance'
-            },
-            {
-                key: 'Subjects',
-                labelText: 'Subjects',
-                parse: true,
-                filter: true,
-                display: 'list'
             },
             {
                 key: 'Classification',

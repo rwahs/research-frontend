@@ -4,10 +4,15 @@
     define(function () {
         return [
             {
-                key: 'Media',
+                key: 'MediaThumbnail',
                 labelText: 'Image',
                 display: 'image',
                 placeholder: '(No image available)'
+            },
+            {
+                key: 'MediaSmall',
+                display: 'image',
+                tableColumn: false
             },
             {
                 key: 'idno',
@@ -43,13 +48,6 @@
             {
                 key: 'Medium',
                 labelText: 'Medium'
-            },
-            {
-                key: 'Subjects',
-                labelText: 'Subjects',
-                parse: true,
-                filter: true,
-                display: 'list'
             }
         ];
     });

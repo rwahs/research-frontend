@@ -5,33 +5,72 @@
         [
             'lodash',
             'knockout',
+            'querystring',
+            'config/routes',
             'util/container',
             'models/DynamicRecord',
+            'models/ListPager',
             'ui/pages/search/SearchType'
         ],
-        function (_, ko, container, DynamicRecord, SearchType) {
-            return function (context, parameters) {
-                var search, selectedSearchType, searchParameters;
+        function (_, ko, qs, routes, container, DynamicRecord, ListPager, SearchType) {
+            var RESULTS_MODES = [ 'List', 'Thumbnails', 'Table' ];
 
-                this.searchText = ko.observable('');
+            return function (context) {
+                var settings = container.resolve('settings.' + context.params.type),
+                    selectedSearchType = ko.observable(),
+                    submittedQuery = ko.observable(),
+                    results = ko.observableArray(),
+                    query = qs.parse(window.location.search.replace(/^\?/, '')),
+                    doSearch = function (callback) {
+                        submittedQuery(this.searchText());
+                        results([]);
+                        this.loading(true);
+                        this.displayResults(false);
+                        container.resolve('search.' + context.params.type)(
+                            _.zipObject(
+                                [ selectedSearchType() ],
+                                [ submittedQuery() ]
+                            ),
+                            function (err, searchServiceResults) {
+                                this.loading(false);
+                                if (err) {
+                                    // TODO Display error
+                                    return;
+                                }
+                                results(_.map(searchServiceResults, function (result) {
+                                    return new DynamicRecord(result, this.searchResultFields);
+                                }.bind(this)));
+                                this.displayResults(true);
+                                if (_.isFunction(callback)) {
+                                    callback();
+                                }
+                            }.bind(this)
+                        );
+                    }.bind(this);
+
+                this.pager = new ListPager(
+                    results,
+                    query.start ? parseInt(query.start, 10) : undefined,
+                    query.size ? parseInt(query.size, 10) : undefined
+                );
+
+                this.searchText = ko.observable(query.query || '');
                 this.searchTypes = ko.observableArray();
                 this.searchResultFields = ko.observableArray();
-                this.results = ko.observableArray();
                 this.loading = ko.observable(false);
                 this.displayResults = ko.observable(false);
+                this.resultsMode = ko.observable(query.mode || 'List');
 
-                search = container.resolve(parameters.searchServiceKey);
-                selectedSearchType = ko.observable();
+                this.type = ko.pureComputed(function () {
+                    return context.params.type;
+                });
 
-                searchParameters = ko.pureComputed(function () {
-                    return _.zipObject(
-                        [ selectedSearchType() ],
-                        [ this.searchText() || '*' ]
-                    );
-                }.bind(this));
+                this.submittedQuery = ko.pureComputed(function () {
+                    return submittedQuery();
+                });
 
                 this.heading = ko.pureComputed(function () {
-                    return parameters.collectionName + ' Search';
+                    return settings.collectionName + ' Search';
                 });
 
                 this.placeholder = ko.pureComputed(function () {
@@ -41,14 +80,22 @@
                 }.bind(this));
 
                 this.hasResults = ko.pureComputed(function () {
-                    return this.results().length > 0;
+                    return results().length > 0;
+                });
+
+                this.availableResultsModes = ko.pureComputed(function () {
+                    return RESULTS_MODES;
+                });
+
+                this.resultsModeContainerClassName = ko.pureComputed(function () {
+                    return 'results-container-' + this.resultsMode().toLowerCase();
                 }.bind(this));
 
                 this.binding = function (element, callback) {
                     require(
                         [
-                            parameters.searchTypes,
-                            parameters.searchResultFields
+                            settings.searchTypes,
+                            settings.searchResultFields
                         ],
                         function (searchTypes, searchResultFields) {
                             this.searchTypes(_.map(searchTypes, function (type) {
@@ -56,40 +103,36 @@
                             }));
                             this.searchTypes()[0].makeActive();
                             this.searchResultFields(searchResultFields);
-                            callback();
+                            if (this.searchText()) {
+                                doSearch(callback);
+                            } else {
+                                callback();
+                            }
                         }.bind(this)
                     );
                 };
 
                 this.reset = function () {
+                    results([]);
                     this.displayResults(false);
-                    this.results([]);
                     this.searchText('');
                     this.searchTypes()[0].makeActive();
                 };
 
-                this.submit = function () {
-                    this.loading(true);
-                    this.displayResults(false);
-                    this.results([]);
-                    search(
-                        searchParameters(),
-                        function (err, results) {
-                            this.loading(false);
-                            if (err) {
-                                // TODO Display error
-                                return;
-                            }
-                            this.results(_.map(results, function (result) {
-                                return new DynamicRecord(result, this.searchResultFields);
-                            }.bind(this)));
-                            this.displayResults(true);
-                        }.bind(this)
-                    );
+                this.submit = function (callback) {
+                    if (!this.searchText()) {
+                        return;
+                    }
+                    this.pager.start(0);
+                    routes.pushState(this.searchUrlFor({ query: this.searchText() }));
+                    doSearch(callback);
                     return false;
                 };
 
                 this.displayFor = function (field, result) {
+                    if (_.isString(field)) {
+                        field = _.find(this.searchResultFields(), { key: field });
+                    }
                     return {
                         name: 'display/' + (field.display || 'text'),
                         params: {
@@ -100,8 +143,34 @@
                     };
                 };
 
+                this.displayForLabelField = function (result) {
+                    return this.displayFor(settings.labelField, result);
+                };
+
+                this.resultFor = function (result) {
+                    return {
+                        name: 'collections/' + context.params.type + '/' + this.resultsMode().toLowerCase() + '-result',
+                        params: this
+                    };
+                };
+
+                this.searchUrlFor = function (overrides) {
+                    return routes.searchUrlFor(
+                        context.params.type,
+                        _.defaults(
+                            overrides,
+                            {
+                                query: submittedQuery(),
+                                start: this.pager.start(),
+                                size: this.pager.pageSize(),
+                                mode: this.resultsMode()
+                            }
+                        )
+                    );
+                };
+
                 this.detailUrlFor = function (result) {
-                    return parameters.detailUrlTemplate.replace(':id', result.id());
+                    return routes.detailUrlFor(context.params.type, result.id());
                 };
             };
         }

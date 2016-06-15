@@ -1,0 +1,61 @@
+<div class="list-controls-container">
+    <div>
+        <div class="input-group input-group-sm">
+            <span class="input-group-addon">Mode:</span>
+            <ul class="pagination pagination-sm">
+                <!-- ko foreach: availableResultsModes -->
+                <li data-bind="css: { active: active }">
+                    <a href="#" data-bind="attr: { href: url, 'aria-label': longLabel }, click: click">
+                        <span data-bind="attr: { class: glyphicon }"></span>
+                        <span data-bind="text: label"></span>
+                    </a>
+                </li>
+                <!-- /ko -->
+            </ul>
+        </div>
+    </div>
+    <div>
+        <div class="input-group input-group-sm">
+            <span class="input-group-addon">Page Size:</span>
+            <ul class="pagination pagination-sm">
+                <!-- ko foreach: availablePageSizes -->
+                <li data-bind="css: { active: active }">
+                    <a href="#" data-bind="text: label, attr: { href: url, 'aria-label': longLabel }, click: click"></a>
+                </li>
+                <!-- /ko -->
+            </ul>
+        </div>
+    </div>
+    <div>
+        <div class="input-group input-group-sm">
+            <span class="input-group-addon">Page:</span>
+            <ul class="pagination pagination-sm">
+                <li data-bind="css: { disabled: atFirstPage }">
+                    <a href="#" aria-label="First page" data-bind="attr: { href: firstPageUrl }, click: jumpToFirstPage">
+                        <span class="glyphicon glyphicon-fast-backward"></span>
+                    </a>
+                </li>
+                <li data-bind="css: { disabled: atFirstPage }">
+                    <a href="#" aria-label="Previous page" data-bind="attr: { href: previousPageUrl }, click: jumpToPreviousPage">
+                        <span class="glyphicon glyphicon-backward"></span>
+                    </a>
+                </li>
+                <!-- ko foreach: availableJumpPageNumbers -->
+                <li data-bind="css: { active: active }">
+                    <a href="#" data-bind="text: label, attr: { href: url, 'aria-label': longLabel }, click: click" aria-label="Jump to Page"></a>
+                </li>
+                <!-- /ko -->
+                <li data-bind="css: { disabled: atLastPage }">
+                    <a href="#" aria-label="Next page" data-bind="attr: { href: nextPageUrl }, click: jumpToNextPage">
+                        <span class="glyphicon glyphicon-forward"></span>
+                    </a>
+                </li>
+                <li data-bind="css: { disabled: atLastPage }">
+                    <a href="#" aria-label="Last page" data-bind="attr: { href: lastPageUrl }, click: jumpToLastPage">
+                        <span class="glyphicon glyphicon-fast-forward"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

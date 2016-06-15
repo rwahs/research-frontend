@@ -1,19 +1,7 @@
-<article id="memorials-detail" class="detail">
-    <!-- ko if: loading -->
-    <div class="loading text-muted">
-        <img src="/images/loading.gif" alt="" title="Loading animation" />
-        Loading Public Memorials record, please wait...
-    </div>
-    <!-- /ko -->
-    <!-- ko if: displayRecord -->
-    <div class="type-header">Public Memorials record</div>
-    <h1>
-        <span data-bind="component: displayFor('ItemName')"></span>
-        <span class="idno" data-bind="text: idno"></span>
-    </h1>
+<section class="detail detail-memorials">
     <div class="row">
         <div class="col-md-12">
-            <div data-bind="component: displayFor('Media')"></div>
+            <div data-bind="component: displayFor('MediaMedium')"></div>
         </div>
     </div>
     <div class="row">
@@ -76,5 +64,4 @@
             <div class="value" data-bind="component: displayFor('Provenance')"></div>
         </div>
     </div>
-    <!-- /ko -->
-</article>
+</section>

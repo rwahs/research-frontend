@@ -1,11 +1,13 @@
-<!-- ko if: hasValue -->
-<div>
-    <!-- ko foreach: { data: value, as: 'hierarchyNode' } -->
-    <!-- ko if: $index() > 0 -->&rArr;<!-- /ko -->
-    <span data-bind="html: hierarchyNode"></span>
+<div class="display display-hierarchy">
+    <!-- ko if: hasValue -->
+    <div>
+        <!-- ko foreach: { data: value, as: 'hierarchyNode' } -->
+        <!-- ko if: $index() > 0 -->&rArr;<!-- /ko -->
+        <span data-bind="html: hierarchyNode"></span>
+        <!-- /ko -->
+    </div>
+    <!-- /ko -->
+    <!-- ko ifnot: hasValue -->
+    <span class="text-muted" data-bind="html: placeholder"></span>
     <!-- /ko -->
 </div>
-<!-- /ko -->
-<!-- ko ifnot: hasValue -->
-<span class="text-muted" data-bind="html: placeholder"></span>
-<!-- /ko -->

@@ -26,7 +26,10 @@
                             title: 'The Meaning of Life',
                             description: '<p>Rich text <strong>description</strong>.</p>'
                         });
-                        container.register('detail', detailService);
+                        container.register('detail.collection', detailService);
+                        container.register('settings.collection', {
+                            detailFields: 'fixtures/collections/detailFields'
+                        });
                         container.seal();
                     });
                     describe('When constructed with valid parameters', function () {
@@ -38,10 +41,7 @@
                                     id: 42
                                 }
                             };
-                            page = new DetailPage(context, {
-                                detailServiceKey: 'detail',
-                                detailFields: 'fixtures/collections/detailFields'
-                            });
+                            page = new DetailPage(context);
                         });
                         it('Exposes observables', function () {
                             expect(ko.isObservable(page.detailFields)).to.equal(true);
@@ -134,7 +134,10 @@
                     var detailService;
                     beforeEach(function () {
                         detailService = new MockDetailService(new Error('Service Error'));
-                        container.register('detail', detailService);
+                        container.register('detail.collection', detailService);
+                        container.register('settings.collection', {
+                            detailFields: 'fixtures/collections/detailFields'
+                        });
                         container.seal();
                     });
                     describe('When constructed with valid parameters', function () {
@@ -145,9 +148,7 @@
                                     type: 'collection'
                                 }
                             };
-                            page = new DetailPage(context, {
-                                detailServiceKey: 'detail'
-                            });
+                            page = new DetailPage(context);
                         });
                         describe('When bound to the view', function () {
                             var element;

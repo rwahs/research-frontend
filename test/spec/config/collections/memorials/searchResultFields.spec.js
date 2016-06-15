@@ -3,10 +3,11 @@
 
     define(
         [
+            'lodash',
             'chai',
             'config/collections/memorials/searchResultFields'
         ],
-        function (chai, searchResultFields) {
+        function (_, chai, searchResultFields) {
             var expect = chai.expect;
 
             describe('The `memorials/searchResultFields` module', function () {
@@ -14,45 +15,43 @@
                     expect(searchResultFields).to.be.an('array');
                     expect(searchResultFields).to.have.length(7);
                 });
-                it('Defines the `Media` field', function () {
-                    expect(searchResultFields[0].key).to.equal('Media');
-                    expect(searchResultFields[0].labelText).to.equal('Image');
-                    expect(searchResultFields[0].display).to.equal('image');
-                    expect(searchResultFields[0].placeholder).to.equal('(No image available)');
+                it('Defines the `MediaThumbnail` field', function () {
+                    var mediaField = _.find(searchResultFields, { key: 'MediaThumbnail' });
+                    expect(mediaField.labelText).to.equal('Image');
+                    expect(mediaField.display).to.equal('image');
+                    expect(mediaField.placeholder).to.equal('(No image available)');
+                });
+                it('Defines the `MediaSmall` field', function () {
+                    var mediaField = _.find(searchResultFields, { key: 'MediaSmall' });
+                    expect(mediaField.display).to.equal('image');
+                    expect(mediaField.tableColumn).to.equal(false);
                 });
                 it('Defines the `idno` field', function () {
-                    expect(searchResultFields[1].key).to.equal('idno');
-                    expect(searchResultFields[1].labelText).to.equal('Accession Number');
+                    var idnoField = _.find(searchResultFields, { key: 'idno' });
+                    expect(idnoField.labelText).to.equal('Accession Number');
                 });
                 it('Defines the `ItemName` field', function () {
-                    expect(searchResultFields[2].key).to.equal('ItemName');
-                    expect(searchResultFields[2].labelText).to.equal('Item Name');
+                    var itemNameField = _.find(searchResultFields, { key: 'ItemName' });
+                    expect(itemNameField.labelText).to.equal('Item Name');
                 });
                 it('Defines the `Creator` field', function () {
-                    expect(searchResultFields[3].key).to.equal('Creator');
-                    expect(searchResultFields[3].labelText).to.equal('Creator');
-                    expect(searchResultFields[3].parse).to.equal(true);
-                    expect(searchResultFields[3].filter).to.equal('Value');
-                    expect(searchResultFields[3].display).to.equal('typed-list');
+                    var creatorField = _.find(searchResultFields, { key: 'Creator' });
+                    expect(creatorField.labelText).to.equal('Creator');
+                    expect(creatorField.parse).to.equal(true);
+                    expect(creatorField.filter).to.equal('Value');
+                    expect(creatorField.display).to.equal('typed-list');
                 });
                 it('Defines the `ErectedBy` field', function () {
-                    expect(searchResultFields[4].key).to.equal('ErectedBy');
-                    expect(searchResultFields[4].labelText).to.equal('Erected By');
+                    var erectedByField = _.find(searchResultFields, { key: 'ErectedBy' });
+                    expect(erectedByField.labelText).to.equal('Erected By');
                 });
                 it('Defines the `Location` field', function () {
-                    expect(searchResultFields[5].key).to.equal('Location');
-                    expect(searchResultFields[5].labelText).to.equal('Location');
-                    expect(searchResultFields[5].parse).to.equal(true);
-                    expect(searchResultFields[5].skip).to.equal(1);
-                    expect(searchResultFields[5].filter).to.equal(true);
-                    expect(searchResultFields[5].display).to.equal('hierarchy');
-                });
-                it('Defines the `Subjects` field', function () {
-                    expect(searchResultFields[6].key).to.equal('Subjects');
-                    expect(searchResultFields[6].labelText).to.equal('Subjects');
-                    expect(searchResultFields[6].parse).to.equal(true);
-                    expect(searchResultFields[6].filter).to.equal(true);
-                    expect(searchResultFields[6].display).to.equal('list');
+                    var locationField = _.find(searchResultFields, { key: 'Location' });
+                    expect(locationField.labelText).to.equal('Location');
+                    expect(locationField.parse).to.equal(true);
+                    expect(locationField.skip).to.equal(1);
+                    expect(locationField.filter).to.equal(true);
+                    expect(locationField.display).to.equal('hierarchy');
                 });
             });
         }

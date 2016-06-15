@@ -1,4 +1,4 @@
-<article id="search">
+<article class="search">
     <h1 data-bind="text: heading"></h1>
     <div class="row">
         <div class="col-md-6">
@@ -6,7 +6,7 @@
                 <form data-bind="submit: submit">
                     <div class="panel-body">
                         <div class="form-group">
-                            <input name="q" placeholder="Search" class="form-control" data-bind="value: searchText, attr: { placeholder: placeholder }" />
+                            <input name="query" placeholder="Search" class="form-control" data-bind="textInput: searchText, attr: { placeholder: placeholder }" />
                         </div>
                         <div class="form-group">
                             <div class="btn-group btn-group-justified">
@@ -22,7 +22,7 @@
                                 <span class="glyphicon glyphicon-refresh"></span>
                                 Reset
                             </button>
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="btn btn-success" data-bind="enable: searchText">
                                 <span class="glyphicon glyphicon-search"></span>
                                 Search
                             </button>
@@ -46,30 +46,36 @@
     <!-- /ko -->
     <!-- ko if: hasResults -->
     <div class="row">
-        <div class="col-md-12">
-            <table class="table table-bordered table-striped results-table">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <!-- ko foreach: { data: searchResultFields, as: 'field' } -->
-                    <th data-bind="text: field.labelText"></th>
-                    <!-- /ko -->
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <!-- ko foreach: { data: results, as: 'result' } -->
-                <tr>
-                    <td data-bind="text: $index() + 1"></td>
-                    <!-- ko foreach: { data: $parent.searchResultFields, as: 'field' } -->
-                    <td data-bind="component: $parents[1].displayFor(field, result)"></td>
-                    <!-- /ko -->
-                    <td><a data-bind="attr: { href: $parent.detailUrlFor(result) }">View</a></td>
-                </tr>
-                <!-- /ko -->
-                </tbody>
-            </table>
+        <div class="col-md-12 text-right">
+            <div data-bind="component: { name: 'controls/list', params: { pager: pager, resultsMode: resultsMode, availableResultsModes: availableResultsModes, searchUrlFor: searchUrlFor } }"></div>
         </div>
+    </div>
+    <div data-bind="attr: { class: resultsModeContainerClassName }">
+        <!-- ko if: resultsMode() === 'List' -->
+        <!-- ko foreach: { data: pager.currentPage, as: 'result' } -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="result clearfix" data-bind="component: $parent.resultFor(result)"></div>
+            </div>
+        </div>
+        <!-- /ko -->
+        <!-- /ko -->
+        <!-- ko if: resultsMode() === 'Thumbnails' -->
+        <div class="row">
+            <!-- ko foreach: { data: pager.currentPage, as: 'result' } -->
+            <div class="col-md-3 col-sm-4 col-xs-6">
+                <div class="result clearfix" data-bind="component: $parent.resultFor(result)"></div>
+            </div>
+            <!-- /ko -->
+        </div>
+        <!-- /ko -->
+        <!-- ko if: resultsMode() === 'Table' -->
+        <div class="row">
+            <div class="col-md-12">
+                <div data-bind="component: { name: 'collections/table-results', params: $data }"></div>
+            </div>
+        </div>
+        <!-- /ko -->
     </div>
     <!-- /ko -->
     <!-- /ko -->

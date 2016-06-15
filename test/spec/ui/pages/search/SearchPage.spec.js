@@ -6,11 +6,12 @@
             'chai',
             'sinon',
             'knockout',
+            'config/routes',
             'util/container',
             'ui/pages/search/SearchPage',
             'mock/services/MockSearchService'
         ],
-        function (chai, sinon, ko, container, SearchPage, MockSearchService) {
+        function (chai, sinon, ko, routes, container, SearchPage, MockSearchService) {
             var expect = chai.expect;
 
             describe('The `SearchPage` module', function () {
@@ -20,13 +21,19 @@
                 describe('When the search service is returning valid results', function () {
                     var searchService;
                     beforeEach(function () {
+                        sinon.stub(routes, 'pushState');
                         // jshint camelcase: false
                         searchService = new MockSearchService(undefined, [
                             { object_id: 1, first: 'First 1', second: 'Second 1', third: 'Third 1' },
                             { object_id: 2, first: 'First 2', second: 'Second 2', third: 'Third 2' },
                             { object_id: 3, first: 'First 3', second: 'Second 3', third: 'Third 3' }
                         ]);
-                        container.register('search', searchService);
+                        container.register('search.collection', searchService);
+                        container.register('settings.collection', {
+                            collectionName: 'Collection',
+                            searchTypes: 'fixtures/collections/searchTypes',
+                            searchResultFields: 'fixtures/collections/searchResultFields'
+                        });
                         container.seal();
                     });
                     describe('When constructed with correct parameters', function () {
@@ -37,13 +44,7 @@
                                     type: 'collection'
                                 }
                             };
-                            page = new SearchPage(context, {
-                                collectionName: 'Collection',
-                                searchServiceKey: 'search',
-                                detailUrlTemplate: 'path/to/detail/:id',
-                                searchTypes: 'fixtures/collections/searchTypes',
-                                searchResultFields: 'fixtures/collections/searchResultFields'
-                            });
+                            page = new SearchPage(context);
                         });
                         it('Returns an object', function () {
                             expect(page).to.be.an('object');
@@ -52,7 +53,6 @@
                             expect(ko.isObservable(page.searchText)).to.equal(true);
                             expect(ko.isObservable(page.searchTypes)).to.equal(true);
                             expect(ko.isObservable(page.searchResultFields)).to.equal(true);
-                            expect(ko.isObservable(page.results)).to.equal(true);
                             expect(ko.isObservable(page.loading)).to.equal(true);
                             expect(ko.isObservable(page.displayResults)).to.equal(true);
                             expect(ko.isPureComputed(page.heading)).to.equal(true);
@@ -74,7 +74,6 @@
                             expect(page.searchText()).to.equal('');
                             expect(page.searchTypes()).to.deep.equal([]);
                             expect(page.searchResultFields()).to.deep.equal([]);
-                            expect(page.results()).to.deep.equal([]);
                         });
                         it('Is not loading or displaying results', function () {
                             expect(page.loading()).to.equal(false);
@@ -148,16 +147,12 @@
                                     beforeEach(function () {
                                         page.submit();
                                     });
-                                    it('Calls the specified search service with a wildcard', function () {
-                                        sinon.assert.calledOnce(searchService);
-                                        sinon.assert.calledWith(searchService, { first: '*' });
+                                    it('Does not call the search service', function () {
+                                        sinon.assert.notCalled(searchService);
                                     });
-                                    it('Is not loading but is displaying results', function () {
+                                    it('Is not loading or displaying results', function () {
                                         expect(page.loading()).to.equal(false);
-                                        expect(page.displayResults()).to.equal(true);
-                                    });
-                                    it('Displays the retrieved results', function () {
-                                        expect(page.results()).to.have.length(3); // 3 records in mock data
+                                        expect(page.displayResults()).to.equal(false);
                                     });
                                 });
                             });
@@ -192,9 +187,6 @@
                                     it('Is not loading but is displaying results', function () {
                                         expect(page.loading()).to.equal(false);
                                         expect(page.displayResults()).to.equal(true);
-                                    });
-                                    it('Displays the retrieved results', function () {
-                                        expect(page.results()).to.have.length(3); // 3 records in mock data
                                     });
                                 });
                             });
@@ -249,20 +241,27 @@
                         });
                         describe('The `detailUrlFor` view helper method', function () {
                             it('Returns the correct URL', function () {
-                                expect(page.detailUrlFor({ id: ko.observable(42) })).to.equal('path/to/detail/42');
+                                expect(page.detailUrlFor({ id: ko.observable(42) })).to.equal('/collection/detail/42');
                             });
                         });
                     });
                     afterEach(function () {
                         container.reset();
+                        routes.pushState.restore();
                     });
                 });
                 describe('When the search service is returning errors', function () {
                     var searchService;
                     beforeEach(function () {
+                        sinon.stub(routes, 'pushState');
                         // jshint camelcase: false
                         searchService = new MockSearchService(new Error('Search Error'));
-                        container.register('search', searchService);
+                        container.register('search.collection', searchService);
+                        container.register('settings.collection', {
+                            collectionName: 'Collection',
+                            searchTypes: 'fixtures/collections/searchTypes',
+                            searchResultFields: 'fixtures/collections/searchResultFields'
+                        });
                         container.seal();
                     });
                     describe('When constructed with valid parameters', function () {
@@ -273,13 +272,7 @@
                                     type: 'collection'
                                 }
                             };
-                            page = new SearchPage(context, {
-                                collectionName: 'Collection',
-                                searchServiceKey: 'search',
-                                detailUrlTemplate: 'path/to/detail/:id',
-                                searchTypes: 'fixtures/collections/searchTypes',
-                                searchResultFields: 'fixtures/collections/searchResultFields'
-                            });
+                            page = new SearchPage(context);
                         });
                         describe('When bound to the view', function () {
                             var element;
@@ -287,8 +280,9 @@
                                 element = document.createElement('div');
                                 page.binding(element, done);
                             });
-                            describe('When the search form is submitted', function () {
+                            describe('When the search form is submitted with a valid query', function () {
                                 beforeEach(function () {
+                                    page.searchText('query');
                                     page.submit();
                                 });
                                 it('Calls the specified search service', function () {
@@ -298,15 +292,13 @@
                                     expect(page.loading()).to.equal(false);
                                     expect(page.displayResults()).to.equal(false);
                                 });
-                                it('Does not display any results', function () {
-                                    expect(page.results()).to.have.length(0);
-                                });
                                 // TODO Displays the error
                             });
                         });
                     });
                     afterEach(function () {
                         container.reset();
+                        routes.pushState.restore();
                     });
                 });
             });
