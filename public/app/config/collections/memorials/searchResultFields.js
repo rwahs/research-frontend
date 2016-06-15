@@ -40,13 +40,6 @@
                 skip: 1,
                 filter: true,
                 display: 'hierarchy'
-            },
-            {
-                key: 'Subjects',
-                labelText: 'Subjects',
-                parse: true,
-                filter: true,
-                display: 'list'
             }
         ];
     });

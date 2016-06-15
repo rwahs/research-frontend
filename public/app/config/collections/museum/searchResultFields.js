@@ -35,13 +35,6 @@
                 labelText: 'Importance'
             },
             {
-                key: 'Subjects',
-                labelText: 'Subjects',
-                parse: true,
-                filter: true,
-                display: 'list'
-            },
-            {
                 key: 'Classification',
                 labelText: 'Classification',
                 parse: true,
