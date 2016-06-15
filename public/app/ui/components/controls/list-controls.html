@@ -1,17 +1,6 @@
 <div class="list-controls-container">
     <div>
         <div class="input-group input-group-sm">
-            <span class="input-group-addon">Sort:</span>
-            <select class="form-control">
-                <option value="" aria-label="Display the results in natural order" data-bind="click: resetSort">None</option>
-                <!-- ko foreach: availableSortFields -->
-                <option data-bind="text: label, attr: { value: value, selected: active, 'aria-label': longLabel }, click: click"></option>
-                <!-- /ko -->
-            </select>
-        </div>
-    </div>
-    <div>
-        <div class="input-group input-group-sm">
             <span class="input-group-addon">Mode:</span>
             <ul class="pagination pagination-sm">
                 <!-- ko foreach: availableModes -->
@@ -27,14 +16,23 @@
     </div>
     <div>
         <div class="input-group input-group-sm">
-            <span class="input-group-addon">Page Size:</span>
-            <ul class="pagination pagination-sm">
-                <!-- ko foreach: availablePageSizes -->
-                <li data-bind="css: { active: active }">
-                    <a href="#" data-bind="text: label, attr: { href: url, 'aria-label': longLabel }, click: click"></a>
-                </li>
+            <span class="input-group-addon">Sort:</span>
+            <select class="form-control styled-select" title="">
+                <option value="" aria-label="Display the results in natural order" data-bind="click: resetSort">None</option>
+                <!-- ko foreach: availableSortFields -->
+                <option data-bind="text: label, attr: { value: value, selected: active, 'aria-label': longLabel }, click: click"></option>
                 <!-- /ko -->
-            </ul>
+            </select>
+        </div>
+    </div>
+    <div>
+        <div class="input-group input-group-sm">
+            <span class="input-group-addon">Page Size:</span>
+            <select class="form-control styled-select" title="">
+                <!-- ko foreach: availablePageSizes -->
+                <option data-bind="text: label, attr: { href: url, selected: active, 'aria-label': longLabel }, click: click"></option>
+                <!-- /ko -->
+            </select>
         </div>
     </div>
     <div>
