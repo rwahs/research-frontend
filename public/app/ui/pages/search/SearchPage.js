@@ -148,7 +148,6 @@
                 };
 
                 this.resultFor = function (result) {
-                    console.log('collections/' + context.params.type + '/' + this.resultsMode().toLowerCase() + '-result');
                     return {
                         name: 'collections/' + context.params.type + '/' + this.resultsMode().toLowerCase() + '-result',
                         params: this
