@@ -55,6 +55,9 @@
                             expect(ko.isObservable(page.searchResultFields)).to.equal(true);
                             expect(ko.isObservable(page.loading)).to.equal(true);
                             expect(ko.isObservable(page.displayResults)).to.equal(true);
+                            expect(ko.isPureComputed(page.displayedResults)).to.equal(true);
+                            expect(ko.isPureComputed(page.type)).to.equal(true);
+                            expect(ko.isPureComputed(page.submittedQuery)).to.equal(true);
                             expect(ko.isPureComputed(page.heading)).to.equal(true);
                             expect(ko.isPureComputed(page.placeholder)).to.equal(true);
                             expect(ko.isPureComputed(page.hasResults)).to.equal(true);
@@ -68,7 +71,10 @@
                         });
                         it('Exposes view helper methods', function () {
                             expect(page.displayFor).to.be.a('function');
+                            expect(page.displayForLabelField).to.be.a('function');
+                            expect(page.resultFor).to.be.a('function');
                             expect(page.detailUrlFor).to.be.a('function');
+                            expect(page.searchUrlFor).to.be.a('function');
                         });
                         it('Gives the correct default values', function () {
                             expect(page.searchText()).to.equal('');

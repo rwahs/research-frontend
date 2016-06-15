@@ -15,17 +15,17 @@
                 };
 
             return function (parameters) {
-                if (!parameters || !parameters.pager) {
+                if (!parameters) {
+                    throw new Error('ListControlsComponent missing parameter map.');
+                }
+                if (!parameters.modeSwitcher) {
+                    throw new Error('ListControlsComponent missing required parameter: `modeSwitcher`.');
+                }
+                if (!parameters.pager) {
                     throw new Error('ListControlsComponent missing required parameter: `pager`.');
                 }
                 if (!parameters.sorter) {
                     throw new Error('ListControlsComponent missing required parameter: `sorter`.');
-                }
-                if (!parameters.resultsMode) {
-                    throw new Error('ListControlsComponent missing required parameter: `resultsMode`.');
-                }
-                if (!parameters.availableResultsModes) {
-                    throw new Error('ListControlsComponent missing required parameter: `availableResultsModes`.');
                 }
                 if (!parameters.searchUrlFor) {
                     throw new Error('ListControlsComponent missing required parameter: `searchUrlFor`.');
@@ -69,9 +69,9 @@
                     ));
                 });
 
-                this.availableResultsModes = ko.pureComputed(function () {
+                this.availableModes = ko.pureComputed(function () {
                     return _.map(
-                        parameters.availableResultsModes(),
+                        parameters.modeSwitcher.availableModes(),
                         function (mode) {
                             var url = parameters.searchUrlFor({ mode: mode });
                             return {
@@ -80,11 +80,11 @@
                                 longLabel: 'Display results in ' + mode + ' mode',
                                 url: url,
                                 active: ko.pureComputed(function () {
-                                    return mode === parameters.resultsMode();
+                                    return mode === parameters.modeSwitcher.mode();
                                 }),
                                 click: function () {
                                     routes.pushState(url);
-                                    parameters.resultsMode(mode);
+                                    parameters.modeSwitcher.mode(mode);
                                     return false;
                                 }
                             };

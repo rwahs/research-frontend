@@ -8,10 +8,11 @@
             'chai',
             'sinon',
             'ui/components/controls/ListControlsComponent',
+            'models/ListModeSwitcher',
             'models/ListPager',
             'models/ListSorter'
         ],
-        function (_, ko, chai, sinon, ListControlsComponent, ListPager, ListSorter) {
+        function (_, ko, chai, sinon, ListControlsComponent, ListModeSwitcher, ListPager, ListSorter) {
             var expect = chai.expect;
 
             describe('The `ListControlsComponent` module', function () {
@@ -19,20 +20,20 @@
                     expect(ListControlsComponent).to.be.a('function');
                 });
                 describe('When constructed with all required parameters', function () {
-                    var sorter, pager, controls;
+                    var modeSwitcher, sorter, pager, controls;
                     beforeEach(function () {
+                        modeSwitcher = new ListModeSwitcher('List');
                         sorter = new ListSorter(ko.observableArray(_.range(0, 500)), ko.observableArray());
                         pager = new ListPager(sorter.sortedList, 0, 10, [ 10, 25 ]);
                         controls = new ListControlsComponent({
+                            modeSwitcher: modeSwitcher,
                             pager: pager,
                             sorter: sorter,
-                            resultsMode: ko.observable('List'),
-                            availableResultsModes: ko.observable([ 'List', 'Thumbnails', 'Table' ]),
                             searchUrlFor: _.identity
                         });
                     });
                     it('Exposes observables and computed observables', function () {
-                        expect(ko.isPureComputed(controls.availableResultsModes)).to.equal(true);
+                        expect(ko.isPureComputed(controls.availableModes)).to.equal(true);
                         expect(ko.isPureComputed(controls.availablePageSizes)).to.equal(true);
                         expect(ko.isPureComputed(controls.availableJumpPageNumbers)).to.equal(true);
                         expect(ko.isPureComputed(controls.firstPageUrl)).to.equal(true);
@@ -48,8 +49,8 @@
                         expect(_.isFunction(controls.jumpToPreviousPage)).to.equal(true);
                         expect(_.isFunction(controls.jumpToNextPage)).to.equal(true);
                     });
-                    it('Returns the correct `availableResultsModes` objects', function () {
-                        var resultsModes = controls.availableResultsModes();
+                    it('Returns the correct `availableModes` objects', function () {
+                        var resultsModes = controls.availableModes();
                         expect(resultsModes.length).to.equal(3); // For the 3 passed in modes
 
                         expect(resultsModes[0].label).to.equal('List');
@@ -138,7 +139,19 @@
                     it('Throws an error', function () {
                         expect(function () {
                             controls = new ListControlsComponent();
-                        }).to.throw('ListControlsComponent missing required parameter: `pager`.');
+                        }).to.throw('ListControlsComponent missing parameter map.');
+                    });
+                });
+                describe('When constructed with the `modeSwitcher` parameter missing', function () {
+                    var controls;
+                    it('Throws an error', function () {
+                        expect(function () {
+                            controls = new ListControlsComponent({
+                                pager: new ListPager(ko.observableArray()),
+                                sorter: new ListSorter(ko.observableArray(), ko.observableArray()),
+                                searchUrlFor: _.noop
+                            });
+                        }).to.throw('ListControlsComponent missing required parameter: `modeSwitcher`.');
                     });
                 });
                 describe('When constructed with the `pager` parameter missing', function () {
@@ -146,9 +159,8 @@
                     it('Throws an error', function () {
                         expect(function () {
                             controls = new ListControlsComponent({
+                                modeSwitcher: new ListModeSwitcher(),
                                 sorter: new ListSorter(ko.observableArray(), ko.observableArray()),
-                                resultsMode: ko.observable(),
-                                availableResultsModes: ko.observable(),
                                 searchUrlFor: _.noop
                             });
                         }).to.throw('ListControlsComponent missing required parameter: `pager`.');
@@ -160,38 +172,11 @@
                         expect(function () {
                             sorter = new ListSorter(ko.observableArray(), ko.observableArray());
                             controls = new ListControlsComponent({
+                                modeSwitcher: new ListModeSwitcher(),
                                 pager: new ListPager(ko.observableArray()),
-                                resultsMode: ko.observable(),
-                                availableResultsModes: ko.observable(),
                                 searchUrlFor: _.noop
                             });
                         }).to.throw('ListControlsComponent missing required parameter: `sorter`.');
-                    });
-                });
-                describe('When constructed with the `resultsMode` parameter missing', function () {
-                    var controls;
-                    it('Throws an error', function () {
-                        expect(function () {
-                            controls = new ListControlsComponent({
-                                pager: new ListPager(ko.observableArray()),
-                                sorter: new ListSorter(ko.observableArray(), ko.observableArray()),
-                                availableResultsModes: ko.observable(),
-                                searchUrlFor: _.noop
-                            });
-                        }).to.throw('ListControlsComponent missing required parameter: `resultsMode`.');
-                    });
-                });
-                describe('When constructed with the `availableResultsModes` parameter missing', function () {
-                    var controls;
-                    it('Throws an error', function () {
-                        expect(function () {
-                            controls = new ListControlsComponent({
-                                pager: new ListPager(ko.observableArray()),
-                                sorter: new ListSorter(ko.observableArray(), ko.observableArray()),
-                                resultsMode: ko.observable(),
-                                searchUrlFor: _.noop
-                            });
-                        }).to.throw('ListControlsComponent missing required parameter: `availableResultsModes`.');
                     });
                 });
                 describe('When constructed with the `searchUrlFor` parameter missing', function () {
@@ -199,10 +184,9 @@
                     it('Throws an error', function () {
                         expect(function () {
                             controls = new ListControlsComponent({
+                                modeSwitcher: new ListModeSwitcher(),
                                 pager: new ListPager(ko.observableArray()),
-                                sorter: new ListSorter(ko.observableArray(), ko.observableArray()),
-                                resultsMode: ko.observable(),
-                                availableResultsModes: ko.observable()
+                                sorter: new ListSorter(ko.observableArray(), ko.observableArray())
                             });
                         }).to.throw('ListControlsComponent missing required parameter: `searchUrlFor`.');
                     });

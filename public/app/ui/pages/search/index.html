@@ -47,11 +47,11 @@
     <!-- ko if: hasResults -->
     <div class="row">
         <div class="col-md-12 text-right">
-            <div data-bind="component: { name: 'controls/list', params: { pager: pager, sorter: sorter, resultsMode: resultsMode, availableResultsModes: availableResultsModes, searchUrlFor: searchUrlFor } }"></div>
+            <div data-bind="component: { name: 'controls/list', params: { pager: pager, sorter: sorter, modeSwitcher: modeSwitcher, searchUrlFor: searchUrlFor } }"></div>
         </div>
     </div>
-    <div data-bind="attr: { class: resultsModeContainerClassName }">
-        <!-- ko if: resultsMode() === 'List' -->
+    <div data-bind="attr: { class: modeSwitcher.resultsContainerClassName }">
+        <!-- ko if: modeSwitcher.mode() === 'List' -->
         <!-- ko foreach: { data: displayedResults, as: 'result' } -->
         <div class="row">
             <div class="col-md-12">
@@ -60,7 +60,7 @@
         </div>
         <!-- /ko -->
         <!-- /ko -->
-        <!-- ko if: resultsMode() === 'Thumbnails' -->
+        <!-- ko if: modeSwitcher.mode() === 'Thumbnails' -->
         <div class="row">
             <!-- ko foreach: { data: displayedResults, as: 'result' } -->
             <div class="col-md-3 col-sm-4 col-xs-6">
@@ -69,7 +69,7 @@
             <!-- /ko -->
         </div>
         <!-- /ko -->
-        <!-- ko if: resultsMode() === 'Table' -->
+        <!-- ko if: modeSwitcher.mode() === 'Table' -->
         <div class="row">
             <div class="col-md-12">
                 <div data-bind="component: { name: 'collections/table-results', params: $data }"></div>

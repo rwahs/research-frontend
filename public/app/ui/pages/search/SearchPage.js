@@ -9,13 +9,13 @@
             'config/routes',
             'util/container',
             'models/DynamicRecord',
+            'models/ListModeSwitcher',
             'models/ListSorter',
             'models/ListPager',
             'ui/pages/search/SearchType'
         ],
-        function (_, ko, qs, routes, container, DynamicRecord, ListSorter, ListPager, SearchType) {
-            var RESULTS_MODES = [ 'List', 'Thumbnails', 'Table' ],
-                int = function (value) {
+        function (_, ko, qs, routes, container, DynamicRecord, ListModeSwitcher, ListSorter, ListPager, SearchType) {
+            var int = function (value) {
                     return value ? parseInt(value, 10) : undefined;
                 };
 
@@ -57,8 +57,8 @@
                 this.searchResultFields = ko.observableArray();
                 this.loading = ko.observable(false);
                 this.displayResults = ko.observable(false);
-                this.resultsMode = ko.observable(query.mode || 'List');
 
+                this.modeSwitcher = new ListModeSwitcher(query.mode);
                 this.sorter = new ListSorter(results, this.searchResultFields, query.sort, query.dir);
                 this.pager = new ListPager(this.sorter.sortedList, int(query.start), int(query.size));
 
@@ -87,14 +87,6 @@
                 this.hasResults = ko.pureComputed(function () {
                     return results().length > 0;
                 });
-
-                this.availableResultsModes = ko.pureComputed(function () {
-                    return RESULTS_MODES;
-                });
-
-                this.resultsModeContainerClassName = ko.pureComputed(function () {
-                    return 'results-container-' + this.resultsMode().toLowerCase();
-                }.bind(this));
 
                 this.binding = function (element, callback) {
                     require(
@@ -154,7 +146,7 @@
 
                 this.resultFor = function (result) {
                     return {
-                        name: 'collections/' + context.params.type + '/' + this.resultsMode().toLowerCase() + '-result',
+                        name: 'collections/' + context.params.type + '/' + this.modeSwitcher.mode().toLowerCase() + '-result',
                         params: this
                     };
                 };
@@ -170,7 +162,7 @@
                                 dir: this.sorter.direction(),
                                 start: this.pager.start(),
                                 size: this.pager.pageSize(),
-                                mode: this.resultsMode()
+                                mode: this.modeSwitcher.mode()
                             }
                         )
                     );

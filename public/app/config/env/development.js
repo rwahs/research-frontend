@@ -8,8 +8,8 @@
             'services/detailService'
         ],
         function (container, searchService, detailService) {
-            var simpleApiBaseUrl = 'http://localhost/providence/service.php/simple',
-                noCache = true,
+            var simpleApiBaseUrl = 'https://staging-collections.histwest.org.au/service.php/simple',
+                noCache = false,
                 ajaxOptions = {
                     xhrFields: {
                         withCredentials: true
