@@ -47,12 +47,12 @@
     <!-- ko if: hasResults -->
     <div class="row">
         <div class="col-md-12 text-right">
-            <div data-bind="component: { name: 'controls/list', params: { pager: pager, resultsMode: resultsMode, availableResultsModes: availableResultsModes, searchUrlFor: searchUrlFor } }"></div>
+            <div data-bind="component: { name: 'controls/list', params: { pager: pager, sorter: sorter, resultsMode: resultsMode, availableResultsModes: availableResultsModes, searchUrlFor: searchUrlFor } }"></div>
         </div>
     </div>
     <div data-bind="attr: { class: resultsModeContainerClassName }">
         <!-- ko if: resultsMode() === 'List' -->
-        <!-- ko foreach: { data: pager.currentPage, as: 'result' } -->
+        <!-- ko foreach: { data: displayedResults, as: 'result' } -->
         <div class="row">
             <div class="col-md-12">
                 <div class="result clearfix" data-bind="component: $parent.resultFor(result)"></div>
@@ -62,7 +62,7 @@
         <!-- /ko -->
         <!-- ko if: resultsMode() === 'Thumbnails' -->
         <div class="row">
-            <!-- ko foreach: { data: pager.currentPage, as: 'result' } -->
+            <!-- ko foreach: { data: displayedResults, as: 'result' } -->
             <div class="col-md-3 col-sm-4 col-xs-6">
                 <div class="result clearfix" data-bind="component: $parent.resultFor(result)"></div>
             </div>

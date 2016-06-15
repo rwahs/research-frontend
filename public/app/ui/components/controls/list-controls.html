@@ -1,6 +1,17 @@
 <div class="list-controls-container">
     <div>
         <div class="input-group input-group-sm">
+            <span class="input-group-addon">Sort:</span>
+            <select class="form-control">
+                <option value="" aria-label="Display the results in natural order" data-bind="click: resetSort">None</option>
+                <!-- ko foreach: availableSortFields -->
+                <option data-bind="text: label, attr: { value: value, selected: active, 'aria-label': longLabel }, click: click"></option>
+                <!-- /ko -->
+            </select>
+        </div>
+    </div>
+    <div>
+        <div class="input-group input-group-sm">
             <span class="input-group-addon">Mode:</span>
             <ul class="pagination pagination-sm">
                 <!-- ko foreach: availableResultsModes -->

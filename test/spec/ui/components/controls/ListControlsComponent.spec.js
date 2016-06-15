@@ -8,9 +8,10 @@
             'chai',
             'sinon',
             'ui/components/controls/ListControlsComponent',
-            'models/ListPager'
+            'models/ListPager',
+            'models/ListSorter'
         ],
-        function (_, ko, chai, sinon, ListControlsComponent, ListPager) {
+        function (_, ko, chai, sinon, ListControlsComponent, ListPager, ListSorter) {
             var expect = chai.expect;
 
             describe('The `ListControlsComponent` module', function () {
@@ -18,10 +19,13 @@
                     expect(ListControlsComponent).to.be.a('function');
                 });
                 describe('When constructed with all required parameters', function () {
-                    var controls;
+                    var sorter, pager, controls;
                     beforeEach(function () {
+                        sorter = new ListSorter(ko.observableArray(_.range(0, 500)), ko.observableArray());
+                        pager = new ListPager(sorter.sortedList, 0, 10, [ 10, 25 ]);
                         controls = new ListControlsComponent({
-                            pager: new ListPager(ko.observableArray(_.range(0, 500)), 0, 10, [ 10, 25 ]),
+                            pager: pager,
+                            sorter: sorter,
                             resultsMode: ko.observable('List'),
                             availableResultsModes: ko.observable([ 'List', 'Thumbnails', 'Table' ]),
                             searchUrlFor: _.identity
@@ -142,11 +146,26 @@
                     it('Throws an error', function () {
                         expect(function () {
                             controls = new ListControlsComponent({
+                                sorter: new ListSorter(ko.observableArray(), ko.observableArray()),
                                 resultsMode: ko.observable(),
                                 availableResultsModes: ko.observable(),
                                 searchUrlFor: _.noop
                             });
                         }).to.throw('ListControlsComponent missing required parameter: `pager`.');
+                    });
+                });
+                describe('When constructed with the `sorter` parameter missing', function () {
+                    var sorter, controls;
+                    it('Throws an error', function () {
+                        expect(function () {
+                            sorter = new ListSorter(ko.observableArray(), ko.observableArray());
+                            controls = new ListControlsComponent({
+                                pager: new ListPager(ko.observableArray()),
+                                resultsMode: ko.observable(),
+                                availableResultsModes: ko.observable(),
+                                searchUrlFor: _.noop
+                            });
+                        }).to.throw('ListControlsComponent missing required parameter: `sorter`.');
                     });
                 });
                 describe('When constructed with the `resultsMode` parameter missing', function () {
@@ -155,6 +174,7 @@
                         expect(function () {
                             controls = new ListControlsComponent({
                                 pager: new ListPager(ko.observableArray()),
+                                sorter: new ListSorter(ko.observableArray(), ko.observableArray()),
                                 availableResultsModes: ko.observable(),
                                 searchUrlFor: _.noop
                             });
@@ -167,6 +187,7 @@
                         expect(function () {
                             controls = new ListControlsComponent({
                                 pager: new ListPager(ko.observableArray()),
+                                sorter: new ListSorter(ko.observableArray(), ko.observableArray()),
                                 resultsMode: ko.observable(),
                                 searchUrlFor: _.noop
                             });
@@ -179,6 +200,7 @@
                         expect(function () {
                             controls = new ListControlsComponent({
                                 pager: new ListPager(ko.observableArray()),
+                                sorter: new ListSorter(ko.observableArray(), ko.observableArray()),
                                 resultsMode: ko.observable(),
                                 availableResultsModes: ko.observable()
                             });

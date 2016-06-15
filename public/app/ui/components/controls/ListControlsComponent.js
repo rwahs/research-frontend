@@ -18,6 +18,9 @@
                 if (!parameters || !parameters.pager) {
                     throw new Error('ListControlsComponent missing required parameter: `pager`.');
                 }
+                if (!parameters.sorter) {
+                    throw new Error('ListControlsComponent missing required parameter: `sorter`.');
+                }
                 if (!parameters.resultsMode) {
                     throw new Error('ListControlsComponent missing required parameter: `resultsMode`.');
                 }
@@ -27,6 +30,44 @@
                 if (!parameters.searchUrlFor) {
                     throw new Error('ListControlsComponent missing required parameter: `searchUrlFor`.');
                 }
+
+                this.availableSortFields = ko.pureComputed(function () {
+                    return _.flatten(_.map(
+                        parameters.sorter.availableSortFields(),
+                        function (field) {
+                            return [
+                                {
+                                    label: field.labelText + ' asc',
+                                    longLabel: 'Sort ascending by ' + field.labelText,
+                                    value: field.key + '-asc',
+                                    active: ko.pureComputed(function () {
+                                        return field.key === parameters.sorter.field();
+                                    }),
+                                    click: function () {
+                                        routes.pushState(parameters.searchUrlFor({ sort: field.key, dir: 'asc' }));
+                                        parameters.sorter.field(field.key);
+                                        parameters.sorter.direction('asc');
+                                        return false;
+                                    }
+                                },
+                                {
+                                    label: field.labelText + ' desc',
+                                    longLabel: 'Sort descending by ' + field.labelText,
+                                    value: field.key + '-desc',
+                                    active: ko.pureComputed(function () {
+                                        return field.key === parameters.sorter.field();
+                                    }),
+                                    click: function () {
+                                        routes.pushState(parameters.searchUrlFor({ sort: field.key, dir: 'desc' }));
+                                        parameters.sorter.field(field.key);
+                                        parameters.sorter.direction('desc');
+                                        return false;
+                                    }
+                                }
+                            ];
+                        }
+                    ));
+                });
 
                 this.availableResultsModes = ko.pureComputed(function () {
                     return _.map(
@@ -119,6 +160,11 @@
                 this.atLastPage = ko.pureComputed(function () {
                     return parameters.pager.start() >= parameters.pager.lastPageStart();
                 });
+
+                this.resetSort = function () {
+                    parameters.sorter.field(null);
+                    parameters.sorter.direction(null);
+                };
 
                 this.jumpToFirstPage = function () {
                     if (!this.atFirstPage()) {

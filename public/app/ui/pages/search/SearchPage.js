@@ -9,11 +9,15 @@
             'config/routes',
             'util/container',
             'models/DynamicRecord',
+            'models/ListSorter',
             'models/ListPager',
             'ui/pages/search/SearchType'
         ],
-        function (_, ko, qs, routes, container, DynamicRecord, ListPager, SearchType) {
-            var RESULTS_MODES = [ 'List', 'Thumbnails', 'Table' ];
+        function (_, ko, qs, routes, container, DynamicRecord, ListSorter, ListPager, SearchType) {
+            var RESULTS_MODES = [ 'List', 'Thumbnails', 'Table' ],
+                int = function (value) {
+                    return value ? parseInt(value, 10) : undefined;
+                };
 
             return function (context) {
                 var settings = container.resolve('settings.' + context.params.type),
@@ -48,18 +52,19 @@
                         );
                     }.bind(this);
 
-                this.pager = new ListPager(
-                    results,
-                    query.start ? parseInt(query.start, 10) : undefined,
-                    query.size ? parseInt(query.size, 10) : undefined
-                );
-
                 this.searchText = ko.observable(query.query || '');
                 this.searchTypes = ko.observableArray();
                 this.searchResultFields = ko.observableArray();
                 this.loading = ko.observable(false);
                 this.displayResults = ko.observable(false);
                 this.resultsMode = ko.observable(query.mode || 'List');
+
+                this.sorter = new ListSorter(results, this.searchResultFields, query.sort, query.dir);
+                this.pager = new ListPager(this.sorter.sortedList, int(query.start), int(query.size));
+
+                this.displayedResults = ko.pureComputed(function () {
+                    return this.pager.currentPage();
+                }.bind(this));
 
                 this.type = ko.pureComputed(function () {
                     return context.params.type;
@@ -161,6 +166,8 @@
                             overrides,
                             {
                                 query: submittedQuery(),
+                                sort: this.sorter.field(),
+                                dir: this.sorter.direction(),
                                 start: this.pager.start(),
                                 size: this.pager.pageSize(),
                                 mode: this.resultsMode()
