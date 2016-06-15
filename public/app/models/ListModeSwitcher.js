@@ -17,7 +17,7 @@
                 });
 
                 this.resultsContainerClassName = ko.pureComputed(function () {
-                    return 'results-container-' + this.resultsMode().toLowerCase();
+                    return 'results-container-' + this.mode().toLowerCase();
                 }.bind(this));
             };
         }
