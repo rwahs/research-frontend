@@ -2,7 +2,7 @@
     <div>
         <div class="input-group input-group-sm">
             <span class="input-group-addon">Sort:</span>
-            <select class="form-control" data-bind="options: availableSortFields, optionsText: 'labelText', optionsValue: 'key', optionsCaption: 'Default', value: sortField"></select>
+            <select class="form-control styled-select" data-bind="options: availableSortFields, optionsText: 'labelText', optionsValue: 'key', optionsCaption: 'Default', value: sortField"></select>
             <ul class="pagination pagination-sm">
                 <li data-bind="css: { active: isAscending }">
                     <a href="#" data-bind="attr: { href: sortAscendingUrl }, click: sortAscending" aria-label="Sort ascending">
@@ -35,13 +35,7 @@
     <div>
         <div class="input-group input-group-sm">
             <span class="input-group-addon">Page Size:</span>
-            <ul class="pagination pagination-sm">
-                <!-- ko foreach: availablePageSizes -->
-                <li data-bind="css: { active: active }">
-                    <a href="#" data-bind="text: label, attr: { href: url, 'aria-label': longLabel }, click: click"></a>
-                </li>
-                <!-- /ko -->
-            </ul>
+            <select class="form-control styled-select" title="" data-bind="options: availablePageSizes, value: pageSize"></select>
         </div>
     </div>
     <div>

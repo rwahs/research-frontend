@@ -127,6 +127,30 @@
                             });
                         });
                     });
+                    describe('The `pageSize` writable-computed', function () {
+                        it('Has the correct initial value', function () {
+                            expect(controls.pageSize()).to.equal(10);
+                        });
+                        describe('When the value is changed directly', function () {
+                            beforeEach(function () {
+                                controls.pageSize(25);
+                            });
+                            it('Updates the `pageSize` observable in the `ListPager`', function () {
+                                expect(pager.pageSize()).to.equal(25);
+                            });
+                            it('Updates the browser URL', function () {
+                                sinon.assert.calledOnce(routes.pushState);
+                            });
+                        });
+                        describe('When the value in the `ListPager` is updated', function () {
+                            beforeEach(function () {
+                                pager.pageSize(25);
+                            });
+                            it('Updates the `pageSize`', function () {
+                                expect(controls.pageSize()).to.equal(25);
+                            });
+                        });
+                    });
                     it('Returns the correct `availableModes` objects', function () {
                         var modes = controls.availableModes();
                         expect(modes.length).to.equal(3); // For the 3 passed in modes
@@ -150,20 +174,7 @@
                         expect(_.isFunction(modes[2].click)).to.equal(true);
                     });
                     it('Returns the correct `availablePageSizes` objects', function () {
-                        var pageSizes = controls.availablePageSizes();
-                        expect(pageSizes.length).to.equal(2); // For the 2 page sizes
-
-                        expect(pageSizes[0].label).to.equal(10);
-                        expect(pageSizes[0].longLabel).to.equal('Display 10 results per page');
-                        expect(pageSizes[0].url).to.deep.equal({ start: 0, size: 10 }); // Since we have `_.identity` as the `searchUrlFor` callback
-                        expect(_.isFunction(pageSizes[0].active)).to.equal(true);
-                        expect(_.isFunction(pageSizes[0].click)).to.equal(true);
-
-                        expect(pageSizes[1].label).to.equal(25);
-                        expect(pageSizes[1].longLabel).to.equal('Display 25 results per page');
-                        expect(pageSizes[1].url).to.deep.equal({ start: 0, size: 25 }); // Since we have `_.identity` as the `searchUrlFor` callback
-                        expect(_.isFunction(pageSizes[1].active)).to.equal(true);
-                        expect(_.isFunction(pageSizes[1].click)).to.equal(true);
+                        expect(controls.availablePageSizes()).to.deep.equal([ 10, 25 ]); // For the 2 page sizes
                     });
                     it('Returns the correct `availableJumpPageNumbers` objects', function () {
                         var pageSizes = controls.availableJumpPageNumbers();

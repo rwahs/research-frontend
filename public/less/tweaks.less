@@ -22,3 +22,15 @@ footer.navbar {
     line-height: 1;
     padding: 10px;
 }
+
+select.form-control.styled-select {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: transparent url('/images/dropdown.png') right @padding-small-horizontal center no-repeat;
+    padding-right: @padding-small-horizontal * 2;
+}
+
+select.form-control.styled-select::-ms-expand {
+    display: none;
+}

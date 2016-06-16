@@ -51,6 +51,16 @@
                     }
                 });
 
+                this.pageSize = ko.pureComputed({
+                    read: function () {
+                        return parameters.pager.pageSize();
+                    },
+                    write: function (size) {
+                        routes.pushState(parameters.searchUrlFor({ size: size }));
+                        parameters.pager.pageSize(size);
+                    }
+                });
+
                 this.availableSortFields = ko.pureComputed(function () {
                     return parameters.sorter.availableSortFields();
                 });
@@ -95,25 +105,7 @@
                 });
 
                 this.availablePageSizes = ko.pureComputed(function () {
-                    return _.map(
-                        parameters.pager.availablePageSizes(),
-                        function (size) {
-                            var url = parameters.searchUrlFor({ start: 0, size: size });
-                            return {
-                                label: size,
-                                longLabel: 'Display ' + size + ' results per page',
-                                url: url,
-                                active: ko.pureComputed(function () {
-                                    return size === parameters.pager.pageSize();
-                                }),
-                                click: function () {
-                                    routes.pushState(url);
-                                    parameters.pager.pageSize(size);
-                                    return false;
-                                }
-                            };
-                        }
-                    );
+                    return parameters.pager.availablePageSizes();
                 });
 
                 this.availableJumpPageNumbers = ko.pureComputed(function () {
