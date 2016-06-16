@@ -80,8 +80,32 @@
                         it('Has the correct default initial state', function () {
                             expect(sorter.field()).to.equal(undefined);
                             expect(sorter.direction()).to.equal(undefined);
+                        });
+                        it('Gives the correct sort field options', function () {
                             expect(_.map(sorter.availableSortFields(), 'key')).to.deep.equal([ 'first', 'second' ]);
+                        });
+                        it('Gives the correct initial results (order)', function () {
                             expect(_.map(sorter.sortedList(), getId)).to.deep.equal([ 1, 2, 3, 4, 5 ]);
+                        });
+                        describe('When using default sort', function () {
+                            describe('With `direction = asc`', function () {
+                                beforeEach(function () {
+                                    sorter.field(undefined);
+                                    sorter.direction('asc');
+                                });
+                                it('Gives the correct results (order)', function () {
+                                    expect(_.map(sorter.sortedList(), getId)).to.deep.equal([ 1, 2, 3, 4, 5 ]);
+                                });
+                            });
+                            describe('With `direction = desc`', function () {
+                                beforeEach(function () {
+                                    sorter.field(undefined);
+                                    sorter.direction('desc');
+                                });
+                                it('Gives the correct results (order)', function () {
+                                    expect(_.map(sorter.sortedList(), getId)).to.deep.equal([ 5, 4, 3, 2, 1 ]);
+                                });
+                            });
                         });
                         describe('When sorting by a field using natural sorting', function () {
                             describe('With `direction = asc`', function () {
@@ -89,10 +113,7 @@
                                     sorter.field('first');
                                     sorter.direction('asc');
                                 });
-                                it('Has the correct state', function () {
-                                    expect(sorter.field()).to.equal('first');
-                                    expect(sorter.direction()).to.equal('asc');
-                                    expect(_.map(sorter.availableSortFields(), 'key')).to.deep.equal([ 'first', 'second' ]);
+                                it('Gives the correct results (order)', function () {
                                     expect(_.map(sorter.sortedList(), getId)).to.deep.equal([ 5, 1, 4, 2, 3 ]);
                                 });
                             });
@@ -101,10 +122,7 @@
                                     sorter.field('first');
                                     sorter.direction('desc');
                                 });
-                                it('Has the correct state', function () {
-                                    expect(sorter.field()).to.equal('first');
-                                    expect(sorter.direction()).to.equal('desc');
-                                    expect(_.map(sorter.availableSortFields(), 'key')).to.deep.equal([ 'first', 'second' ]);
+                                it('Gives the correct results (order)', function () {
                                     expect(_.map(sorter.sortedList(), getId)).to.deep.equal([ 3, 2, 4, 1, 5 ]);
                                 });
                             });
@@ -115,10 +133,7 @@
                                     sorter.field('second');
                                     sorter.direction('asc');
                                 });
-                                it('Has the correct state', function () {
-                                    expect(sorter.field()).to.equal('second');
-                                    expect(sorter.direction()).to.equal('asc');
-                                    expect(_.map(sorter.availableSortFields(), 'key')).to.deep.equal([ 'first', 'second' ]);
+                                it('Gives the correct results (order)', function () {
                                     expect(_.map(sorter.sortedList(), getId)).to.deep.equal([ 1, 2, 4, 5, 3 ]);
                                 });
                             });
@@ -127,10 +142,7 @@
                                     sorter.field('second');
                                     sorter.direction('desc');
                                 });
-                                it('Has the correct state', function () {
-                                    expect(sorter.field()).to.equal('second');
-                                    expect(sorter.direction()).to.equal('desc');
-                                    expect(_.map(sorter.availableSortFields(), 'key')).to.deep.equal([ 'first', 'second' ]);
+                                it('Gives the correct results (order)', function () {
                                     expect(_.map(sorter.sortedList(), getId)).to.deep.equal([ 5, 4, 2, 1, 3 ]);
                                 });
                             });
@@ -154,7 +166,11 @@
                         it('Has the correct initial state', function () {
                             expect(sorter.field()).to.equal('first');
                             expect(sorter.direction()).to.equal('asc');
+                        });
+                        it('Gives the correct sort field options', function () {
                             expect(_.map(sorter.availableSortFields(), 'key')).to.deep.equal([ 'first', 'second' ]);
+                        });
+                        it('Gives the correct initial results (order)', function () {
                             expect(_.map(sorter.sortedList(), getId)).to.deep.equal([ 5, 1, 4, 2, 3 ]);
                         });
                         describe('When clearing the `field` and `direction`', function () {
@@ -162,10 +178,7 @@
                                 sorter.field(undefined);
                                 sorter.direction(undefined);
                             });
-                            it('Has the correct state', function () {
-                                expect(sorter.field()).to.equal(undefined);
-                                expect(sorter.direction()).to.equal(undefined);
-                                expect(_.map(sorter.availableSortFields(), 'key')).to.deep.equal([ 'first', 'second' ]);
+                            it('Gives the correct results (order)', function () {
                                 expect(_.map(sorter.sortedList(), getId)).to.deep.equal([ 1, 2, 3, 4, 5 ]);
                             });
                         });
