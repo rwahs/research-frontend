@@ -209,6 +209,7 @@
                                         params: {
                                             data: 'This is the data',
                                             name: 'field',
+                                            display: undefined,
                                             placeholder: undefined
                                         }
                                     });
@@ -233,6 +234,7 @@
                                         params: {
                                             data: 'This is the data',
                                             name: 'field',
+                                            display: 'fancy',
                                             placeholder: 'No data'
                                         }
                                     });

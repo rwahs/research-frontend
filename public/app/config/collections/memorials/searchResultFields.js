@@ -6,8 +6,7 @@
             {
                 key: 'MediaThumbnail',
                 labelText: 'Image',
-                display: 'image',
-                placeholder: '(No image available)'
+                display: 'image'
             },
             {
                 key: 'MediaSmall',
