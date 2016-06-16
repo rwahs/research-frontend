@@ -20,6 +20,7 @@
                         beforeEach(function () {
                             display = new DisplayComponent({
                                 name: 'field',
+                                display: 'text',
                                 data: {
                                     idno: '42a',
                                     title: 'Title of the Record',
@@ -36,6 +37,7 @@
                         beforeEach(function () {
                             display = new DisplayComponent({
                                 name: 'missing',
+                                display: 'text',
                                 data: {
                                     idno: '42a',
                                     title: 'Title of the Record',
@@ -49,25 +51,46 @@
                         });
                     });
                     describe('Without optional parameters', function () {
-                        beforeEach(function () {
-                            display = new DisplayComponent({
-                                name: 'field',
-                                data: {
-                                    idno: '42a',
-                                    title: 'Title of the Record',
-                                    field: 'value of field'
-                                }
+                        describe('With type of "text"', function () {
+                            beforeEach(function () {
+                                display = new DisplayComponent({
+                                    name: 'field',
+                                    display: 'text',
+                                    data: {
+                                        idno: '42a',
+                                        title: 'Title of the Record',
+                                        field: 'value of field'
+                                    }
+                                });
+                            });
+                            it('Exposes the correct default label and placeholder values', function () {
+                                expect(display.labelText()).to.equal(undefined);
+                                expect(display.placeholder()).to.equal('&mdash;');
                             });
                         });
-                        it('Exposes the correct default label and placeholder values', function () {
-                            expect(display.labelText()).to.equal(undefined);
-                            expect(display.placeholder()).to.equal('&mdash;');
+                        describe('With type of "image"', function () {
+                            beforeEach(function () {
+                                display = new DisplayComponent({
+                                    name: 'field',
+                                    display: 'image',
+                                    data: {
+                                        idno: '42a',
+                                        title: 'Title of the Record',
+                                        field: 'value of field'
+                                    }
+                                });
+                            });
+                            it('Exposes the correct default label and placeholder values', function () {
+                                expect(display.labelText()).to.equal(undefined);
+                                expect(display.placeholder()).to.equal('<span class="img-thumbnail img-placeholder"><span><span class="glyphicon glyphicon-picture"></span></span></span>');
+                            });
                         });
                     });
                     describe('With optional parameters specified', function () {
                         beforeEach(function () {
                             display = new DisplayComponent({
                                 name: 'field',
+                                display: 'text',
                                 data: {
                                     idno: '42a',
                                     title: 'Title of the Record',
@@ -86,6 +109,7 @@
                         beforeEach(function () {
                             display = new DisplayComponent({
                                 name: 'field',
+                                display: 'text',
                                 data: {
                                     idno: '42a',
                                     title: 'Title of the Record',

@@ -19,7 +19,6 @@
                     var mediaField = _.find(searchResultFields, { key: 'MediaThumbnail' });
                     expect(mediaField.labelText).to.equal('Image');
                     expect(mediaField.display).to.equal('image');
-                    expect(mediaField.placeholder).to.equal('(No image available)');
                 });
                 it('Defines the `MediaSmall` field', function () {
                     var mediaField = _.find(searchResultFields, { key: 'MediaSmall' });
