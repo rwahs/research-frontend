@@ -8,6 +8,10 @@
         ],
         function (_, ko) {
             return function (parameters) {
+                var defaultPlaceholder = (parameters.display === 'image') ?
+                        '<span class="img-thumbnail img-placeholder"><span><span class="glyphicon glyphicon-picture"></span></span></span>' :
+                        '&mdash;';
+
                 if (!parameters.name) {
                     throw new Error('DisplayComponent missing required parameter: `name`.');
                 }
@@ -30,7 +34,7 @@
                 });
 
                 this.placeholder = ko.pureComputed(function () {
-                    return parameters.placeholder === false ? false : (parameters.placeholder || '&mdash;');
+                    return parameters.placeholder === false ? false : (parameters.placeholder || defaultPlaceholder);
                 }.bind(this));
             };
         }

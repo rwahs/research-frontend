@@ -135,6 +135,7 @@
                         params: {
                             data: result.data,
                             name: field.key,
+                            display: field.display,
                             placeholder: field.placeholder
                         }
                     };
