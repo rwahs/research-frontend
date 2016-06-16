@@ -31,42 +31,44 @@
                     throw new Error('ListControlsComponent missing required parameter: `searchUrlFor`.');
                 }
 
+                this.sortField = ko.pureComputed({
+                    read: function () {
+                        return parameters.sorter.field();
+                    },
+                    write: function (field) {
+                        routes.pushState(parameters.searchUrlFor({ sort: field || '' }));
+                        parameters.sorter.field(field);
+                    }
+                });
+
+                this.sortDirection = ko.pureComputed({
+                    read: function () {
+                        return parameters.sorter.direction();
+                    },
+                    write: function (direction) {
+                        routes.pushState(parameters.searchUrlFor({ dir: direction }));
+                        parameters.sorter.direction(direction);
+                    }
+                });
+
                 this.availableSortFields = ko.pureComputed(function () {
-                    return _.flatten(_.map(
-                        parameters.sorter.availableSortFields(),
-                        function (field) {
-                            return [
-                                {
-                                    label: field.labelText + ' asc',
-                                    longLabel: 'Sort ascending by ' + field.labelText,
-                                    value: field.key + '-asc',
-                                    active: ko.pureComputed(function () {
-                                        return field.key === parameters.sorter.field();
-                                    }),
-                                    click: function () {
-                                        routes.pushState(parameters.searchUrlFor({ sort: field.key, dir: 'asc' }));
-                                        parameters.sorter.field(field.key);
-                                        parameters.sorter.direction('asc');
-                                        return false;
-                                    }
-                                },
-                                {
-                                    label: field.labelText + ' desc',
-                                    longLabel: 'Sort descending by ' + field.labelText,
-                                    value: field.key + '-desc',
-                                    active: ko.pureComputed(function () {
-                                        return field.key === parameters.sorter.field();
-                                    }),
-                                    click: function () {
-                                        routes.pushState(parameters.searchUrlFor({ sort: field.key, dir: 'desc' }));
-                                        parameters.sorter.field(field.key);
-                                        parameters.sorter.direction('desc');
-                                        return false;
-                                    }
-                                }
-                            ];
-                        }
-                    ));
+                    return parameters.sorter.availableSortFields();
+                });
+
+                this.isAscending = ko.pureComputed(function () {
+                    return parameters.sorter.direction() === 'asc';
+                });
+
+                this.isDescending = ko.pureComputed(function () {
+                    return parameters.sorter.direction() === 'desc';
+                });
+
+                this.sortAscendingUrl = ko.pureComputed(function () {
+                    return parameters.searchUrlFor({ dir: 'asc' });
+                });
+
+                this.sortDescendingUrl = ko.pureComputed(function () {
+                    return parameters.searchUrlFor({ dir: 'desc' });
                 });
 
                 this.availableModes = ko.pureComputed(function () {
@@ -161,10 +163,15 @@
                     return parameters.pager.start() >= parameters.pager.lastPageStart();
                 });
 
-                this.resetSort = function () {
-                    parameters.sorter.field(null);
-                    parameters.sorter.direction(null);
-                };
+                this.sortAscending = function () {
+                    routes.pushState(this.sortAscendingUrl());
+                    parameters.sorter.direction('asc');
+                }.bind(this);
+
+                this.sortDescending = function () {
+                    routes.pushState(this.sortDescendingUrl());
+                    parameters.sorter.direction('desc');
+                }.bind(this);
 
                 this.jumpToFirstPage = function () {
                     if (!this.atFirstPage()) {
