@@ -79,7 +79,7 @@
                         });
                         it('Has the correct default initial state', function () {
                             expect(sorter.field()).to.equal(undefined);
-                            expect(sorter.direction()).to.equal(undefined);
+                            expect(sorter.direction()).to.equal('asc');
                         });
                         it('Gives the correct sort field options', function () {
                             expect(_.map(sorter.availableSortFields(), 'key')).to.deep.equal([ 'first', 'second' ]);

@@ -9,7 +9,7 @@
         function (_, ko) {
             return function (sourceObservable, fieldsObservable, sortField, sortDirection) {
                 this.field = ko.observable(sortField || undefined);
-                this.direction = ko.observable(sortDirection || undefined);
+                this.direction = ko.observable(sortDirection || 'asc');
 
                 this.availableSortFields = ko.pureComputed(function () {
                     return _.filter(fieldsObservable(), 'sort');
