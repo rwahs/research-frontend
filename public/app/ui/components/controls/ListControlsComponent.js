@@ -15,22 +15,65 @@
                 };
 
             return function (parameters) {
-                if (!parameters || !parameters.pager) {
+                if (!parameters) {
+                    throw new Error('ListControlsComponent missing parameter map.');
+                }
+                if (!parameters.modeSwitcher) {
+                    throw new Error('ListControlsComponent missing required parameter: `modeSwitcher`.');
+                }
+                if (!parameters.pager) {
                     throw new Error('ListControlsComponent missing required parameter: `pager`.');
                 }
-                if (!parameters.resultsMode) {
-                    throw new Error('ListControlsComponent missing required parameter: `resultsMode`.');
-                }
-                if (!parameters.availableResultsModes) {
-                    throw new Error('ListControlsComponent missing required parameter: `availableResultsModes`.');
+                if (!parameters.sorter) {
+                    throw new Error('ListControlsComponent missing required parameter: `sorter`.');
                 }
                 if (!parameters.searchUrlFor) {
                     throw new Error('ListControlsComponent missing required parameter: `searchUrlFor`.');
                 }
 
-                this.availableResultsModes = ko.pureComputed(function () {
+                this.sortField = ko.pureComputed({
+                    read: function () {
+                        return parameters.sorter.field();
+                    },
+                    write: function (field) {
+                        routes.pushState(parameters.searchUrlFor({ sort: field || '' }));
+                        parameters.sorter.field(field);
+                    }
+                });
+
+                this.sortDirection = ko.pureComputed({
+                    read: function () {
+                        return parameters.sorter.direction();
+                    },
+                    write: function (direction) {
+                        routes.pushState(parameters.searchUrlFor({ dir: direction }));
+                        parameters.sorter.direction(direction);
+                    }
+                });
+
+                this.availableSortFields = ko.pureComputed(function () {
+                    return parameters.sorter.availableSortFields();
+                });
+
+                this.isAscending = ko.pureComputed(function () {
+                    return parameters.sorter.direction() === 'asc';
+                });
+
+                this.isDescending = ko.pureComputed(function () {
+                    return parameters.sorter.direction() === 'desc';
+                });
+
+                this.sortAscendingUrl = ko.pureComputed(function () {
+                    return parameters.searchUrlFor({ dir: 'asc' });
+                });
+
+                this.sortDescendingUrl = ko.pureComputed(function () {
+                    return parameters.searchUrlFor({ dir: 'desc' });
+                });
+
+                this.availableModes = ko.pureComputed(function () {
                     return _.map(
-                        parameters.availableResultsModes(),
+                        parameters.modeSwitcher.availableModes(),
                         function (mode) {
                             var url = parameters.searchUrlFor({ mode: mode });
                             return {
@@ -39,11 +82,11 @@
                                 longLabel: 'Display results in ' + mode + ' mode',
                                 url: url,
                                 active: ko.pureComputed(function () {
-                                    return mode === parameters.resultsMode();
+                                    return mode === parameters.modeSwitcher.mode();
                                 }),
                                 click: function () {
                                     routes.pushState(url);
-                                    parameters.resultsMode(mode);
+                                    parameters.modeSwitcher.mode(mode);
                                     return false;
                                 }
                             };
@@ -119,6 +162,16 @@
                 this.atLastPage = ko.pureComputed(function () {
                     return parameters.pager.start() >= parameters.pager.lastPageStart();
                 });
+
+                this.sortAscending = function () {
+                    routes.pushState(this.sortAscendingUrl());
+                    parameters.sorter.direction('asc');
+                }.bind(this);
+
+                this.sortDescending = function () {
+                    routes.pushState(this.sortDescendingUrl());
+                    parameters.sorter.direction('desc');
+                }.bind(this);
 
                 this.jumpToFirstPage = function () {
                     if (!this.atFirstPage()) {

@@ -5,11 +5,15 @@
         return [
             {
                 key: 'first',
-                labelText: 'Field One'
+                labelText: 'Field One',
+                sort: true
             },
             {
                 key: 'second',
-                labelText: 'Field Two'
+                labelText: 'Field Two',
+                sort: function (value) {
+                    return value ? value.toString().toLowerCase() : undefined;
+                }
             },
             {
                 key: 'third',
