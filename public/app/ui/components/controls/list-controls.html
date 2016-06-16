@@ -1,6 +1,24 @@
 <div class="list-controls-container">
     <div>
         <div class="input-group input-group-sm">
+            <span class="input-group-addon">Sort:</span>
+            <select class="form-control" data-bind="options: availableSortFields, optionsText: 'labelText', optionsValue: 'key', optionsCaption: 'Default', value: sortField"></select>
+            <ul class="pagination pagination-sm">
+                <li data-bind="css: { active: isAscending }">
+                    <a href="#" data-bind="attr: { href: sortAscendingUrl }, click: sortAscending" aria-label="Sort ascending">
+                        <span class="glyphicon glyphicon-sort-by-attributes"></span>
+                    </a>
+                </li>
+                <li data-bind="css: { active: isDescending }">
+                    <a href="#" data-bind="attr: { href: sortDescendingUrl }, click: sortDescending" aria-label="Sort descending">
+                        <span class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <div class="input-group input-group-sm">
             <span class="input-group-addon">Mode:</span>
             <ul class="pagination pagination-sm">
                 <!-- ko foreach: availableModes -->
@@ -16,23 +34,14 @@
     </div>
     <div>
         <div class="input-group input-group-sm">
-            <span class="input-group-addon">Sort:</span>
-            <select class="form-control styled-select" title="">
-                <option value="" aria-label="Display the results in natural order" data-bind="click: resetSort">None</option>
-                <!-- ko foreach: availableSortFields -->
-                <option data-bind="text: label, attr: { value: value, selected: active, 'aria-label': longLabel }, click: click"></option>
-                <!-- /ko -->
-            </select>
-        </div>
-    </div>
-    <div>
-        <div class="input-group input-group-sm">
             <span class="input-group-addon">Page Size:</span>
-            <select class="form-control styled-select" title="">
+            <ul class="pagination pagination-sm">
                 <!-- ko foreach: availablePageSizes -->
-                <option data-bind="text: label, attr: { href: url, selected: active, 'aria-label': longLabel }, click: click"></option>
+                <li data-bind="css: { active: active }">
+                    <a href="#" data-bind="text: label, attr: { href: url, 'aria-label': longLabel }, click: click"></a>
+                </li>
                 <!-- /ko -->
-            </select>
+            </ul>
         </div>
     </div>
     <div>

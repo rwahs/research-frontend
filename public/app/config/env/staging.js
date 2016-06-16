@@ -5,9 +5,10 @@
         [
             'util/container',
             'services/searchService',
-            'services/detailService'
+            'services/detailService',
+            'services/cachingService'
         ],
-        function (container, searchService, detailService) {
+        function (container, searchService, detailService, cachingService) {
             var simpleApiBaseUrl = 'https://staging-collections.histwest.org.au/service.php/simple',
                 ajaxOptions = {
                     xhrFields: {
@@ -19,15 +20,15 @@
                 };
 
             return function () {
-                container.register('search.library', searchService(simpleApiBaseUrl + '/library_search', ajaxOptions, false, true));
-                container.register('search.photographs', searchService(simpleApiBaseUrl + '/photographs_search', ajaxOptions, false, true));
-                container.register('search.museum', searchService(simpleApiBaseUrl + '/museum_search', ajaxOptions, false, true));
-                container.register('search.memorials', searchService(simpleApiBaseUrl + '/memorials_search', ajaxOptions, false, true));
+                container.register('search.library', cachingService(searchService(simpleApiBaseUrl + '/library_search', ajaxOptions, false, true)));
+                container.register('search.photographs', cachingService(searchService(simpleApiBaseUrl + '/photographs_search', ajaxOptions, false, true)));
+                container.register('search.museum', cachingService(searchService(simpleApiBaseUrl + '/museum_search', ajaxOptions, false, true)));
+                container.register('search.memorials', cachingService(searchService(simpleApiBaseUrl + '/memorials_search', ajaxOptions, false, true)));
 
-                container.register('detail.library', detailService(simpleApiBaseUrl + '/library_detail', ajaxOptions, false, true));
-                container.register('detail.photographs', detailService(simpleApiBaseUrl + '/photographs_detail', ajaxOptions, false, true));
-                container.register('detail.museum', detailService(simpleApiBaseUrl + '/museum_detail', ajaxOptions, false, true));
-                container.register('detail.memorials', detailService(simpleApiBaseUrl + '/memorials_detail', ajaxOptions, false, true));
+                container.register('detail.library', cachingService(detailService(simpleApiBaseUrl + '/library_detail', ajaxOptions, false, true)));
+                container.register('detail.photographs', cachingService(detailService(simpleApiBaseUrl + '/photographs_detail', ajaxOptions, false, true)));
+                container.register('detail.museum', cachingService(detailService(simpleApiBaseUrl + '/museum_detail', ajaxOptions, false, true)));
+                container.register('detail.memorials', cachingService(detailService(simpleApiBaseUrl + '/memorials_detail', ajaxOptions, false, true)));
 
                 container.seal();
             };

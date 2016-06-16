@@ -16,12 +16,12 @@
                 });
 
                 this.sortedList = ko.pureComputed(function () {
-                    var data = sourceObservable(),
+                    var data = _.slice(sourceObservable()),
                         field = this.field(),
                         fieldDefinition = _.find(fieldsObservable(), { key: field }),
                         direction = this.direction();
-                    if (!field || !direction) {
-                        return data;
+                    if (!field) {
+                        return direction === 'desc' ? _.reverse(data) : data;
                     }
                     return _.orderBy(
                         data,
@@ -41,7 +41,8 @@
                             }
                             return value;
                         }.bind(this),
-                        direction);
+                        direction
+                    );
                 }.bind(this));
             };
         }
