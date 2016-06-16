@@ -15,10 +15,6 @@
                 this.start = ko.observable(start || 0);
                 this.pageSize = ko.observable(size || DEFAULT_PAGE_SIZE);
 
-                this.pageSize.subscribe(function () {
-                    this.start(0);
-                }.bind(this));
-
                 this.availablePageSizes = ko.pureComputed(function () {
                     return availablePageSizes || DEFAULT_AVAILABLE_PAGE_SIZES;
                 });

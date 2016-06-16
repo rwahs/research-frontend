@@ -138,16 +138,16 @@
                                 pager.pageSize(25);
                             });
                             it('Has the correct modified state', function () {
-                                expect(pager.start()).to.equal(0);
+                                expect(pager.start()).to.equal(50);
                                 expect(pager.fullResultsCount()).to.equal(500);
                                 expect(pager.pageCount()).to.equal(20);
-                                expect(pager.pageNumber()).to.equal(0);
-                                expect(pager.currentPage()).to.deep.equal(_.range(0, 25));
+                                expect(pager.pageNumber()).to.equal(2);
+                                expect(pager.currentPage()).to.deep.equal(_.range(50, 75));
                                 expect(pager.availableJumpPageNumbers()).to.deep.equal(_.range(0, 7));
                                 expect(pager.firstPageStart()).to.equal(0);
                                 expect(pager.lastPageStart()).to.equal(475);
-                                expect(pager.previousPageStart()).to.equal(0);
-                                expect(pager.nextPageStart()).to.equal(25);
+                                expect(pager.previousPageStart()).to.equal(25);
+                                expect(pager.nextPageStart()).to.equal(75);
                             });
                         });
                     });
