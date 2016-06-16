@@ -28,6 +28,7 @@
                 it('Defines the `Title` field', function () {
                     var titleField = _.find(searchResultFields, { key: 'Title' });
                     expect(titleField.labelText).to.equal('Title');
+                    expect(titleField.sort).to.equal(true);
                 });
                 it('Defines the `Author` field', function () {
                     var authorField = _.find(searchResultFields, { key: 'Author' });
@@ -35,22 +36,27 @@
                     expect(authorField.parse).to.equal(true);
                     expect(authorField.filter).to.equal(true);
                     expect(authorField.display).to.equal('list');
+                    expect(_.isFunction(authorField.sort)).to.equal(true);
                 });
                 it('Defines the `Publisher` field', function () {
                     var publisherField = _.find(searchResultFields, { key: 'Publisher' });
                     expect(publisherField.labelText).to.equal('Publisher');
+                    expect(publisherField.sort).to.equal(true);
                 });
                 it('Defines the `DateOfPublication` field', function () {
                     var dateOfPublicationField = _.find(searchResultFields, { key: 'DateOfPublication' });
                     expect(dateOfPublicationField.labelText).to.equal('Date of Publication');
+                    expect(dateOfPublicationField.sort).to.equal(true);
                 });
                 it('Defines the `PlaceOfPublication` field', function () {
                     var placeOfPublicationField = _.find(searchResultFields, { key: 'PlaceOfPublication' });
                     expect(placeOfPublicationField.labelText).to.equal('Place of Publication');
+                    expect(placeOfPublicationField.sort).to.equal(true);
                 });
                 it('Defines the `PublicationType` field', function () {
                     var publicationTypeField = _.find(searchResultFields, { key: 'PublicationType' });
                     expect(publicationTypeField.labelText).to.equal('Type');
+                    expect(publicationTypeField.sort).to.equal(true);
                 });
             });
         }

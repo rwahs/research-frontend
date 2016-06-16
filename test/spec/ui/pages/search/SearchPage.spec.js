@@ -8,10 +8,9 @@
             'knockout',
             'config/routes',
             'util/container',
-            'ui/pages/search/SearchPage',
-            'mock/services/MockSearchService'
+            'ui/pages/search/SearchPage'
         ],
-        function (chai, sinon, ko, routes, container, SearchPage, MockSearchService) {
+        function (chai, sinon, ko, routes, container, SearchPage) {
             var expect = chai.expect;
 
             describe('The `SearchPage` module', function () {
@@ -23,7 +22,7 @@
                     beforeEach(function () {
                         sinon.stub(routes, 'pushState');
                         // jshint camelcase: false
-                        searchService = new MockSearchService(undefined, [
+                        searchService = sinon.stub().callsArgWith(1, undefined, [
                             { object_id: 1, first: 'First 1', second: 'Second 1', third: 'Third 1' },
                             { object_id: 2, first: 'First 2', second: 'Second 2', third: 'Third 2' },
                             { object_id: 3, first: 'First 3', second: 'Second 3', third: 'Third 3' }
@@ -55,6 +54,9 @@
                             expect(ko.isObservable(page.searchResultFields)).to.equal(true);
                             expect(ko.isObservable(page.loading)).to.equal(true);
                             expect(ko.isObservable(page.displayResults)).to.equal(true);
+                            expect(ko.isPureComputed(page.displayedResults)).to.equal(true);
+                            expect(ko.isPureComputed(page.type)).to.equal(true);
+                            expect(ko.isPureComputed(page.submittedQuery)).to.equal(true);
                             expect(ko.isPureComputed(page.heading)).to.equal(true);
                             expect(ko.isPureComputed(page.placeholder)).to.equal(true);
                             expect(ko.isPureComputed(page.hasResults)).to.equal(true);
@@ -68,7 +70,10 @@
                         });
                         it('Exposes view helper methods', function () {
                             expect(page.displayFor).to.be.a('function');
+                            expect(page.displayForLabelField).to.be.a('function');
+                            expect(page.resultFor).to.be.a('function');
                             expect(page.detailUrlFor).to.be.a('function');
+                            expect(page.searchUrlFor).to.be.a('function');
                         });
                         it('Gives the correct default values', function () {
                             expect(page.searchText()).to.equal('');
@@ -257,7 +262,7 @@
                     beforeEach(function () {
                         sinon.stub(routes, 'pushState');
                         // jshint camelcase: false
-                        searchService = new MockSearchService(new Error('Search Error'));
+                        searchService = sinon.stub().callsArgWith(1, new Error('Search Error'));
                         container.register('search.collection', searchService);
                         container.register('settings.collection', {
                             collectionName: 'Collection',

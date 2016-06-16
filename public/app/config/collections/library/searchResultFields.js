@@ -15,30 +15,38 @@
             },
             {
                 key: 'Title',
-                labelText: 'Title'
+                labelText: 'Title',
+                sort: true
             },
             {
                 key: 'Author',
                 labelText: 'Author',
                 parse: true,
                 filter: true,
-                display: 'list'
+                display: 'list',
+                sort: function (value) {
+                    return value.length > 0 ? value[0] : undefined;
+                }
             },
             {
                 key: 'Publisher',
-                labelText: 'Publisher'
+                labelText: 'Publisher',
+                sort: true
             },
             {
                 key: 'DateOfPublication',
-                labelText: 'Date of Publication'
+                labelText: 'Date of Publication',
+                sort: true
             },
             {
                 key: 'PlaceOfPublication',
-                labelText: 'Place of Publication'
+                labelText: 'Place of Publication',
+                sort: true
             },
             {
                 key: 'PublicationType',
-                labelText: 'Type'
+                labelText: 'Type',
+                sort: true
             }
         ];
     });

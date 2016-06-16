@@ -11,7 +11,7 @@
     </tr>
     </thead>
     <tbody>
-    <!-- ko foreach: { data: pager.currentPage, as: 'result' } -->
+    <!-- ko foreach: { data: displayedResults, as: 'result' } -->
     <tr class="result">
         <td data-bind="text: $index() + $parent.pager.start() + 1"></td>
         <!-- ko foreach: { data: $parent.searchResultFields, as: 'field' } -->

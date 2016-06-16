@@ -29,7 +29,6 @@
 
             // Test specs, mocks and fixtures
             spec: 'spec/',
-            mock: 'mock/',
             fixtures: 'fixtures/'
         },
         shim: {
@@ -74,6 +73,9 @@
                     'spec/config/settings.spec',
                     'spec/models/DynamicRecord.spec',
                     'spec/models/ListPager.spec',
+                    'spec/models/ListSorter.spec',
+                    'spec/models/ListModeSwitcher.spec',
+                    'spec/services/cachingService.spec',
                     'spec/services/searchService.spec',
                     'spec/services/detailService.spec',
                     'spec/ui/components/controls/ListControlsComponent.spec',

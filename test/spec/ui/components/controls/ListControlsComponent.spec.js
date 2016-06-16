@@ -7,28 +7,55 @@
             'knockout',
             'chai',
             'sinon',
+            'config/routes',
             'ui/components/controls/ListControlsComponent',
-            'models/ListPager'
+            'models/ListModeSwitcher',
+            'models/ListPager',
+            'models/ListSorter'
         ],
-        function (_, ko, chai, sinon, ListControlsComponent, ListPager) {
-            var expect = chai.expect;
+        function (_, ko, chai, sinon, routes, ListControlsComponent, ListModeSwitcher, ListPager, ListSorter) {
+            var expect = chai.expect,
+                data = _.map(_.range(0, 500), function (n) {
+                    return {
+                        id: ko.observable(n),
+                        data: ko.observable({
+                            first: 'record ' + n,
+                            second: '' + n,
+                            third: n
+                        })
+                    };
+                });
 
             describe('The `ListControlsComponent` module', function () {
                 it('Defines a constructor function', function () {
                     expect(ListControlsComponent).to.be.a('function');
                 });
                 describe('When constructed with all required parameters', function () {
-                    var controls;
-                    beforeEach(function () {
-                        controls = new ListControlsComponent({
-                            pager: new ListPager(ko.observableArray(_.range(0, 500)), 0, 10, [ 10, 25 ]),
-                            resultsMode: ko.observable('List'),
-                            availableResultsModes: ko.observable([ 'List', 'Thumbnails', 'Table' ]),
-                            searchUrlFor: _.identity
+                    var modeSwitcher, sorter, pager, controls;
+                    beforeEach(function (done) {
+                        sinon.stub(routes, 'pushState');
+                        require([ 'fixtures/collections/searchResultFields' ], function (searchResultFields) {
+                            modeSwitcher = new ListModeSwitcher('List');
+                            sorter = new ListSorter(ko.observableArray(data), ko.observableArray(searchResultFields), 'first', 'asc');
+                            pager = new ListPager(sorter.sortedList, 0, 10, [ 10, 25 ]);
+                            controls = new ListControlsComponent({
+                                modeSwitcher: modeSwitcher,
+                                pager: pager,
+                                sorter: sorter,
+                                searchUrlFor: _.identity
+                            });
+                            done();
                         });
                     });
-                    it('Exposes observables and computed observables', function () {
-                        expect(ko.isPureComputed(controls.availableResultsModes)).to.equal(true);
+                    it('Exposes computed observables', function () {
+                        expect(ko.isPureComputed(controls.sortField)).to.equal(true);
+                        expect(ko.isPureComputed(controls.sortDirection)).to.equal(true);
+                        expect(ko.isPureComputed(controls.availableSortFields)).to.equal(true);
+                        expect(ko.isPureComputed(controls.isAscending)).to.equal(true);
+                        expect(ko.isPureComputed(controls.isDescending)).to.equal(true);
+                        expect(ko.isPureComputed(controls.sortAscendingUrl)).to.equal(true);
+                        expect(ko.isPureComputed(controls.sortDescendingUrl)).to.equal(true);
+                        expect(ko.isPureComputed(controls.availableModes)).to.equal(true);
                         expect(ko.isPureComputed(controls.availablePageSizes)).to.equal(true);
                         expect(ko.isPureComputed(controls.availableJumpPageNumbers)).to.equal(true);
                         expect(ko.isPureComputed(controls.firstPageUrl)).to.equal(true);
@@ -39,32 +66,88 @@
                         expect(ko.isPureComputed(controls.atLastPage)).to.equal(true);
                     });
                     it('Exposes control functions', function () {
+                        expect(_.isFunction(controls.sortAscending)).to.equal(true);
+                        expect(_.isFunction(controls.sortDescending)).to.equal(true);
                         expect(_.isFunction(controls.jumpToFirstPage)).to.equal(true);
                         expect(_.isFunction(controls.jumpToLastPage)).to.equal(true);
                         expect(_.isFunction(controls.jumpToPreviousPage)).to.equal(true);
                         expect(_.isFunction(controls.jumpToNextPage)).to.equal(true);
                     });
-                    it('Returns the correct `availableResultsModes` objects', function () {
-                        var resultsModes = controls.availableResultsModes();
-                        expect(resultsModes.length).to.equal(3); // For the 3 passed in modes
+                    it('Returns the correct `availableSortFields` objects', function () {
+                        var sortFields = controls.availableSortFields();
+                        expect(_.find(sortFields, { key: 'first' })).not.to.equal(undefined);
+                        expect(_.find(sortFields, { key: 'second' })).not.to.equal(undefined);
+                        expect(_.find(sortFields, { key: 'third' })).to.equal(undefined); // Doesn't have a `sort` property
+                    });
+                    describe('The `sortField` writable-computed', function () {
+                        it('Has the correct initial value', function () {
+                            expect(controls.sortField()).to.equal('first');
+                        });
+                        describe('When the value is changed directly', function () {
+                            beforeEach(function () {
+                                controls.sortField('second');
+                            });
+                            it('Updates the `field` observable in the `ListSorter`', function () {
+                                expect(sorter.field()).to.equal('second');
+                            });
+                            it('Updates the browser URL', function () {
+                                sinon.assert.calledOnce(routes.pushState);
+                            });
+                        });
+                        describe('When the value in the `ListSorter` is updated', function () {
+                            beforeEach(function () {
+                                sorter.field('second');
+                            });
+                            it('Updates the `sortField`', function () {
+                                expect(controls.sortField()).to.equal('second');
+                            });
+                        });
+                    });
+                    describe('The `sortDirection` writable-computed', function () {
+                        it('Has the correct initial value', function () {
+                            expect(controls.sortDirection()).to.equal('asc');
+                        });
+                        describe('When the value is changed directly', function () {
+                            beforeEach(function () {
+                                controls.sortDirection('desc');
+                            });
+                            it('Updates the `field` observable in the `ListSorter`', function () {
+                                expect(sorter.direction()).to.equal('desc');
+                            });
+                            it('Updates the browser URL', function () {
+                                sinon.assert.calledOnce(routes.pushState);
+                            });
+                        });
+                        describe('When the value in the `ListSorter` is updated', function () {
+                            beforeEach(function () {
+                                sorter.direction('desc');
+                            });
+                            it('Updates the `sortField`', function () {
+                                expect(controls.sortDirection()).to.equal('desc');
+                            });
+                        });
+                    });
+                    it('Returns the correct `availableModes` objects', function () {
+                        var modes = controls.availableModes();
+                        expect(modes.length).to.equal(3); // For the 3 passed in modes
 
-                        expect(resultsModes[0].label).to.equal('List');
-                        expect(resultsModes[0].longLabel).to.equal('Display results in List mode');
-                        expect(resultsModes[0].url).to.deep.equal({ mode: 'List' }); // Since we have `_.identity` as the `searchUrlFor` callback
-                        expect(_.isFunction(resultsModes[0].active)).to.equal(true);
-                        expect(_.isFunction(resultsModes[0].click)).to.equal(true);
+                        expect(modes[0].label).to.equal('List');
+                        expect(modes[0].longLabel).to.equal('Display results in List mode');
+                        expect(modes[0].url).to.deep.equal({ mode: 'List' }); // Since we have `_.identity` as the `searchUrlFor` callback
+                        expect(_.isFunction(modes[0].active)).to.equal(true);
+                        expect(_.isFunction(modes[0].click)).to.equal(true);
 
-                        expect(resultsModes[1].label).to.equal('Thumbnails');
-                        expect(resultsModes[1].longLabel).to.equal('Display results in Thumbnails mode');
-                        expect(resultsModes[1].url).to.deep.equal({ mode: 'Thumbnails' }); // Since we have `_.identity` as the `searchUrlFor` callback
-                        expect(_.isFunction(resultsModes[1].active)).to.equal(true);
-                        expect(_.isFunction(resultsModes[1].click)).to.equal(true);
+                        expect(modes[1].label).to.equal('Thumbnails');
+                        expect(modes[1].longLabel).to.equal('Display results in Thumbnails mode');
+                        expect(modes[1].url).to.deep.equal({ mode: 'Thumbnails' }); // Since we have `_.identity` as the `searchUrlFor` callback
+                        expect(_.isFunction(modes[1].active)).to.equal(true);
+                        expect(_.isFunction(modes[1].click)).to.equal(true);
 
-                        expect(resultsModes[2].label).to.equal('Table');
-                        expect(resultsModes[2].longLabel).to.equal('Display results in Table mode');
-                        expect(resultsModes[2].url).to.deep.equal({ mode: 'Table' }); // Since we have `_.identity` as the `searchUrlFor` callback
-                        expect(_.isFunction(resultsModes[2].active)).to.equal(true);
-                        expect(_.isFunction(resultsModes[2].click)).to.equal(true);
+                        expect(modes[2].label).to.equal('Table');
+                        expect(modes[2].longLabel).to.equal('Display results in Table mode');
+                        expect(modes[2].url).to.deep.equal({ mode: 'Table' }); // Since we have `_.identity` as the `searchUrlFor` callback
+                        expect(_.isFunction(modes[2].active)).to.equal(true);
+                        expect(_.isFunction(modes[2].click)).to.equal(true);
                     });
                     it('Returns the correct `availablePageSizes` objects', function () {
                         var pageSizes = controls.availablePageSizes();
@@ -128,13 +211,28 @@
                         expect(_.isFunction(pageSizes[6].active)).to.equal(true);
                         expect(_.isFunction(pageSizes[6].click)).to.equal(true);
                     });
+                    afterEach(function () {
+                        routes.pushState.restore();
+                    });
                 });
                 describe('When constructed with no parameters', function () {
                     var controls;
                     it('Throws an error', function () {
                         expect(function () {
                             controls = new ListControlsComponent();
-                        }).to.throw('ListControlsComponent missing required parameter: `pager`.');
+                        }).to.throw('ListControlsComponent missing parameter map.');
+                    });
+                });
+                describe('When constructed with the `modeSwitcher` parameter missing', function () {
+                    var controls;
+                    it('Throws an error', function () {
+                        expect(function () {
+                            controls = new ListControlsComponent({
+                                pager: new ListPager(ko.observableArray()),
+                                sorter: new ListSorter(ko.observableArray(), ko.observableArray()),
+                                searchUrlFor: _.noop
+                            });
+                        }).to.throw('ListControlsComponent missing required parameter: `modeSwitcher`.');
                     });
                 });
                 describe('When constructed with the `pager` parameter missing', function () {
@@ -142,35 +240,24 @@
                     it('Throws an error', function () {
                         expect(function () {
                             controls = new ListControlsComponent({
-                                resultsMode: ko.observable(),
-                                availableResultsModes: ko.observable(),
+                                modeSwitcher: new ListModeSwitcher(),
+                                sorter: new ListSorter(ko.observableArray(), ko.observableArray()),
                                 searchUrlFor: _.noop
                             });
                         }).to.throw('ListControlsComponent missing required parameter: `pager`.');
                     });
                 });
-                describe('When constructed with the `resultsMode` parameter missing', function () {
-                    var controls;
+                describe('When constructed with the `sorter` parameter missing', function () {
+                    var sorter, controls;
                     it('Throws an error', function () {
                         expect(function () {
+                            sorter = new ListSorter(ko.observableArray(), ko.observableArray());
                             controls = new ListControlsComponent({
+                                modeSwitcher: new ListModeSwitcher(),
                                 pager: new ListPager(ko.observableArray()),
-                                availableResultsModes: ko.observable(),
                                 searchUrlFor: _.noop
                             });
-                        }).to.throw('ListControlsComponent missing required parameter: `resultsMode`.');
-                    });
-                });
-                describe('When constructed with the `availableResultsModes` parameter missing', function () {
-                    var controls;
-                    it('Throws an error', function () {
-                        expect(function () {
-                            controls = new ListControlsComponent({
-                                pager: new ListPager(ko.observableArray()),
-                                resultsMode: ko.observable(),
-                                searchUrlFor: _.noop
-                            });
-                        }).to.throw('ListControlsComponent missing required parameter: `availableResultsModes`.');
+                        }).to.throw('ListControlsComponent missing required parameter: `sorter`.');
                     });
                 });
                 describe('When constructed with the `searchUrlFor` parameter missing', function () {
@@ -178,9 +265,9 @@
                     it('Throws an error', function () {
                         expect(function () {
                             controls = new ListControlsComponent({
+                                modeSwitcher: new ListModeSwitcher(),
                                 pager: new ListPager(ko.observableArray()),
-                                resultsMode: ko.observable(),
-                                availableResultsModes: ko.observable()
+                                sorter: new ListSorter(ko.observableArray(), ko.observableArray())
                             });
                         }).to.throw('ListControlsComponent missing required parameter: `searchUrlFor`.');
                     });

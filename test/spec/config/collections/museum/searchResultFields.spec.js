@@ -26,24 +26,29 @@
                     expect(mediaField.tableColumn).to.equal(false);
                 });
                 it('Defines the `type` field', function () {
-                    var idnoField = _.find(searchResultFields, { key: 'type' });
-                    expect(idnoField.labelText).to.equal('Item Type');
+                    var typeField = _.find(searchResultFields, { key: 'type' });
+                    expect(typeField.labelText).to.equal('Item Type');
+                    expect(typeField.sort).to.equal(true);
                 });
                 it('Defines the `idno` field', function () {
                     var idnoField = _.find(searchResultFields, { key: 'idno' });
                     expect(idnoField.labelText).to.equal('Accession Number');
+                    expect(idnoField.sort).to.equal(true);
                 });
                 it('Defines the `ItemName` field', function () {
                     var itemNameField = _.find(searchResultFields, { key: 'ItemName' });
                     expect(itemNameField.labelText).to.equal('Item Name');
+                    expect(itemNameField.sort).to.equal(true);
                 });
                 it('Defines the `Dates` field', function () {
                     var datesField = _.find(searchResultFields, { key: 'Dates' });
                     expect(datesField.labelText).to.equal('Dates');
+                    expect(datesField.sort).to.equal(true);
                 });
                 it('Defines the `Importance` field', function () {
                     var importanceField = _.find(searchResultFields, { key: 'Importance' });
                     expect(importanceField.labelText).to.equal('Importance');
+                    expect(importanceField.sort).to.equal(true);
                 });
                 it('Defines the `Classification` field', function () {
                     var classificationField = _.find(searchResultFields, { key: 'Classification' });
@@ -52,6 +57,7 @@
                     expect(classificationField.skipNested).to.equal(1);
                     expect(classificationField.filter).to.equal(true);
                     expect(classificationField.display).to.equal('hierarchy-list');
+                    expect(_.isFunction(classificationField.sort)).to.equal(true);
                 });
             });
         }

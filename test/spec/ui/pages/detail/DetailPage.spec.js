@@ -7,10 +7,9 @@
             'sinon',
             'knockout',
             'util/container',
-            'ui/pages/detail/DetailPage',
-            'mock/services/MockDetailService'
+            'ui/pages/detail/DetailPage'
         ],
-        function (chai, sinon, ko, container, DetailPage, MockDetailService) {
+        function (chai, sinon, ko, container, DetailPage) {
             var expect = chai.expect;
 
             describe('The `DetailPage` module', function () {
@@ -20,7 +19,7 @@
                 describe('When the detail service is returning valid results', function () {
                     var detailService;
                     beforeEach(function () {
-                        detailService = new MockDetailService(undefined, {
+                        detailService = sinon.stub().callsArgWith(1, undefined, {
                             id: 42,
                             idno: '1984/42',
                             title: 'The Meaning of Life',
@@ -28,6 +27,7 @@
                         });
                         container.register('detail.collection', detailService);
                         container.register('settings.collection', {
+                            collectionName: 'Test',
                             detailFields: 'fixtures/collections/detailFields'
                         });
                         container.seal();
@@ -51,6 +51,8 @@
                             expect(ko.isPureComputed(page.data)).to.equal(true);
                             expect(ko.isPureComputed(page.idno)).to.equal(true);
                             expect(ko.isPureComputed(page.displayRecord)).to.equal(true);
+                            expect(ko.isPureComputed(page.typeHeader)).to.equal(true);
+                            expect(ko.isPureComputed(page.detail)).to.equal(true);
                         });
                         it('Has the correct initial state', function () {
                             expect(page.detailFields()).to.deep.equal([]);
@@ -58,6 +60,8 @@
                             expect(page.data()).to.equal(undefined);
                             expect(page.idno()).to.equal(undefined);
                             expect(page.displayRecord()).to.equal(false);
+                            expect(page.typeHeader()).to.equal('Test Record');
+                            expect(page.detail()).to.equal('collections/collection/detail');
                         });
                         it('Exposes life cycle methods', function () {
                             expect(page.binding).to.be.a('function');
@@ -65,6 +69,7 @@
                         it('Exposes view helper methods', function () {
                             expect(page.labelFor).to.be.a('function');
                             expect(page.displayFor).to.be.a('function');
+                            expect(page.displayForLabelField).to.be.a('function');
                         });
                         describe('When bound to the view', function () {
                             var element;
@@ -133,9 +138,10 @@
                 describe('When the detail service is returning errors', function () {
                     var detailService;
                     beforeEach(function () {
-                        detailService = new MockDetailService(new Error('Service Error'));
+                        detailService = sinon.stub().callsArgWith(1, new Error('Service Error'));
                         container.register('detail.collection', detailService);
                         container.register('settings.collection', {
+                            collectionName: 'Test',
                             detailFields: 'fixtures/collections/detailFields'
                         });
                         container.seal();

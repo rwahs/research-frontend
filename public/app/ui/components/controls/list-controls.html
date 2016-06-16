@@ -1,9 +1,27 @@
 <div class="list-controls-container">
     <div>
         <div class="input-group input-group-sm">
+            <span class="input-group-addon">Sort:</span>
+            <select class="form-control" data-bind="options: availableSortFields, optionsText: 'labelText', optionsValue: 'key', optionsCaption: 'Default', value: sortField"></select>
+            <ul class="pagination pagination-sm">
+                <li data-bind="css: { active: isAscending }">
+                    <a href="#" data-bind="attr: { href: sortAscendingUrl }, click: sortAscending" aria-label="Sort ascending">
+                        <span class="glyphicon glyphicon-sort-by-attributes"></span>
+                    </a>
+                </li>
+                <li data-bind="css: { active: isDescending }">
+                    <a href="#" data-bind="attr: { href: sortDescendingUrl }, click: sortDescending" aria-label="Sort descending">
+                        <span class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <div class="input-group input-group-sm">
             <span class="input-group-addon">Mode:</span>
             <ul class="pagination pagination-sm">
-                <!-- ko foreach: availableResultsModes -->
+                <!-- ko foreach: availableModes -->
                 <li data-bind="css: { active: active }">
                     <a href="#" data-bind="attr: { href: url, 'aria-label': longLabel }, click: click">
                         <span data-bind="attr: { class: glyphicon }"></span>
