@@ -1,6 +1,8 @@
 /* global __dirname */
 
-(function (pkg, gulp, jshint, jscs, stylish, mocha, connect, less, requirejs, uglify, replace, header, awspublish, aws, yargs, rimraf, mkdirp, recursive) {
+(function (pkg, gulp,
+           jshint, jscs, stylish, mocha, connect, less, requirejs, uglify, replace, rename, header, awspublish,
+           aws, yargs, rimraf, mkdirp, recursive) {
     'use strict';
 
     var environment = yargs.argv.env || 'development',
@@ -211,6 +213,22 @@
     );
 
     gulp.task(
+        'package:robotstxt',
+        [
+            'package:clean'
+        ],
+        function () {
+            if (environment === 'development') {
+                throw new Error('Cannot use "package" tasks in development environment');
+            }
+            return gulp
+                .src('public/robots.txt.' + environment)
+                .pipe(rename('robots.txt'))
+                .pipe(gulp.dest('dist/' + environment));
+        }
+    );
+
+    gulp.task(
         'package',
         [
             'package:clean',
@@ -218,7 +236,8 @@
             'package:javascript',
             'package:html',
             'package:images',
-            'package:fonts'
+            'package:fonts',
+            'package:robotstxt'
         ]
     );
 
@@ -335,6 +354,7 @@
     require('gulp-requirejs-optimize'),
     require('gulp-uglify'),
     require('gulp-replace'),
+    require('gulp-rename'),
     require('gulp-header'),
     require('gulp-awspublish'),
     require('aws-sdk'),
