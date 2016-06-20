@@ -67,7 +67,6 @@
     gulp.task(
         'build:less',
         [
-            'qa',
             'build:clean'
         ],
         function () {
@@ -83,7 +82,6 @@
     gulp.task(
         'build',
         [
-            'qa',
             'build:clean',
             'build:less'
         ]
@@ -91,6 +89,10 @@
 
     gulp.task(
         'package:clean',
+        [
+            'qa',
+            'build'
+        ],
         function (callback) {
             if (environment === 'development') {
                 throw new Error('Cannot use "package" tasks in development environment');
