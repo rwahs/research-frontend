@@ -12,22 +12,33 @@
     <link href="/css/main.css" rel="stylesheet" />
 </head>
 <body>
-    <header class="navbar navbar-inverse navbar-fixed-top">
-        <div id="cross-site" class="nav-tabs">
+    <header class="navbar navbar-inverse navbar-static-top">
+        <div id="cross-site" class="nav-tabs navbar-collapse collapse">
             <div class="container" role="navigation">
                 <ul class="nav nav-tabs">
                     <li role="presentation"><a href="https://www.histwest.org.au/" class="cross-site-link">Website</a></li>
                     <li role="presentation"><a href="https://shop.histwest.org.au/" class="cross-site-link">Shop</a></li>
-                    <li role="presentation" class="active"><a href="https://research.histwest.org.au/" class="cross-site-link">Research</a></li>
+                    <li role="presentation" class="active"><a href="https://research.histwest.org.au/" class="cross-site-link">Collections</a></li>
                 </ul>
             </div>
         </div>
         <div class="container">
-            <a href="/"><img src="/images/logo-small.png" alt="Royal Western Australian Historical Society" /></a>
+            <a href="/"><img src="/images/rwahs-logo_web.png" alt="Royal Western Australian Historical Society" class="logo" /></a>
+        </div>
+        <div class="container">
+            <div class="nav-main-menu">
+                <ul class="menu nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/library/search/">Library</a></li>
+                    <li><a href="/photographs/search/">Photographs</a></li>
+                    <li><a href="/museum/search/">Museum</a></li>
+                    <li><a href="/memorials/search/">Memorials</a></li>                
+                </ul>
+            </div>
         </div>
     </header>
     <div id="application-container" class="container"></div>
-    <footer class="navbar navbar-default navbar-fixed-bottom">
+    <footer class="navbar navbar-default navbar-static-bottom">
         <div class="container small">
             <div class="pull-right">
                 <a href="/about" title="About this public research software">About</a>
