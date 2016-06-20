@@ -1,25 +1,50 @@
 #cross-site {
-    background-color: @gray-lighter;
+    background-color: @cross-nav-bg;
     font-size: @font-size-small;
+    padding-left:15px;
+    padding-right:15px;
 
     ul.nav-tabs {
         padding-top: @padding-xs-vertical;
         border-bottom: none;
+        background-color: @cross-nav-bg;
 
         li a {
-            padding: @padding-xs-vertical @padding-small-horizontal;
-            color: @brand-primary;
+            padding: @padding-large-vertical;
+            color: #666;
+            border-left: 1px @brand-primary;
         }
 
         li a:hover {
-            border-color: @gray;
+            border-color: @cross-nav-hover-bg;
             border-bottom: none;
+            background-color: @cross-nav-hover-bg;
         }
 
         li.active a {
-            background-color: @brand-primary;
-            border-bottom: 1px @brand-primary solid;
-            color: #fff;
+            background-color: #FFF;
+            border-bottom: 3px @brand-primary solid;
+            color: #777;
+            
         }
+    }
+}
+
+.nav-main-menu {
+    font-size: @font-size-large;
+
+    ul.navbar-nav {
+        padding-top: @padding-xs-vertical;
+        border-bottom: none;
+
+        li a {
+            color: #fff;
+            font-weight: 300;
+        }
+
+        li a:hover {
+            background-color: @main-menu-hover;
+        }
+
     }
 }
