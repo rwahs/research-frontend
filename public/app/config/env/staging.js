@@ -9,7 +9,7 @@
             'services/cachingService'
         ],
         function (container, searchService, detailService, cachingService) {
-            var simpleApiBaseUrl = 'https://staging-collections.histwest.org.au/service.php/simple',
+            var simpleApiBaseUrl = 'https://staging-collections-api.histwest.org.au/service.php/simple',
                 ajaxOptions = {
                     xhrFields: {
                         withCredentials: true
