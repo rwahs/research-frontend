@@ -17,6 +17,8 @@
             ' * ${pkg.description}\n' +
             ' * \n' +
             ' * @version ${pkg.version}\n' +
+            ' * @date ' + (new Date()).toISOString() + '\n' +
+            ' * @environment ' + environment + '\n' +
             ' * @link ${pkg.homepage}\n' +
             ' * @license ${pkg.license}\n' +
             ' */\n\n';
