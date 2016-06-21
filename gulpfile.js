@@ -91,6 +91,10 @@
 
     gulp.task(
         'package:clean',
+        [
+            'qa',
+            'build'
+        ],
         function (callback) {
             if (environment === 'development') {
                 throw new Error('Cannot use "package" tasks in development environment');
@@ -104,6 +108,8 @@
     gulp.task(
         'package:less',
         [
+            'qa',
+            'build',
             'package:clean'
         ],
         function () {
@@ -123,6 +129,8 @@
     gulp.task(
         'package:javascript',
         [
+            'qa',
+            'build',
             'package:clean'
         ],
         function () {
@@ -160,6 +168,8 @@
     gulp.task(
         'package:html',
         [
+            'qa',
+            'build',
             'package:clean'
         ],
         function () {
@@ -187,6 +197,8 @@
     gulp.task(
         'package:images',
         [
+            'qa',
+            'build',
             'package:clean'
         ],
         function () {
@@ -202,6 +214,8 @@
     gulp.task(
         'package:fonts',
         [
+            'qa',
+            'build',
             'package:clean'
         ],
         function () {
@@ -217,6 +231,8 @@
     gulp.task(
         'package:robotstxt',
         [
+            'qa',
+            'build',
             'package:clean'
         ],
         function () {
@@ -233,6 +249,8 @@
     gulp.task(
         'package',
         [
+            'qa',
+            'build',
             'package:clean',
             'package:less',
             'package:javascript',
@@ -246,6 +264,8 @@
     gulp.task(
         'deploy',
         [
+            'qa',
+            'build',
             'package'
         ],
         function () {
