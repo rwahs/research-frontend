@@ -39,13 +39,15 @@
                     'config/settings',
                     'config/env/' + environment,
                     'config/components',
-                    'config/routes'
+                    'config/routes',
+                    'ui/responsive'
                 ],
-                function (settings, env, components, routes) {
+                function (settings, env, components, routes, responsive) {
                     settings();
                     env();
                     components();
                     routes();
+                    responsive();
                 }
             );
         });

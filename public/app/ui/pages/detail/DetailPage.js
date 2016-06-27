@@ -5,10 +5,11 @@
         [
             'lodash',
             'knockout',
+            'ui/responsive',
             'util/container',
             'models/DynamicRecord'
         ],
-        function (_, ko, container, DynamicRecord) {
+        function (_, ko, responsive, container, DynamicRecord) {
             return function (context) {
                 var settings = container.resolve('settings.' + context.params.type),
                     record = ko.observable(undefined);
@@ -60,6 +61,11 @@
                             );
                         }.bind(this)
                     );
+                };
+
+                this.ready = function (element, callback) {
+                    responsive.update();
+                    callback();
                 };
 
                 this.labelFor = function (key) {

@@ -31,21 +31,38 @@
     }
 }
 
-.nav-main-menu {
-    font-size: @font-size-large;
-
-    ul.navbar-nav {
-        padding-top: @padding-xs-vertical;
-        border-bottom: none;
-
-        li a {
-            color: #fff;
-            font-weight: 300;
-        }
-
-        li a:hover {
-            background-color: @main-menu-hover;
-        }
-
+header.navbar {
+    .logo {
+        padding-top: @padding-large-vertical;
+        padding-bottom: @padding-large-vertical;
     }
+
+    #nav-main-menu {
+        font-size: @font-size-large;
+
+        ul.navbar-nav {
+            padding-top: @padding-xs-vertical;
+            border-bottom: none;
+
+            li a {
+                color: #fff;
+                font-weight: 300;
+            }
+
+            li a:hover {
+                background-color: @main-menu-hover;
+            }
+        }
+    }
+}
+
+#application-container {
+    margin-bottom: 20px;
+}
+
+footer.navbar {
+    min-height: unset;
+    line-height: 1;
+    padding: 10px;
+    margin-bottom: 0;
 }

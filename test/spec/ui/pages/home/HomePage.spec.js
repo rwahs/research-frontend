@@ -4,19 +4,19 @@
     define(
         [
             'chai',
-            'ui/pages/error/ErrorPage'
+            'ui/pages/home/HomePage'
         ],
-        function (chai, ErrorPage) {
+        function (chai, HomePage) {
             var expect = chai.expect;
 
-            describe('The `ErrorPage` module', function () {
+            describe('The `HomePage` module', function () {
                 it('Defines a constructor function', function () {
-                    expect(ErrorPage).to.be.a('function');
+                    expect(HomePage).to.be.a('function');
                 });
                 describe('When constructed', function () {
                     var page;
                     beforeEach(function () {
-                        page = new ErrorPage();
+                        page = new HomePage();
                     });
                     it('Exposes life cycle functions', function () {
                         expect(page.ready).to.be.a('function');
