@@ -78,6 +78,7 @@
                     'spec/services/cachingService.spec',
                     'spec/services/searchService.spec',
                     'spec/services/detailService.spec',
+                    'spec/ui/responsive.spec',
                     'spec/ui/components/controls/ListControlsComponent.spec',
                     'spec/ui/components/display/DisplayComponent.spec',
                     'spec/ui/pages/detail/DetailPage.spec',
