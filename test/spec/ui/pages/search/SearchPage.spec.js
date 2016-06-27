@@ -63,6 +63,7 @@
                         });
                         it('Exposes life cycle methods', function () {
                             expect(page.binding).to.be.a('function');
+                            expect(page.ready).to.be.a('function');
                         });
                         it('Exposes event handlers', function () {
                             expect(page.submit).to.be.a('function');

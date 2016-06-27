@@ -3,9 +3,14 @@
 
     define(
         [
+            'ui/responsive'
         ],
-        function () {
-            return function (context) {
+        function (responsive) {
+            return function () {
+                this.ready = function (element, callback) {
+                    responsive.update();
+                    callback();
+                };
             };
         }
     );

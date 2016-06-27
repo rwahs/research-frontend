@@ -6,6 +6,7 @@
             'lodash',
             'knockout',
             'querystring',
+            'ui/responsive',
             'config/routes',
             'util/container',
             'models/DynamicRecord',
@@ -14,7 +15,7 @@
             'models/ListPager',
             'ui/pages/search/SearchType'
         ],
-        function (_, ko, qs, routes, container, DynamicRecord, ListModeSwitcher, ListSorter, ListPager, SearchType) {
+        function (_, ko, qs, responsive, routes, container, DynamicRecord, ListModeSwitcher, ListSorter, ListPager, SearchType) {
             var int = function (value) {
                     return value ? parseInt(value, 10) : undefined;
                 };
@@ -45,6 +46,7 @@
                                     return new DynamicRecord(result, this.searchResultFields);
                                 }.bind(this)));
                                 this.displayResults(true);
+                                responsive.update();
                                 if (_.isFunction(callback)) {
                                     callback();
                                 }
@@ -107,6 +109,11 @@
                             }
                         }.bind(this)
                     );
+                };
+
+                this.ready = function (element, callback) {
+                    responsive.update();
+                    callback();
                 };
 
                 this.reset = function () {
