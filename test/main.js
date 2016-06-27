@@ -85,7 +85,8 @@
                     'spec/ui/pages/error/ErrorPage.spec',
                     'spec/ui/pages/search/SearchPage.spec',
                     'spec/ui/pages/search/SearchType.spec',
-                    'spec/ui/pages/static/StaticPage.spec',
+                    'spec/ui/pages/home/HomePage.spec',
+                    'spec/ui/pages/about/AboutPage.spec',
                     'spec/util/bind.spec',
                     'spec/util/container.spec',
                     'spec/util/safelyParseJson.spec'
