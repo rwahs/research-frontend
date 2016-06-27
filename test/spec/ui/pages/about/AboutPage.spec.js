@@ -4,19 +4,19 @@
     define(
         [
             'chai',
-            'ui/pages/static/StaticPage'
+            'ui/pages/about/AboutPage'
         ],
-        function (chai, StaticPage) {
+        function (chai, AboutPage) {
             var expect = chai.expect;
 
-            describe('The `StaticPage` module', function () {
+            describe('The `AboutPage` module', function () {
                 it('Defines a constructor function', function () {
-                    expect(StaticPage).to.be.a('function');
+                    expect(AboutPage).to.be.a('function');
                 });
                 describe('When constructed', function () {
                     var page;
                     beforeEach(function () {
-                        page = new StaticPage();
+                        page = new AboutPage();
                     });
                     it('Exposes life cycle functions', function () {
                         expect(page.ready).to.be.a('function');
