@@ -12,11 +12,11 @@
 
             routes = function () {
                 page('/', function (context) {
-                    return bind('ui/pages/static/home', 'ui/pages/static/StaticPage', context);
+                    return bind('ui/pages/home/home', 'ui/pages/home/HomePage', context);
                 });
 
                 page('/about', function (context) {
-                    return bind('ui/pages/static/about', 'ui/pages/static/StaticPage', context);
+                    return bind('ui/pages/about/about', 'ui/pages/about/AboutPage', context);
                 });
 
                 page('/:type/search', function (context) {
