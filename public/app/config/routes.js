@@ -12,25 +12,25 @@
 
             routes = function () {
                 page('/', function (context) {
-                    return bind('ui/pages/static/home', 'ui/pages/static/StaticPage', context);
+                    return bind('ui/pages/home/home', 'ui/pages/home/HomePage', context);
                 });
 
                 page('/about', function (context) {
-                    return bind('ui/pages/static/about', 'ui/pages/static/StaticPage', context);
+                    return bind('ui/pages/about/about', 'ui/pages/about/AboutPage', context);
                 });
 
                 page('/:type/search', function (context) {
                     if (types.indexOf(context.params.type) < 0) {
                         return bind('ui/pages/error/404', 'ui/pages/error/ErrorPage', context);
                     }
-                    return bind('ui/pages/search/index', 'ui/pages/search/SearchPage', context);
+                    return bind('ui/pages/search/search', 'ui/pages/search/SearchPage', context);
                 });
 
                 page('/:type/detail/:id', function (context) {
                     if (types.indexOf(context.params.type) < 0) {
                         return bind('ui/pages/error/404', 'ui/pages/error/ErrorPage', context);
                     }
-                    return bind('ui/pages/detail/index', 'ui/pages/detail/DetailPage', context);
+                    return bind('ui/pages/detail/detail', 'ui/pages/detail/DetailPage', context);
                 });
 
                 page('*', function (context) {
