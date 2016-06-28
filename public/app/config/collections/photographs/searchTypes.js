@@ -9,7 +9,7 @@
                 glyphicon: 'search'
             },
             {
-                key: 'ca_objects.Creator',
+                key: 'ca_objects.Creator.CreatorName',
                 labelText: 'Creator',
                 glyphicon: 'user'
             },
