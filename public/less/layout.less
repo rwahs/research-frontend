@@ -1,9 +1,9 @@
 #cross-site {
-    padding-top:5px;
+    padding-top: 5px;
     background-color: @cross-nav-bg;
     font-size: @font-size-small;
-    padding-left:15px;
-    padding-right:15px;
+    padding-left: 15px;
+    padding-right: 15px;
 
     ul.nav-tabs {
         padding-top: @padding-xs-vertical;
@@ -31,21 +31,39 @@
     }
 }
 
-.nav-main-menu {
-    font-size: @font-size-large;
-
-    ul.navbar-nav {
-        padding-top: @padding-xs-vertical;
-        border-bottom: none;
-
-        li a {
-            color: #fff;
-            font-weight: 300;
-        }
-
-        li a:hover {
-            background-color: @main-menu-hover;
-        }
-
+header.navbar {
+    .logo{
+        padding-top: @padding-large-vertical;
+        padding-bottom: @padding-large-vertical;
     }
+
+    .nav-main-menu {
+        font-size: @font-size-large;
+
+        ul.navbar-nav {
+            padding-top: @padding-xs-vertical;
+            border-bottom: none;
+
+            li a {
+                color: #fff;
+                font-weight: 300;
+            }
+
+            li a:hover {
+                background-color: @main-menu-hover;
+            }
+
+        }
+    }
+}
+
+#application-container {
+    margin-bottom: 30px;
+}
+
+footer.navbar {
+    min-height: unset;
+    line-height: 1;
+    padding: 10px;
+    margin-bottom: 0;
 }
