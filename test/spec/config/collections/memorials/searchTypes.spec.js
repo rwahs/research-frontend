@@ -13,12 +13,17 @@
             describe('The `memorials/searchTypes` module', function () {
                 it('Defines a static array', function () {
                     expect(searchTypes).to.be.an('array');
-                    expect(searchTypes).to.have.length(3);
+                    expect(searchTypes).to.have.length(4);
                 });
                 it('Defines the `Keyword` field', function () {
                     var searchType = _.find(searchTypes, { key: '_fulltext' });
                     expect(searchType.labelText).to.equal('Keyword');
                     expect(searchType.glyphicon).to.equal('search');
+                });
+                it('Defines the `Creator` field', function () {
+                    var searchType = _.find(searchTypes, { key: 'ca_objects.Creator.CreatorName' });
+                    expect(searchType.labelText).to.equal('Creator');
+                    expect(searchType.glyphicon).to.equal('user');
                 });
                 it('Defines the `Item Name` field', function () {
                     var searchType = _.find(searchTypes, { key: 'ca_objects.preferred_labels' });

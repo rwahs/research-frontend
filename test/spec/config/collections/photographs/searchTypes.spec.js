@@ -5,12 +5,12 @@
         [
             'lodash',
             'chai',
-            'config/collections/library/searchTypes'
+            'config/collections/photographs/searchTypes'
         ],
         function (_, chai, searchTypes) {
             var expect = chai.expect;
 
-            describe('The `library/searchTypes` module', function () {
+            describe('The `photographs/searchTypes` module', function () {
                 it('Defines a static array', function () {
                     expect(searchTypes).to.be.an('array');
                     expect(searchTypes).to.have.length(4);
@@ -20,9 +20,9 @@
                     expect(searchType.labelText).to.equal('Keyword');
                     expect(searchType.glyphicon).to.equal('search');
                 });
-                it('Defines the `Author` field', function () {
-                    var searchType = _.find(searchTypes, { key: 'ca_objects.Author' });
-                    expect(searchType.labelText).to.equal('Author');
+                it('Defines the `Creator` field', function () {
+                    var searchType = _.find(searchTypes, { key: 'ca_objects.Creator.CreatorName' });
+                    expect(searchType.labelText).to.equal('Creator');
                     expect(searchType.glyphicon).to.equal('user');
                 });
                 it('Defines the `Title` field', function () {
