@@ -28,19 +28,18 @@
         ' */\n\n';
 
     autodiscoverTests = function (callback) {
-        var processNextPath,
-            rootPath = path.join(__dirname, 'test', 'spec'),
-            paths = [ '' ],
-            tests = [];
-        processNextPath = function () {
+        var rootPath, paths, tests;
+        rootPath = path.join(__dirname, 'test', 'spec');
+        paths = [ '' ];
+        tests = [];
+        (function processNextPath() {
             var dir;
             if (paths.length === 0) {
                 return callback(null, tests);
             }
             dir = paths.pop();
             fs.readdir(path.join(rootPath, dir), function (err, files) {
-                var processNextFile;
-                processNextFile = function () {
+                (function processNextFile() {
                     var file;
                     if (files.length === 0) {
                         return processNextPath();
@@ -55,11 +54,9 @@
                         }
                         processNextFile();
                     });
-                };
-                processNextFile();
+                }());
             });
-        };
-        processNextPath();
+        }());
     };
 
     gulp.task(
