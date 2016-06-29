@@ -1,0 +1,65 @@
+(function () {
+    'use strict';
+
+    require.config({
+        urlArgs: 'm=' + (new Date()).getTime(),
+        paths: {
+            // Test modules
+            mocha: '../node_modules/mocha/mocha',
+            chai: '../node_modules/chai/chai',
+            sinon: '../node_modules/sinon/lib/sinon',
+
+            // RequireJS extensions
+            text: '../public/lib/text/text',
+
+            // Vendor libraries
+            knockout: '../public/lib/knockout/dist/knockout.debug',
+            lodash: '../public/lib/lodash/lodash',
+            jquery: '../public/lib/jquery/dist/jquery',
+            bootstrap: '../public/lib/bootstrap/dist/js/bootstrap',
+            page: '../public/lib/page/page',
+            querystring: '../public/lib/querystring/querystring',
+
+            // Application modules
+            config: '../public/app/config/',
+            models: '../public/app/models/',
+            services: '../public/app/services/',
+            ui: '../public/app/ui/',
+            util: '../public/app/util/',
+
+            // Test specs, mocks and fixtures
+            spec: 'spec/',
+            fixtures: 'fixtures/'
+        },
+        shim: {
+            mocha: {
+                init: function () {
+                    // https://gist.github.com/michaelcox/3800736
+                    // https://github.com/mochajs/mocha/wiki/Using-mocha-programmatically
+                    return this.mocha.setup({
+                        ui: 'bdd',
+                        reporter: /phantom/i.test(window.navigator.userAgent) ? 'spec' : 'html'
+                    });
+                }
+            }
+        }
+    });
+
+    require(
+        [
+            'mocha'
+        ],
+        function (mocha) {
+            require(
+                [
+                    // TESTS GO HERE (this line is replaced by the gulp qa:pretest task)
+                ],
+                function () {
+                    // See https://github.com/nathanboktae/mocha-phantomjs-core/issues/12
+                    window.initMochaPhantomJS();
+                    mocha.run();
+                }
+            );
+        }
+    );
+}());

@@ -2,26 +2,65 @@
 
 (function (pkg, gulp,
            jshint, jscs, stylish, mocha, connect, less, requirejs, uglify, replace, rename, header, awspublish,
-           aws, yargs, rimraf, mkdirp, recursive) {
+           aws, yargs, fs, path, rimraf, mkdirp, recursive) {
     'use strict';
 
-    var environment = yargs.argv.env || 'development',
-        environmentPrefix = {
-            staging: 'staging-',
-            uat: 'uat-',
-            production: ''
-        },
-        headerTemplate =
-            '/**\n' +
-            ' * ${pkg.name}\n' +
-            ' * ${pkg.description}\n' +
-            ' * \n' +
-            ' * @version ${pkg.version}\n' +
-            ' * @date ' + (new Date()).toISOString() + '\n' +
-            ' * @environment ' + environment + '\n' +
-            ' * @link ${pkg.homepage}\n' +
-            ' * @license ${pkg.license}\n' +
-            ' */\n\n';
+    var environment, environmentPrefix, headerTemplate, autodiscoverTests;
+
+    environment = yargs.argv.env || 'development';
+
+    environmentPrefix = {
+        staging: 'staging-',
+        uat: 'uat-',
+        production: ''
+    };
+
+    headerTemplate =
+        '/**\n' +
+        ' * ${pkg.name}\n' +
+        ' * ${pkg.description}\n' +
+        ' * \n' +
+        ' * @version ${pkg.version}\n' +
+        ' * @date ' + (new Date()).toISOString() + '\n' +
+        ' * @environment ' + environment + '\n' +
+        ' * @link ${pkg.homepage}\n' +
+        ' * @license ${pkg.license}\n' +
+        ' */\n\n';
+
+    autodiscoverTests = function (callback) {
+        var processNextPath,
+            rootPath = path.join(__dirname, 'test', 'spec'),
+            paths = [ '' ],
+            tests = [];
+        processNextPath = function () {
+            var dir;
+            if (paths.length === 0) {
+                return callback(null, tests);
+            }
+            dir = paths.pop();
+            fs.readdir(path.join(rootPath, dir), function (err, files) {
+                var processNextFile;
+                processNextFile = function () {
+                    var file;
+                    if (files.length === 0) {
+                        return processNextPath();
+                    }
+                    file = files.pop();
+                    fs.stat(path.join(rootPath, dir, file), function (err, stat) {
+                        if (stat.isDirectory()) {
+                            paths.push(path.join(dir, file));
+                        }
+                        if (stat.isFile()) {
+                            tests.push(path.join('spec', dir, file.replace(/\.js$/, '')));
+                        }
+                        processNextFile();
+                    });
+                };
+                processNextFile();
+            });
+        };
+        processNextPath();
+    };
 
     gulp.task(
         'qa:lint',
@@ -40,9 +79,32 @@
     );
 
     gulp.task(
-        'qa:test',
+        'qa:autodiscover-tests',
         [
             'qa:lint'
+        ],
+        function (callback) {
+            autodiscoverTests(function (err, tests) {
+                if (err) {
+                    return callback(err);
+                }
+                gulp.src('test/main.js.template')
+                    .pipe(replace(
+                        /\/\/\sTESTS GO HERE.*/,
+                        '\'' + tests.join('\',\n                    \'') + '\''
+                    ))
+                    .pipe(rename('main.js'))
+                    .pipe(gulp.dest('test'));
+                callback();
+            });
+        }
+    );
+
+    gulp.task(
+        'qa:test',
+        [
+            'qa:lint',
+            'qa:autodiscover-tests'
         ],
         function () {
             return gulp
@@ -55,6 +117,7 @@
         'qa',
         [
             'qa:lint',
+            'qa:autodiscover-tests',
             'qa:test'
         ]
     );
@@ -322,8 +385,9 @@
                 .watch(
                     [
                         '*.js',
-                        'public/app/**',
-                        'test/**/*.js'
+                        'public/app/**/*.js',
+                        'test/fixtures/**/*.js',
+                        'test/spec/**/*.js'
                     ],
                     [
                         'qa'
@@ -381,6 +445,8 @@
     require('gulp-awspublish'),
     require('aws-sdk'),
     require('yargs'),
+    require('fs'),
+    require('path'),
     require('rimraf'),
     require('mkdirp'),
     require('recursive-readdir')
