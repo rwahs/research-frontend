@@ -9,6 +9,11 @@
                 glyphicon: 'search'
             },
             {
+                key: 'ca_objects.Creator.CreatorName',
+                labelText: 'Creator',
+                glyphicon: 'user'
+            },
+            {
                 key: 'ca_objects.preferred_labels',
                 labelText: 'Item Name',
                 glyphicon: 'certificate'
