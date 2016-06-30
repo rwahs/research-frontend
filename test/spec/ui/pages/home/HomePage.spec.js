@@ -4,14 +4,14 @@
     define(
         [
             'chai',
-            'ui/pages/static/StaticPage'
+            'ui/pages/home/HomePage'
         ],
-        function (chai, StaticPage) {
+        function (chai, HomePage) {
             var expect = chai.expect;
 
-            describe('The `StaticPage` module', function () {
+            describe('The `HomePage` module', function () {
                 it('Defines a constructor function', function () {
-                    expect(StaticPage).to.be.a('function');
+                    expect(HomePage).to.be.a('function');
                 });
             });
         }
