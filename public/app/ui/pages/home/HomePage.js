@@ -3,9 +3,14 @@
 
     define(
         [
+            'util/container'
         ],
-        function () {
-            return function (context) {
+        function (container) {
+            return function () {
+                this.ready = function (callback) {
+                    container.resolve('ui.overlay').loading(false);
+                    callback();
+                };
             };
         }
     );
