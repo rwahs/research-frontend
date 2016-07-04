@@ -27,7 +27,7 @@
     });
 
     // Boot the application
-    require([ 'jquery' ], function ($) {
+    require([ 'jquery', 'knockout' ], function ($, ko) {
         require([ 'bootstrap' ], function () {
             // This value is replaced during the packaging process.
             var environment = 'development';
@@ -43,10 +43,10 @@
                     'text!ui/shell.html'
                 ],
                 function (settings, env, components, routes, shellView) {
-                    $('#application-container').html(shellView);
                     settings();
                     env();
                     components();
+                    ko.applyBindings(undefined, $('#application-container').html(shellView)[0]);
                     routes();
                 }
             );
