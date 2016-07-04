@@ -27,7 +27,7 @@
     });
 
     // Boot the application
-    require([ 'jquery' ], function () {
+    require([ 'jquery' ], function ($) {
         require([ 'bootstrap' ], function () {
             // This value is replaced during the packaging process.
             var environment = 'development';
@@ -39,9 +39,11 @@
                     'config/settings',
                     'config/env/' + environment,
                     'config/components',
-                    'config/routes'
+                    'config/routes',
+                    'text!ui/shell.html'
                 ],
-                function (settings, env, components, routes) {
+                function (settings, env, components, routes, shellView) {
+                    $('#application-container').html(shellView);
                     settings();
                     env();
                     components();
