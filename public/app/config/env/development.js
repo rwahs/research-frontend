@@ -5,9 +5,10 @@
         [
             'util/container',
             'services/searchService',
-            'services/detailService'
+            'services/detailService',
+            'ui/overlay'
         ],
-        function (container, searchService, detailService) {
+        function (container, searchService, detailService, overlay) {
             var simpleApiBaseUrl = 'http://localhost/providence/service.php/simple',
                 noCache = true,
                 ajaxOptions = {
@@ -29,6 +30,8 @@
                 container.register('detail.photographs', detailService(simpleApiBaseUrl + '/photographs_detail', ajaxOptions, noCache, true));
                 container.register('detail.museum', detailService(simpleApiBaseUrl + '/museum_detail', ajaxOptions, noCache, true));
                 container.register('detail.memorials', detailService(simpleApiBaseUrl + '/memorials_detail', ajaxOptions, noCache, true));
+
+                container.register('ui.overlay', overlay(true));
 
                 container.seal();
             };
