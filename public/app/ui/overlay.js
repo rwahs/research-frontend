@@ -12,12 +12,12 @@
                         $('#loading-overlay').toggle(status);
                     },
 
-                    error: function (message, fatal) {
+                    error: function (message) {
                         $('#error-message')
                             .append($('<div>')
                                 .addClass('container')
                                 .append($('<span>').addClass('glyphicon glyphicon-alert'))
-                                .append(fatal ? 'A fatal error occurred' : 'An error occurred')
+                                .append('An error occurred')
                                 .append((debug && message) ? ': ' + message : ''))
                             .on('click', function () {
                                 $(this).fadeOut();
