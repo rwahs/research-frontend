@@ -18,7 +18,7 @@
                     expect(SearchPage).to.be.a('function');
                 });
                 describe('When the search service is returning valid results', function () {
-                    var searchService;
+                    var searchService, overlay;
                     beforeEach(function () {
                         sinon.stub(routes, 'pushState');
                         // jshint camelcase: false
@@ -33,6 +33,11 @@
                             searchTypes: 'fixtures/collections/searchTypes',
                             searchResultFields: 'fixtures/collections/searchResultFields'
                         });
+                        overlay = {
+                            loading: sinon.stub(),
+                            error: sinon.stub()
+                        };
+                        container.register('ui.overlay', overlay);
                         container.seal();
                     });
                     describe('When constructed with correct parameters', function () {
@@ -52,7 +57,6 @@
                             expect(ko.isObservable(page.searchText)).to.equal(true);
                             expect(ko.isObservable(page.searchTypes)).to.equal(true);
                             expect(ko.isObservable(page.searchResultFields)).to.equal(true);
-                            expect(ko.isObservable(page.loading)).to.equal(true);
                             expect(ko.isObservable(page.displayResults)).to.equal(true);
                             expect(ko.isPureComputed(page.displayedResults)).to.equal(true);
                             expect(ko.isPureComputed(page.type)).to.equal(true);
@@ -80,14 +84,19 @@
                             expect(page.searchTypes()).to.deep.equal([]);
                             expect(page.searchResultFields()).to.deep.equal([]);
                         });
-                        it('Is not loading or displaying results', function () {
-                            expect(page.loading()).to.equal(false);
+                        it('Is not displaying results', function () {
                             expect(page.displayResults()).to.equal(false);
                         });
                         it('Gives the right default computed values', function () {
                             expect(page.heading()).to.equal('Collection Search');
                             expect(page.placeholder()).to.equal('Enter your search terms...');
                             expect(page.hasResults()).to.equal(false);
+                        });
+                        it('Has not displayed the loading animation', function () {
+                            expect(overlay.loading.callCount).to.equal(0);
+                        });
+                        it('Has not displayed any errors', function () {
+                            expect(overlay.error.callCount).to.equal(0);
                         });
                         describe('When bound to the view', function () {
                             var container;
@@ -108,9 +117,14 @@
                             it('Sets the result fields', function () {
                                 expect(page.searchResultFields()).to.have.length(3); // see fixtures/collections/searchResultFields.js
                             });
-                            it('Is not loading or displaying results', function () {
-                                expect(page.loading()).to.equal(false);
+                            it('Is not displaying results', function () {
                                 expect(page.displayResults()).to.equal(false);
+                            });
+                            it('Has not displayed the loading animation', function () {
+                                expect(overlay.loading.callCount).to.equal(0);
+                            });
+                            it('Has not displayed any errors', function () {
+                                expect(overlay.error.callCount).to.equal(0);
                             });
                             describe('When a different search type is made active', function () {
                                 beforeEach(function () {
@@ -123,9 +137,14 @@
                                 it('Sets the placeholder text', function () {
                                     expect(page.placeholder()).to.equal('Search by Field Two...');
                                 });
-                                it('Is not loading or displaying results', function () {
-                                    expect(page.loading()).to.equal(false);
+                                it('Is not displaying results', function () {
                                     expect(page.displayResults()).to.equal(false);
+                                });
+                                it('Has not displayed the loading animation', function () {
+                                    expect(overlay.loading.callCount).to.equal(0);
+                                });
+                                it('Has not displayed any errors', function () {
+                                    expect(overlay.error.callCount).to.equal(0);
                                 });
                             });
                             describe('With empty search text', function () {
@@ -143,9 +162,14 @@
                                     it('Resets the search type', function () {
                                         expect(page.searchTypes()[0].active()).to.equal(true);
                                     });
-                                    it('Is not loading or displaying results', function () {
-                                        expect(page.loading()).to.equal(false);
+                                    it('Is not displaying results', function () {
                                         expect(page.displayResults()).to.equal(false);
+                                    });
+                                    it('Has not displayed the loading animation', function () {
+                                        expect(overlay.loading.callCount).to.equal(0);
+                                    });
+                                    it('Has not displayed any errors', function () {
+                                        expect(overlay.error.callCount).to.equal(0);
                                     });
                                 });
                                 describe('When the search form is submitted', function () {
@@ -155,9 +179,14 @@
                                     it('Does not call the search service', function () {
                                         sinon.assert.notCalled(searchService);
                                     });
-                                    it('Is not loading or displaying results', function () {
-                                        expect(page.loading()).to.equal(false);
+                                    it('Is not displaying results', function () {
                                         expect(page.displayResults()).to.equal(false);
+                                    });
+                                    it('Has not displayed the loading animation', function () {
+                                        expect(overlay.loading.callCount).to.equal(0);
+                                    });
+                                    it('Has not displayed any errors', function () {
+                                        expect(overlay.error.callCount).to.equal(0);
                                     });
                                 });
                             });
@@ -176,9 +205,14 @@
                                     it('Resets the search type', function () {
                                         expect(page.searchTypes()[0].active()).to.equal(true);
                                     });
-                                    it('Is not loading or displaying results', function () {
-                                        expect(page.loading()).to.equal(false);
+                                    it('Is not displaying results', function () {
                                         expect(page.displayResults()).to.equal(false);
+                                    });
+                                    it('Has not displayed the loading animation', function () {
+                                        expect(overlay.loading.callCount).to.equal(0);
+                                    });
+                                    it('Has not displayed any errors', function () {
+                                        expect(overlay.error.callCount).to.equal(0);
                                     });
                                 });
                                 describe('When the search form is submitted', function () {
@@ -189,9 +223,16 @@
                                         sinon.assert.calledOnce(searchService);
                                         sinon.assert.calledWith(searchService, { second: 'query' });
                                     });
-                                    it('Is not loading but is displaying results', function () {
-                                        expect(page.loading()).to.equal(false);
+                                    it('Is displaying results', function () {
                                         expect(page.displayResults()).to.equal(true);
+                                    });
+                                    it('Has displayed and then hidden the loading animation', function () {
+                                        expect(overlay.loading.callCount).to.equal(2);
+                                        expect(overlay.loading.getCall(0).args).to.deep.equal([ true ]);
+                                        expect(overlay.loading.getCall(1).args).to.deep.equal([ false ]);
+                                    });
+                                    it('Has not displayed any errors', function () {
+                                        expect(overlay.error.callCount).to.equal(0);
                                     });
                                 });
                             });
@@ -258,7 +299,7 @@
                     });
                 });
                 describe('When the search service is returning errors', function () {
-                    var searchService;
+                    var searchService, overlay;
                     beforeEach(function () {
                         sinon.stub(routes, 'pushState');
                         // jshint camelcase: false
@@ -269,6 +310,11 @@
                             searchTypes: 'fixtures/collections/searchTypes',
                             searchResultFields: 'fixtures/collections/searchResultFields'
                         });
+                        overlay = {
+                            loading: sinon.stub(),
+                            error: sinon.stub()
+                        };
+                        container.register('ui.overlay', overlay);
                         container.seal();
                     });
                     describe('When constructed with valid parameters', function () {
@@ -295,11 +341,18 @@
                                 it('Calls the specified search service', function () {
                                     sinon.assert.calledOnce(searchService);
                                 });
-                                it('Is not loading or displaying results', function () {
-                                    expect(page.loading()).to.equal(false);
+                                it('Is not displaying results', function () {
                                     expect(page.displayResults()).to.equal(false);
                                 });
-                                // TODO Displays the error
+                                it('Has displayed and then hidden the loading animation', function () {
+                                    expect(overlay.loading.callCount).to.equal(2);
+                                    expect(overlay.loading.getCall(0).args).to.deep.equal([ true ]);
+                                    expect(overlay.loading.getCall(1).args).to.deep.equal([ false ]);
+                                });
+                                it('Has displayed an error', function () {
+                                    expect(overlay.error.callCount).to.equal(1);
+                                    expect(overlay.error.getCall(0).args).to.deep.equal([ new Error('Service Error') ]);
+                                });
                             });
                         });
                     });
