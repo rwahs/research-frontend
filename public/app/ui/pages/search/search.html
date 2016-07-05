@@ -8,6 +8,7 @@
                         <div class="form-group">
                             <input name="query" placeholder="Search" class="form-control" data-bind="textInput: searchText, attr: { placeholder: placeholder }" />
                         </div>
+                        <!-- ko if: displaySearchTypeSwitch -->
                         <div class="form-group">
                             <div class="btn-group btn-group-justified">
                                 <!-- ko foreach: searchTypes -->
@@ -15,6 +16,7 @@
                                 <!-- /ko -->
                             </div>
                         </div>
+                        <!-- /ko -->
                     </div>
                     <div class="panel-footer text-right">
                         <div class="btn-group">

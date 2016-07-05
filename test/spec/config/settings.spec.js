@@ -19,12 +19,18 @@
                         settings();
                     });
                     it('Registers the settings', function () {
+                        expect(container.isRegistered('settings.all')).to.equal(true);
                         expect(container.isRegistered('settings.library')).to.equal(true);
                         expect(container.isRegistered('settings.memorials')).to.equal(true);
                         expect(container.isRegistered('settings.museum')).to.equal(true);
                         expect(container.isRegistered('settings.photographs')).to.equal(true);
                     });
                     it('Registers the correct settings', function () {
+                        expect(container.resolve('settings.all')).to.deep.equal({
+                            collectionName: 'All Collections',
+                            searchTypes: 'config/collections/all/searchTypes',
+                            searchResultFields: 'config/collections/all/searchResultFields'
+                        });
                         expect(container.resolve('settings.library')).to.deep.equal({
                             collectionName: 'Library',
                             labelField: 'Title',

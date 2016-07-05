@@ -1,0 +1,12 @@
+<div class="search header-search">
+    <form data-bind="submit: submit">
+        <div class="input-group">
+            <input type="text" name="query" placeholder="Search the collections&hellip;" class="form-control" data-bind="textInput: searchText" />
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-default" data-bind="attr: { disabled: preventSubmit }">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+        </div>
+    </form>
+</div>

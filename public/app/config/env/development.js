@@ -21,6 +21,7 @@
                 };
 
             return function () {
+                container.register('search.all', searchService(simpleApiBaseUrl + '/all_search', ajaxOptions, false, true));
                 container.register('search.library', searchService(simpleApiBaseUrl + '/library_search', ajaxOptions, noCache, true));
                 container.register('search.photographs', searchService(simpleApiBaseUrl + '/photographs_search', ajaxOptions, noCache, true));
                 container.register('search.museum', searchService(simpleApiBaseUrl + '/museum_search', ajaxOptions, noCache, true));
@@ -32,8 +33,6 @@
                 container.register('detail.memorials', detailService(simpleApiBaseUrl + '/memorials_detail', ajaxOptions, noCache, true));
 
                 container.register('ui.overlay', overlay(true));
-
-                container.seal();
             };
         }
     );

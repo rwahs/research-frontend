@@ -39,6 +39,10 @@
                 sort: true
             },
             {
+                key: 'MakersMarks',
+                labelText: 'Makers Marks'
+            },
+            {
                 key: 'Classification',
                 labelText: 'Classification',
                 parse: true,

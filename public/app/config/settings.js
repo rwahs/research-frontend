@@ -7,6 +7,11 @@
         ],
         function (container) {
             return function () {
+                container.register('settings.all', {
+                    collectionName: 'All Collections',
+                    searchTypes: 'config/collections/all/searchTypes',
+                    searchResultFields: 'config/collections/all/searchResultFields'
+                });
                 container.register('settings.library', {
                     collectionName: 'Library',
                     labelField: 'Title',

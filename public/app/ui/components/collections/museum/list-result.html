@@ -1,4 +1,6 @@
 <div class="list-result list-result-museum">
     <span class="pull-left" data-bind="component: displayFor('MediaThumbnail', result)"></span>
-    <a href="#" data-bind="attr: { href: detailUrlFor(result) }, component: displayForLabelField(result)"></a>
+    <a class="result-title" href="#" data-bind="attr: { href: detailUrlFor(result) }, component: displayFor('ItemName', result)"></a>
+    <div data-bind="component: displayFor('type', result)"></div>
+    <div data-bind="component: displayFor('MakersMarks', result)"></div>
 </div>

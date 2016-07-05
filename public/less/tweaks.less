@@ -1,6 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
 html {
     position: relative;
     min-height: 100%;
+}
+
+p,li,dt,dd,td,th,details,button,form,a,div,details {
+  font-family: Raleway, sans-serif;
 }
 
 img {
@@ -24,3 +30,30 @@ select.form-control.styled-select {
 select.form-control.styled-select::-ms-expand {
     display: none;
 }
+
+.list-result {
+    .result-title {
+        font-size: @font-size-large;
+    }
+    span {
+        .display-text{
+            display: inline;
+        }
+    }
+    .inline-list li {
+        list-style-type: none;
+    }
+}
+
+article.search .results-container-thumbnails .result{
+    overflow:hidden;
+    img {
+        max-height: 175px;
+        margin: auto;
+    }   
+    .img-placeholder {
+        max-height: 175px;
+    }
+}
+
+

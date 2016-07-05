@@ -24,9 +24,24 @@
                 sort: true
             },
             {
+                key: 'ItemName',
+                labelText: 'Item Name',
+                sort: true
+            },
+            {
                 key: 'Title',
                 labelText: 'Title',
                 sort: true
+            },
+            {
+                key: 'Author',
+                labelText: 'Author',
+                parse: true,
+                filter: true,
+                display: 'list',
+                sort: function (value) {
+                    return value.length > 0 ? value[0] : undefined;
+                }
             },
             {
                 key: 'Creator',
@@ -39,9 +54,8 @@
                 }
             },
             {
-                key: 'DateOfCreation',
-                labelText: 'Date of Creation',
-                sort: true
+                key: 'MakersMarks',
+                labelText: 'Makers Marks'
             },
             {
                 key: 'Publisher',
@@ -59,9 +73,15 @@
                 sort: true
             },
             {
-                key: 'Medium',
-                labelText: 'Medium',
-                sort: true
+                key: 'Location',
+                labelText: 'Location',
+                parse: true,
+                skip: 1,
+                filter: true,
+                display: 'hierarchy',
+                sort: function (value) {
+                    return value.length > 0 ? value.join(' / ') : undefined;
+                }
             }
         ];
     });

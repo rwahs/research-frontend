@@ -66,10 +66,6 @@
                     return this.pager.currentPage();
                 }.bind(this));
 
-                this.type = ko.pureComputed(function () {
-                    return context.params.type;
-                });
-
                 this.submittedQuery = ko.pureComputed(function () {
                     return submittedQuery();
                 });
@@ -87,6 +83,10 @@
                 this.hasResults = ko.pureComputed(function () {
                     return results().length > 0;
                 });
+
+                this.displaySearchTypeSwitch = ko.pureComputed(function () {
+                    return this.searchTypes() && this.searchTypes().length > 1;
+                }.bind(this));
 
                 this.binding = function (element, callback) {
                     require(
@@ -147,12 +147,12 @@
                 };
 
                 this.displayForLabelField = function (result) {
-                    return this.displayFor(settings.labelField, result);
+                    return this.displayFor(container.resolve('settings.' + typeFor(result)).labelField, result);
                 };
 
                 this.resultFor = function (result) {
                     return {
-                        name: 'collections/' + context.params.type + '/' + this.modeSwitcher.mode().toLowerCase() + '-result',
+                        name: 'collections/' + typeFor(result) + '/' + this.modeSwitcher.mode().toLowerCase() + '-result',
                         params: this
                     };
                 };
@@ -175,7 +175,7 @@
                 };
 
                 this.detailUrlFor = function (result) {
-                    return routes.detailUrlFor(context.params.type, result.id());
+                    return routes.detailUrlFor(typeFor(result), result.id());
                 };
             };
         }
