@@ -1,67 +1,92 @@
 <section class="detail detail-photographs">
     <div class="row">
         <div class="col-md-12">
-            <div data-bind="component: displayFor('MediaMedium')"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="name" data-bind="text: labelFor('Creator')"></div>
-            <div class="value" data-bind="component: displayFor('Creator')"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="name" data-bind="text: labelFor('DateOfCreation')"></div>
-            <div class="value" data-bind="component: displayFor('DateOfCreation')"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="name" data-bind="text: labelFor('Publisher')"></div>
-            <div class="value" data-bind="component: displayFor('Publisher')"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="name" data-bind="text: labelFor('DateOfPublication')"></div>
-            <div class="value" data-bind="component: displayFor('DateOfPublication')"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="name" data-bind="text: labelFor('PlaceOfPublication')"></div>
-            <div class="value" data-bind="component: displayFor('PlaceOfPublication')"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="name" data-bind="text: labelFor('Medium')"></div>
-            <div class="value" data-bind="component: displayFor('Medium')"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="name" data-bind="text: labelFor('PhysicalDescription')"></div>
-            <div class="value" data-bind="component: displayFor('PhysicalDescription')"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="name" data-bind="text: labelFor('Subjects')"></div>
-            <div class="value" data-bind="component: displayFor('Subjects')"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
+            <div class="pull-right" data-bind="component: displayFor('MediaMedium')"></div>
             <div class="name" data-bind="text: labelFor('Summary')"></div>
             <div class="value" data-bind="component: displayFor('Summary')"></div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <div class="name" data-bind="text: labelFor('Notes')"></div>
-            <div class="value" data-bind="component: displayFor('Notes')"></div>
+        <div class="col-md-6 col-sm-12">
+            <table class="table table-condensed">
+                <tr>   
+                    <th scope="row">
+                        <div class="name" data-bind="text: labelFor('Creator')"></div>
+                    </th>
+                    <td>
+                        <div class="value" data-bind="component: displayFor('Creator')"></div>
+                    </td>
+                </tr>
+                <tr>   
+                    <th scope="row">
+                        <div class="name" data-bind="text: labelFor('DateOfCreation')"></div>
+                    </th>
+                    <td>
+                        <div class="value" data-bind="component: displayFor('DateOfCreation')"></div>
+                    </td>
+                </tr>
+                <tr>   
+                    <th scope="row">
+                        <div class="name" data-bind="text: labelFor('Publisher')"></div>
+                    </th>
+                    <td>
+                        <div class="value" data-bind="component: displayFor('Publisher')"></div>
+                    </td>
+                </tr>
+                <tr>   
+                    <th scope="row">
+                        <div class="name" data-bind="text: labelFor('DateOfPublication')"></div>
+                    </th>
+                    <td>
+                        <div class="value" data-bind="component: displayFor('DateOfPublication')"></div>
+                    </td>
+                </tr>
+                <tr>   
+                    <th scope="row">
+                        <div class="name" data-bind="text: labelFor('PlaceOfPublication')"></div>
+                    </th>
+                    <td>
+                        <div class="value" data-bind="component: displayFor('PlaceOfPublication')"></div>  
+                    </td>
+                </tr>  
+            </table>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <table class="table table-condensed">
+                <tr>   
+                    <th scope="row">
+                        <div class="name" data-bind="text: labelFor('Medium')"></div>
+                    </th>
+                    <td>
+                        <div class="value" data-bind="component: displayFor('Medium')"></div>
+                    </td>
+                </tr>
+                <tr>   
+                    <th scope="row">
+                        <div class="name" data-bind="text: labelFor('PhysicalDescription')"></div>
+                    </th>
+                    <td>
+                        <div class="value" data-bind="component: displayFor('PhysicalDescription')"></div>
+                    </td>
+                </tr>
+                <tr>   
+                    <th scope="row">
+                        <div class="name" data-bind="text: labelFor('Subjects')"></div>
+                    </th>
+                    <td>
+                        <div class="value" data-bind="component: displayFor('Subjects')"></div>
+                    </td>
+                </tr>
+                <tr>   
+                    <th scope="row">
+                        <div class="name" data-bind="text: labelFor('Notes')"></div>
+                    </th>
+                    <td>
+                        <div class="value" data-bind="component: displayFor('Notes')"></div>
+                    </td>
+                </tr>
+                              
+            </table>
         </div>
     </div>
 </section>
