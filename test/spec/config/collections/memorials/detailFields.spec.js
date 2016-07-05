@@ -13,7 +13,11 @@
             describe('The `memorials/detailFields` module', function () {
                 it('Defines a static array', function () {
                     expect(detailFields).to.be.an('array');
-                    expect(detailFields).to.have.length(13);
+                    expect(detailFields).to.have.length(14);
+                });
+                it('Defines the `type` field', function () {
+                    expect(detailFields[0].key).to.equal('type');
+                    expect(detailFields[0].labelText).to.equal('Item Type');
                 });
                 it('Defines the `idno` field', function () {
                     var idnoField = _.find(detailFields, { key: 'idno' });
