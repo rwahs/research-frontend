@@ -5,15 +5,15 @@
         [
             'lodash',
             'chai',
-            'config/collections/memorials/searchResultFields'
+            'config/collections/all/searchResultFields'
         ],
         function (_, chai, searchResultFields) {
             var expect = chai.expect;
 
-            describe('The `memorials/searchResultFields` module', function () {
+            describe('The `all/searchResultFields` module', function () {
                 it('Defines a static array', function () {
                     expect(searchResultFields).to.be.an('array');
-                    expect(searchResultFields).to.have.length(8);
+                    expect(searchResultFields).to.have.length(13);
                 });
                 it('Defines the `MediaThumbnail` field', function () {
                     var mediaField = _.find(searchResultFields, { key: 'MediaThumbnail' });
@@ -40,6 +40,19 @@
                     expect(itemNameField.labelText).to.equal('Item Name');
                     expect(itemNameField.sort).to.equal(true);
                 });
+                it('Defines the `Title` field', function () {
+                    var titleField = _.find(searchResultFields, { key: 'Title' });
+                    expect(titleField.labelText).to.equal('Title');
+                    expect(titleField.sort).to.equal(true);
+                });
+                it('Defines the `Author` field', function () {
+                    var authorField = _.find(searchResultFields, { key: 'Author' });
+                    expect(authorField.labelText).to.equal('Author');
+                    expect(authorField.parse).to.equal(true);
+                    expect(authorField.filter).to.equal(true);
+                    expect(authorField.display).to.equal('list');
+                    expect(_.isFunction(authorField.sort)).to.equal(true);
+                });
                 it('Defines the `Creator` field', function () {
                     var creatorField = _.find(searchResultFields, { key: 'Creator' });
                     expect(creatorField.labelText).to.equal('Creator');
@@ -48,10 +61,25 @@
                     expect(creatorField.display).to.equal('typed-list');
                     expect(_.isFunction(creatorField.sort)).to.equal(true);
                 });
-                it('Defines the `ErectedBy` field', function () {
-                    var erectedByField = _.find(searchResultFields, { key: 'ErectedBy' });
-                    expect(erectedByField.labelText).to.equal('Erected By');
-                    expect(erectedByField.sort).to.equal(true);
+                it('Defines the `Publisher` field', function () {
+                    var publisherField = _.find(searchResultFields, { key: 'Publisher' });
+                    expect(publisherField.labelText).to.equal('Publisher');
+                    expect(publisherField.sort).to.equal(true);
+                });
+                it('Defines the `DateOfPublication` field', function () {
+                    var dateOfPublicationField = _.find(searchResultFields, { key: 'DateOfPublication' });
+                    expect(dateOfPublicationField.labelText).to.equal('Date of Publication');
+                    expect(dateOfPublicationField.sort).to.equal(true);
+                });
+                it('Defines the `PlaceOfPublication` field', function () {
+                    var placeOfPublicationField = _.find(searchResultFields, { key: 'PlaceOfPublication' });
+                    expect(placeOfPublicationField.labelText).to.equal('Place of Publication');
+                    expect(placeOfPublicationField.sort).to.equal(true);
+                });
+                it('Defines the `PublicationType` field', function () {
+                    var publicationTypeField = _.find(searchResultFields, { key: 'PublicationType' });
+                    expect(publicationTypeField.labelText).to.equal('Type');
+                    expect(publicationTypeField.sort).to.equal(true);
                 });
                 it('Defines the `Location` field', function () {
                     var locationField = _.find(searchResultFields, { key: 'Location' });

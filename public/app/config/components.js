@@ -89,14 +89,6 @@
                 );
 
                 ko.components.register(
-                    'display/html',
-                    {
-                        viewModel: { require: 'ui/components/display/DisplayComponent' },
-                        template: { require: 'text!ui/components/display/html.html' }
-                    }
-                );
-
-                ko.components.register(
                     'display/list',
                     {
                         viewModel: { require: 'ui/components/display/DisplayComponent' },
@@ -133,6 +125,14 @@
                     {
                         viewModel: { require: 'ui/components/display/DisplayComponent' },
                         template: { require: 'text!ui/components/display/image.html' }
+                    }
+                );
+
+                ko.components.register(
+                    'search/header',
+                    {
+                        viewModel: { require: 'ui/components/search/SearchComponent' },
+                        template: { require: 'text!ui/components/search/header-search.html' }
                     }
                 );
             };

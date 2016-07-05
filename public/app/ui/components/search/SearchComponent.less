@@ -1,0 +1,17 @@
+.search {
+    background: transparent;
+
+    &.header-search {
+        margin-top: @padding-base-vertical;
+
+        input {
+            max-width: 100%;
+            width: 180px;
+            transition: width ease .5s;
+
+            &:focus {
+                width: 400px;
+            }
+        }
+    }
+}

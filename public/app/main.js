@@ -27,7 +27,7 @@
     });
 
     // Boot the application
-    require([ 'jquery' ], function () {
+    require([ 'jquery', 'knockout' ], function ($, ko) {
         require([ 'bootstrap' ], function () {
             // This value is replaced during the packaging process.
             var environment = 'development';
@@ -36,16 +36,22 @@
             }
             require(
                 [
+                    'util/container',
+                    'config/types',
                     'config/settings',
                     'config/env/' + environment,
                     'config/components',
-                    'config/routes'
+                    'config/routes',
+                    'text!ui/shell.html'
                 ],
-                function (settings, env, components, routes) {
+                function (container, types, settings, env, components, routes, shellView) {
+                    types();
                     settings();
                     env();
                     components();
+                    ko.applyBindings(undefined, $('#application-container').html(shellView)[0]);
                     routes();
+                    container.seal();
                 }
             );
         });

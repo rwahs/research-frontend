@@ -7,11 +7,12 @@
             'knockout'
         ],
         function (_, ko) {
-            var current,
-                applicationContainer = document.getElementById('application-container');
+            var current;
 
             return function (viewPath, viewModelPath, context) {
-                var element, vm, runHook, attach;
+                var container, element, vm, runHook, attach;
+
+                container = window.document.getElementById('page-container');
 
                 runHook = function (vm, hook, element, callback) {
                     callback = callback || _.noop;
@@ -23,8 +24,8 @@
 
                 attach = function () {
                     runHook(vm, 'attaching', element, function () {
-                        applicationContainer.innerHTML = '';
-                        applicationContainer.appendChild(element);
+                        container.innerHTML = '';
+                        container.appendChild(element);
                         ko.applyBindings(vm, element);
                         runHook(vm, 'binding', element, function () {
                             current = { vm: vm, element: element };
@@ -34,7 +35,7 @@
                 };
 
                 require([ 'text!' + viewPath + '.html', viewModelPath ], function (view, ViewModel) {
-                    element = document.createElement('div');
+                    element = window.document.createElement('div');
                     element.innerHTML = view;
                     vm = new ViewModel(context);
                     if (current) {

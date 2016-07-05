@@ -24,9 +24,24 @@
                 sort: true
             },
             {
+                key: 'ItemName',
+                labelText: 'Item Name',
+                sort: true
+            },
+            {
                 key: 'Title',
                 labelText: 'Title',
                 sort: true
+            },
+            {
+                key: 'Author',
+                labelText: 'Author',
+                parse: true,
+                filter: true,
+                display: 'list',
+                sort: function (value) {
+                    return value.length > 0 ? value[0] : undefined;
+                }
             },
             {
                 key: 'Creator',
@@ -37,11 +52,6 @@
                 sort: function (value) {
                     return value.length > 0 ? value[0].Value : undefined;
                 }
-            },
-            {
-                key: 'DateOfCreation',
-                labelText: 'Date of Creation',
-                sort: true
             },
             {
                 key: 'Publisher',
@@ -59,9 +69,20 @@
                 sort: true
             },
             {
-                key: 'Medium',
-                labelText: 'Medium',
+                key: 'PublicationType',
+                labelText: 'Type',
                 sort: true
+            },
+            {
+                key: 'Location',
+                labelText: 'Location',
+                parse: true,
+                skip: 1,
+                filter: true,
+                display: 'hierarchy',
+                sort: function (value) {
+                    return value.length > 0 ? value.join(' / ') : undefined;
+                }
             }
         ];
     });
