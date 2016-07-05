@@ -1,5 +1,6 @@
 <div class="list-result list-result-library">
     <span class="pull-left" data-bind="component: displayFor('MediaThumbnail', result)"></span>
+    <span class="pull-right label label-default" data-bind="component: displayFor('type', result)"></span>
     <a class="result-title" href="#" data-bind="attr: { href: detailUrlFor(result) }, component: displayFor('Title', result)"></a>
     <div class="inline-list" data-bind="component: displayFor('Author', result)"></div>
     <div>
