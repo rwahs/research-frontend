@@ -13,7 +13,7 @@
             describe('The `all/searchResultFields` module', function () {
                 it('Defines a static array', function () {
                     expect(searchResultFields).to.be.an('array');
-                    expect(searchResultFields).to.have.length(14);
+                    expect(searchResultFields).to.have.length(13);
                 });
                 it('Defines the `MediaThumbnail` field', function () {
                     var mediaField = _.find(searchResultFields, { key: 'MediaThumbnail' });
@@ -79,11 +79,6 @@
                     var placeOfPublicationField = _.find(searchResultFields, { key: 'PlaceOfPublication' });
                     expect(placeOfPublicationField.labelText).to.equal('Place of Publication');
                     expect(placeOfPublicationField.sort).to.equal(true);
-                });
-                it('Defines the `PublicationType` field', function () {
-                    var publicationTypeField = _.find(searchResultFields, { key: 'PublicationType' });
-                    expect(publicationTypeField.labelText).to.equal('Type');
-                    expect(publicationTypeField.sort).to.equal(true);
                 });
                 it('Defines the `Location` field', function () {
                     var locationField = _.find(searchResultFields, { key: 'Location' });

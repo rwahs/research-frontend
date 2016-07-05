@@ -73,11 +73,6 @@
                 sort: true
             },
             {
-                key: 'PublicationType',
-                labelText: 'Type',
-                sort: true
-            },
-            {
                 key: 'Location',
                 labelText: 'Location',
                 parse: true,
