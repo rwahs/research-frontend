@@ -36,13 +36,15 @@
             }
             require(
                 [
+                    'config/types',
                     'config/settings',
                     'config/env/' + environment,
                     'config/components',
                     'config/routes',
                     'text!ui/shell.html'
                 ],
-                function (settings, env, components, routes, shellView) {
+                function (types, settings, env, components, routes, shellView) {
+                    types();
                     settings();
                     env();
                     components();
