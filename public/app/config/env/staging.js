@@ -20,6 +20,7 @@
                 };
 
             return function () {
+                container.register('search.all', cachingService(searchService(simpleApiBaseUrl + '/all_search', ajaxOptions, false, true)));
                 container.register('search.library', cachingService(searchService(simpleApiBaseUrl + '/library_search', ajaxOptions, false, true)));
                 container.register('search.photographs', cachingService(searchService(simpleApiBaseUrl + '/photographs_search', ajaxOptions, false, true)));
                 container.register('search.museum', cachingService(searchService(simpleApiBaseUrl + '/museum_search', ajaxOptions, false, true)));

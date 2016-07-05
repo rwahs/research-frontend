@@ -19,6 +19,7 @@
                         configure();
                     });
                     it('Registers search services', function () {
+                        expect(container.isRegistered('search.all')).to.equal(true);
                         expect(container.isRegistered('search.library')).to.equal(true);
                         expect(container.isRegistered('search.photographs')).to.equal(true);
                         expect(container.isRegistered('search.museum')).to.equal(true);
