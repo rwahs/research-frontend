@@ -36,6 +36,7 @@
             }
             require(
                 [
+                    'util/container',
                     'config/types',
                     'config/settings',
                     'config/env/' + environment,
@@ -43,13 +44,14 @@
                     'config/routes',
                     'text!ui/shell.html'
                 ],
-                function (types, settings, env, components, routes, shellView) {
+                function (container, types, settings, env, components, routes, shellView) {
                     types();
                     settings();
                     env();
                     components();
                     ko.applyBindings(undefined, $('#application-container').html(shellView)[0]);
                     routes();
+                    container.seal();
                 }
             );
         });

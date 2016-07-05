@@ -31,9 +31,6 @@
                         expect(container.isRegistered('detail.museum')).to.equal(true);
                         expect(container.isRegistered('detail.memorials')).to.equal(true);
                     });
-                    it('Seals the container', function () {
-                        expect(container.isSealed()).to.equal(true);
-                    });
                     afterEach(function () {
                         container.reset();
                     });

@@ -30,8 +30,6 @@
                 container.register('detail.photographs', cachingService(detailService(simpleApiBaseUrl + '/photographs_detail', ajaxOptions, false, true)));
                 container.register('detail.museum', cachingService(detailService(simpleApiBaseUrl + '/museum_detail', ajaxOptions, false, true)));
                 container.register('detail.memorials', cachingService(detailService(simpleApiBaseUrl + '/memorials_detail', ajaxOptions, false, true)));
-
-                container.seal();
             };
         }
     );
