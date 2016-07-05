@@ -145,7 +145,7 @@
                 };
 
                 this.displayForLabelField = function (result) {
-                    return this.displayFor(settings.labelField, result);
+                    return this.displayFor(container.resolve('settings.' + typeFor(result)).labelField, result);
                 };
 
                 this.resultFor = function (result) {
