@@ -22,7 +22,7 @@
                         components();
                     });
                     it('Configures the correct number of components', function () {
-                        expect(ko.components.register.callCount).to.equal(21);
+                        expect(ko.components.register.callCount).to.equal(22);
                     });
                     it('Configures the "library detail" collections component', function () {
                         var args = _.find(ko.components.register.args, { 0: 'collections/library/detail' });
@@ -123,6 +123,16 @@
                         var args = _.find(ko.components.register.args, { 0: 'display/hierarchy-list' });
                         expect(args[1].viewModel.require).to.equal('ui/components/display/DisplayComponent');
                         expect(args[1].template.require).to.equal('text!ui/components/display/hierarchy-list.html');
+                    });
+                    it('Configures the "image" display component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'display/image' });
+                        expect(args[1].viewModel.require).to.equal('ui/components/display/DisplayComponent');
+                        expect(args[1].template.require).to.equal('text!ui/components/display/image.html');
+                    });
+                    it('Configures the "cover-image" display component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'display/cover-image' });
+                        expect(args[1].viewModel.require).to.equal('ui/components/display/DisplayComponent');
+                        expect(args[1].template.require).to.equal('text!ui/components/display/cover-image.html');
                     });
                     it('Configures the header search component', function () {
                         var args = _.find(ko.components.register.args, { 0: 'search/header' });

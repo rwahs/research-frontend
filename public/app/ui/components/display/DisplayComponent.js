@@ -8,8 +8,8 @@
         ],
         function (_, ko) {
             return function (parameters) {
-                var defaultPlaceholder = (parameters.display === 'image') ?
-                        '<span class="img-thumbnail img-placeholder"><span><span class="glyphicon glyphicon-picture"></span></span></span>' :
+                var defaultPlaceholder = (parameters.display === 'cover-image') ?
+                        '<span class="img-placeholder"><span class="glyphicon glyphicon-picture"></span></span>' :
                         '&mdash;';
 
                 if (!parameters.name) {

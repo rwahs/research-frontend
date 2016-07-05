@@ -1,6 +1,6 @@
-<div class="display display-image">
+<div class="display display-cover-image">
     <!-- ko if: hasValue -->
-    <img class="cover-image" data-bind="attr: { src: value }" />
+    <div class="cover-image" data-bind="style: { backgroundImage: 'url(\'' + value() + '\')' }"></div>
     <!-- /ko -->
     <!-- ko ifnot: hasValue -->
     <!-- ko if: placeholder -->
