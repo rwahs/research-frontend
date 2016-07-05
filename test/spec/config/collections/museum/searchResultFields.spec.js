@@ -13,7 +13,7 @@
             describe('The `museum/searchResultFields` module', function () {
                 it('Defines a static array', function () {
                     expect(searchResultFields).to.be.an('array');
-                    expect(searchResultFields).to.have.length(8);
+                    expect(searchResultFields).to.have.length(9);
                 });
                 it('Defines the `MediaThumbnail` field', function () {
                     var mediaField = _.find(searchResultFields, { key: 'MediaThumbnail' });
@@ -49,6 +49,10 @@
                     var importanceField = _.find(searchResultFields, { key: 'Importance' });
                     expect(importanceField.labelText).to.equal('Importance');
                     expect(importanceField.sort).to.equal(true);
+                });
+                it('Defines the `MakersMarks` field', function () {
+                    var makersMarksField = _.find(searchResultFields, { key: 'MakersMarks' });
+                    expect(makersMarksField.labelText).to.equal('Makers Marks');
                 });
                 it('Defines the `Classification` field', function () {
                     var classificationField = _.find(searchResultFields, { key: 'Classification' });

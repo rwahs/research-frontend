@@ -61,6 +61,10 @@
                     expect(creatorField.display).to.equal('typed-list');
                     expect(_.isFunction(creatorField.sort)).to.equal(true);
                 });
+                it('Defines the `MakersMarks` field', function () {
+                    var makersMarksField = _.find(searchResultFields, { key: 'MakersMarks' });
+                    expect(makersMarksField.labelText).to.equal('Makers Marks');
+                });
                 it('Defines the `Publisher` field', function () {
                     var publisherField = _.find(searchResultFields, { key: 'Publisher' });
                     expect(publisherField.labelText).to.equal('Publisher');
@@ -75,11 +79,6 @@
                     var placeOfPublicationField = _.find(searchResultFields, { key: 'PlaceOfPublication' });
                     expect(placeOfPublicationField.labelText).to.equal('Place of Publication');
                     expect(placeOfPublicationField.sort).to.equal(true);
-                });
-                it('Defines the `PublicationType` field', function () {
-                    var publicationTypeField = _.find(searchResultFields, { key: 'PublicationType' });
-                    expect(publicationTypeField.labelText).to.equal('Type');
-                    expect(publicationTypeField.sort).to.equal(true);
                 });
                 it('Defines the `Location` field', function () {
                     var locationField = _.find(searchResultFields, { key: 'Location' });

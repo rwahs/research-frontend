@@ -54,6 +54,10 @@
                 }
             },
             {
+                key: 'MakersMarks',
+                labelText: 'Makers Marks'
+            },
+            {
                 key: 'Publisher',
                 labelText: 'Publisher',
                 sort: true
@@ -66,11 +70,6 @@
             {
                 key: 'PlaceOfPublication',
                 labelText: 'Place of Publication',
-                sort: true
-            },
-            {
-                key: 'PublicationType',
-                labelText: 'Type',
                 sort: true
             },
             {
