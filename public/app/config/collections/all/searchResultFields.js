@@ -54,6 +54,10 @@
                 }
             },
             {
+                key: 'MakersMarks',
+                labelText: 'Makers Marks'
+            },
+            {
                 key: 'Publisher',
                 labelText: 'Publisher',
                 sort: true

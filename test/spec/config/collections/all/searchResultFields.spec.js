@@ -13,7 +13,7 @@
             describe('The `all/searchResultFields` module', function () {
                 it('Defines a static array', function () {
                     expect(searchResultFields).to.be.an('array');
-                    expect(searchResultFields).to.have.length(13);
+                    expect(searchResultFields).to.have.length(14);
                 });
                 it('Defines the `MediaThumbnail` field', function () {
                     var mediaField = _.find(searchResultFields, { key: 'MediaThumbnail' });
@@ -60,6 +60,10 @@
                     expect(creatorField.filter).to.equal('Value');
                     expect(creatorField.display).to.equal('typed-list');
                     expect(_.isFunction(creatorField.sort)).to.equal(true);
+                });
+                it('Defines the `MakersMarks` field', function () {
+                    var makersMarksField = _.find(searchResultFields, { key: 'MakersMarks' });
+                    expect(makersMarksField.labelText).to.equal('Makers Marks');
                 });
                 it('Defines the `Publisher` field', function () {
                     var publisherField = _.find(searchResultFields, { key: 'Publisher' });
