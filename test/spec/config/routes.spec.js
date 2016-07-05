@@ -6,9 +6,10 @@
             'chai',
             'sinon',
             'knockout',
+            'page',
             'config/routes'
         ],
-        function (chai, sinon, ko, routes) {
+        function (chai, sinon, ko, page, routes) {
             var expect = chai.expect;
 
             describe('The `routes` configuration module', function () {
@@ -40,6 +41,41 @@
                             expect(routes.detailUrlFor('type', 42)).to.equal('/type/detail/42');
                             expect(routes.detailUrlFor('blizblaz', 69)).to.equal('/blizblaz/detail/69');
                         });
+                    });
+                });
+                describe('The `pushState` function', function () {
+                    beforeEach(function () {
+                        sinon.stub(page, 'show');
+                    });
+                    describe('When invoked with a URL only', function () {
+                        beforeEach(function () {
+                            routes.pushState('/some/url/path');
+                        });
+                        it('Calls through to PageJS without a dispatch', function () {
+                            expect(page.show.callCount).to.equal(1);
+                            expect(page.show.getCall(0).args).to.deep.equal([ '/some/url/path', {}, false, true ]);
+                        });
+                    });
+                    describe('When invoked with a URL and `false` dispatch', function () {
+                        beforeEach(function () {
+                            routes.pushState('/some/url/path', false);
+                        });
+                        it('Calls through to PageJS without a dispatch', function () {
+                            expect(page.show.callCount).to.equal(1);
+                            expect(page.show.getCall(0).args).to.deep.equal([ '/some/url/path', {}, false, true ]);
+                        });
+                    });
+                    describe('When invoked with a URL and `true` dispatch', function () {
+                        beforeEach(function () {
+                            routes.pushState('/some/url/path', true);
+                        });
+                        it('Calls through to PageJS with dispatch', function () {
+                            expect(page.show.callCount).to.equal(1);
+                            expect(page.show.getCall(0).args).to.deep.equal([ '/some/url/path', {}, true, true ]);
+                        });
+                    });
+                    afterEach(function () {
+                        page.show.restore();
                     });
                 });
             });

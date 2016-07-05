@@ -21,6 +21,9 @@
                         sinon.stub(ko.components, 'register');
                         components();
                     });
+                    it('Configures the correct number of components', function () {
+                        expect(ko.components.register.callCount).to.equal(21);
+                    });
                     it('Configures the "library detail" collections component', function () {
                         var args = _.find(ko.components.register.args, { 0: 'collections/library/detail' });
                         expect(args[1].viewModel).to.equal(undefined);
@@ -86,15 +89,20 @@
                         expect(args[1].viewModel).to.equal(undefined);
                         expect(args[1].template.require).to.equal('text!ui/components/collections/table-results.html');
                     });
+                    it('Configures the "table-results" collections component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'collections/table-results' });
+                        expect(args[1].viewModel).to.equal(undefined);
+                        expect(args[1].template.require).to.equal('text!ui/components/collections/table-results.html');
+                    });
+                    it('Configures the "list controls" component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'controls/list' });
+                        expect(args[1].viewModel.require).to.equal('ui/components/controls/ListControlsComponent');
+                        expect(args[1].template.require).to.equal('text!ui/components/controls/list-controls.html');
+                    });
                     it('Configures the "text" display component', function () {
                         var args = _.find(ko.components.register.args, { 0: 'display/text' });
                         expect(args[1].viewModel.require).to.equal('ui/components/display/DisplayComponent');
                         expect(args[1].template.require).to.equal('text!ui/components/display/text.html');
-                    });
-                    it('Configures the "html" display component', function () {
-                        var args = _.find(ko.components.register.args, { 0: 'display/html' });
-                        expect(args[1].viewModel.require).to.equal('ui/components/display/DisplayComponent');
-                        expect(args[1].template.require).to.equal('text!ui/components/display/html.html');
                     });
                     it('Configures the "list" display component', function () {
                         var args = _.find(ko.components.register.args, { 0: 'display/list' });
@@ -115,6 +123,11 @@
                         var args = _.find(ko.components.register.args, { 0: 'display/hierarchy-list' });
                         expect(args[1].viewModel.require).to.equal('ui/components/display/DisplayComponent');
                         expect(args[1].template.require).to.equal('text!ui/components/display/hierarchy-list.html');
+                    });
+                    it('Configures the header search component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'search/header' });
+                        expect(args[1].viewModel.require).to.equal('ui/components/search/SearchComponent');
+                        expect(args[1].template.require).to.equal('text!ui/components/search/header-search.html');
                     });
                     afterEach(function () {
                         ko.components.register.restore();

@@ -20,7 +20,7 @@
                 });
 
                 page('/:type/search', function (context) {
-                    if (types.indexOf(context.params.type) < 0) {
+                    if (context.params.type !== 'all' && types.indexOf(context.params.type) < 0) {
                         return bind('ui/pages/error/404', 'ui/pages/error/ErrorPage', context);
                     }
                     return bind('ui/pages/search/search', 'ui/pages/search/SearchPage', context);
@@ -48,8 +48,8 @@
                 return '/' + type + '/detail/' + id;
             };
 
-            routes.pushState = function (url) {
-                return page.show(url, {}, false, true);
+            routes.pushState = function (url, dispatch) {
+                return page.show(url, {}, dispatch || false, true);
             };
 
             return routes;

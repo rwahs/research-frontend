@@ -307,6 +307,23 @@
     );
 
     gulp.task(
+        'package:favicon',
+        [
+            'qa',
+            'build',
+            'package:clean'
+        ],
+        function () {
+            if (environment === 'development') {
+                throw new Error('Cannot use "package" tasks in development environment');
+            }
+            return gulp
+                .src('public/favicon.ico')
+                .pipe(gulp.dest('dist/' + environment));
+        }
+    );
+
+    gulp.task(
         'package',
         [
             'qa',
@@ -317,7 +334,8 @@
             'package:html',
             'package:images',
             'package:fonts',
-            'package:robotstxt'
+            'package:robotstxt',
+            'package:favicon'
         ]
     );
 

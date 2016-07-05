@@ -19,6 +19,7 @@
                         configure();
                     });
                     it('Registers search services', function () {
+                        expect(container.isRegistered('search.all')).to.equal(true);
                         expect(container.isRegistered('search.library')).to.equal(true);
                         expect(container.isRegistered('search.photographs')).to.equal(true);
                         expect(container.isRegistered('search.museum')).to.equal(true);
@@ -29,9 +30,6 @@
                         expect(container.isRegistered('detail.photographs')).to.equal(true);
                         expect(container.isRegistered('detail.museum')).to.equal(true);
                         expect(container.isRegistered('detail.memorials')).to.equal(true);
-                    });
-                    it('Seals the container', function () {
-                        expect(container.isSealed()).to.equal(true);
                     });
                     afterEach(function () {
                         container.reset();
