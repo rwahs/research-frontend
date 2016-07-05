@@ -13,7 +13,7 @@
             describe('The `memorials/searchResultFields` module', function () {
                 it('Defines a static array', function () {
                     expect(searchResultFields).to.be.an('array');
-                    expect(searchResultFields).to.have.length(7);
+                    expect(searchResultFields).to.have.length(8);
                 });
                 it('Defines the `MediaThumbnail` field', function () {
                     var mediaField = _.find(searchResultFields, { key: 'MediaThumbnail' });
@@ -24,6 +24,11 @@
                     var mediaField = _.find(searchResultFields, { key: 'MediaSmall' });
                     expect(mediaField.display).to.equal('image');
                     expect(mediaField.tableColumn).to.equal(false);
+                });
+                it('Defines the `type` field', function () {
+                    var titleField = _.find(searchResultFields, { key: 'type' });
+                    expect(titleField.labelText).to.equal('Item Type');
+                    expect(titleField.sort).to.equal(true);
                 });
                 it('Defines the `idno` field', function () {
                     var idnoField = _.find(searchResultFields, { key: 'idno' });

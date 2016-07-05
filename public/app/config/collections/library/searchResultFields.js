@@ -14,6 +14,11 @@
                 tableColumn: false
             },
             {
+                key: 'type',
+                labelText: 'Item Type',
+                sort: true
+            },
+            {
                 key: 'Title',
                 labelText: 'Title',
                 sort: true
