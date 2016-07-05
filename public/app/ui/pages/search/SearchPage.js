@@ -26,6 +26,9 @@
                     results = ko.observableArray(),
                     query = qs.parse(window.location.search.replace(/^\?/, '')),
                     overlay = container.resolve('ui.overlay'),
+                    typeFor = function (result) {
+                        return container.resolve('types')[result.data().type];
+                    },
                     doSearch = function (callback) {
                         submittedQuery(this.searchText());
                         results([]);
