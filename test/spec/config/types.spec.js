@@ -1,3 +1,5 @@
+// jshint sub:true
+// jscs:disable requireDotNotation
 (function () {
     'use strict';
 
