@@ -55,7 +55,7 @@
                             expect(ko.isPureComputed(page.data)).to.equal(true);
                             expect(ko.isPureComputed(page.idno)).to.equal(true);
                             expect(ko.isPureComputed(page.displayRecord)).to.equal(true);
-                            expect(ko.isPureComputed(page.typeHeader)).to.equal(true);
+                            expect(ko.isPureComputed(page.collectionName)).to.equal(true);
                             expect(ko.isPureComputed(page.detail)).to.equal(true);
                         });
                         it('Has the correct initial state', function () {
@@ -63,7 +63,7 @@
                             expect(page.data()).to.equal(undefined);
                             expect(page.idno()).to.equal(undefined);
                             expect(page.displayRecord()).to.equal(false);
-                            expect(page.typeHeader()).to.equal('Test Record');
+                            expect(page.collectionName()).to.equal('Test');
                             expect(page.detail()).to.equal('collections/collection/detail');
                         });
                         it('Exposes life cycle methods', function () {
