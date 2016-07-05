@@ -3,6 +3,15 @@ html {
     min-height: 100%;
 }
 
+@font-face {
+  font-family: Raleway;
+  src: url('https://fonts.googleapis.com/css?family=Raleway');
+}
+
+p,li,dt,dd,td,th,details,button,form,a,div,details {
+  font-family: Raleway, Georgia, serif;
+}
+
 img {
     max-width: 100%;
     height: auto;
@@ -24,3 +33,46 @@ select.form-control.styled-select {
 select.form-control.styled-select::-ms-expand {
     display: none;
 }
+
+.list-result{
+    .result-title{
+        font-size:14pt;
+    }
+    .right-badge{
+        background-color: @brand-primary;
+        padding:3px 5px;
+        color: white;
+        margin-left:10px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+    }
+    .inline-results{
+        display: inline;
+        .display-text{
+            display: inline;
+        }
+    }
+    .author li{
+        list-style-type: none;
+    }
+    .bottom-right{
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        color:#666;   
+    }
+}
+
+article.search .results-container-thumbnails .result{
+    overflow:hidden;
+    img{
+        max-height: 175px;
+        margin: auto;
+    }   
+    .img-placeholder{
+        max-height: 175px;
+    }
+}
+
+

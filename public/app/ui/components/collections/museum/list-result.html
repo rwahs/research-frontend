@@ -1,4 +1,10 @@
 <div class="list-result list-result-museum">
     <span class="pull-left" data-bind="component: displayFor('MediaThumbnail', result)"></span>
-    <a href="#" data-bind="attr: { href: detailUrlFor(result) }, component: displayForLabelField(result)"></a>
+
+    <a class="result-title" href="#" data-bind="attr: { href: detailUrlFor(result) }, component: displayForLabelField(result)"></a>
+
+    <div class="inline-results bottom-right"  data-bind="component: displayFor('idno', result)"></div>
+
+    <span class="inline-results" data-bind="component: displayFor('type', result)"> </span>
+
 </div>

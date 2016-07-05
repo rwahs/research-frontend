@@ -1,4 +1,9 @@
 <div class="list-result list-result-memorials">
     <span class="pull-left" data-bind="component: displayFor('MediaThumbnail', result)"></span>
-    <a href="#" data-bind="attr: { href: detailUrlFor(result) }, component: displayForLabelField(result)"></a>
+
+    <a class="result-title" href="#" data-bind="attr: { href: detailUrlFor(result) }, component: displayForLabelField(result)"></a>
+
+	<div class="inline-results"  data-bind="component: displayFor('idno', result)"></div>
+	<div class="inline-results"  data-bind="component: displayFor('Location', result)"></div>
+
 </div>
