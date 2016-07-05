@@ -8,6 +8,10 @@
                 labelText: 'ID'
             },
             {
+                key: 'type',
+                labelText: 'Type'
+            },
+            {
                 key: 'idno',
                 labelText: 'Accession Number'
             },
