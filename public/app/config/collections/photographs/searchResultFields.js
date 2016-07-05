@@ -6,11 +6,11 @@
             {
                 key: 'MediaThumbnail',
                 labelText: 'Image',
-                display: 'image'
+                display: 'cover-image'
             },
             {
                 key: 'MediaSmall',
-                display: 'image',
+                display: 'cover-image',
                 tableColumn: false
             },
             {
