@@ -25,13 +25,14 @@
                     submittedQuery = ko.observable(),
                     results = ko.observableArray(),
                     query = qs.parse(window.location.search.replace(/^\?/, '')),
+                    overlay = container.resolve('ui.overlay'),
                     typeFor = function (result) {
                         return container.resolve('types')[result.data().type];
                     },
                     doSearch = function (callback) {
                         submittedQuery(this.searchText());
                         results([]);
-                        this.loading(true);
+                        overlay.loading(true);
                         this.displayResults(false);
                         container.resolve('search.' + context.params.type)(
                             _.zipObject(
@@ -39,10 +40,10 @@
                                 [ submittedQuery() ]
                             ),
                             function (err, searchServiceResults) {
-                                this.loading(false);
+                                overlay.loading(false);
                                 if (err) {
-                                    // TODO Display error
-                                    return;
+                                    overlay.error(err);
+                                    return _.isFunction(callback) ? callback(err) : undefined;
                                 }
                                 results(_.map(searchServiceResults, function (result) {
                                     return new DynamicRecord(result, this.searchResultFields);
@@ -58,7 +59,6 @@
                 this.searchText = ko.observable(query.query || '');
                 this.searchTypes = ko.observableArray();
                 this.searchResultFields = ko.observableArray();
-                this.loading = ko.observable(false);
                 this.displayResults = ko.observable(false);
 
                 this.modeSwitcher = new ListModeSwitcher(query.mode);
@@ -110,6 +110,11 @@
                             }
                         }.bind(this)
                     );
+                };
+
+                this.ready = function (callback) {
+                    container.resolve('ui.overlay').loading(false);
+                    callback();
                 };
 
                 this.reset = function () {

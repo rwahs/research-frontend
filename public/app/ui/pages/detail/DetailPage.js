@@ -14,7 +14,6 @@
                     record = ko.observable(undefined);
 
                 this.detailFields = ko.observableArray();
-                this.loading = ko.observable(false);
 
                 this.data = ko.pureComputed(function () {
                     return record() ? record().data() : undefined;
@@ -26,7 +25,7 @@
                 }.bind(this));
 
                 this.displayRecord = ko.pureComputed(function () {
-                    return !this.loading() && !!this.data();
+                    return !!this.data();
                 }.bind(this));
 
                 this.typeHeader = ko.pureComputed(function () {
@@ -38,8 +37,9 @@
                 });
 
                 this.binding = function (element, callback) {
+                    var overlay = container.resolve('ui.overlay');
                     record(undefined);
-                    this.loading(true);
+                    overlay.loading(true);
                     require(
                         [
                             settings.detailFields
@@ -49,9 +49,8 @@
                             container.resolve('detail.' + context.params.type)(
                                 context.params.id,
                                 function (err, result) {
-                                    this.loading(false);
                                     if (err) {
-                                        // TODO Display error
+                                        overlay.error(err);
                                         return callback();
                                     }
                                     record(new DynamicRecord(result, this.detailFields));
@@ -60,6 +59,11 @@
                             );
                         }.bind(this)
                     );
+                };
+
+                this.ready = function (callback) {
+                    container.resolve('ui.overlay').loading(false);
+                    callback();
                 };
 
                 this.labelFor = function (key) {

@@ -17,7 +17,7 @@
                     expect(DetailPage).to.be.a('function');
                 });
                 describe('When the detail service is returning valid results', function () {
-                    var detailService;
+                    var detailService, overlay;
                     beforeEach(function () {
                         detailService = sinon.stub().callsArgWith(1, undefined, {
                             id: 42,
@@ -30,6 +30,11 @@
                             collectionName: 'Test',
                             detailFields: 'fixtures/collections/detailFields'
                         });
+                        overlay = {
+                            loading: sinon.stub(),
+                            error: sinon.stub()
+                        };
+                        container.register('ui.overlay', overlay);
                         container.seal();
                     });
                     describe('When constructed with valid parameters', function () {
@@ -45,7 +50,6 @@
                         });
                         it('Exposes observables', function () {
                             expect(ko.isObservable(page.detailFields)).to.equal(true);
-                            expect(ko.isObservable(page.loading)).to.equal(true);
                         });
                         it('Exposes computed observables', function () {
                             expect(ko.isPureComputed(page.data)).to.equal(true);
@@ -56,7 +60,6 @@
                         });
                         it('Has the correct initial state', function () {
                             expect(page.detailFields()).to.deep.equal([]);
-                            expect(page.loading()).to.equal(false);
                             expect(page.data()).to.equal(undefined);
                             expect(page.idno()).to.equal(undefined);
                             expect(page.displayRecord()).to.equal(false);
@@ -81,9 +84,6 @@
                                 sinon.assert.calledOnce(detailService);
                                 sinon.assert.calledWith(detailService, 42);
                             });
-                            it('Is not loading', function () {
-                                expect(page.loading()).to.equal(false);
-                            });
                             it('Displays the record', function () {
                                 expect(page.displayRecord()).to.equal(true);
                             });
@@ -93,6 +93,23 @@
                                     idno: '1984/42',
                                     title: 'The Meaning of Life',
                                     description: '<p>Rich text <strong>description</strong>.</p>'
+                                });
+                            });
+                            it('Is displaying the loading animation', function () {
+                                expect(overlay.loading.callCount).to.equal(1);
+                                expect(overlay.loading.getCall(0).args).to.deep.equal([ true ]);
+                            });
+                            it('Has not displayed any errors', function () {
+                                expect(overlay.error.callCount).to.equal(0);
+                            });
+                            describe('When the view is ready', function () {
+                                beforeEach(function (done) {
+                                    page.ready(done);
+                                });
+                                it('Has displayed and then hidden the loading animation', function () {
+                                    expect(overlay.loading.callCount).to.equal(2);
+                                    expect(overlay.loading.getCall(0).args).to.deep.equal([ true ]);
+                                    expect(overlay.loading.getCall(1).args).to.deep.equal([ false ]);
                                 });
                             });
                             describe('The `labelFor` method', function () {
@@ -136,7 +153,7 @@
                     });
                 });
                 describe('When the detail service is returning errors', function () {
-                    var detailService;
+                    var detailService, overlay;
                     beforeEach(function () {
                         detailService = sinon.stub().callsArgWith(1, new Error('Service Error'));
                         container.register('detail.collection', detailService);
@@ -144,6 +161,11 @@
                             collectionName: 'Test',
                             detailFields: 'fixtures/collections/detailFields'
                         });
+                        overlay = {
+                            loading: sinon.stub(),
+                            error: sinon.stub()
+                        };
+                        container.register('ui.overlay', overlay);
                         container.seal();
                     });
                     describe('When constructed with valid parameters', function () {
@@ -165,16 +187,30 @@
                             it('Calls the specified detail service', function () {
                                 sinon.assert.calledOnce(detailService);
                             });
-                            it('Is not loading', function () {
-                                expect(page.loading()).to.equal(false);
-                            });
                             it('Does not display the record', function () {
                                 expect(page.displayRecord()).to.equal(false);
                             });
                             it('Does not store any data', function () {
                                 expect(page.data()).to.equal(undefined);
                             });
-                            // TODO Displays the error
+                            it('Is displaying the loading animation', function () {
+                                expect(overlay.loading.callCount).to.equal(1);
+                                expect(overlay.loading.getCall(0).args).to.deep.equal([ true ]);
+                            });
+                            it('Has displayed an error', function () {
+                                expect(overlay.error.callCount).to.equal(1);
+                                expect(overlay.error.getCall(0).args).to.deep.equal([ new Error('Service Error') ]);
+                            });
+                            describe('When the view is ready', function () {
+                                beforeEach(function (done) {
+                                    page.ready(done);
+                                });
+                                it('Has displayed and then hidden the loading animation', function () {
+                                    expect(overlay.loading.callCount).to.equal(2);
+                                    expect(overlay.loading.getCall(0).args).to.deep.equal([ true ]);
+                                    expect(overlay.loading.getCall(1).args).to.deep.equal([ false ]);
+                                });
+                            });
                         });
                     });
                     afterEach(function () {

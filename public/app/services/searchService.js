@@ -29,9 +29,9 @@
                         },
                         error: function (jqXHR, textStatus, err) {
                             if (logErrors && console && typeof console.error === 'function') {
-                                console.error(err);
+                                console.error(jqXHR, textStatus, err);
                             }
-                            callback(err);
+                            callback(err || 'An unknown error occurred');
                         }
                     }));
                 };

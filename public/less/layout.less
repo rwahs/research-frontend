@@ -32,6 +32,8 @@
 }
 
 header.navbar {
+    margin-bottom: 0;
+
     .logo{
         padding-top: @padding-large-vertical;
         padding-bottom: @padding-large-vertical;
@@ -58,6 +60,7 @@ header.navbar {
 }
 
 #page-container {
+    margin-top: 30px;
     margin-bottom: 30px;
 }
 
@@ -70,4 +73,45 @@ footer.navbar {
     line-height: 1;
     padding: 10px;
     margin-bottom: 0;
+}
+
+#loading-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    div {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #666;
+        opacity: .5;
+        z-index: 9998;
+    }
+
+    img {
+        position: relative;
+        z-index: 10000;
+    }
+}
+
+#error-message {
+    display: none;
+    width: 100%;
+    padding: @padding-large-vertical @padding-large-horizontal;
+    font-weight: bold;
+
+    span.glyphicon {
+        margin-right: @padding-small-horizontal;
+    }
 }

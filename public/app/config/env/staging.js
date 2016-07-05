@@ -6,9 +6,10 @@
             'util/container',
             'services/searchService',
             'services/detailService',
-            'services/cachingService'
+            'services/cachingService',
+            'ui/overlay'
         ],
-        function (container, searchService, detailService, cachingService) {
+        function (container, searchService, detailService, cachingService, overlay) {
             var simpleApiBaseUrl = 'https://staging-collections-api.histwest.org.au/service.php/simple',
                 ajaxOptions = {
                     xhrFields: {
@@ -30,6 +31,8 @@
                 container.register('detail.photographs', cachingService(detailService(simpleApiBaseUrl + '/photographs_detail', ajaxOptions, false, true)));
                 container.register('detail.museum', cachingService(detailService(simpleApiBaseUrl + '/museum_detail', ajaxOptions, false, true)));
                 container.register('detail.memorials', cachingService(detailService(simpleApiBaseUrl + '/memorials_detail', ajaxOptions, false, true)));
+
+                container.register('ui.overlay', overlay(true));
             };
         }
     );
