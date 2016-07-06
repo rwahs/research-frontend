@@ -25,13 +25,23 @@
                     return queryBuilder.comparators();
                 });
 
-                // the text() function is just an example to show output
-                this.text = ko.computed(function () {
+                this.text = ko.pureComputed(function () {
                     var field, comparator, value;
                     field = this.selectedField();
                     comparator = this.selectedComparator();
                     value = this.value();
                     return (!field || !comparator || !value) ? '' : comparator.displayFormat(field, value);
+                }.bind(this));
+
+                this.query = ko.pureComputed(function () {
+                    var field, comparator, value;
+                    field = this.selectedField();
+                    comparator = this.selectedComparator();
+                    value = this.value();
+                    return (!field || !comparator || !value) ? undefined : {
+                        key: field,
+                        value: comparator.queryFormat(value)
+                    };
                 }.bind(this));
             };
         }

@@ -15,6 +15,9 @@
                 if (!parameters.maxDepth) {
                     throw new Error('QueryBuilderComponent missing required parameter: `maxDepth`.');
                 }
+                if (!parameters.queryObservable) {
+                    throw new Error('QueryBuilderComponent missing required parameter: `queryObservable`.');
+                }
 
                 this.root = ko.observable();
 
@@ -38,39 +41,39 @@
                 this.comparators = ko.pureComputed(function () {
                     return [
                         {
-                            label: '= (equals)',
+                            label: '~ (contains)',
                             displayFormat: function (field, value) {
-                                return field + ' EQUALS ' + value;
+                                return field + ' CONTAINS ' + value;
+                            },
+                            queryFormat: function (value) {
+                                return '"' + value + '"';
                             }
                         },
                         {
-                            label: '!= (does not equal)',
+                            label: '!~ (does not contain)',
                             displayFormat: function (field, value) {
-                                return field + ' NOT-EQUALS ' + value;
+                                return field + ' NOT-CONTAINS ' + value;
+                            },
+                            queryFormat: function (value) {
+                                return '-"' + value + '"';
                             }
                         },
                         {
                             label: '^ (starts with)',
                             displayFormat: function (field, value) {
                                 return field + ' STARTS-WITH ' + value;
+                            },
+                            queryFormat: function (value) {
+                                return '"' + value + '"*';
                             }
                         },
                         {
                             label: '!^ (does not start with)',
                             displayFormat: function (field, value) {
                                 return field + ' NOT-STARTS-WITH ' + value;
-                            }
-                        },
-                        {
-                            label: '% (contains)',
-                            displayFormat: function (field, value) {
-                                return field + ' CONTAINS ' + value;
-                            }
-                        },
-                        {
-                            label: '!% (does not contain)',
-                            displayFormat: function (field, value) {
-                                return field + ' NOT-CONTAINS ' + value;
+                            },
+                            queryFormat: function (value) {
+                                return '-"' + value + '"*';
                             }
                         }
                     ];
@@ -80,11 +83,17 @@
                     return parameters.maxDepth;
                 });
 
-                // the text() function is just an example to show output
-                this.text = ko.computed(function () {
+                this.text = ko.pureComputed(function () {
                     var root = this.root();
                     return root ? root.text() : undefined;
                 }.bind(this));
+
+                this.query = ko.pureComputed(function () {
+                    var root = this.root();
+                    return root ? root.query() : undefined;
+                }.bind(this));
+
+                this.query.subscribe(parameters.queryObservable);
 
                 this.root(new Group(this));
             };

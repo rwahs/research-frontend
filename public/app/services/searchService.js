@@ -11,8 +11,8 @@
                 var queryString;
 
                 queryString = function (parameters) {
-                    return _.map(parameters, function (value, key) {
-                        return '(' + key + ':' + value + ')';
+                    return _.map(parameters, function (parameter) {
+                        return '(' + parameter.key + ':' + parameter.value + ')';
                     })
                     .join(' AND ');
                 };

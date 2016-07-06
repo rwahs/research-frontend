@@ -20,7 +20,7 @@
                         <!-- /ko -->
                         <!-- /ko -->
                         <!-- ko if: advancedMode -->
-                        <div data-bind="component: { name: 'search/query-builder', params: { fields: searchResultFields, maxDepth: 3 } }"></div>
+                        <div data-bind="component: { name: 'search/query-builder', params: { fields: searchResultFields, maxDepth: 3, queryObservable: advancedSearchQuery } }"></div>
                         <!-- /ko -->
                     </div>
                     <div class="panel-footer text-right">

@@ -29,20 +29,13 @@
                     typeFor = function (result) {
                         return container.resolve('types')[result.data().type];
                     },
-                    searchParameters = ko.pureComputed(function () {
-                        // TODO if (advancedMode()) ... else ...
-                        return _.zipObject(
-                            [ selectedSearchType() ],
-                            [ submittedQuery() ]
-                        );
-                    }),
                     doSearch = function (callback) {
                         submittedQuery(this.searchText());
                         results([]);
                         overlay.loading(true);
                         this.displayResults(false);
                         container.resolve('search.' + context.params.type)(
-                            searchParameters(),
+                            (this.advancedMode && this.advancedMode()) ? this.advancedSearchQuery() : this.basicSearchQuery(),
                             function (err, searchServiceResults) {
                                 overlay.loading(false);
                                 if (err) {
@@ -61,6 +54,7 @@
                     }.bind(this);
 
                 this.searchText = ko.observable(query.query || '');
+                this.advancedSearchQuery = ko.observable();
                 this.advancedMode = ko.observable(false);
                 this.searchTypes = ko.observableArray();
                 this.searchResultFields = ko.observableArray();
@@ -69,6 +63,18 @@
                 this.modeSwitcher = new ListModeSwitcher(query.mode);
                 this.sorter = new ListSorter(results, this.searchResultFields, query.sort, query.dir);
                 this.pager = new ListPager(this.sorter.sortedList, int(query.start), int(query.size));
+
+                this.basicSearchQuery = ko.pureComputed(function () {
+                    return _.map(
+                        submittedQuery().split(/\s+/),
+                        function (term) {
+                            return {
+                                key: selectedSearchType(),
+                                value: '"' + term + '"'
+                            };
+                        }
+                    );
+                });
 
                 this.displayedResults = ko.pureComputed(function () {
                     return this.pager.currentPage();
