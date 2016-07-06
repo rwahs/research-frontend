@@ -1,11 +1,11 @@
-<div class="list-result list-result-library">
-    <span class="pull-left" data-bind="component: displayFor('MediaThumbnail', result)"></span>
-    <span class="pull-right label label-default" data-bind="component: displayFor('type', result)"></span>
-    <a class="result-title" href="#" data-bind="attr: { href: detailUrlFor(result) }, component: displayFor('Title', result)"></a>
+<a href="#" data-bind="attr: { href: detailUrlFor(result) }" class="list-result list-result-library clearfix">
+    <div class="pull-left" data-bind="component: displayFor('MediaThumbnail', result)"></div>
+    <div class="pull-right label label-default" data-bind="component: displayFor('type', result)"></div>
+    <div class="result-title" data-bind="component: displayFor('Title', result)"></div>
     <div class="inline-list" data-bind="component: displayFor('Author', result)"></div>
     <div>
         <span data-bind="component: displayFor('PlaceOfPublication', result)"></span> :
         <span data-bind="component: displayFor('Publisher', result)"></span>,
         <span data-bind="component: displayFor('DateOfPublication', result)"></span>
     </div>
-</div>
+</a>

@@ -129,6 +129,14 @@
                 );
 
                 ko.components.register(
+                    'display/cover-image',
+                    {
+                        viewModel: { require: 'ui/components/display/DisplayComponent' },
+                        template: { require: 'text!ui/components/display/cover-image.html' }
+                    }
+                );
+
+                ko.components.register(
                     'search/header',
                     {
                         viewModel: { require: 'ui/components/search/SearchComponent' },

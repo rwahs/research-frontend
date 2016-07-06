@@ -4,6 +4,10 @@
     define(function () {
         return [
             {
+                key: 'type',
+                labelText: 'Item Type'
+            },
+            {
                 key: 'idno',
                 labelText: 'Accession Number'
             },

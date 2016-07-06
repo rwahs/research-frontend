@@ -26,7 +26,6 @@
             background-color: #FFF;
             border-bottom: 3px @brand-primary solid;
             color: #777;
-            
         }
     }
 }
@@ -34,9 +33,19 @@
 header.navbar {
     margin-bottom: 0;
 
-    .logo{
+    .logo {
         padding-top: @padding-large-vertical;
         padding-bottom: @padding-large-vertical;
+    }
+
+    @media (max-width: @screen-xs-max) {
+        .logo {
+            width: 204px;
+        }
+    }
+
+    .container {
+        position: relative;
     }
 
     #nav-main-menu {
@@ -61,7 +70,7 @@ header.navbar {
 
 #page-container {
     margin-top: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 80px;
 }
 
 footer.navbar {

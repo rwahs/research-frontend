@@ -82,7 +82,24 @@
                             });
                             it('Exposes the correct default label and placeholder values', function () {
                                 expect(display.labelText()).to.equal(undefined);
-                                expect(display.placeholder()).to.equal('<span class="img-thumbnail img-placeholder"><span><span class="glyphicon glyphicon-picture"></span></span></span>');
+                                expect(display.placeholder()).to.equal('&mdash;');
+                            });
+                        });
+                        describe('With type of "cover-image"', function () {
+                            beforeEach(function () {
+                                display = new DisplayComponent({
+                                    name: 'field',
+                                    display: 'cover-image',
+                                    data: {
+                                        idno: '42a',
+                                        title: 'Title of the Record',
+                                        field: 'value of field'
+                                    }
+                                });
+                            });
+                            it('Exposes the correct default label and placeholder values', function () {
+                                expect(display.labelText()).to.equal(undefined);
+                                expect(display.placeholder()).to.equal('<span class="img-placeholder"><span class="glyphicon glyphicon-picture"></span></span>');
                             });
                         });
                     });

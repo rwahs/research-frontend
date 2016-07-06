@@ -28,9 +28,10 @@
                     return !!this.data();
                 }.bind(this));
 
-                this.typeHeader = ko.pureComputed(function () {
-                    return settings.collectionName + ' Record';
-                });
+                this.collectionName = ko.pureComputed(function () {
+                    var data = this.data();
+                    return data ? data.type : undefined;
+                }.bind(this));
 
                 this.detail = ko.pureComputed(function () {
                     return 'collections/' + context.params.type + '/detail';

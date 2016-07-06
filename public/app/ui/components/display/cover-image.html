@@ -1,0 +1,10 @@
+<div class="display display-cover-image">
+    <!-- ko if: hasValue -->
+    <div class="cover-image" data-bind="style: { backgroundImage: 'url(\'' + value() + '\')' }"></div>
+    <!-- /ko -->
+    <!-- ko ifnot: hasValue -->
+    <!-- ko if: placeholder -->
+    <div class="cover-image" data-bind="html: placeholder"></div>
+    <!-- /ko -->
+    <!-- /ko -->
+</div>

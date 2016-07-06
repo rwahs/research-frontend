@@ -21,13 +21,13 @@
                     beforeEach(function () {
                         detailService = sinon.stub().callsArgWith(1, undefined, {
                             id: 42,
+                            type: 'Test',
                             idno: '1984/42',
                             title: 'The Meaning of Life',
                             description: '<p>Rich text <strong>description</strong>.</p>'
                         });
                         container.register('detail.collection', detailService);
                         container.register('settings.collection', {
-                            collectionName: 'Test',
                             detailFields: 'fixtures/collections/detailFields'
                         });
                         overlay = {
@@ -55,7 +55,7 @@
                             expect(ko.isPureComputed(page.data)).to.equal(true);
                             expect(ko.isPureComputed(page.idno)).to.equal(true);
                             expect(ko.isPureComputed(page.displayRecord)).to.equal(true);
-                            expect(ko.isPureComputed(page.typeHeader)).to.equal(true);
+                            expect(ko.isPureComputed(page.collectionName)).to.equal(true);
                             expect(ko.isPureComputed(page.detail)).to.equal(true);
                         });
                         it('Has the correct initial state', function () {
@@ -63,7 +63,7 @@
                             expect(page.data()).to.equal(undefined);
                             expect(page.idno()).to.equal(undefined);
                             expect(page.displayRecord()).to.equal(false);
-                            expect(page.typeHeader()).to.equal('Test Record');
+                            expect(page.collectionName()).to.equal(undefined);
                             expect(page.detail()).to.equal('collections/collection/detail');
                         });
                         it('Exposes life cycle methods', function () {
@@ -90,6 +90,7 @@
                             it('Stores the loaded data', function () {
                                 expect(page.data()).to.deep.equal({
                                     id: 42,
+                                    type: 'Test',
                                     idno: '1984/42',
                                     title: 'The Meaning of Life',
                                     description: '<p>Rich text <strong>description</strong>.</p>'
@@ -110,6 +111,9 @@
                                     expect(overlay.loading.callCount).to.equal(2);
                                     expect(overlay.loading.getCall(0).args).to.deep.equal([ true ]);
                                     expect(overlay.loading.getCall(1).args).to.deep.equal([ false ]);
+                                });
+                                it('Displays the correct collection name', function () {
+                                    expect(page.collectionName()).to.equal('Test');
                                 });
                             });
                             describe('The `labelFor` method', function () {
