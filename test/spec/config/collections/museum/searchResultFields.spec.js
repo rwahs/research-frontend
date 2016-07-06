@@ -19,16 +19,19 @@
                     var mediaField = _.find(searchResultFields, { key: 'MediaThumbnail' });
                     expect(mediaField.labelText).to.equal('Image');
                     expect(mediaField.display).to.equal('cover-image');
+                    expect(mediaField.searchField).to.equal(false);
                 });
                 it('Defines the `MediaSmall` field', function () {
                     var mediaField = _.find(searchResultFields, { key: 'MediaSmall' });
                     expect(mediaField.display).to.equal('cover-image');
                     expect(mediaField.tableColumn).to.equal(false);
+                    expect(mediaField.searchField).to.equal(false);
                 });
                 it('Defines the `type` field', function () {
                     var typeField = _.find(searchResultFields, { key: 'type' });
                     expect(typeField.labelText).to.equal('Item Type');
                     expect(typeField.sort).to.equal(true);
+                    expect(typeField.searchField).to.equal(false);
                 });
                 it('Defines the `idno` field', function () {
                     var idnoField = _.find(searchResultFields, { key: 'idno' });

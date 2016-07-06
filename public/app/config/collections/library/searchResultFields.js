@@ -6,17 +6,20 @@
             {
                 key: 'MediaThumbnail',
                 labelText: 'Image',
-                display: 'cover-image'
+                display: 'cover-image',
+                searchField: false
             },
             {
                 key: 'MediaSmall',
                 display: 'cover-image',
-                tableColumn: false
+                tableColumn: false,
+                searchField: false
             },
             {
                 key: 'type',
                 labelText: 'Item Type',
-                sort: true
+                sort: true,
+                searchField: false
             },
             {
                 key: 'Title',
