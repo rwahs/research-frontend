@@ -22,7 +22,7 @@
                         components();
                     });
                     it('Configures the correct number of components', function () {
-                        expect(ko.components.register.callCount).to.equal(22);
+                        expect(ko.components.register.callCount).to.equal(23);
                     });
                     it('Configures the "library detail" collections component', function () {
                         var args = _.find(ko.components.register.args, { 0: 'collections/library/detail' });
@@ -138,6 +138,11 @@
                         var args = _.find(ko.components.register.args, { 0: 'search/header' });
                         expect(args[1].viewModel.require).to.equal('ui/components/search/SearchComponent');
                         expect(args[1].template.require).to.equal('text!ui/components/search/header-search.html');
+                    });
+                    it('Configures the query builder search component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'search/query-builder' });
+                        expect(args[1].viewModel.require).to.equal('ui/components/queryBuilder/QueryBuilderComponent');
+                        expect(args[1].template.require).to.equal('text!ui/components/queryBuilder/query-builder.html');
                     });
                     afterEach(function () {
                         ko.components.register.restore();

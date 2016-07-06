@@ -143,6 +143,14 @@
                         template: { require: 'text!ui/components/search/header-search.html' }
                     }
                 );
+
+                ko.components.register(
+                    'search/query-builder',
+                    {
+                        viewModel: { require: 'ui/components/queryBuilder/QueryBuilderComponent' },
+                        template: { require: 'text!ui/components/queryBuilder/query-builder.html' }
+                    }
+                );
             };
         }
     );
