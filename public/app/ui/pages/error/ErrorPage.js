@@ -7,7 +7,7 @@
         ],
         function (container) {
             return function () {
-                this.ready = function (callback) {
+                this.ready = function (element, callback) {
                     container.resolve('ui.overlay').loading(false);
                     callback();
                 };
