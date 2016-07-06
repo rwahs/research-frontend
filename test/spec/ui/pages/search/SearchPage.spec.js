@@ -59,6 +59,7 @@
                             });
                             it('Exposes the correct observables and computed observables', function () {
                                 expect(ko.isObservable(page.searchText)).to.equal(true);
+                                expect(ko.isObservable(page.advancedMode)).to.equal(true);
                                 expect(ko.isObservable(page.searchTypes)).to.equal(true);
                                 expect(ko.isObservable(page.searchResultFields)).to.equal(true);
                                 expect(ko.isObservable(page.displayResults)).to.equal(true);
@@ -66,6 +67,7 @@
                                 expect(ko.isPureComputed(page.submittedQuery)).to.equal(true);
                                 expect(ko.isPureComputed(page.heading)).to.equal(true);
                                 expect(ko.isPureComputed(page.placeholder)).to.equal(true);
+                                expect(ko.isPureComputed(page.advancedModeToggleText)).to.equal(true);
                                 expect(ko.isPureComputed(page.hasResults)).to.equal(true);
                                 expect(ko.isPureComputed(page.displaySearchTypeSwitch)).to.equal(true);
                             });
@@ -73,6 +75,7 @@
                                 expect(page.binding).to.be.a('function');
                             });
                             it('Exposes event handlers', function () {
+                                expect(page.toggleAdvancedMode).to.be.a('function');
                                 expect(page.submit).to.be.a('function');
                                 expect(page.reset).to.be.a('function');
                             });
@@ -85,6 +88,7 @@
                             });
                             it('Gives the correct default values', function () {
                                 expect(page.searchText()).to.equal('');
+                                expect(page.advancedMode()).to.equal(false);
                                 expect(page.searchTypes()).to.deep.equal([]);
                                 expect(page.searchResultFields()).to.deep.equal([]);
                             });
@@ -123,6 +127,9 @@
                                 it('Sets the result fields', function () {
                                     expect(page.searchResultFields()).to.have.length(3); // see fixtures/collections/searchResultFields.js
                                 });
+                                it('Is in basic search mode', function () {
+                                    expect(page.advancedMode()).to.equal(false);
+                                });
                                 it('Is not displaying results', function () {
                                     expect(page.displayResults()).to.equal(false);
                                 });
@@ -131,6 +138,22 @@
                                 });
                                 it('Has not displayed any errors', function () {
                                     expect(overlay.error.callCount).to.equal(0);
+                                });
+                                describe('When the advanced mode is toggled', function () {
+                                    beforeEach(function () {
+                                        page.toggleAdvancedMode();
+                                    });
+                                    it('Sets the search into advanced mode', function () {
+                                        expect(page.advancedMode()).to.equal(true);
+                                    });
+                                    describe('When the advanced mode is toggled again', function () {
+                                        beforeEach(function () {
+                                            page.toggleAdvancedMode();
+                                        });
+                                        it('Sets the search back into basic mode', function () {
+                                            expect(page.advancedMode()).to.equal(false);
+                                        });
+                                    });
                                 });
                                 describe('When a different search type is made active', function () {
                                     beforeEach(function () {
@@ -142,6 +165,9 @@
                                     });
                                     it('Sets the placeholder text', function () {
                                         expect(page.placeholder()).to.equal('Search by Field Two...');
+                                    });
+                                    it('Is in basic search mode', function () {
+                                        expect(page.advancedMode()).to.equal(false);
                                     });
                                     it('Is not displaying results', function () {
                                         expect(page.displayResults()).to.equal(false);
@@ -168,6 +194,9 @@
                                         it('Resets the search type', function () {
                                             expect(page.searchTypes()[0].active()).to.equal(true);
                                         });
+                                        it('Is in basic search mode', function () {
+                                            expect(page.advancedMode()).to.equal(false);
+                                        });
                                         it('Is not displaying results', function () {
                                             expect(page.displayResults()).to.equal(false);
                                         });
@@ -184,6 +213,9 @@
                                         });
                                         it('Does not call the search service', function () {
                                             sinon.assert.notCalled(searchService);
+                                        });
+                                        it('Is in basic search mode', function () {
+                                            expect(page.advancedMode()).to.equal(false);
                                         });
                                         it('Is not displaying results', function () {
                                             expect(page.displayResults()).to.equal(false);
@@ -211,6 +243,9 @@
                                         it('Resets the search type', function () {
                                             expect(page.searchTypes()[0].active()).to.equal(true);
                                         });
+                                        it('Is in basic search mode', function () {
+                                            expect(page.advancedMode()).to.equal(false);
+                                        });
                                         it('Is not displaying results', function () {
                                             expect(page.displayResults()).to.equal(false);
                                         });
@@ -228,6 +263,9 @@
                                         it('Calls the specified search service with the given search text', function () {
                                             sinon.assert.calledOnce(searchService);
                                             sinon.assert.calledWith(searchService, { second: 'query' });
+                                        });
+                                        it('Is in basic search mode', function () {
+                                            expect(page.advancedMode()).to.equal(false);
                                         });
                                         it('Is displaying results', function () {
                                             expect(page.displayResults()).to.equal(true);

@@ -29,16 +29,20 @@
                     typeFor = function (result) {
                         return container.resolve('types')[result.data().type];
                     },
+                    searchParameters = ko.pureComputed(function () {
+                        // TODO if (advancedMode()) ... else ...
+                        return _.zipObject(
+                            [ selectedSearchType() ],
+                            [ submittedQuery() ]
+                        );
+                    }),
                     doSearch = function (callback) {
                         submittedQuery(this.searchText());
                         results([]);
                         overlay.loading(true);
                         this.displayResults(false);
                         container.resolve('search.' + context.params.type)(
-                            _.zipObject(
-                                [ selectedSearchType() ],
-                                [ submittedQuery() ]
-                            ),
+                            searchParameters(),
                             function (err, searchServiceResults) {
                                 overlay.loading(false);
                                 if (err) {
@@ -57,6 +61,7 @@
                     }.bind(this);
 
                 this.searchText = ko.observable(query.query || '');
+                this.advancedMode = ko.observable(false);
                 this.searchTypes = ko.observableArray();
                 this.searchResultFields = ko.observableArray();
                 this.displayResults = ko.observable(false);
@@ -81,6 +86,10 @@
                     return selectedSearchType() ?
                         _.find(this.searchTypes(), { key: selectedSearchType() }).placeholder :
                         'Enter your search terms...';
+                }.bind(this));
+
+                this.advancedModeToggleText = ko.pureComputed(function () {
+                    return this.advancedMode() ? 'Back to basic mode' : 'Advanced search';
                 }.bind(this));
 
                 this.hasResults = ko.pureComputed(function () {
@@ -112,9 +121,13 @@
                     );
                 };
 
-                this.ready = function (callback) {
-                    container.resolve('ui.overlay').loading(false);
+                this.ready = function (element, callback) {
+                    overlay.loading(false);
                     callback();
+                };
+
+                this.toggleAdvancedMode = function () {
+                    this.advancedMode(!this.advancedMode());
                 };
 
                 this.reset = function () {
