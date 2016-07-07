@@ -13,10 +13,6 @@
                 this.selectedComparator = ko.observable();
                 this.value = ko.observable('');
 
-                this.hasOptions = ko.pureComputed(function () {
-                    return false;
-                });
-
                 this.fields = ko.pureComputed(function () {
                     return queryBuilder.fields();
                 });

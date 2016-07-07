@@ -7,12 +7,7 @@
     <div class="condition">
         <select data-bind="options: fields, optionsCaption: '', optionsText: 'labelText', optionsValue: 'key', value: selectedField" class="form-control field styled-select"></select>
         <select data-bind="options: comparators, optionsCaption: '', optionsText: 'label', optionsValue: 'key', value: selectedComparator" class="form-control comparator styled-select"></select>
-        <!-- ko if: hasOptions -->
-        <select data-bind="value: value" class="form-control condition-value styled-select"></select>
-        <!-- /ko -->
-        <!-- ko ifnot: hasOptions -->
         <input type="text" data-bind="textInput: value" class="form-control condition-value" />
-        <!-- /ko -->
         <button class="btn btn-danger btn-xs pull-right" data-bind="click: $parent.removeChild"><span class="glyphicon glyphicon-minus-sign"></span> Remove</button>
     </div>
 </script>
