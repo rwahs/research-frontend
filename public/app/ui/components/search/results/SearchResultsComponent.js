@@ -9,13 +9,21 @@
             'util/container'
         ],
         function (_, ko, routes, container) {
-            return function () {
+            return function (parameters) {
                 var typeFor = function (result) {
-                        return container.resolve('types')[result.data().type];
-                    };
+                    return container.resolve('types')[result.data().type];
+                };
 
-                this.resultFields = ko.observableArray();
-                this.results = ko.observableArray();
+                if (!parameters.results) {
+                    throw new Error('SearchResultsComponent missing required parameter: `results`.');
+                }
+                if (!parameters.modeSwitcher) {
+                    throw new Error('SearchResultsComponent missing required parameter: `modeSwitcher`.');
+                }
+
+                this.results = parameters.results;
+                this.modeSwitcher = parameters.modeSwitcher;
+                this.resultFields = parameters.resultFields;
 
                 this.displayFor = function (field, result) {
                     if (_.isString(field)) {

@@ -46,7 +46,7 @@
     <!-- /ko -->
     <!-- ko if: hasResults -->
     <div data-bind="component: { name: 'controls/list', params: { pager: pager, sorter: sorter, modeSwitcher: modeSwitcher, searchUrlFor: searchUrlFor } }" class="text-right"></div>
-    <div data-bind="component: { name: 'search/results', params: { results: displayedResults } }"></div>
+    <div data-bind="component: { name: 'search/results', params: { results: displayedResults, modeSwitcher: modeSwitcher, resultFields: resultFields } }"></div>
     <!-- /ko -->
     <!-- /ko -->
 </article>
