@@ -6,7 +6,8 @@
             {
                 key: 'first',
                 labelText: 'Field One',
-                sort: true
+                sort: true,
+                placeholder: 'placeholder value'
             },
             {
                 key: 'second',
@@ -17,7 +18,8 @@
             },
             {
                 key: 'third',
-                labelText: 'Field Three'
+                labelText: 'Field Three',
+                display: 'image'
             }
         ];
     });
