@@ -262,7 +262,15 @@
                                         });
                                         it('Calls the specified search service with the given search text', function () {
                                             sinon.assert.calledOnce(searchService);
-                                            sinon.assert.calledWith(searchService, { second: 'query' });
+                                            sinon.assert.calledWith(searchService, {
+                                                operator: 'AND',
+                                                children: [
+                                                    {
+                                                        key: 'second',
+                                                        value: '"query"'
+                                                    }
+                                                ]
+                                            });
                                         });
                                         it('Is in basic search mode', function () {
                                             expect(page.advancedMode()).to.equal(false);

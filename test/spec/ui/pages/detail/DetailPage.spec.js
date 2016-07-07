@@ -105,7 +105,7 @@
                             });
                             describe('When the view is ready', function () {
                                 beforeEach(function (done) {
-                                    page.ready(done);
+                                    page.ready(element, done);
                                 });
                                 it('Has displayed and then hidden the loading animation', function () {
                                     expect(overlay.loading.callCount).to.equal(2);
@@ -207,7 +207,7 @@
                             });
                             describe('When the view is ready', function () {
                                 beforeEach(function (done) {
-                                    page.ready(done);
+                                    page.ready(element, done);
                                 });
                                 it('Has displayed and then hidden the loading animation', function () {
                                     expect(overlay.loading.callCount).to.equal(2);

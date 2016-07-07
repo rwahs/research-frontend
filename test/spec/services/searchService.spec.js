@@ -36,9 +36,10 @@
                                 });
                             });
                             describe('When invoked with no parameters', function () {
-                                var serviceError, serviceResult;
+                                var parameters, serviceError, serviceResult;
                                 beforeEach(function (done) {
-                                    service(undefined, function (err, result) {
+                                    parameters = undefined;
+                                    service(parameters, function (err, result) {
                                         serviceError = err;
                                         serviceResult = result;
                                         done();
@@ -57,10 +58,43 @@
                                     expect(serviceResult).to.have.length(3);
                                 });
                             });
-                            describe('When invoked with one parameter', function () {
-                                var serviceError, serviceResult;
+                            describe('When invoked with incorrectly structured parameters', function () {
+                                var parameters, serviceError, serviceResult;
                                 beforeEach(function (done) {
-                                    service({ field: 'value' }, function (err, result) {
+                                    // This is the old syntax, it is no longer supported, see the next `describe`.
+                                    parameters = { field: 'value' };
+                                    service(parameters, function (err, result) {
+                                        serviceError = err;
+                                        serviceResult = result;
+                                        done();
+                                    });
+                                });
+                                it('Makes an AJAX call', function () {
+                                    sinon.assert.calledOnce($.ajax);
+                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=');
+                                    expect($.ajax.args[0][0].foo).to.equal('bar');
+                                    expect($.ajax.args[0][0].success).to.be.a('function');
+                                    expect($.ajax.args[0][0].error).to.be.a('function');
+                                });
+                                it('Records a valid result', function () {
+                                    expect(serviceError).to.equal(undefined);
+                                    expect(serviceResult).to.be.an('array');
+                                    expect(serviceResult).to.have.length(3);
+                                });
+                            });
+                            describe('When invoked with one field value specified', function () {
+                                var parameters, serviceError, serviceResult;
+                                beforeEach(function (done) {
+                                    parameters = {
+                                        operator: 'AND',
+                                        children: [
+                                            {
+                                                key: 'field',
+                                                value: 'value'
+                                            }
+                                        ]
+                                    };
+                                    service(parameters, function (err, result) {
                                         serviceError = err;
                                         serviceResult = result;
                                         done();
@@ -80,9 +114,22 @@
                                 });
                             });
                             describe('When invoked with multiple parameters', function () {
-                                var serviceError, serviceResult;
+                                var parameters, serviceError, serviceResult;
                                 beforeEach(function (done) {
-                                    service({ field: 'value', another: 'search this' }, function (err, result) {
+                                    parameters = {
+                                        operator: 'AND',
+                                        children: [
+                                            {
+                                                key: 'field',
+                                                value: 'value'
+                                            },
+                                            {
+                                                key: 'another',
+                                                value: 'search this'
+                                            }
+                                        ]
+                                    };
+                                    service(parameters, function (err, result) {
                                         serviceError = err;
                                         serviceResult = result;
                                         done();
@@ -195,9 +242,10 @@
                                 });
                             });
                             describe('When invoked with no parameters', function () {
-                                var serviceError, serviceResult;
+                                var parameters, serviceError, serviceResult;
                                 beforeEach(function (done) {
-                                    service(undefined, function (err, result) {
+                                    parameters = undefined;
+                                    service(parameters, function (err, result) {
                                         serviceError = err;
                                         serviceResult = result;
                                         done();
@@ -217,9 +265,18 @@
                                 });
                             });
                             describe('When invoked with one parameter', function () {
-                                var serviceError, serviceResult;
+                                var parameters, serviceError, serviceResult;
                                 beforeEach(function (done) {
-                                    service({ field: 'value' }, function (err, result) {
+                                    parameters = {
+                                        operator: 'AND',
+                                        children: [
+                                            {
+                                                key: 'field',
+                                                value: 'value'
+                                            }
+                                        ]
+                                    };
+                                    service(parameters, function (err, result) {
                                         serviceError = err;
                                         serviceResult = result;
                                         done();
@@ -239,9 +296,22 @@
                                 });
                             });
                             describe('When invoked with multiple parameters', function () {
-                                var serviceError, serviceResult;
+                                var parameters, serviceError, serviceResult;
                                 beforeEach(function (done) {
-                                    service({ field: 'value', another: 'search this' }, function (err, result) {
+                                    parameters = {
+                                        operator: 'AND',
+                                        children: [
+                                            {
+                                                key: 'field',
+                                                value: 'value'
+                                            },
+                                            {
+                                                key: 'another',
+                                                value: 'search this'
+                                            }
+                                        ]
+                                    };
+                                    service(parameters, function (err, result) {
                                         serviceError = err;
                                         serviceResult = result;
                                         done();
