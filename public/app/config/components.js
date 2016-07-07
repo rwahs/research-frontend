@@ -137,10 +137,10 @@
                 );
 
                 ko.components.register(
-                    'search/header',
+                    'search/quick',
                     {
-                        viewModel: { require: 'ui/components/search/SearchComponent' },
-                        template: { require: 'text!ui/components/search/header-search.html' }
+                        viewModel: { require: 'ui/components/search/quick/QuickSearchComponent' },
+                        template: { require: 'text!ui/components/search/quick/quick-search.html' }
                     }
                 );
 

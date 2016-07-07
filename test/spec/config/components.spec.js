@@ -134,10 +134,10 @@
                         expect(args[1].viewModel.require).to.equal('ui/components/display/DisplayComponent');
                         expect(args[1].template.require).to.equal('text!ui/components/display/cover-image.html');
                     });
-                    it('Configures the header search component', function () {
-                        var args = _.find(ko.components.register.args, { 0: 'search/header' });
-                        expect(args[1].viewModel.require).to.equal('ui/components/search/SearchComponent');
-                        expect(args[1].template.require).to.equal('text!ui/components/search/header-search.html');
+                    it('Configures the quick search component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'search/quick' });
+                        expect(args[1].viewModel.require).to.equal('ui/components/search/quick/QuickSearchComponent');
+                        expect(args[1].template.require).to.equal('text!ui/components/search/quick/quick-search.html');
                     });
                     it('Configures the query builder search component', function () {
                         var args = _.find(ko.components.register.args, { 0: 'search/query-builder' });

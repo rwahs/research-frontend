@@ -87,7 +87,7 @@
                                 text.split(/\s+/),
                                 function (term) {
                                     return {
-                                        key: selectedInputField(),
+                                        field: selectedInputField(),
                                         operator: 'contains',
                                         value: term
                                     };

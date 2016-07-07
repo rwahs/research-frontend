@@ -269,8 +269,9 @@
                                                 operator: 'AND',
                                                 children: [
                                                     {
-                                                        key: 'second',
-                                                        value: '"query"'
+                                                        field: 'second',
+                                                        operator: 'contains',
+                                                        value: 'query'
                                                     }
                                                 ]
                                             });

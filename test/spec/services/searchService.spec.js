@@ -89,7 +89,7 @@
                                         operator: 'AND',
                                         children: [
                                             {
-                                                key: 'field',
+                                                field: 'field',
                                                 value: 'value'
                                             }
                                         ]
@@ -120,11 +120,11 @@
                                         operator: 'AND',
                                         children: [
                                             {
-                                                key: 'field',
+                                                field: 'field',
                                                 value: 'value'
                                             },
                                             {
-                                                key: 'another',
+                                                field: 'another',
                                                 value: 'search this'
                                             }
                                         ]
@@ -271,7 +271,7 @@
                                         operator: 'AND',
                                         children: [
                                             {
-                                                key: 'field',
+                                                field: 'field',
                                                 value: 'value'
                                             }
                                         ]
@@ -302,11 +302,11 @@
                                         operator: 'AND',
                                         children: [
                                             {
-                                                key: 'field',
+                                                field: 'field',
                                                 value: 'value'
                                             },
                                             {
-                                                key: 'another',
+                                                field: 'another',
                                                 value: 'search this'
                                             }
                                         ]
