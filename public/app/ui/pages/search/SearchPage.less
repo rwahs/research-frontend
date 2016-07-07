@@ -35,7 +35,7 @@ article.search {
         }
 
         &:hover {
-            background-color: #ffe;
+            background-color: @alert-warning-bg;
             border-color: @link-color;
 
             * {
@@ -51,23 +51,16 @@ article.search {
         .display.display-cover-image {
             .cover-image {
                 display: block;
-                width: 120px;
-                height: 120px;
                 background: @gray-lighter none no-repeat scroll center center / cover;
                 margin-right: @padding-base-horizontal;
                 border: 1px solid @gray-lighter;
 
                 .img-placeholder {
                     &:extend(.text-muted);
-                    background-color: #eee;
+                    background-color: @gray-lighter;
                     display: inline-block;
                     width: 100%;
-                    padding-top: 40px;
                     text-align: center;
-
-                    .glyphicon {
-                        font-size: 40px;
-                    }
                 }
             }
         }
@@ -91,6 +84,21 @@ article.search {
             .inline-list li {
                 list-style-type: none;
             }
+
+            .display.display-cover-image {
+                .cover-image {
+                    width: @list-cover-image-size;
+                    height: @list-cover-image-size;
+
+                    .img-placeholder {
+                        padding-top: @list-cover-image-size / 3;
+
+                        .glyphicon {
+                            font-size: @list-cover-image-size / 3;
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -100,15 +108,15 @@ article.search {
 
             .display.display-cover-image {
                 .cover-image {
-                    width: 240px;
-                    height: 240px;
+                    width: @thumbnails-cover-image-size;
+                    height: @thumbnails-cover-image-size;
                     margin: 0 auto;
 
                     .img-placeholder {
-                        padding-top: 80px;
+                        padding-top: @thumbnails-cover-image-size / 3;
 
                         .glyphicon {
-                            font-size: 80px;
+                            font-size: @thumbnails-cover-image-size / 3;
                         }
                     }
                 }
@@ -119,6 +127,25 @@ article.search {
                 display: block;
                 height: @line-height-computed * 2 + @padding-base-vertical * 2;
                 overflow: hidden;
+            }
+        }
+    }
+
+    .results-container-table {
+        .result {
+            .display.display-cover-image {
+                .cover-image {
+                    width: @table-cover-image-size;
+                    height: @table-cover-image-size;
+
+                    .img-placeholder {
+                        padding-top: @table-cover-image-size / 3;
+
+                        .glyphicon {
+                            font-size: @table-cover-image-size / 3;
+                        }
+                    }
+                }
             }
         }
     }
