@@ -19,13 +19,11 @@
                     var mediaField = _.find(searchResultFields, { key: 'MediaThumbnail' });
                     expect(mediaField.labelText).to.equal('Image');
                     expect(mediaField.display).to.equal('cover-image');
-                    expect(mediaField.searchField).to.equal(false);
                 });
                 it('Defines the `MediaSmall` field', function () {
                     var mediaField = _.find(searchResultFields, { key: 'MediaSmall' });
                     expect(mediaField.display).to.equal('cover-image');
                     expect(mediaField.tableColumn).to.equal(false);
-                    expect(mediaField.searchField).to.equal(false);
                 });
                 it('Defines the `type` field', function () {
                     var titleField = _.find(searchResultFields, { key: 'type' });

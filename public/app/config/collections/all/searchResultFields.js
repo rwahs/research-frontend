@@ -6,14 +6,12 @@
             {
                 key: 'MediaThumbnail',
                 labelText: 'Image',
-                display: 'cover-image',
-                searchField: false
+                display: 'cover-image'
             },
             {
                 key: 'MediaSmall',
                 display: 'cover-image',
-                tableColumn: false,
-                searchField: false
+                tableColumn: false
             },
             {
                 key: 'type',
