@@ -13,9 +13,9 @@
 
             Group = function (queryBuilder, parentGroup) {
                 this.children = ko.observableArray();
-                this.selectedLogicalOperator = ko.observable();
+                this.selectedOperator = ko.observable();
 
-                this.logicalOperators = ko.pureComputed(function () {
+                this.operators = ko.pureComputed(function () {
                     return [
                         {
                             label: 'and',
@@ -38,7 +38,7 @@
 
                 this.query = ko.pureComputed(function () {
                     return {
-                        operator: this.selectedLogicalOperator(),
+                        operator: this.selectedOperator(),
                         children: _(this.children()).invokeMap('query').filter().value()
                     };
                 }.bind(this));
@@ -53,7 +53,7 @@
                     if (!query.children) {
                         throw new Error('Cannot parse Group query, missing `children`');
                     }
-                    this.selectedLogicalOperator(query.operator);
+                    this.selectedOperator(query.operator);
                     this.children(_.map(query.children, function (child) {
                         var childNode;
                         if (child.operator && child.children) {
@@ -81,7 +81,7 @@
                 }.bind(this);
 
                 this.children.push(new Condition(queryBuilder));
-                this.selectedLogicalOperator(this.logicalOperators()[0]);
+                this.selectedOperator(this.operators()[0]);
             };
 
             return Group;

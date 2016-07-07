@@ -14,7 +14,7 @@
 <script type="text/html" id="group-template">
     <div class="group">
         <div class="group-controls">
-            <select data-bind="options: logicalOperators, optionsText: 'label', optionsValue: 'value', value: selectedLogicalOperator" class="form-control operator styled-select"></select>
+            <select data-bind="options: operators, optionsText: 'label', optionsValue: 'value', value: selectedOperator" class="form-control operator styled-select"></select>
             <div class="pull-right">
                 <button class="btn btn-xs btn-success" data-bind="click: addCondition"><span class="glyphicon glyphicon-plus-sign"></span> Add Condition</button>
                 <!-- ko if: allowChildren -->
