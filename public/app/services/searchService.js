@@ -11,12 +11,12 @@
                 var queryString;
 
                 queryString = function (parameters) {
-                    return '(' + _.map(parameters.children, function (child) {
+                    return _.map(parameters.children, function (child) {
                         return child.hasOwnProperty('children') ?
-                            queryString(child) :
+                            '(' + queryString(child) + ')' :
                             '(' + child.key + ':' + child.value + ')';
                     })
-                    .join(' ' + parameters.operator + ' ') + ')';
+                    .join(' ' + parameters.operator + ' ');
                 };
 
                 return function (parameters, callback) {
