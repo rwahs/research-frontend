@@ -14,7 +14,7 @@
                     return _.map(parameters.children, function (child) {
                         return child.hasOwnProperty('children') ?
                             '(' + queryString(child) + ')' :
-                            '(' + child.key + ':' + child.value + ')';
+                            '(' + child.field + ':' + child.value + ')'; // TODO Use comparator
                     })
                     .join(' ' + parameters.operator + ' ');
                 };

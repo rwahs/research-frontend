@@ -65,6 +65,28 @@
                 this.selectedLogicalOperator(this.logicalOperators()[0]);
             };
 
+            Group.parse = function (query, queryBuilder, parentGroup) {
+                var group;
+                if (!query.operator) {
+                    throw new Error('Cannot parse Group query, missing `operator`');
+                }
+                if (!query.children) {
+                    throw new Error('Cannot parse Group query, missing `children`');
+                }
+                group = new Group(queryBuilder, parentGroup);
+                group.selectedLogicalOperator(query.operator);
+                group.children(_.map(query.children, function (child) {
+                    if (child.operator && child.children) {
+                        return Group.parse(child, queryBuilder, group);
+                    }
+                    if (child.field && child.comparator && child.value) {
+                        return Condition.parse(child, queryBuilder);
+                    }
+                    throw new Error('Cannot parse Group query, invalid data encountered in query structure: ' + JSON.stringify(child));
+                }));
+                return group;
+            };
+
             return Group;
         }
     );

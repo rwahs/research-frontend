@@ -78,18 +78,22 @@
                 }.bind(this));
 
                 this.basicSearchQuery = ko.pureComputed(function () {
-                    return {
-                        operator: 'AND',
-                        children: _.map(
-                            this.searchText().split(/\s+/),
-                            function (term) {
-                                return {
-                                    key: selectedInputField(),
-                                    value: '"' + term + '"'
-                                };
-                            }
-                        )
-                    };
+                    var text = this.searchText();
+                    return (text.length === 0) ?
+                        undefined :
+                        {
+                            operator: 'AND',
+                            children: _.map(
+                                text.split(/\s+/),
+                                function (term) {
+                                    return {
+                                        key: selectedInputField(),
+                                        operator: 'contains',
+                                        value: term
+                                    };
+                                }
+                            )
+                        };
                 }.bind(this));
 
                 this.displayedResults = ko.pureComputed(function () {
@@ -142,7 +146,7 @@
                             }));
                             this.searchInputFields()[0].makeActive();
                             this.searchResultFields(searchResultFields);
-                            if (this.searchText()) {
+                            if (this.currentQuery()) {
                                 doSearch(callback);
                             } else {
                                 callback();

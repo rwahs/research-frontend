@@ -41,24 +41,28 @@
                 this.comparators = ko.pureComputed(function () {
                     return [
                         {
+                            key: 'contains',
                             label: 'contains',
                             queryFormat: function (value) {
                                 return '"' + value + '"';
                             }
                         },
                         {
+                            key: '!contains',
                             label: 'does not contain',
                             queryFormat: function (value) {
                                 return '-"' + value + '"';
                             }
                         },
                         {
+                            key: 'starts',
                             label: 'starts with',
                             queryFormat: function (value) {
                                 return '"' + value + '"*';
                             }
                         },
                         {
+                            key: '!starts',
                             label: 'does not start with',
                             queryFormat: function (value) {
                                 return '-"' + value + '"*';
@@ -81,11 +85,13 @@
                     return root ? root.query() : undefined;
                 }.bind(this));
 
+                if (parameters.queryObservable()) {
+                    this.root(Group.parse(parameters.queryObservable(), this));
+                } else {
+                    this.root(new Group(this));
+                }
+
                 this.query.subscribe(parameters.queryObservable);
-
-                this.root(new Group(this));
-
-                // TODO Parse initial / current query.
             };
         }
     );
