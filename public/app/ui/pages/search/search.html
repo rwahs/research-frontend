@@ -12,15 +12,18 @@
                         <!-- ko if: displaySearchInputFieldSwitch -->
                         <div class="form-group">
                             <div class="btn-group btn-group-justified">
-                                <!-- ko foreach: searchInputFields -->
-                                <a class="btn btn-default" data-bind="html: label, css: { active: active }, click: makeActive"></a>
+                                <!-- ko foreach: basicSearchInputFields -->
+                                <a class="btn btn-default" data-bind="css: { active: active }, click: makeActive">
+                                    <span data-bind="html: glyphicon"></span>
+                                    <span data-bind="html: labelText"></span>
+                                </a>
                                 <!-- /ko -->
                             </div>
                         </div>
                         <!-- /ko -->
                         <!-- /ko -->
                         <!-- ko if: advancedMode -->
-                        <div data-bind="component: { name: 'search/query-builder', params: { fields: searchResultFields, maxDepth: 3, queryObservable: advancedSearchQuery } }"></div>
+                        <div data-bind="component: { name: 'search/query-builder', params: { fields: searchInputFields, maxDepth: 3, queryObservable: advancedSearchQuery } }"></div>
                         <!-- /ko -->
                     </div>
                     <div class="panel-footer text-right">

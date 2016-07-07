@@ -20,10 +20,7 @@
                 });
 
                 this.fields = ko.pureComputed(function () {
-                    return _.filter(queryBuilder.fields(), function (field) {
-                        // Unspecified is true, only explicit false is false.
-                        return field.searchField !== false;
-                    });
+                    return queryBuilder.fields();
                 });
 
                 this.comparators = ko.pureComputed(function () {
@@ -43,10 +40,12 @@
                     field = this.selectedField();
                     comparator = this.selectedComparator();
                     value = this.value();
-                    return (!field || !comparator || !value) ? undefined : {
-                        key: field,
-                        value: comparator.queryFormat(value)
-                    };
+                    return (field && comparator && value) ?
+                        {
+                            key: field,
+                            value: comparator.queryFormat(value)
+                        } :
+                        undefined;
                 }.bind(this));
             };
         }

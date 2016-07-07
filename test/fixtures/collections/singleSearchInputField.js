@@ -6,7 +6,8 @@
             {
                 key: 'only',
                 labelText: 'Only available search type',
-                glyphicon: 'one'
+                glyphicon: 'one',
+                basicSearch: true
             }
         ];
     });

@@ -61,6 +61,7 @@
                                 expect(ko.isObservable(page.searchText)).to.equal(true);
                                 expect(ko.isObservable(page.advancedMode)).to.equal(true);
                                 expect(ko.isObservable(page.searchInputFields)).to.equal(true);
+                                expect(ko.isObservable(page.basicSearchInputFields)).to.equal(true);
                                 expect(ko.isObservable(page.searchResultFields)).to.equal(true);
                                 expect(ko.isObservable(page.displayResults)).to.equal(true);
                                 expect(ko.isPureComputed(page.displayedResults)).to.equal(true);
@@ -90,6 +91,7 @@
                                 expect(page.searchText()).to.equal('');
                                 expect(page.advancedMode()).to.equal(false);
                                 expect(page.searchInputFields()).to.deep.equal([]);
+                                expect(page.basicSearchInputFields()).to.deep.equal([]);
                                 expect(page.searchResultFields()).to.deep.equal([]);
                             });
                             it('Is not displaying results', function () {
@@ -110,16 +112,17 @@
                             describe('When bound to the view', function () {
                                 var containerElement;
                                 beforeEach(function (done) {
-                                    containerElement = document.createElement('div');
+                                    containerElement = window.document.createElement('div');
                                     page.binding(containerElement, done);
                                 });
                                 it('Sets the search types', function () {
-                                    expect(page.searchInputFields()).to.have.length(2); // see fixtures/collections/searchInputFields.js
+                                    expect(page.searchInputFields()).to.have.length(3); // see fixtures/collections/searchInputFields.js
+                                    expect(page.basicSearchInputFields()).to.have.length(2);
                                     expect(page.displaySearchInputFieldSwitch()).to.equal(true);
                                 });
                                 it('Sets the active search type', function () {
-                                    expect(page.searchInputFields()[0].active()).to.equal(true);
-                                    expect(page.searchInputFields()[1].active()).to.equal(false);
+                                    expect(page.basicSearchInputFields()[0].active()).to.equal(true);
+                                    expect(page.basicSearchInputFields()[1].active()).to.equal(false);
                                 });
                                 it('Sets the placeholder text', function () {
                                     expect(page.placeholder()).to.equal('Search by Field One...');
@@ -157,11 +160,11 @@
                                 });
                                 describe('When a different search type is made active', function () {
                                     beforeEach(function () {
-                                        page.searchInputFields()[1].makeActive();
+                                        page.basicSearchInputFields()[1].makeActive();
                                     });
                                     it('Sets the active search type', function () {
-                                        expect(page.searchInputFields()[0].active()).to.equal(false);
-                                        expect(page.searchInputFields()[1].active()).to.equal(true);
+                                        expect(page.basicSearchInputFields()[0].active()).to.equal(false);
+                                        expect(page.basicSearchInputFields()[1].active()).to.equal(true);
                                     });
                                     it('Sets the placeholder text', function () {
                                         expect(page.placeholder()).to.equal('Search by Field Two...');
@@ -181,7 +184,7 @@
                                 });
                                 describe('With empty search text', function () {
                                     beforeEach(function () {
-                                        page.searchInputFields()[0].makeActive();
+                                        page.basicSearchInputFields()[0].makeActive();
                                         page.searchText('');
                                     });
                                     describe('When the search form is reset', function () {
@@ -192,7 +195,7 @@
                                             expect(page.searchText()).to.equal('');
                                         });
                                         it('Resets the search type', function () {
-                                            expect(page.searchInputFields()[0].active()).to.equal(true);
+                                            expect(page.basicSearchInputFields()[0].active()).to.equal(true);
                                         });
                                         it('Is in basic search mode', function () {
                                             expect(page.advancedMode()).to.equal(false);
@@ -230,7 +233,7 @@
                                 });
                                 describe('With non-empty search text', function () {
                                     beforeEach(function () {
-                                        page.searchInputFields()[1].makeActive();
+                                        page.basicSearchInputFields()[1].makeActive();
                                         page.searchText('query');
                                     });
                                     describe('When the search form is reset', function () {
@@ -241,7 +244,7 @@
                                             expect(page.searchText()).to.equal('');
                                         });
                                         it('Resets the search type', function () {
-                                            expect(page.searchInputFields()[0].active()).to.equal(true);
+                                            expect(page.basicSearchInputFields()[0].active()).to.equal(true);
                                         });
                                         it('Is in basic search mode', function () {
                                             expect(page.advancedMode()).to.equal(false);
@@ -362,7 +365,7 @@
                             container.register('search.collection', searchService);
                             container.register('settings.collection', {
                                 collectionName: 'Collection',
-                                searchInputFields: 'fixtures/collections/singleSearchType',
+                                searchInputFields: 'fixtures/collections/singleSearchInputField',
                                 searchResultFields: 'fixtures/collections/searchResultFields'
                             });
                             container.register('types', {
@@ -391,11 +394,12 @@
                             describe('When bound to the view', function () {
                                 var containerElement;
                                 beforeEach(function (done) {
-                                    containerElement = document.createElement('div');
+                                    containerElement = window.document.createElement('div');
                                     page.binding(containerElement, done);
                                 });
                                 it('Sets the single search type', function () {
-                                    expect(page.searchInputFields()).to.have.length(1); // see fixtures/collections/singleSearchType.js
+                                    expect(page.searchInputFields()).to.have.length(1); // see fixtures/collections/singleSearchInputField.js
+                                    expect(page.basicSearchInputFields()).to.have.length(1);
                                     expect(page.displaySearchInputFieldSwitch()).to.equal(false);
                                 });
                                 it('Sets the active search type', function () {
@@ -443,7 +447,7 @@
                         describe('When bound to the view', function () {
                             var element;
                             beforeEach(function (done) {
-                                element = document.createElement('div');
+                                element = window.document.createElement('div');
                                 page.binding(element, done);
                             });
                             describe('When the search form is submitted with a valid query', function () {

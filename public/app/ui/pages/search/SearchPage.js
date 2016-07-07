@@ -12,16 +12,16 @@
             'models/ListModeSwitcher',
             'models/ListSorter',
             'models/ListPager',
-            'ui/pages/search/SearchType'
+            'ui/pages/search/SearchInputField'
         ],
-        function (_, ko, qs, routes, container, DynamicRecord, ListModeSwitcher, ListSorter, ListPager, SearchType) {
+        function (_, ko, qs, routes, container, DynamicRecord, ListModeSwitcher, ListSorter, ListPager, SearchInputField) {
             var int = function (value) {
                     return value ? parseInt(value, 10) : undefined;
                 };
 
             return function (context) {
                 var settings = container.resolve('settings.' + context.params.type),
-                    selectedSearchType = ko.observable(),
+                    selectedInputField = ko.observable(),
                     submittedQuery = ko.observable(),
                     results = ko.observableArray(),
                     query = qs.parse(window.location.search.replace(/^\?/, '')),
@@ -64,6 +64,12 @@
                 this.sorter = new ListSorter(results, this.searchResultFields, query.sort, query.dir);
                 this.pager = new ListPager(this.sorter.sortedList, int(query.start), int(query.size));
 
+                this.basicSearchInputFields = ko.pureComputed(function () {
+                    return this.searchInputFields().filter(function (field) {
+                        return field.basicSearch();
+                    });
+                }.bind(this));
+
                 this.basicSearchQuery = ko.pureComputed(function () {
                     return {
                         operator: 'AND',
@@ -71,7 +77,7 @@
                             submittedQuery().split(/\s+/),
                             function (term) {
                                 return {
-                                    key: selectedSearchType(),
+                                    key: selectedInputField(),
                                     value: '"' + term + '"'
                                 };
                             }
@@ -92,8 +98,10 @@
                 });
 
                 this.placeholder = ko.pureComputed(function () {
-                    return selectedSearchType() ?
-                        _.find(this.searchInputFields(), { key: selectedSearchType() }).placeholder :
+                    return selectedInputField() ?
+                        _.find(this.searchInputFields(), function (field) {
+                            return field.key() === selectedInputField();
+                        }).placeholder() :
                         'Enter your search terms...';
                 }.bind(this));
 
@@ -106,7 +114,7 @@
                 });
 
                 this.displaySearchInputFieldSwitch = ko.pureComputed(function () {
-                    return this.searchInputFields() && this.searchInputFields().length > 1;
+                    return this.basicSearchInputFields() && this.basicSearchInputFields().length > 1;
                 }.bind(this));
 
                 this.canSubmit = ko.pureComputed(function () {
@@ -123,7 +131,7 @@
                         ],
                         function (searchInputFields, searchResultFields) {
                             this.searchInputFields(_.map(searchInputFields, function (type) {
-                                return new SearchType(type, selectedSearchType);
+                                return new SearchInputField(type, selectedInputField);
                             }));
                             this.searchInputFields()[0].makeActive();
                             this.searchResultFields(searchResultFields);
