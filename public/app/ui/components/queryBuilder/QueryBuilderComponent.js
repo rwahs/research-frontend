@@ -41,37 +41,25 @@
                 this.comparators = ko.pureComputed(function () {
                     return [
                         {
-                            label: '~ (contains)',
-                            displayFormat: function (field, value) {
-                                return field + ' CONTAINS ' + value;
-                            },
+                            label: 'contains',
                             queryFormat: function (value) {
                                 return '"' + value + '"';
                             }
                         },
                         {
-                            label: '!~ (does not contain)',
-                            displayFormat: function (field, value) {
-                                return field + ' NOT-CONTAINS ' + value;
-                            },
+                            label: 'does not contain',
                             queryFormat: function (value) {
                                 return '-"' + value + '"';
                             }
                         },
                         {
-                            label: '^ (starts with)',
-                            displayFormat: function (field, value) {
-                                return field + ' STARTS-WITH ' + value;
-                            },
+                            label: 'starts with',
                             queryFormat: function (value) {
                                 return '"' + value + '"*';
                             }
                         },
                         {
-                            label: '!^ (does not start with)',
-                            displayFormat: function (field, value) {
-                                return field + ' NOT-STARTS-WITH ' + value;
-                            },
+                            label: 'does not start with',
                             queryFormat: function (value) {
                                 return '-"' + value + '"*';
                             }

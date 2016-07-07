@@ -25,32 +25,24 @@
                 });
 
                 this.text = ko.pureComputed(function () {
-                    var op, fields;
-                    op = '';
-                    fields = _(this.children())
-                        .map(function (child) {
-                            if (child.text().length === 0) {
-                                return undefined;
-                            }
-                            var text = op + ' ' + child.text();
-                            op = this.selectedLogicalOperator();
-                            return text.trim();
-                        }.bind(this))
-                        .filter()
-                        .value();
-                    return fields.length ? '(' + fields.join(' ') + ')' : '';
+                    var fields;
+                    fields = _(this.children()).invokeMap('text').filter().value();
+                    return fields.length ? '(' + fields.join(' ' + this.selectedLogicalOperator() + ' ') + ')' : '';
                 }.bind(this));
 
                 this.query = ko.pureComputed(function () {
-                    return _(this.children())
-                        .map(function (child) {
-                            if (!child.query()) {
-                                return undefined;
-                            }
-                            return child.query();
-                        })
-                        .filter()
-                        .value();
+                    return {
+                        operator: this.selectedLogicalOperator(),
+                        children: _(this.children())
+                            .map(function (child) {
+                                if (!child.query()) {
+                                    return undefined;
+                                }
+                                return child.query();
+                            })
+                            .filter()
+                            .value()
+                    };
                 }.bind(this));
 
                 this.allowChildren = ko.pureComputed(function () {

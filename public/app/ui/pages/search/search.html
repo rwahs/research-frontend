@@ -1,8 +1,8 @@
 <article class="search">
     <h1 data-bind="text: heading"></h1>
     <div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-default search-panel">
+        <div class="search-panel col-md-6" data-bind="css: { advanced: advancedMode }">
+            <div class="panel panel-default">
                 <form data-bind="submit: submit">
                     <div class="panel-body">
                         <!-- ko ifnot: advancedMode -->
@@ -30,7 +30,7 @@
                                 <span class="glyphicon glyphicon-refresh"></span>
                                 Reset
                             </button>
-                            <button type="submit" class="btn btn-success" data-bind="enable: searchText">
+                            <button type="submit" class="btn btn-success" data-bind="enable: canSubmit">
                                 <span class="glyphicon glyphicon-search"></span>
                                 Search
                             </button>
@@ -39,8 +39,8 @@
                 </form>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="well search-tips">
+        <div class="search-tips col-md-6" data-bind="css: { advanced: advancedMode }">
+            <div class="well" data-bind="css: { hidden: advancedMode }">
                 <h2>Search Tips</h2>
                 <ul>
                     <li>Use specific rather than general queries.</li>

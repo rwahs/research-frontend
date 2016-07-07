@@ -1,29 +1,40 @@
-<div class="query-builder" data-bind="with: root">
+<div class="query-builder">
     <input name="query" placeholder="Advanced Search" class="form-control" readonly data-bind="value: text" />
-    <div data-bind="template: templateName"></div>
+    <div data-bind="with: root">
+        <div data-bind="template: templateName" class="alert alert-warning"></div>
+    </div>
+</div>
 
-    <script type="text/html" id="condition-template">
-        <div class="condition">
-            <select data-bind="options: fields, optionsCaption: '', optionsText: 'labelText', optionsValue: 'key', value: selectedField" class="form-control field styled-select"></select>
-            <select data-bind="options: comparators, optionsCaption: '', optionsText: 'label', value: selectedComparator" class="form-control comparator styled-select"></select>
-            <input type="text" data-bind="textInput: value" class="form-control condition-value" />
-            <button class="btn btn-danger btn-xs" data-bind="click: $parent.removeChild"><span class="glyphicon glyphicon-minus-sign"></span></button>
-        </div>
-    </script>
+<script type="text/html" id="condition-template">
+    <div class="condition">
+        <select data-bind="options: fields, optionsCaption: '', optionsText: 'labelText', optionsValue: 'key', value: selectedField" class="form-control field styled-select"></select>
+        <select data-bind="options: comparators, optionsCaption: '', optionsText: 'label', value: selectedComparator" class="form-control comparator styled-select"></select>
+        <!-- ko if: hasOptions -->
+        <select data-bind="value: value" class="form-control condition-value styled-select"></select>
+        <!-- /ko -->
+        <!-- ko ifnot: hasOptions -->
+        <input type="text" data-bind="textInput: value" class="form-control condition-value" />
+        <!-- /ko -->
+        <button class="btn btn-danger btn-xs pull-right" data-bind="click: $parent.removeChild"><span class="glyphicon glyphicon-minus-sign"></span> Remove</button>
+    </div>
+</script>
 
-    <script type="text/html" id="group-template">
-        <div class="alert alert-warning alert-group">
+<script type="text/html" id="group-template">
+    <div class="group">
+        <div class="group-controls">
             <select data-bind="options: logicalOperators, optionsText: 'label', optionsValue: 'value', value: selectedLogicalOperator" class="form-control operator styled-select"></select>
-            <button class="btn btn-xs btn-success" data-bind="click: addCondition"><span class="glyphicon glyphicon-plus-sign"></span> Add Condition</button>
-            <!-- ko if: allowChildren -->
-            <button class="btn btn-xs btn-success" data-bind="click: addGroup"><span class="glyphicon glyphicon-plus-sign"></span> Add Group</button>
-            <!-- /ko -->
-            <button class="btn btn-xs btn-danger" data-bind="click: $parent.removeChild"><span class="glyphicon glyphicon-minus-sign"></span> Remove Group</button>
-            <div class="group-conditions">
-                <div data-bind="foreach: children">
-                    <div data-bind="template: templateName"></div>
-                </div>
+            <div class="pull-right">
+                <button class="btn btn-xs btn-success" data-bind="click: addCondition"><span class="glyphicon glyphicon-plus-sign"></span> Add Condition</button>
+                <!-- ko if: allowChildren -->
+                <button class="btn btn-xs btn-success" data-bind="click: addGroup"><span class="glyphicon glyphicon-plus-sign"></span> Add Group</button>
+                <!-- /ko -->
+                <button class="btn btn-xs btn-danger" data-bind="click: $parent.removeChild"><span class="glyphicon glyphicon-minus-sign"></span> Remove Group</button>
             </div>
         </div>
-    </script>
-</div>
+        <div class="group-conditions">
+            <div class="rules-list" data-bind="foreach: children">
+                <div data-bind="template: templateName"></div>
+            </div>
+        </div>
+    </div>
+</script>

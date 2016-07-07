@@ -55,7 +55,7 @@
 
                 this.searchText = ko.observable(query.query || '');
                 this.advancedSearchQuery = ko.observable();
-                this.advancedMode = ko.observable(false);
+                this.advancedMode = ko.observable(!!query.advanced);
                 this.searchTypes = ko.observableArray();
                 this.searchResultFields = ko.observableArray();
                 this.displayResults = ko.observable(false);
@@ -65,15 +65,18 @@
                 this.pager = new ListPager(this.sorter.sortedList, int(query.start), int(query.size));
 
                 this.basicSearchQuery = ko.pureComputed(function () {
-                    return _.map(
-                        submittedQuery().split(/\s+/),
-                        function (term) {
-                            return {
-                                key: selectedSearchType(),
-                                value: '"' + term + '"'
-                            };
-                        }
-                    );
+                    return {
+                        operator: 'AND',
+                        children: _.map(
+                            submittedQuery().split(/\s+/),
+                            function (term) {
+                                return {
+                                    key: selectedSearchType(),
+                                    value: '"' + term + '"'
+                                };
+                            }
+                        )
+                    };
                 });
 
                 this.displayedResults = ko.pureComputed(function () {
@@ -104,6 +107,12 @@
 
                 this.displaySearchTypeSwitch = ko.pureComputed(function () {
                     return this.searchTypes() && this.searchTypes().length > 1;
+                }.bind(this));
+
+                this.canSubmit = ko.pureComputed(function () {
+                    return this.advancedMode() ?
+                        this.advancedSearchQuery() && this.advancedSearchQuery().children.length > 0 :
+                        this.searchText() && this.searchText().length > 0;
                 }.bind(this));
 
                 this.binding = function (element, callback) {
@@ -141,10 +150,11 @@
                     this.displayResults(false);
                     this.searchText('');
                     this.searchTypes()[0].makeActive();
+                    this.advancedSearchQuery(undefined);
                 };
 
                 this.submit = function (callback) {
-                    if (!this.searchText()) {
+                    if (!this.canSubmit()) {
                         return;
                     }
                     this.pager.start(0);
@@ -180,21 +190,20 @@
                 };
 
                 this.searchUrlFor = function (overrides) {
-                    return routes.searchUrlFor(
-                        context.params.type,
-                        _.defaults(
-                            overrides,
-                            {
-                                query: submittedQuery(),
-                                sort: this.sorter.field(),
-                                dir: this.sorter.direction(),
-                                start: this.pager.start(),
-                                size: this.pager.pageSize(),
-                                mode: this.modeSwitcher.mode()
-                            }
-                        )
-                    );
-                };
+                    var query;
+                    query = {
+                        query: submittedQuery(),
+                        sort: this.sorter.field(),
+                        dir: this.sorter.direction(),
+                        start: this.pager.start(),
+                        size: this.pager.pageSize(),
+                        mode: this.modeSwitcher.mode()
+                    };
+                    if (this.advancedMode()) {
+                        query.advanced = true;
+                    }
+                    return routes.searchUrlFor(context.params.type, _.defaults(overrides, query));
+                }.bind(this);
 
                 this.detailUrlFor = function (result) {
                     return routes.detailUrlFor(typeFor(result), result.id());
