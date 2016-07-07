@@ -129,6 +129,128 @@
                             });
                         });
                     });
+                    describe('When constructed with an initial query that can be converted to a basic search', function () {
+                        var query, component;
+                        beforeEach(function (done) {
+                            query = ko.observable({
+                                operator: 'AND',
+                                children: [
+                                    {
+                                        field: 'first',
+                                        comparator: 'contains',
+                                        value: 'foo'
+                                    },
+                                    {
+                                        field: 'first',
+                                        comparator: 'contains',
+                                        value: 'bar'
+                                    }
+                                ]
+                            });
+                            require([ 'fixtures/collections/searchInputFields' ], function (searchInputFields) {
+                                component = new BasicSearchComponent({
+                                    queryObservable: query,
+                                    fields: ko.observable(searchInputFields)
+                                });
+                                done();
+                            });
+                        });
+                        it('Returns an object', function () {
+                            expect(component).to.be.an('object');
+                        });
+                        it('Exposes the correct observables and computed observables', function () {
+                            expect(ko.isObservable(component.searchText)).to.equal(true);
+                            expect(ko.isPureComputed(component.displayedInputFields)).to.equal(true);
+                            expect(ko.isPureComputed(component.displayFieldSwitch)).to.equal(true);
+                            expect(ko.isPureComputed(component.selectedSearchField)).to.equal(true);
+                            expect(ko.isPureComputed(component.placeholder)).to.equal(true);
+                            expect(ko.isPureComputed(component.displayLostQueryWarning)).to.equal(true);
+                        });
+                        it('Exposes view helper methods', function () {
+                            expect(component.isSelectedSearchField).to.be.a('function');
+                            expect(component.selectSearchField).to.be.a('function');
+                            expect(component.glyphiconCssFor).to.be.a('function');
+                        });
+                        it('Sets the correct default search text', function () {
+                            expect(component.searchText()).to.equal('foo bar');
+                        });
+                        it('Sets the input fields', function () {
+                            expect(component.displayedInputFields()).to.have.length(2); // see fixtures/collections/searchInputFields.js
+                        });
+                        it('Displays the field switch', function () {
+                            expect(component.displayFieldSwitch()).to.equal(true);
+                        });
+                        it('Sets the active search type', function () {
+                            expect(component.selectedSearchField().key).to.equal('first'); // see fixtures/collections/searchInputFields.js
+                        });
+                        it('Sets the placeholder text', function () {
+                            expect(component.placeholder()).to.equal('Search by Field One...');
+                        });
+                        it('Does not display the warning about losing query details', function () {
+                            expect(component.displayLostQueryWarning()).to.equal(false);
+                        });
+                    });
+                    describe('When constructed with an initial query that cannot be converted to a basic search', function () {
+                        var query, component;
+                        beforeEach(function (done) {
+                            query = ko.observable({
+                                operator: 'AND',
+                                children: [
+                                    {
+                                        field: 'first',
+                                        comparator: 'starts',
+                                        value: 'foo'
+                                    },
+                                    {
+                                        field: 'second',
+                                        comparator: 'contains',
+                                        value: 'bar'
+                                    }
+                                ]
+                            });
+                            require([ 'fixtures/collections/searchInputFields' ], function (searchInputFields) {
+                                component = new BasicSearchComponent({
+                                    queryObservable: query,
+                                    fields: ko.observable(searchInputFields)
+                                });
+                                done();
+                            });
+                        });
+                        it('Returns an object', function () {
+                            expect(component).to.be.an('object');
+                        });
+                        it('Exposes the correct observables and computed observables', function () {
+                            expect(ko.isObservable(component.searchText)).to.equal(true);
+                            expect(ko.isPureComputed(component.displayedInputFields)).to.equal(true);
+                            expect(ko.isPureComputed(component.displayFieldSwitch)).to.equal(true);
+                            expect(ko.isPureComputed(component.selectedSearchField)).to.equal(true);
+                            expect(ko.isPureComputed(component.placeholder)).to.equal(true);
+                            expect(ko.isPureComputed(component.displayLostQueryWarning)).to.equal(true);
+                        });
+                        it('Exposes view helper methods', function () {
+                            expect(component.isSelectedSearchField).to.be.a('function');
+                            expect(component.selectSearchField).to.be.a('function');
+                            expect(component.glyphiconCssFor).to.be.a('function');
+                        });
+                        it('Sets the correct default search text', function () {
+                            expect(component.searchText()).to.equal('foo');
+                        });
+                        it('Sets the input fields', function () {
+                            expect(component.displayedInputFields()).to.have.length(2); // see fixtures/collections/searchInputFields.js
+                        });
+                        it('Displays the field switch', function () {
+                            expect(component.displayFieldSwitch()).to.equal(true);
+                        });
+                        it('Sets the active search type', function () {
+                            expect(component.selectedSearchField().key).to.equal('first'); // see fixtures/collections/searchInputFields.js
+                        });
+                        it('Sets the placeholder text', function () {
+                            expect(component.placeholder()).to.equal('Search by Field One...');
+                        });
+                        it('Displays the warning about losing query details', function () {
+                            expect(component.displayLostQueryWarning()).to.equal(true);
+                        });
+                    });
                 });
                 describe('When there is only one available search type', function () {
                     describe('When constructed with no initial query', function () {
