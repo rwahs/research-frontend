@@ -12,10 +12,10 @@
             return function (parameters) {
                 var root;
 
-                if (!parameters.queryObservable) {
-                    throw new Error('QueryBuilderComponent missing required parameter: `queryObservable`.');
+                if (!parameters.queryObservable || !ko.isObservable(parameters.queryObservable)) {
+                    throw new Error('QueryBuilderComponent missing or invalid required parameter: `queryObservable`.');
                 }
-                if (!parameters.fields) {
+                if (!parameters.fields || parameters.fields().length === 0) {
                     throw new Error('QueryBuilderComponent missing required parameter: `fields`.');
                 }
                 if (!parameters.maxDepth) {
