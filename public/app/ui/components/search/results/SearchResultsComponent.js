@@ -40,10 +40,6 @@
                     };
                 };
 
-                this.displayForLabelField = function (result) {
-                    return this.displayFor(container.resolve('settings.' + typeFor(result)).labelField, result);
-                };
-
                 this.resultFor = function (result) {
                     return {
                         name: 'collections/' + typeFor(result) + '/' + this.modeSwitcher.mode().toLowerCase() + '-result',
