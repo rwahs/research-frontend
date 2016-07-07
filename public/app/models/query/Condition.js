@@ -50,14 +50,6 @@
                     ];
                 });
 
-                this.text = ko.pureComputed(function () {
-                    var field, comparator, value;
-                    field = _.find(this.fields(), { key: this.selectedField() });
-                    comparator = _.find(this.comparators(), { key: this.selectedComparator() });
-                    value = this.value();
-                    return (field && comparator && value) ? '("' + field.labelText + '" ' + comparator.label + ' "' + value + '")' : '';
-                }.bind(this));
-
                 this.query = ko.pureComputed(function () {
                     var field, comparator, value;
                     field = this.selectedField();

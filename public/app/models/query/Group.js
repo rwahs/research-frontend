@@ -36,12 +36,6 @@
                     return this.depth() + 1 < queryBuilder.maxDepth();
                 }.bind(this));
 
-                this.text = ko.pureComputed(function () {
-                    var fields;
-                    fields = _(this.children()).invokeMap('text').filter().value();
-                    return fields.length ? '(' + fields.join(' ' + this.selectedLogicalOperator() + ' ') + ')' : '';
-                }.bind(this));
-
                 this.query = ko.pureComputed(function () {
                     return {
                         operator: this.selectedLogicalOperator(),
