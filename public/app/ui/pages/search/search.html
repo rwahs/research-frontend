@@ -6,24 +6,10 @@
                 <form data-bind="submit: submit">
                     <div class="panel-body">
                         <!-- ko ifnot: advancedMode -->
-                        <div class="form-group">
-                            <input name="query" placeholder="Search" class="form-control" data-bind="textInput: searchText, attr: { placeholder: placeholder }" />
-                        </div>
-                        <!-- ko if: displaySearchInputFieldSwitch -->
-                        <div class="form-group">
-                            <div class="btn-group btn-group-justified">
-                                <!-- ko foreach: basicSearchInputFields -->
-                                <a class="btn btn-default" data-bind="css: { active: active }, click: makeActive">
-                                    <span data-bind="html: glyphicon"></span>
-                                    <span data-bind="html: labelText"></span>
-                                </a>
-                                <!-- /ko -->
-                            </div>
-                        </div>
-                        <!-- /ko -->
+                        <div data-bind="component: { name: 'search/basic', params: { fields: inputFields, queryObservable: query } }"></div>
                         <!-- /ko -->
                         <!-- ko if: advancedMode -->
-                        <div data-bind="component: { name: 'search/query-builder', params: { fields: searchInputFields, maxDepth: 3, queryObservable: advancedSearchQuery } }"></div>
+                        <div data-bind="component: { name: 'search/query-builder', params: { fields: inputFields, maxDepth: 3, queryObservable: query } }"></div>
                         <!-- /ko -->
                     </div>
                     <div class="panel-footer text-right">
@@ -59,38 +45,8 @@
     <p class="text-muted">No results found.</p>
     <!-- /ko -->
     <!-- ko if: hasResults -->
-    <div class="row">
-        <div class="col-md-12 text-right">
-            <div data-bind="component: { name: 'controls/list', params: { pager: pager, sorter: sorter, modeSwitcher: modeSwitcher, searchUrlFor: searchUrlFor } }"></div>
-        </div>
-    </div>
-    <div data-bind="attr: { class: modeSwitcher.resultsContainerClassName }">
-        <!-- ko if: modeSwitcher.mode() === 'List' -->
-        <!-- ko foreach: { data: displayedResults, as: 'result' } -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="result clearfix" data-bind="component: $parent.resultFor(result)"></div>
-            </div>
-        </div>
-        <!-- /ko -->
-        <!-- /ko -->
-        <!-- ko if: modeSwitcher.mode() === 'Thumbnails' -->
-        <div class="row">
-            <!-- ko foreach: { data: displayedResults, as: 'result' } -->
-            <div class="col-md-3 col-sm-4 col-xs-6">
-                <div class="result clearfix" data-bind="component: $parent.resultFor(result)"></div>
-            </div>
-            <!-- /ko -->
-        </div>
-        <!-- /ko -->
-        <!-- ko if: modeSwitcher.mode() === 'Table' -->
-        <div class="row">
-            <div class="col-md-12">
-                <div data-bind="component: { name: 'collections/table-results', params: $data }"></div>
-            </div>
-        </div>
-        <!-- /ko -->
-    </div>
+    <div data-bind="component: { name: 'controls/list', params: { pager: pager, sorter: sorter, modeSwitcher: modeSwitcher, searchUrlFor: searchUrlFor } }" class="text-right"></div>
+    <div data-bind="component: { name: 'search/results', params: { results: displayedResults } }"></div>
     <!-- /ko -->
     <!-- /ko -->
 </article>

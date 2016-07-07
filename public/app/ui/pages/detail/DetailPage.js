@@ -37,27 +37,30 @@
                     return 'collections/' + context.params.type + '/detail';
                 });
 
-                this.binding = function (element, callback) {
-                    var overlay = container.resolve('ui.overlay');
+                this.attaching = function (element, callback) {
                     record(undefined);
-                    overlay.loading(true);
+                    container.resolve('ui.overlay').loading(true);
                     require(
                         [
                             settings.detailFields
                         ],
                         function (detailFields) {
                             this.detailFields(detailFields);
-                            container.resolve('detail.' + context.params.type)(
-                                context.params.id,
-                                function (err, result) {
-                                    if (err) {
-                                        overlay.error(err);
-                                        return callback();
-                                    }
-                                    record(new DynamicRecord(result, this.detailFields));
-                                    callback();
-                                }.bind(this)
-                            );
+                            callback();
+                        }.bind(this)
+                    );
+                };
+
+                this.binding = function (element, callback) {
+                    container.resolve('detail.' + context.params.type)(
+                        context.params.id,
+                        function (err, result) {
+                            if (err) {
+                                container.resolve('ui.overlay').error(err);
+                                return callback();
+                            }
+                            record(new DynamicRecord(result, this.detailFields));
+                            callback();
                         }.bind(this)
                     );
                 };

@@ -1,0 +1,17 @@
+<section class="basic-search">
+    <div class="form-group">
+        <input placeholder="Search" class="form-control" data-bind="textInput: searchText, attr: { placeholder: placeholder }" />
+    </div>
+    <!-- ko if: displayFieldSwitch -->
+    <div class="form-group">
+        <div class="btn-group btn-group-justified">
+            <!-- ko foreach: displayedInputFields -->
+            <a class="btn btn-default" data-bind="css: { active: $parent.isSelectedSearchField($data) }, click: $parent.selectSearchField">
+                <span data-bind="css: $parent.glyphiconCssFor($data)"></span>
+                <span data-bind="html: labelText"></span>
+            </a>
+            <!-- /ko -->
+        </div>
+    </div>
+    <!-- /ko -->
+</section>

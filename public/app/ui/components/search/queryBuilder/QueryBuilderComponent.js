@@ -5,93 +5,47 @@
     define(
         [
             'knockout',
-            'ui/components/search/queryBuilder/Group'
+            'models/query/Group',
+            'models/query/Condition'
         ],
-        function (ko, Group) {
+        function (ko, Group, Condition) {
             return function (parameters) {
+                var root;
+
+                if (!parameters.queryObservable) {
+                    throw new Error('QueryBuilderComponent missing required parameter: `queryObservable`.');
+                }
                 if (!parameters.fields) {
                     throw new Error('QueryBuilderComponent missing required parameter: `fields`.');
                 }
                 if (!parameters.maxDepth) {
                     throw new Error('QueryBuilderComponent missing required parameter: `maxDepth`.');
                 }
-                if (!parameters.queryObservable) {
-                    throw new Error('QueryBuilderComponent missing required parameter: `queryObservable`.');
-                }
 
-                this.root = ko.observable();
+                root = new Group(this);
+                root.parse(parameters.queryObservable());
+                root.query.subscribe(parameters.queryObservable);
 
-                this.logicalOperators = ko.pureComputed(function () {
-                    return [
-                        {
-                            label: 'and',
-                            value: 'AND'
-                        },
-                        {
-                            label: 'or',
-                            value: 'OR'
-                        }
-                    ];
+                this.root = ko.pureComputed(function () {
+                    return root;
                 });
 
                 this.fields = ko.pureComputed(function () {
                     return parameters.fields();
                 });
 
-                this.comparators = ko.pureComputed(function () {
-                    return [
-                        {
-                            key: 'contains',
-                            label: 'contains',
-                            queryFormat: function (value) {
-                                return '"' + value + '"';
-                            }
-                        },
-                        {
-                            key: '!contains',
-                            label: 'does not contain',
-                            queryFormat: function (value) {
-                                return '-"' + value + '"';
-                            }
-                        },
-                        {
-                            key: 'starts',
-                            label: 'starts with',
-                            queryFormat: function (value) {
-                                return '"' + value + '"*';
-                            }
-                        },
-                        {
-                            key: '!starts',
-                            label: 'does not start with',
-                            queryFormat: function (value) {
-                                return '-"' + value + '"*';
-                            }
-                        }
-                    ];
-                });
-
                 this.maxDepth = ko.pureComputed(function () {
                     return parameters.maxDepth;
                 });
 
-                this.text = ko.pureComputed(function () {
-                    var root = this.root();
-                    return root ? root.text() : undefined;
-                }.bind(this));
-
-                this.query = ko.pureComputed(function () {
-                    var root = this.root();
-                    return root ? root.query() : undefined;
-                }.bind(this));
-
-                if (parameters.queryObservable()) {
-                    this.root(Group.parse(parameters.queryObservable(), this));
-                } else {
-                    this.root(new Group(this));
-                }
-
-                this.query.subscribe(parameters.queryObservable);
+                this.templateFor = function (node) {
+                    if (node instanceof Group) {
+                        return 'group-template';
+                    }
+                    if (node instanceof Condition) {
+                        return 'condition-template';
+                    }
+                };
             };
         }
     );
