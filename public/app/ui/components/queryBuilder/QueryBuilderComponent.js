@@ -84,6 +84,8 @@
                 this.query.subscribe(parameters.queryObservable);
 
                 this.root(new Group(this));
+
+                // TODO Parse initial / current query.
             };
         }
     );

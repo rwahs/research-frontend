@@ -12,9 +12,10 @@
             'models/ListModeSwitcher',
             'models/ListSorter',
             'models/ListPager',
-            'ui/pages/search/SearchInputField'
+            'ui/pages/search/SearchInputField',
+            'util/safelyParseJson'
         ],
-        function (_, ko, qs, routes, container, DynamicRecord, ListModeSwitcher, ListSorter, ListPager, SearchInputField) {
+        function (_, ko, qs, routes, container, DynamicRecord, ListModeSwitcher, ListSorter, ListPager, SearchInputField, safelyParseJson) {
             var int = function (value) {
                     return value ? parseInt(value, 10) : undefined;
                 };
@@ -30,12 +31,12 @@
                         return container.resolve('types')[result.data().type];
                     },
                     doSearch = function (callback) {
-                        submittedQuery(this.searchText());
+                        submittedQuery(this.currentQuery());
                         results([]);
                         overlay.loading(true);
                         this.displayResults(false);
                         container.resolve('search.' + context.params.type)(
-                            (this.advancedMode && this.advancedMode()) ? this.advancedSearchQuery() : this.basicSearchQuery(),
+                            this.currentQuery(),
                             function (err, searchServiceResults) {
                                 overlay.loading(false);
                                 if (err) {
@@ -53,8 +54,8 @@
                         );
                     }.bind(this);
 
-                this.searchText = ko.observable(query.query || '');
-                this.advancedSearchQuery = ko.observable();
+                this.searchText = ko.observable(query.advanced ? '' : query.query || ''); // TODO FIXME
+                this.advancedSearchQuery = ko.observable(query.advanced ? safelyParseJson(query.query) : undefined);
                 this.advancedMode = ko.observable(!!query.advanced);
                 this.searchInputFields = ko.observableArray();
                 this.searchResultFields = ko.observableArray();
@@ -63,6 +64,12 @@
                 this.modeSwitcher = new ListModeSwitcher(query.mode);
                 this.sorter = new ListSorter(results, this.searchResultFields, query.sort, query.dir);
                 this.pager = new ListPager(this.sorter.sortedList, int(query.start), int(query.size));
+
+                this.currentQuery = ko.pureComputed(function () {
+                    return (this.advancedMode && this.advancedMode()) ?
+                        this.advancedSearchQuery() :
+                        this.basicSearchQuery();
+                }.bind(this));
 
                 this.basicSearchInputFields = ko.pureComputed(function () {
                     return this.searchInputFields().filter(function (field) {
@@ -74,7 +81,7 @@
                     return {
                         operator: 'AND',
                         children: _.map(
-                            submittedQuery().split(/\s+/),
+                            this.searchText().split(/\s+/),
                             function (term) {
                                 return {
                                     key: selectedInputField(),
@@ -83,7 +90,7 @@
                             }
                         )
                     };
-                });
+                }.bind(this));
 
                 this.displayedResults = ko.pureComputed(function () {
                     return this.pager.currentPage();
@@ -166,7 +173,7 @@
                         return;
                     }
                     this.pager.start(0);
-                    routes.pushState(this.searchUrlFor({ query: this.searchText() }));
+                    routes.pushState(this.searchUrlFor({ query: JSON.stringify(this.currentQuery()) }));
                     doSearch(callback);
                     return false;
                 };
@@ -200,7 +207,7 @@
                 this.searchUrlFor = function (overrides) {
                     var query;
                     query = {
-                        query: submittedQuery(),
+                        query: JSON.stringify(submittedQuery()),
                         sort: this.sorter.field(),
                         dir: this.sorter.direction(),
                         start: this.pager.start(),
