@@ -46,8 +46,8 @@
                 if (!parameters.fields || parameters.fields().length === 0) {
                     throw new Error('BasicSearchComponent missing required parameter: `fields`.');
                 }
-                if (!parameters.queryObservable) {
-                    throw new Error('BasicSearchComponent missing required parameter: `queryObservable`.');
+                if (!parameters.queryObservable || !ko.isObservable(parameters.queryObservable)) {
+                    throw new Error('BasicSearchComponent missing or invalid required parameter: `queryObservable`.');
                 }
 
                 initialFieldAndText = getFieldAndTextForQuery(parameters.queryObservable());
