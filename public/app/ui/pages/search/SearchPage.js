@@ -56,7 +56,7 @@
                 this.searchText = ko.observable(query.query || '');
                 this.advancedSearchQuery = ko.observable();
                 this.advancedMode = ko.observable(!!query.advanced);
-                this.searchTypes = ko.observableArray();
+                this.searchInputFields = ko.observableArray();
                 this.searchResultFields = ko.observableArray();
                 this.displayResults = ko.observable(false);
 
@@ -93,7 +93,7 @@
 
                 this.placeholder = ko.pureComputed(function () {
                     return selectedSearchType() ?
-                        _.find(this.searchTypes(), { key: selectedSearchType() }).placeholder :
+                        _.find(this.searchInputFields(), { key: selectedSearchType() }).placeholder :
                         'Enter your search terms...';
                 }.bind(this));
 
@@ -105,8 +105,8 @@
                     return results().length > 0;
                 });
 
-                this.displaySearchTypeSwitch = ko.pureComputed(function () {
-                    return this.searchTypes() && this.searchTypes().length > 1;
+                this.displaySearchInputFieldSwitch = ko.pureComputed(function () {
+                    return this.searchInputFields() && this.searchInputFields().length > 1;
                 }.bind(this));
 
                 this.canSubmit = ko.pureComputed(function () {
@@ -118,14 +118,14 @@
                 this.binding = function (element, callback) {
                     require(
                         [
-                            settings.searchTypes,
+                            settings.searchInputFields,
                             settings.searchResultFields
                         ],
-                        function (searchTypes, searchResultFields) {
-                            this.searchTypes(_.map(searchTypes, function (type) {
+                        function (searchInputFields, searchResultFields) {
+                            this.searchInputFields(_.map(searchInputFields, function (type) {
                                 return new SearchType(type, selectedSearchType);
                             }));
-                            this.searchTypes()[0].makeActive();
+                            this.searchInputFields()[0].makeActive();
                             this.searchResultFields(searchResultFields);
                             if (this.searchText()) {
                                 doSearch(callback);
@@ -149,7 +149,7 @@
                     results([]);
                     this.displayResults(false);
                     this.searchText('');
-                    this.searchTypes()[0].makeActive();
+                    this.searchInputFields()[0].makeActive();
                     this.advancedSearchQuery(undefined);
                 };
 

@@ -9,34 +9,34 @@
             return function () {
                 container.register('settings.all', {
                     collectionName: 'All Collections',
-                    searchTypes: 'config/collections/all/searchTypes',
+                    searchInputFields: 'config/collections/all/searchInputFields',
                     searchResultFields: 'config/collections/all/searchResultFields'
                 });
                 container.register('settings.library', {
                     collectionName: 'Library',
                     labelField: 'Title',
-                    searchTypes: 'config/collections/library/searchTypes',
+                    searchInputFields: 'config/collections/library/searchInputFields',
                     searchResultFields: 'config/collections/library/searchResultFields',
                     detailFields: 'config/collections/library/detailFields'
                 });
                 container.register('settings.photographs', {
                     collectionName: 'Photographs',
                     labelField: 'Title',
-                    searchTypes: 'config/collections/photographs/searchTypes',
+                    searchInputFields: 'config/collections/photographs/searchInputFields',
                     searchResultFields: 'config/collections/photographs/searchResultFields',
                     detailFields: 'config/collections/photographs/detailFields'
                 });
                 container.register('settings.museum', {
                     collectionName: 'Museum',
                     labelField: 'ItemName',
-                    searchTypes: 'config/collections/museum/searchTypes',
+                    searchInputFields: 'config/collections/museum/searchInputFields',
                     searchResultFields: 'config/collections/museum/searchResultFields',
                     detailFields: 'config/collections/museum/detailFields'
                 });
                 container.register('settings.memorials', {
                     collectionName: 'Public Memorials',
                     labelField: 'ItemName',
-                    searchTypes: 'config/collections/memorials/searchTypes',
+                    searchInputFields: 'config/collections/memorials/searchInputFields',
                     searchResultFields: 'config/collections/memorials/searchResultFields',
                     detailFields: 'config/collections/memorials/detailFields'
                 });

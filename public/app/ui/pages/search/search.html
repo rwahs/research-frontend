@@ -9,10 +9,10 @@
                         <div class="form-group">
                             <input name="query" placeholder="Search" class="form-control" data-bind="textInput: searchText, attr: { placeholder: placeholder }" />
                         </div>
-                        <!-- ko if: displaySearchTypeSwitch -->
+                        <!-- ko if: displaySearchInputFieldSwitch -->
                         <div class="form-group">
                             <div class="btn-group btn-group-justified">
-                                <!-- ko foreach: searchTypes -->
+                                <!-- ko foreach: searchInputFields -->
                                 <a class="btn btn-default" data-bind="html: label, css: { active: active }, click: makeActive"></a>
                                 <!-- /ko -->
                             </div>

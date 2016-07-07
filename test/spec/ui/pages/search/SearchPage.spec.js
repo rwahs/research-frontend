@@ -31,7 +31,7 @@
                             container.register('search.collection', searchService);
                             container.register('settings.collection', {
                                 collectionName: 'Collection',
-                                searchTypes: 'fixtures/collections/searchTypes',
+                                searchInputFields: 'fixtures/collections/searchInputFields',
                                 searchResultFields: 'fixtures/collections/searchResultFields'
                             });
                             container.register('types', {
@@ -60,7 +60,7 @@
                             it('Exposes the correct observables and computed observables', function () {
                                 expect(ko.isObservable(page.searchText)).to.equal(true);
                                 expect(ko.isObservable(page.advancedMode)).to.equal(true);
-                                expect(ko.isObservable(page.searchTypes)).to.equal(true);
+                                expect(ko.isObservable(page.searchInputFields)).to.equal(true);
                                 expect(ko.isObservable(page.searchResultFields)).to.equal(true);
                                 expect(ko.isObservable(page.displayResults)).to.equal(true);
                                 expect(ko.isPureComputed(page.displayedResults)).to.equal(true);
@@ -69,7 +69,7 @@
                                 expect(ko.isPureComputed(page.placeholder)).to.equal(true);
                                 expect(ko.isPureComputed(page.advancedModeToggleText)).to.equal(true);
                                 expect(ko.isPureComputed(page.hasResults)).to.equal(true);
-                                expect(ko.isPureComputed(page.displaySearchTypeSwitch)).to.equal(true);
+                                expect(ko.isPureComputed(page.displaySearchInputFieldSwitch)).to.equal(true);
                             });
                             it('Exposes life cycle methods', function () {
                                 expect(page.binding).to.be.a('function');
@@ -89,7 +89,7 @@
                             it('Gives the correct default values', function () {
                                 expect(page.searchText()).to.equal('');
                                 expect(page.advancedMode()).to.equal(false);
-                                expect(page.searchTypes()).to.deep.equal([]);
+                                expect(page.searchInputFields()).to.deep.equal([]);
                                 expect(page.searchResultFields()).to.deep.equal([]);
                             });
                             it('Is not displaying results', function () {
@@ -105,7 +105,7 @@
                                 expect(page.heading()).to.equal('Collection Search');
                                 expect(page.placeholder()).to.equal('Enter your search terms...');
                                 expect(page.hasResults()).to.equal(false);
-                                expect(page.displaySearchTypeSwitch()).to.equal(false);
+                                expect(page.displaySearchInputFieldSwitch()).to.equal(false);
                             });
                             describe('When bound to the view', function () {
                                 var containerElement;
@@ -114,12 +114,12 @@
                                     page.binding(containerElement, done);
                                 });
                                 it('Sets the search types', function () {
-                                    expect(page.searchTypes()).to.have.length(2); // see fixtures/collections/searchTypes.js
-                                    expect(page.displaySearchTypeSwitch()).to.equal(true);
+                                    expect(page.searchInputFields()).to.have.length(2); // see fixtures/collections/searchInputFields.js
+                                    expect(page.displaySearchInputFieldSwitch()).to.equal(true);
                                 });
                                 it('Sets the active search type', function () {
-                                    expect(page.searchTypes()[0].active()).to.equal(true);
-                                    expect(page.searchTypes()[1].active()).to.equal(false);
+                                    expect(page.searchInputFields()[0].active()).to.equal(true);
+                                    expect(page.searchInputFields()[1].active()).to.equal(false);
                                 });
                                 it('Sets the placeholder text', function () {
                                     expect(page.placeholder()).to.equal('Search by Field One...');
@@ -157,11 +157,11 @@
                                 });
                                 describe('When a different search type is made active', function () {
                                     beforeEach(function () {
-                                        page.searchTypes()[1].makeActive();
+                                        page.searchInputFields()[1].makeActive();
                                     });
                                     it('Sets the active search type', function () {
-                                        expect(page.searchTypes()[0].active()).to.equal(false);
-                                        expect(page.searchTypes()[1].active()).to.equal(true);
+                                        expect(page.searchInputFields()[0].active()).to.equal(false);
+                                        expect(page.searchInputFields()[1].active()).to.equal(true);
                                     });
                                     it('Sets the placeholder text', function () {
                                         expect(page.placeholder()).to.equal('Search by Field Two...');
@@ -181,7 +181,7 @@
                                 });
                                 describe('With empty search text', function () {
                                     beforeEach(function () {
-                                        page.searchTypes()[0].makeActive();
+                                        page.searchInputFields()[0].makeActive();
                                         page.searchText('');
                                     });
                                     describe('When the search form is reset', function () {
@@ -192,7 +192,7 @@
                                             expect(page.searchText()).to.equal('');
                                         });
                                         it('Resets the search type', function () {
-                                            expect(page.searchTypes()[0].active()).to.equal(true);
+                                            expect(page.searchInputFields()[0].active()).to.equal(true);
                                         });
                                         it('Is in basic search mode', function () {
                                             expect(page.advancedMode()).to.equal(false);
@@ -230,7 +230,7 @@
                                 });
                                 describe('With non-empty search text', function () {
                                     beforeEach(function () {
-                                        page.searchTypes()[1].makeActive();
+                                        page.searchInputFields()[1].makeActive();
                                         page.searchText('query');
                                     });
                                     describe('When the search form is reset', function () {
@@ -241,7 +241,7 @@
                                             expect(page.searchText()).to.equal('');
                                         });
                                         it('Resets the search type', function () {
-                                            expect(page.searchTypes()[0].active()).to.equal(true);
+                                            expect(page.searchInputFields()[0].active()).to.equal(true);
                                         });
                                         it('Is in basic search mode', function () {
                                             expect(page.advancedMode()).to.equal(false);
@@ -354,7 +354,7 @@
                             container.register('search.collection', searchService);
                             container.register('settings.collection', {
                                 collectionName: 'Collection',
-                                searchTypes: 'fixtures/collections/singleSearchType',
+                                searchInputFields: 'fixtures/collections/singleSearchType',
                                 searchResultFields: 'fixtures/collections/searchResultFields'
                             });
                             container.register('types', {
@@ -387,11 +387,11 @@
                                     page.binding(containerElement, done);
                                 });
                                 it('Sets the single search type', function () {
-                                    expect(page.searchTypes()).to.have.length(1); // see fixtures/collections/singleSearchType.js
-                                    expect(page.displaySearchTypeSwitch()).to.equal(false);
+                                    expect(page.searchInputFields()).to.have.length(1); // see fixtures/collections/singleSearchType.js
+                                    expect(page.displaySearchInputFieldSwitch()).to.equal(false);
                                 });
                                 it('Sets the active search type', function () {
-                                    expect(page.searchTypes()[0].active()).to.equal(true);
+                                    expect(page.searchInputFields()[0].active()).to.equal(true);
                                 });
                             });
                         });
@@ -409,7 +409,7 @@
                         container.register('search.collection', searchService);
                         container.register('settings.collection', {
                             collectionName: 'Collection',
-                            searchTypes: 'fixtures/collections/searchTypes',
+                            searchInputFields: 'fixtures/collections/searchInputFields',
                             searchResultFields: 'fixtures/collections/searchResultFields'
                         });
                         container.register('types', {
