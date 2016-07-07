@@ -8,7 +8,40 @@
         ],
         function (_, ko) {
             return function (parameters) {
-                var selectedSearchFieldKey;
+                var selectedSearchFieldKey, initialFieldAndText,
+                    getFieldAndTextForQuery = function (query) {
+                        var selectedKey, selectedField;
+                        if (!query || !query.children || query.children.length === 0) {
+                            return undefined;
+                        }
+                        selectedKey = query.children[0].field;
+                        if (!selectedKey) {
+                            return undefined;
+                        }
+                        selectedField = _.find(parameters.fields(), { key: selectedKey });
+                        if (!selectedField || !selectedField.basicSearch) {
+                            return undefined;
+                        }
+                        return {
+                            field: selectedKey,
+                            text: _(query.children).filter({ field: selectedKey }).map('value').join(' ')
+                        };
+                    },
+                    getQueryForFieldAndText = function (field, text) {
+                        return text.length === 0 ? undefined : {
+                            operator: 'AND',
+                            children: _.map(
+                                text.split(/\s+/),
+                                function (term) {
+                                    return {
+                                        field: field,
+                                        comparator: 'contains',
+                                        value: term
+                                    };
+                                }
+                            )
+                        };
+                    };
 
                 if (!parameters.fields || parameters.fields().length === 0) {
                     throw new Error('BasicSearchComponent missing required parameter: `fields`.');
@@ -17,28 +50,22 @@
                     throw new Error('BasicSearchComponent missing required parameter: `queryObservable`.');
                 }
 
-                selectedSearchFieldKey = ko.observable(_.filter(parameters.fields(), 'basicSearch')[0].key);
+                initialFieldAndText = getFieldAndTextForQuery(parameters.queryObservable());
 
-                this.searchText = ko.observable(''); // TODO Set initial value
+                selectedSearchFieldKey = ko.observable(initialFieldAndText && initialFieldAndText.field ? initialFieldAndText.field : parameters.fields()[0].key);
+                selectedSearchFieldKey.subscribe(function (key) {
+                    parameters.queryObservable(getQueryForFieldAndText(key, this.searchText()));
+                }.bind(this));
 
-                this.searchText.subscribe(function () {
-                    var text = this.searchText();
-                    if (text.length === 0) {
-                        return parameters.queryObservable(undefined);
-                    }
-                    parameters.queryObservable({
-                        operator: 'AND',
-                        children: _.map(
-                            text.split(/\s+/),
-                            function (term) {
-                                return {
-                                    field: selectedSearchFieldKey(),
-                                    operator: 'contains',
-                                    value: term
-                                };
-                            }
-                        )
-                    });
+                this.searchText = ko.observable(initialFieldAndText ? initialFieldAndText.text : '');
+                this.searchText.subscribe(function (text) {
+                    parameters.queryObservable(getQueryForFieldAndText(selectedSearchFieldKey(), text));
+                }.bind(this));
+
+                parameters.queryObservable.subscribe(function (query) {
+                    var fieldAndText = getFieldAndTextForQuery(query);
+                    selectedSearchFieldKey(fieldAndText ? fieldAndText.field : parameters.fields()[0].key);
+                    this.searchText(fieldAndText ? fieldAndText.text : '');
                 }.bind(this));
 
                 this.displayedInputFields = ko.pureComputed(function () {
@@ -55,6 +82,11 @@
 
                 this.placeholder = ko.pureComputed(function () {
                     return 'Search by ' + this.selectedSearchField().labelText + '...';
+                }.bind(this));
+
+                this.displayLostQueryWarning = ko.pureComputed(function () {
+                    var query = getQueryForFieldAndText(selectedSearchFieldKey(), this.searchText());
+                    return !_.isEqual(query, parameters.queryObservable());
                 }.bind(this));
 
                 this.isSelectedSearchField = function (field) {
