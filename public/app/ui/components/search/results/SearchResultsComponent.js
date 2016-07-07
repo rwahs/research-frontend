@@ -20,6 +20,9 @@
                 if (!parameters.modeSwitcher) {
                     throw new Error('SearchResultsComponent missing required parameter: `modeSwitcher`.');
                 }
+                if (!parameters.resultFields) {
+                    throw new Error('SearchResultsComponent missing required parameter: `resultFields`.');
+                }
 
                 this.results = parameters.results;
                 this.modeSwitcher = parameters.modeSwitcher;
