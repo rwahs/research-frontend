@@ -6,7 +6,7 @@
         [
             'lodash',
             'knockout',
-            'ui/components/queryBuilder/Condition'
+            'ui/components/search/queryBuilder/Condition'
         ],
         function (_, ko, Condition) {
             var Group;

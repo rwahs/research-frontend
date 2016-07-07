@@ -5,7 +5,7 @@
     define(
         [
             'knockout',
-            'ui/components/queryBuilder/Group'
+            'ui/components/search/queryBuilder/Group'
         ],
         function (ko, Group) {
             return function (parameters) {

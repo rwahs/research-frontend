@@ -141,8 +141,8 @@
                     });
                     it('Configures the query builder search component', function () {
                         var args = _.find(ko.components.register.args, { 0: 'search/query-builder' });
-                        expect(args[1].viewModel.require).to.equal('ui/components/queryBuilder/QueryBuilderComponent');
-                        expect(args[1].template.require).to.equal('text!ui/components/queryBuilder/query-builder.html');
+                        expect(args[1].viewModel.require).to.equal('ui/components/search/queryBuilder/QueryBuilderComponent');
+                        expect(args[1].template.require).to.equal('text!ui/components/search/queryBuilder/query-builder.html');
                     });
                     afterEach(function () {
                         ko.components.register.restore();

@@ -147,8 +147,8 @@
                 ko.components.register(
                     'search/query-builder',
                     {
-                        viewModel: { require: 'ui/components/queryBuilder/QueryBuilderComponent' },
-                        template: { require: 'text!ui/components/queryBuilder/query-builder.html' }
+                        viewModel: { require: 'ui/components/search/queryBuilder/QueryBuilderComponent' },
+                        template: { require: 'text!ui/components/search/queryBuilder/query-builder.html' }
                     }
                 );
             };
