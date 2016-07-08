@@ -28,6 +28,8 @@
             };
 
             return function () {
+                container.register('options.service', options);
+
                 container.register('search.all', cachingService(searchService(simpleApiBaseUrl + '/all_search', options)));
                 container.register('search.library', cachingService(searchService(simpleApiBaseUrl + '/library_search', options)));
                 container.register('search.photographs', cachingService(searchService(simpleApiBaseUrl + '/photographs_search', options)));

@@ -27,6 +27,8 @@
             };
 
             return function () {
+                container.register('options.service', options);
+
                 container.register('search.all', searchService(simpleApiBaseUrl + '/all_search', options));
                 container.register('search.library', searchService(simpleApiBaseUrl + '/library_search', options));
                 container.register('search.photographs', searchService(simpleApiBaseUrl + '/photographs_search', options));
