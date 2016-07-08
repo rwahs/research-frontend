@@ -18,10 +18,12 @@
              * Caching is performed in-memory only, so reloading the browser will clear the cache.  This allows updated
              * results to be retrieved.
              */
-            return function (wrappedService, ttl) {
-                var cache = {};
+            return function (wrappedService, options) {
+                var cache, defaultTtl;
 
-                ttl = ttl || 300000; // 5 minutes
+                options = options || {};
+                cache = {};
+                defaultTtl = 300000; // 5 minutes by default
 
                 return function (/* ..., callback */) {
                     var _args = _(arguments),
@@ -37,7 +39,7 @@
                         if (!err && result) {
                             cache[cacheKey] = {
                                 data: result,
-                                expiry: timestamp + ttl
+                                expiry: timestamp + (options.ttl || defaultTtl)
                             };
                         }
                         callback.call(this, err, result);

@@ -15,14 +15,17 @@
                 it('Defines a function', function () {
                     expect(cachingService).to.be.a('function');
                 });
-                describe('When invoked with valid parameters', function () {
-                    describe('When the wrapped service is returning valid results', function () {
-                        var wrappedService, service;
+                describe('When the wrapped service is returning valid results', function () {
+                    var wrappedService;
+                    beforeEach(function () {
+                        wrappedService = sinon.spy(function (key, callback) {
+                            callback(null, [ key + '-result-1', key + '-result-2', key + '-result-3' ]);
+                        });
+                    });
+                    describe('When invoked with valid parameters', function () {
+                        var service;
                         beforeEach(function () {
-                            wrappedService = sinon.spy(function (key, callback) {
-                                callback(null, [ key + '-result-1', key + '-result-2', key + '-result-3' ]);
-                            });
-                            service = cachingService(wrappedService, 100); // 0.1 second to keep tests running fast
+                            service = cachingService(wrappedService, { ttl: 100 }); // 0.1 second to keep tests running fast
                         });
                         it('Returns a function', function () {
                             expect(service).to.be.a('function');
@@ -149,12 +152,17 @@
                             });
                         });
                     });
-                    describe('When the wrapped service is returning errors', function () {
-                        var wrappedService, service;
+                });
+                describe('When the wrapped service is returning errors', function () {
+                    var wrappedService;
+                    beforeEach(function () {
+                        wrappedService = sinon.spy(function (key, callback) {
+                            callback('Error from wrapped service');
+                        });
+                    });
+                    describe('When invoked with valid parameters', function () {
+                        var service;
                         beforeEach(function () {
-                            wrappedService = sinon.spy(function (key, callback) {
-                                callback('Error from wrapped service');
-                            });
                             service = cachingService(wrappedService);
                         });
                         it('Returns a function', function () {
