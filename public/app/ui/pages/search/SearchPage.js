@@ -87,6 +87,16 @@
                     return results().length > 0;
                 });
 
+                this.resultsLimit = ko.pureComputed(function () {
+                    var options = container.isRegistered('options.service') ? container.resolve('options.service') : {};
+                    return options ? options.limit : undefined;
+                });
+
+                this.hasLimitedResults = ko.pureComputed(function () {
+                    var limit = this.resultsLimit();
+                    return limit && results().length >= limit;
+                }.bind(this));
+
                 this.displaySearchTypeSwitch = ko.pureComputed(function () {
                     return this.searchTypes() && this.searchTypes().length > 1;
                 }.bind(this));

@@ -17,6 +17,13 @@
                             </div>
                         </div>
                         <!-- /ko -->
+                        <!-- ko if: hasLimitedResults -->
+                        <div class="alert alert-danger">
+                            <strong>Please note</strong>:
+                            Your search has been limited to <span data-bind="text: resultsLimit"></span> results.
+                            If you cannot find what you are looking for, please try refining your query.
+                        </div>
+                        <!-- /ko -->
                     </div>
                     <div class="panel-footer text-right">
                         <div class="btn-group">
@@ -40,7 +47,7 @@
                     <li>Use specific rather than general queries.</li>
                     <li>Queries are restrictive &mdash; more search terms means fewer results.</li>
                     <li>Searching retrieves all results from the server in a single request.</li>
-                    <li>A hard limit of 500 results is applied to all queries.</li>
+                    <li>A hard limit of <span data-bind="text: resultsLimit"></span> results is applied to all queries.</li>
                     <li>Sorting and pagination are fast because they occur in the browser.</li>
                 </ul>
             </div>
