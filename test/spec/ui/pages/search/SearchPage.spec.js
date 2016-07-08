@@ -468,7 +468,7 @@
                                     });
                                 });
                             });
-                         });
+                        });
                         afterEach(function () {
                             container.reset();
                             routes.pushState.restore();
