@@ -21,10 +21,14 @@
 
             return function (context) {
                 var settings = container.resolve('settings.' + context.params.type),
+                    selectedSearchType = ko.observable(),
                     submittedQuery = ko.observable(),
                     results = ko.observableArray(),
                     initialUrlParameters = qs.parse(window.location.search.replace(/^\?/, '')),
                     overlay = container.resolve('ui.overlay'),
+                    typeFor = function (result) {
+                        return container.resolve('types')[result.data().type];
+                    },
                     doSearch = function (callback) {
                         submittedQuery(this.query());
                         results([]);
@@ -63,6 +67,10 @@
                     return this.pager.currentPage();
                 }.bind(this));
 
+                this.submittedQuery = ko.pureComputed(function () {
+                    return submittedQuery();
+                });
+
                 this.heading = ko.pureComputed(function () {
                     return settings.collectionName + ' Search';
                 });
@@ -74,6 +82,16 @@
                 this.hasResults = ko.pureComputed(function () {
                     return results().length > 0;
                 });
+
+                this.resultsLimit = ko.pureComputed(function () {
+                    var options = container.isRegistered('options.service') ? container.resolve('options.service') : {};
+                    return options ? options.limit : undefined;
+                });
+
+                this.hasLimitedResults = ko.pureComputed(function () {
+                    var limit = this.resultsLimit();
+                    return !!limit && results().length >= limit;
+                }.bind(this));
 
                 this.canSubmit = ko.pureComputed(function () {
                     return !!this.query() && this.query().children.length > 0;
@@ -101,7 +119,7 @@
                     }
                 };
 
-                this.ready = function (element, callback) {
+                this.ready = function (callback) {
                     overlay.loading(false);
                     callback();
                 };
