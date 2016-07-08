@@ -21,7 +21,10 @@
 
                 return function (parameters, callback) {
                     $.ajax(_.merge({}, options.ajaxOptions || {}, {
-                        url: baseUrl + '?q=' + queryString(parameters || {}) + (options.noCache ? '&noCache=1' : ''),
+                        url: baseUrl +
+                            '?q=' + queryString(parameters || {}) +
+                            (options.noCache ? '&noCache=1' : '') +
+                            (options.limit ? '&limit=' + options.limit : ''),
                         success: function (result) {
                             if (!result.ok) {
                                 return callback(new Error('Invalid response received from server'));
