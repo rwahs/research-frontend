@@ -13,10 +13,12 @@
                 options = options || {};
 
                 queryString = function (parameters) {
-                    return _.map(parameters, function (value, key) {
-                        return '(' + key + ':' + value + ')';
+                    return _.map(parameters.children, function (child) {
+                        return child.hasOwnProperty('children') ?
+                            '(' + queryString(child) + ')' :
+                            '(' + child.field + ':' + child.value + ')'; // TODO Use comparator
                     })
-                    .join(' AND ');
+                    .join(' ' + parameters.operator + ' ');
                 };
 
                 return function (parameters, callback) {

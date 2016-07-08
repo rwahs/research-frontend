@@ -7,19 +7,19 @@
             'chai',
             'sinon',
             'config/routes',
-            'ui/components/search/SearchComponent'
+            'ui/components/search/quick/QuickSearchComponent'
         ],
-        function (ko, chai, sinon, routes, SearchComponent) {
+        function (ko, chai, sinon, routes, QuickSearchComponent) {
             var expect = chai.expect;
 
-            describe('The `SearchComponent` module', function () {
+            describe('The `QuickSearchComponent` module', function () {
                 it('Defines a constructor function', function () {
-                    expect(SearchComponent).to.be.a('function');
+                    expect(QuickSearchComponent).to.be.a('function');
                 });
                 describe('When constructed with valid parameters', function () {
                     var search;
                     beforeEach(function () {
-                        search = new SearchComponent({
+                        search = new QuickSearchComponent({
                             searchBaseUrl: 'collection'
                         });
                     });
@@ -81,16 +81,16 @@
                     var search;
                     it('Throws', function () {
                         expect(function () {
-                            search = new SearchComponent({});
-                        }).to.throw('SearchComponent missing required parameter: `searchBaseUrl`.');
+                            search = new QuickSearchComponent({});
+                        }).to.throw('QuickSearchComponent missing required parameter: `searchBaseUrl`.');
                     });
                 });
                 describe('When constructed without parameters', function () {
                     var search;
                     it('Throws', function () {
                         expect(function () {
-                            search = new SearchComponent();
-                        }).to.throw('SearchComponent missing parameter map.');
+                            search = new QuickSearchComponent();
+                        }).to.throw('QuickSearchComponent missing parameter map.');
                     });
                 });
             });

@@ -12,7 +12,7 @@
             'models/ListModeSwitcher',
             'models/ListSorter',
             'models/ListPager',
-            'ui/pages/search/SearchType'
+            'util/safelyParseJson'
         ],
         function (_, ko, qs, routes, container, DynamicRecord, ListModeSwitcher, ListSorter, ListPager, SearchType) {
             var int = function (value) {
@@ -24,21 +24,18 @@
                     selectedSearchType = ko.observable(),
                     submittedQuery = ko.observable(),
                     results = ko.observableArray(),
-                    query = qs.parse(window.location.search.replace(/^\?/, '')),
+                    initialUrlParameters = qs.parse(window.location.search.replace(/^\?/, '')),
                     overlay = container.resolve('ui.overlay'),
                     typeFor = function (result) {
                         return container.resolve('types')[result.data().type];
                     },
                     doSearch = function (callback) {
-                        submittedQuery(this.searchText());
+                        submittedQuery(this.query());
                         results([]);
                         overlay.loading(true);
                         this.displayResults(false);
                         container.resolve('search.' + context.params.type)(
-                            _.zipObject(
-                                [ selectedSearchType() ],
-                                [ submittedQuery() ]
-                            ),
+                            this.query(),
                             function (err, searchServiceResults) {
                                 overlay.loading(false);
                                 if (err) {
@@ -46,7 +43,7 @@
                                     return _.isFunction(callback) ? callback(err) : undefined;
                                 }
                                 results(_.map(searchServiceResults, function (result) {
-                                    return new DynamicRecord(result, this.searchResultFields);
+                                    return new DynamicRecord(result, this.resultFields);
                                 }.bind(this)));
                                 this.displayResults(true);
                                 if (_.isFunction(callback)) {
@@ -56,14 +53,15 @@
                         );
                     }.bind(this);
 
-                this.searchText = ko.observable(query.query || '');
-                this.searchTypes = ko.observableArray();
-                this.searchResultFields = ko.observableArray();
+                this.query = ko.observable(initialUrlParameters.query ? safelyParseJson(initialUrlParameters.query) : undefined);
+                this.advancedMode = ko.observable(!!initialUrlParameters.advanced);
+                this.inputFields = ko.observableArray();
+                this.resultFields = ko.observableArray();
                 this.displayResults = ko.observable(false);
 
-                this.modeSwitcher = new ListModeSwitcher(query.mode);
-                this.sorter = new ListSorter(results, this.searchResultFields, query.sort, query.dir);
-                this.pager = new ListPager(this.sorter.sortedList, int(query.start), int(query.size));
+                this.modeSwitcher = new ListModeSwitcher(initialUrlParameters.mode);
+                this.sorter = new ListSorter(results, this.resultFields, initialUrlParameters.sort, initialUrlParameters.dir);
+                this.pager = new ListPager(this.sorter.sortedList, int(initialUrlParameters.start), int(initialUrlParameters.size));
 
                 this.displayedResults = ko.pureComputed(function () {
                     return this.pager.currentPage();
@@ -81,6 +79,10 @@
                     return selectedSearchType() ?
                         _.find(this.searchTypes(), { key: selectedSearchType() }).placeholder :
                         'Enter your search terms...';
+                }.bind(this));
+
+                this.advancedModeToggleText = ko.pureComputed(function () {
+                    return this.advancedMode() ? 'Back to basic mode' : 'Advanced search';
                 }.bind(this));
 
                 this.hasResults = ko.pureComputed(function () {
@@ -101,95 +103,72 @@
                     return this.searchTypes() && this.searchTypes().length > 1;
                 }.bind(this));
 
-                this.binding = function (element, callback) {
+                this.canSubmit = ko.pureComputed(function () {
+                    return !!this.query() && this.query().children.length > 0;
+                }.bind(this));
+
+                this.attaching = function (element, callback) {
                     require(
                         [
-                            settings.searchTypes,
+                            settings.searchInputFields,
                             settings.searchResultFields
                         ],
-                        function (searchTypes, searchResultFields) {
-                            this.searchTypes(_.map(searchTypes, function (type) {
-                                return new SearchType(type, selectedSearchType);
-                            }));
-                            this.searchTypes()[0].makeActive();
-                            this.searchResultFields(searchResultFields);
-                            if (this.searchText()) {
-                                doSearch(callback);
-                            } else {
-                                callback();
-                            }
+                        function (inputFields, resultFields) {
+                            this.inputFields(inputFields);
+                            this.resultFields(resultFields);
+                            callback();
                         }.bind(this)
                     );
                 };
 
+                this.binding = function (element, callback) {
+                    if (this.query()) {
+                        doSearch(callback);
+                    } else {
+                        callback();
+                    }
+                };
+
                 this.ready = function (callback) {
-                    container.resolve('ui.overlay').loading(false);
+                    overlay.loading(false);
                     callback();
+                };
+
+                this.toggleAdvancedMode = function () {
+                    this.advancedMode(!this.advancedMode());
                 };
 
                 this.reset = function () {
                     results([]);
                     this.displayResults(false);
-                    this.searchText('');
-                    this.searchTypes()[0].makeActive();
+                    this.query(undefined);
                 };
 
                 this.submit = function (callback) {
-                    if (!this.searchText()) {
+                    if (!this.canSubmit()) {
                         return;
                     }
                     this.pager.start(0);
-                    routes.pushState(this.searchUrlFor({ query: this.searchText() }));
+                    routes.pushState(this.searchUrlFor({ query: JSON.stringify(this.query()) }));
                     doSearch(callback);
                     return false;
                 };
 
-                this.displayFor = function (field, result) {
-                    if (_.isString(field)) {
-                        field = _.find(this.searchResultFields(), { key: field });
-                    }
-                    return {
-                        name: 'display/' + (field.display || 'text'),
-                        params: {
-                            data: result.data,
-                            name: field.key,
-                            display: field.display,
-                            placeholder: field.placeholder
-                        }
-                    };
-                };
-
-                this.displayForLabelField = function (result) {
-                    return this.displayFor(container.resolve('settings.' + typeFor(result)).labelField, result);
-                };
-
-                this.resultFor = function (result) {
-                    return {
-                        name: 'collections/' + typeFor(result) + '/' + this.modeSwitcher.mode().toLowerCase() + '-result',
-                        params: this
-                    };
-                };
-
                 this.searchUrlFor = function (overrides) {
-                    return routes.searchUrlFor(
-                        context.params.type,
-                        _.defaults(
-                            overrides,
-                            {
-                                query: submittedQuery(),
-                                sort: this.sorter.field(),
-                                dir: this.sorter.direction(),
-                                start: this.pager.start(),
-                                size: this.pager.pageSize(),
-                                mode: this.modeSwitcher.mode()
-                            }
-                        )
-                    );
-                };
-
-                this.detailUrlFor = function (result) {
-                    return routes.detailUrlFor(typeFor(result), result.id());
-                };
+                    var query;
+                    query = {
+                        query: JSON.stringify(submittedQuery()),
+                        sort: this.sorter.field(),
+                        dir: this.sorter.direction(),
+                        start: this.pager.start(),
+                        size: this.pager.pageSize(),
+                        mode: this.modeSwitcher.mode()
+                    };
+                    if (this.advancedMode()) {
+                        query.advanced = true;
+                    }
+                    return routes.searchUrlFor(context.params.type, _.defaults(overrides, query));
+                }.bind(this);
             };
         }
     );

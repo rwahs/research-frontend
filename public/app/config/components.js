@@ -137,10 +137,34 @@
                 );
 
                 ko.components.register(
-                    'search/header',
+                    'search/basic',
                     {
-                        viewModel: { require: 'ui/components/search/SearchComponent' },
-                        template: { require: 'text!ui/components/search/header-search.html' }
+                        viewModel: { require: 'ui/components/search/basic/BasicSearchComponent' },
+                        template: { require: 'text!ui/components/search/basic/basic-search.html' }
+                    }
+                );
+
+                ko.components.register(
+                    'search/quick',
+                    {
+                        viewModel: { require: 'ui/components/search/quick/QuickSearchComponent' },
+                        template: { require: 'text!ui/components/search/quick/quick-search.html' }
+                    }
+                );
+
+                ko.components.register(
+                    'search/query-builder',
+                    {
+                        viewModel: { require: 'ui/components/search/queryBuilder/QueryBuilderComponent' },
+                        template: { require: 'text!ui/components/search/queryBuilder/query-builder.html' }
+                    }
+                );
+
+                ko.components.register(
+                    'search/results',
+                    {
+                        viewModel: { require: 'ui/components/search/results/SearchResultsComponent' },
+                        template: { require: 'text!ui/components/search/results/search-results.html' }
                     }
                 );
             };

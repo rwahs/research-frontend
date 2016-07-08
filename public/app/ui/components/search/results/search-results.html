@@ -1,0 +1,54 @@
+<section class="search-results">
+    <div data-bind="attr: { class: modeSwitcher.resultsContainerClassName }">
+        <!-- ko if: modeSwitcher.mode() === 'List' -->
+        <!-- ko foreach: { data: results, as: 'result' } -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="result clearfix" data-bind="component: $parent.resultFor(result)"></div>
+            </div>
+        </div>
+        <!-- /ko -->
+        <!-- /ko -->
+        <!-- ko if: modeSwitcher.mode() === 'Thumbnails' -->
+        <div class="row">
+            <!-- ko foreach: { data: results, as: 'result' } -->
+            <div class="col-md-3 col-sm-4 col-xs-6">
+                <div class="result clearfix" data-bind="component: $parent.resultFor(result)"></div>
+            </div>
+            <!-- /ko -->
+        </div>
+        <!-- /ko -->
+        <!-- ko if: modeSwitcher.mode() === 'Table' -->
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered table-striped results-table">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <!-- ko foreach: { data: fields, as: 'field' } -->
+                        <!-- ko if: field.tableColumn !== false -->
+                        <th data-bind="text: field.labelText"></th>
+                        <!-- /ko -->
+                        <!-- /ko -->
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- ko foreach: { data: results, as: 'result' } -->
+                    <tr class="result">
+                        <td data-bind="text: $index() + $parent.pager.start() + 1"></td>
+                        <!-- ko foreach: { data: $parent.fields, as: 'field' } -->
+                        <!-- ko if: field.tableColumn !== false -->
+                        <td data-bind="component: $parents[1].displayFor(field, result)"></td>
+                        <!-- /ko -->
+                        <!-- /ko -->
+                        <td><a data-bind="attr: { href: $parent.detailUrlFor(result) }">View</a></td>
+                    </tr>
+                    <!-- /ko -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+</section>
