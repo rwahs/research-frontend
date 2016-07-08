@@ -16,6 +16,7 @@
             options = {
                 noCache: false,
                 logErrors: false,
+                limit: 500,
                 ajaxOptions: {
                     xhrFields: {
                         withCredentials: true
