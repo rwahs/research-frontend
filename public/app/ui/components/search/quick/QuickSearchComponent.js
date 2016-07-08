@@ -10,10 +10,10 @@
         function (_, ko, routes) {
             return function (parameters) {
                 if (!parameters) {
-                    throw new Error('SearchComponent missing parameter map.');
+                    throw new Error('QuickSearchComponent missing parameter map.');
                 }
                 if (!parameters.searchBaseUrl) {
-                    throw new Error('SearchComponent missing required parameter: `searchBaseUrl`.');
+                    throw new Error('QuickSearchComponent missing required parameter: `searchBaseUrl`.');
                 }
 
                 this.searchText = ko.observable('');

@@ -26,16 +26,17 @@
                         container.seal();
                     });
                     describe('When constructed', function () {
-                        var page;
+                        var page, element;
                         beforeEach(function () {
                             page = new AboutPage();
+                            element = document.createElement('div');
                         });
                         it('Exposes life cycle methods', function () {
                             expect(page.ready).to.be.a('function');
                         });
                         describe('When the page is ready', function () {
                             beforeEach(function (done) {
-                                page.ready(done);
+                                page.ready(element, done);
                             });
                             it('Hides the loading overlay', function () {
                                 expect(overlay.loading.callCount).to.equal(1);

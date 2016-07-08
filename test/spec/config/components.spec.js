@@ -22,7 +22,7 @@
                         components();
                     });
                     it('Configures the correct number of components', function () {
-                        expect(ko.components.register.callCount).to.equal(22);
+                        expect(ko.components.register.callCount).to.equal(25);
                     });
                     it('Configures the "library detail" collections component', function () {
                         var args = _.find(ko.components.register.args, { 0: 'collections/library/detail' });
@@ -134,10 +134,25 @@
                         expect(args[1].viewModel.require).to.equal('ui/components/display/DisplayComponent');
                         expect(args[1].template.require).to.equal('text!ui/components/display/cover-image.html');
                     });
-                    it('Configures the header search component', function () {
-                        var args = _.find(ko.components.register.args, { 0: 'search/header' });
-                        expect(args[1].viewModel.require).to.equal('ui/components/search/SearchComponent');
-                        expect(args[1].template.require).to.equal('text!ui/components/search/header-search.html');
+                    it('Configures the basic component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'search/basic' });
+                        expect(args[1].viewModel.require).to.equal('ui/components/search/basic/BasicSearchComponent');
+                        expect(args[1].template.require).to.equal('text!ui/components/search/basic/basic-search.html');
+                    });
+                    it('Configures the quick search component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'search/quick' });
+                        expect(args[1].viewModel.require).to.equal('ui/components/search/quick/QuickSearchComponent');
+                        expect(args[1].template.require).to.equal('text!ui/components/search/quick/quick-search.html');
+                    });
+                    it('Configures the search query builder component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'search/query-builder' });
+                        expect(args[1].viewModel.require).to.equal('ui/components/search/queryBuilder/QueryBuilderComponent');
+                        expect(args[1].template.require).to.equal('text!ui/components/search/queryBuilder/query-builder.html');
+                    });
+                    it('Configures the search results component', function () {
+                        var args = _.find(ko.components.register.args, { 0: 'search/results' });
+                        expect(args[1].viewModel.require).to.equal('ui/components/search/results/SearchResultsComponent');
+                        expect(args[1].template.require).to.equal('text!ui/components/search/results/search-results.html');
                     });
                     afterEach(function () {
                         ko.components.register.restore();

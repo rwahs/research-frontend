@@ -1,0 +1,74 @@
+.query-builder {
+    .group-conditions {
+        margin: @padding-small-vertical 0 @padding-small-vertical 30px;
+    }
+
+    .rules-list {
+        padding: 0 0 0 30px;
+        position: relative;
+
+        > * {
+            position: relative;
+
+            &::before,
+            &::after {
+                position: absolute;
+                left: -30px;
+                width: 30px;
+                height: ~"calc(50% + 6px)";
+                border: solid @input-border;
+                content: "";
+            }
+
+            &::before {
+                border-width: 0 0 2px 2px;
+                top: -6px;
+            }
+
+            &::after {
+                border-width: 0 0 0 2px;
+                top: 50%;
+            }
+
+            &:first-child::before {
+                height: ~"calc(50% + 8px)";
+                top: -6px;
+            }
+
+            &:last-child::after {
+                display: none;
+            }
+        }
+    }
+
+    .group,
+    .condition {
+        position: relative;
+        margin: @padding-small-vertical 0;
+        border: 1px solid @gray-lighter;
+        border-radius: @border-radius-small;
+        padding: @padding-small-vertical @padding-small-horizontal;
+    }
+
+    .group {
+        background-color: @alert-warning-bg;
+        border-color: @alert-warning-border;
+    }
+
+    .condition {
+        background-color: #fff;
+    }
+
+    input.form-control.condition-value {
+        width: unset;
+        display: inline-block;
+    }
+
+    select.operator,
+    select.field,
+    select.comparator {
+        display: inline-block;
+        background-color: #fff;
+        width: unset;
+    }
+}

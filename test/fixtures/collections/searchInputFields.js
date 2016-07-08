@@ -6,20 +6,20 @@
             {
                 key: 'first',
                 labelText: 'Field One',
-                sort: true,
-                placeholder: 'placeholder value'
+                glyphicon: 'one',
+                basicSearch: true
             },
             {
                 key: 'second',
                 labelText: 'Field Two',
-                sort: function (value) {
-                    return value ? value.toString().toLowerCase() : undefined;
-                }
+                glyphicon: 'two',
+                basicSearch: true
             },
             {
                 key: 'third',
-                labelText: 'Field Three',
-                display: 'image'
+                labelText: 'Field Three (not in basic search)',
+                glyphicon: 'three',
+                basicSearch: false
             }
         ];
     });
