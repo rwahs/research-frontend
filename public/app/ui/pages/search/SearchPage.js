@@ -14,7 +14,7 @@
             'models/ListPager',
             'util/safelyParseJson'
         ],
-        function (_, ko, qs, routes, container, DynamicRecord, ListModeSwitcher, ListSorter, ListPager, SearchType) {
+        function (_, ko, qs, routes, container, DynamicRecord, ListModeSwitcher, ListSorter, ListPager, safelyParseJson) {
             var int = function (value) {
                     return value ? parseInt(value, 10) : undefined;
                 };
@@ -75,12 +75,6 @@
                     return settings.collectionName + ' Search';
                 });
 
-                this.placeholder = ko.pureComputed(function () {
-                    return selectedSearchType() ?
-                        _.find(this.searchTypes(), { key: selectedSearchType() }).placeholder :
-                        'Enter your search terms...';
-                }.bind(this));
-
                 this.advancedModeToggleText = ko.pureComputed(function () {
                     return this.advancedMode() ? 'Back to basic mode' : 'Advanced search';
                 }.bind(this));
@@ -97,10 +91,6 @@
                 this.hasLimitedResults = ko.pureComputed(function () {
                     var limit = this.resultsLimit();
                     return !!limit && results().length >= limit;
-                }.bind(this));
-
-                this.displaySearchTypeSwitch = ko.pureComputed(function () {
-                    return this.searchTypes() && this.searchTypes().length > 1;
                 }.bind(this));
 
                 this.canSubmit = ko.pureComputed(function () {

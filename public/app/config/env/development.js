@@ -6,14 +6,15 @@
             'util/container',
             'services/searchService',
             'services/detailService',
+            'services/cachingService',
             'ui/overlay'
         ],
-        function (container, searchService, detailService, overlay) {
+        function (container, searchService, detailService, cachingService, overlay) {
             var simpleApiBaseUrl, options;
 
-            simpleApiBaseUrl = 'http://localhost/providence/service.php/simple';
+            simpleApiBaseUrl = 'https://staging-collections-api.histwest.org.au/service.php/simple';
             options = {
-                noCache: true,
+                noCache: false,
                 logErrors: true,
                 limit: 500,
                 ajaxOptions: {
@@ -29,16 +30,16 @@
             return function () {
                 container.register('options.service', options);
 
-                container.register('search.all', searchService(simpleApiBaseUrl + '/all_search', options));
-                container.register('search.library', searchService(simpleApiBaseUrl + '/library_search', options));
-                container.register('search.photographs', searchService(simpleApiBaseUrl + '/photographs_search', options));
-                container.register('search.museum', searchService(simpleApiBaseUrl + '/museum_search', options));
-                container.register('search.memorials', searchService(simpleApiBaseUrl + '/memorials_search', options));
+                container.register('search.all', cachingService(searchService(simpleApiBaseUrl + '/all_search', options)));
+                container.register('search.library', cachingService(searchService(simpleApiBaseUrl + '/library_search', options)));
+                container.register('search.photographs', cachingService(searchService(simpleApiBaseUrl + '/photographs_search', options)));
+                container.register('search.museum', cachingService(searchService(simpleApiBaseUrl + '/museum_search', options)));
+                container.register('search.memorials', cachingService(searchService(simpleApiBaseUrl + '/memorials_search', options)));
 
-                container.register('detail.library', detailService(simpleApiBaseUrl + '/library_detail', options));
-                container.register('detail.photographs', detailService(simpleApiBaseUrl + '/photographs_detail', options));
-                container.register('detail.museum', detailService(simpleApiBaseUrl + '/museum_detail', options));
-                container.register('detail.memorials', detailService(simpleApiBaseUrl + '/memorials_detail', options));
+                container.register('detail.library', cachingService(detailService(simpleApiBaseUrl + '/library_detail', options)));
+                container.register('detail.photographs', cachingService(detailService(simpleApiBaseUrl + '/photographs_detail', options)));
+                container.register('detail.museum', cachingService(detailService(simpleApiBaseUrl + '/museum_detail', options)));
+                container.register('detail.memorials', cachingService(detailService(simpleApiBaseUrl + '/memorials_detail', options)));
 
                 container.register('ui.overlay', overlay(true));
             };
