@@ -94,7 +94,7 @@
 
                 this.hasLimitedResults = ko.pureComputed(function () {
                     var limit = this.resultsLimit();
-                    return limit && results().length >= limit;
+                    return !!limit && results().length >= limit;
                 }.bind(this));
 
                 this.displaySearchTypeSwitch = ko.pureComputed(function () {
