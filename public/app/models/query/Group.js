@@ -18,12 +18,12 @@
                 this.operators = ko.pureComputed(function () {
                     return [
                         {
-                            label: 'and',
-                            value: 'AND'
+                            key: 'AND',
+                            labelText: 'and'
                         },
                         {
-                            label: 'or',
-                            value: 'OR'
+                            key: 'OR',
+                            labelText: 'or'
                         }
                     ];
                 });
