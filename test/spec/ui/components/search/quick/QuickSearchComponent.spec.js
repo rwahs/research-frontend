@@ -69,7 +69,7 @@
                             });
                             it('Navigates to the correct URL', function () {
                                 expect(routes.pushState.callCount).to.equal(1);
-                                expect(routes.pushState.getCall(0).args).to.deep.equal([ '/collection/search?query=some%20query', true ]);
+                                expect(routes.pushState.getCall(0).args).to.deep.equal([ '/collection/search?query=' + encodeURIComponent('{"operator":"AND","children":[{"field":"_fulltext","comparator":"contains","value":"some"},{"field":"_fulltext","comparator":"contains","value":"query"}]}'), true ]);
                             });
                         });
                         afterEach(function () {
