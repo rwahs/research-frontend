@@ -4,44 +4,32 @@
     define(
         [
             'lodash',
-            'knockout'
+            'knockout',
+            'util/convertBasicSearch'
         ],
-        function (_, ko) {
+        function (_, ko, convertBasicSearch) {
             return function (parameters) {
-                var selectedSearchFieldKey, initialFieldAndText,
-                    getFieldAndTextForQuery = function (query) {
-                        var selectedKey, selectedField;
-                        if (!query || !query.children || query.children.length === 0) {
-                            return undefined;
-                        }
-                        selectedKey = query.children[0].field;
-                        if (!selectedKey) {
-                            return undefined;
-                        }
-                        selectedField = _.find(parameters.fields(), { key: selectedKey });
-                        if (!selectedField || !selectedField.basicSearch) {
-                            return undefined;
-                        }
-                        return {
-                            field: selectedKey,
-                            text: _(query.children).filter({ field: selectedKey }).map('value').join(' ')
-                        };
-                    },
-                    getQueryForFieldAndText = function (field, text) {
-                        return text.length === 0 ? undefined : {
-                            operator: 'AND',
-                            children: _.map(
-                                text.split(/\s+/),
-                                function (term) {
-                                    return {
-                                        field: field,
-                                        comparator: 'contains',
-                                        value: term
-                                    };
-                                }
-                            )
-                        };
+                var selectedSearchFieldKey, initialFieldAndText, getFieldAndTextForQuery;
+
+                // Inverse of `convertBasicSearch`.
+                getFieldAndTextForQuery = function (query) {
+                    var selectedKey, selectedField;
+                    if (!query || !query.children || query.children.length === 0) {
+                        return undefined;
+                    }
+                    selectedKey = query.children[0].field;
+                    if (!selectedKey) {
+                        return undefined;
+                    }
+                    selectedField = _.find(parameters.fields(), {key: selectedKey});
+                    if (!selectedField || !selectedField.basicSearch) {
+                        return undefined;
+                    }
+                    return {
+                        field: selectedKey,
+                        text: _(query.children).filter({field: selectedKey}).map('value').join(' ')
                     };
+                };
 
                 if (!parameters.fields || parameters.fields().length === 0) {
                     throw new Error('BasicSearchComponent missing required parameter: `fields`.');
@@ -54,12 +42,12 @@
 
                 selectedSearchFieldKey = ko.observable(initialFieldAndText && initialFieldAndText.field ? initialFieldAndText.field : parameters.fields()[0].key);
                 selectedSearchFieldKey.subscribe(function (key) {
-                    parameters.queryObservable(getQueryForFieldAndText(key, this.searchText()));
+                    parameters.queryObservable(convertBasicSearch(key, this.searchText()));
                 }.bind(this));
 
                 this.searchText = ko.observable(initialFieldAndText ? initialFieldAndText.text : '');
                 this.searchText.subscribe(function (text) {
-                    parameters.queryObservable(getQueryForFieldAndText(selectedSearchFieldKey(), text));
+                    parameters.queryObservable(convertBasicSearch(selectedSearchFieldKey(), text));
                 }.bind(this));
 
                 parameters.queryObservable.subscribe(function (query) {
@@ -85,7 +73,7 @@
                 }.bind(this));
 
                 this.displayLostQueryWarning = ko.pureComputed(function () {
-                    var query = getQueryForFieldAndText(selectedSearchFieldKey(), this.searchText());
+                    var query = convertBasicSearch(selectedSearchFieldKey(), this.searchText());
                     return !_.isEqual(query, parameters.queryObservable());
                 }.bind(this));
 
