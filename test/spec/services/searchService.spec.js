@@ -60,67 +60,203 @@
                                 });
                             });
                             describe('When invoked with one parameter', function () {
-                                var parameters, serviceError, serviceResult;
-                                beforeEach(function (done) {
-                                    parameters = {
-                                        operator: 'AND',
-                                        children: [
-                                            {
-                                                field: 'field',
-                                                value: 'value'
-                                            }
-                                        ]
-                                    };
-                                    service(parameters, function (err, result) {
-                                        serviceError = err;
-                                        serviceResult = result;
-                                        done();
+                                describe('With the "contains" comparator', function () {
+                                    var parameters, serviceError, serviceResult;
+                                    beforeEach(function (done) {
+                                        parameters = {
+                                            operator: 'AND',
+                                            children: [
+                                                {
+                                                    field: 'field',
+                                                    comparator: 'contains',
+                                                    value: 'value'
+                                                }
+                                            ]
+                                        };
+                                        service(parameters, function (err, result) {
+                                            serviceError = err;
+                                            serviceResult = result;
+                                            done();
+                                        });
+                                    });
+                                    it('Makes an AJAX call', function () {
+                                        sinon.assert.calledOnce($.ajax);
+                                        expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:"value")');
+                                        expect($.ajax.args[0][0].success).to.be.a('function');
+                                        expect($.ajax.args[0][0].error).to.be.a('function');
+                                    });
+                                    it('Records a valid result', function () {
+                                        expect(serviceError).to.equal(undefined);
+                                        expect(serviceResult).to.be.an('array');
+                                        expect(serviceResult).to.have.length(3);
                                     });
                                 });
-                                it('Makes an AJAX call', function () {
-                                    sinon.assert.calledOnce($.ajax);
-                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:value)');
-                                    expect($.ajax.args[0][0].success).to.be.a('function');
-                                    expect($.ajax.args[0][0].error).to.be.a('function');
+                                describe('With the "notContains" comparator', function () {
+                                    var parameters, serviceError, serviceResult;
+                                    beforeEach(function (done) {
+                                        parameters = {
+                                            operator: 'AND',
+                                            children: [
+                                                {
+                                                    field: 'field',
+                                                    comparator: 'notContains',
+                                                    value: 'value'
+                                                }
+                                            ]
+                                        };
+                                        service(parameters, function (err, result) {
+                                            serviceError = err;
+                                            serviceResult = result;
+                                            done();
+                                        });
+                                    });
+                                    it('Makes an AJAX call', function () {
+                                        sinon.assert.calledOnce($.ajax);
+                                        expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=!(field:"value")');
+                                        expect($.ajax.args[0][0].success).to.be.a('function');
+                                        expect($.ajax.args[0][0].error).to.be.a('function');
+                                    });
+                                    it('Records a valid result', function () {
+                                        expect(serviceError).to.equal(undefined);
+                                        expect(serviceResult).to.be.an('array');
+                                        expect(serviceResult).to.have.length(3);
+                                    });
                                 });
-                                it('Records a valid result', function () {
-                                    expect(serviceError).to.equal(undefined);
-                                    expect(serviceResult).to.be.an('array');
-                                    expect(serviceResult).to.have.length(3);
+                                describe('With the "startsWith" comparator', function () {
+                                    var parameters, serviceError, serviceResult;
+                                    beforeEach(function (done) {
+                                        parameters = {
+                                            operator: 'AND',
+                                            children: [
+                                                {
+                                                    field: 'field',
+                                                    comparator: 'startsWith',
+                                                    value: 'value'
+                                                }
+                                            ]
+                                        };
+                                        service(parameters, function (err, result) {
+                                            serviceError = err;
+                                            serviceResult = result;
+                                            done();
+                                        });
+                                    });
+                                    it('Makes an AJAX call', function () {
+                                        sinon.assert.calledOnce($.ajax);
+                                        expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:"value"*)');
+                                        expect($.ajax.args[0][0].success).to.be.a('function');
+                                        expect($.ajax.args[0][0].error).to.be.a('function');
+                                    });
+                                    it('Records a valid result', function () {
+                                        expect(serviceError).to.equal(undefined);
+                                        expect(serviceResult).to.be.an('array');
+                                        expect(serviceResult).to.have.length(3);
+                                    });
+                                });
+                                describe('With the "notStartsWith" comparator', function () {
+                                    var parameters, serviceError, serviceResult;
+                                    beforeEach(function (done) {
+                                        parameters = {
+                                            operator: 'AND',
+                                            children: [
+                                                {
+                                                    field: 'field',
+                                                    comparator: 'notStartsWith',
+                                                    value: 'value'
+                                                }
+                                            ]
+                                        };
+                                        service(parameters, function (err, result) {
+                                            serviceError = err;
+                                            serviceResult = result;
+                                            done();
+                                        });
+                                    });
+                                    it('Makes an AJAX call', function () {
+                                        sinon.assert.calledOnce($.ajax);
+                                        expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=!(field:"value"*)');
+                                        expect($.ajax.args[0][0].success).to.be.a('function');
+                                        expect($.ajax.args[0][0].error).to.be.a('function');
+                                    });
+                                    it('Records a valid result', function () {
+                                        expect(serviceError).to.equal(undefined);
+                                        expect(serviceResult).to.be.an('array');
+                                        expect(serviceResult).to.have.length(3);
+                                    });
                                 });
                             });
                             describe('When invoked with multiple parameters', function () {
-                                var parameters, serviceError, serviceResult;
-                                beforeEach(function (done) {
-                                    parameters = {
-                                        operator: 'AND',
-                                        children: [
-                                            {
-                                                field: 'field',
-                                                value: 'value'
-                                            },
-                                            {
-                                                field: 'another',
-                                                value: 'search this'
-                                            }
-                                        ]
-                                    };
-                                    service(parameters, function (err, result) {
-                                        serviceError = err;
-                                        serviceResult = result;
-                                        done();
+                                describe('With the "AND" operator', function () {
+                                    var parameters, serviceError, serviceResult;
+                                    beforeEach(function (done) {
+                                        parameters = {
+                                            operator: 'AND',
+                                            children: [
+                                                {
+                                                    field: 'field',
+                                                    comparator: 'contains',
+                                                    value: 'value'
+                                                },
+                                                {
+                                                    field: 'another',
+                                                    comparator: 'notContains',
+                                                    value: 'search this'
+                                                }
+                                            ]
+                                        };
+                                        service(parameters, function (err, result) {
+                                            serviceError = err;
+                                            serviceResult = result;
+                                            done();
+                                        });
+                                    });
+                                    it('Makes an AJAX call', function () {
+                                        sinon.assert.calledOnce($.ajax);
+                                        expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:"value") AND !(another:"search this")');
+                                        expect($.ajax.args[0][0].success).to.be.a('function');
+                                        expect($.ajax.args[0][0].error).to.be.a('function');
+                                    });
+                                    it('Records a valid result', function () {
+                                        expect(serviceError).to.equal(undefined);
+                                        expect(serviceResult).to.be.an('array');
+                                        expect(serviceResult).to.have.length(3);
                                     });
                                 });
-                                it('Makes an AJAX call', function () {
-                                    sinon.assert.calledOnce($.ajax);
-                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:value) AND (another:search this)');
-                                    expect($.ajax.args[0][0].success).to.be.a('function');
-                                    expect($.ajax.args[0][0].error).to.be.a('function');
-                                });
-                                it('Records a valid result', function () {
-                                    expect(serviceError).to.equal(undefined);
-                                    expect(serviceResult).to.be.an('array');
-                                    expect(serviceResult).to.have.length(3);
+                                describe('With the "OR" operator', function () {
+                                    var parameters, serviceError, serviceResult;
+                                    beforeEach(function (done) {
+                                        parameters = {
+                                            operator: 'OR',
+                                            children: [
+                                                {
+                                                    field: 'field',
+                                                    comparator: 'startsWith',
+                                                    value: 'value'
+                                                },
+                                                {
+                                                    field: 'another',
+                                                    comparator: 'startsWith',
+                                                    value: 'search this'
+                                                }
+                                            ]
+                                        };
+                                        service(parameters, function (err, result) {
+                                            serviceError = err;
+                                            serviceResult = result;
+                                            done();
+                                        });
+                                    });
+                                    it('Makes an AJAX call', function () {
+                                        sinon.assert.calledOnce($.ajax);
+                                        expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:"value"*) OR (another:"search this"*)');
+                                        expect($.ajax.args[0][0].success).to.be.a('function');
+                                        expect($.ajax.args[0][0].error).to.be.a('function');
+                                    });
+                                    it('Records a valid result', function () {
+                                        expect(serviceError).to.equal(undefined);
+                                        expect(serviceResult).to.be.an('array');
+                                        expect(serviceResult).to.have.length(3);
+                                    });
                                 });
                             });
                         });
@@ -196,6 +332,7 @@
                                         children: [
                                             {
                                                 field: 'field',
+                                                comparator: 'contains',
                                                 value: 'value'
                                             }
                                         ]
@@ -208,7 +345,7 @@
                                 });
                                 it('Makes an AJAX call', function () {
                                     sinon.assert.calledOnce($.ajax);
-                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:value)');
+                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:"value")');
                                     expect($.ajax.args[0][0].foo).to.equal('bar');
                                     expect($.ajax.args[0][0].success).to.be.a('function');
                                     expect($.ajax.args[0][0].error).to.be.a('function');
@@ -227,10 +364,12 @@
                                         children: [
                                             {
                                                 field: 'field',
+                                                comparator: 'contains',
                                                 value: 'value'
                                             },
                                             {
                                                 field: 'another',
+                                                comparator: 'contains',
                                                 value: 'search this'
                                             }
                                         ]
@@ -243,7 +382,7 @@
                                 });
                                 it('Makes an AJAX call', function () {
                                     sinon.assert.calledOnce($.ajax);
-                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:value) AND (another:search this)');
+                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:"value") AND (another:"search this")');
                                     expect($.ajax.args[0][0].foo).to.equal('bar');
                                     expect($.ajax.args[0][0].success).to.be.a('function');
                                     expect($.ajax.args[0][0].error).to.be.a('function');
@@ -300,6 +439,7 @@
                                         children: [
                                             {
                                                 field: 'field',
+                                                comparator: 'contains',
                                                 value: 'value'
                                             }
                                         ]
@@ -312,7 +452,7 @@
                                 });
                                 it('Makes an AJAX call', function () {
                                     sinon.assert.calledOnce($.ajax);
-                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:value)&noCache=1');
+                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:"value")&noCache=1');
                                     expect($.ajax.args[0][0].success).to.be.a('function');
                                     expect($.ajax.args[0][0].error).to.be.a('function');
                                 });
@@ -330,10 +470,12 @@
                                         children: [
                                             {
                                                 field: 'field',
+                                                comparator: 'contains',
                                                 value: 'value'
                                             },
                                             {
                                                 field: 'another',
+                                                comparator: 'contains',
                                                 value: 'search this'
                                             }
                                         ]
@@ -346,7 +488,7 @@
                                 });
                                 it('Makes an AJAX call', function () {
                                     sinon.assert.calledOnce($.ajax);
-                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:value) AND (another:search this)&noCache=1');
+                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:"value") AND (another:"search this")&noCache=1');
                                     expect($.ajax.args[0][0].success).to.be.a('function');
                                     expect($.ajax.args[0][0].error).to.be.a('function');
                                 });
@@ -402,6 +544,7 @@
                                         children: [
                                             {
                                                 field: 'field',
+                                                comparator: 'contains',
                                                 value: 'value'
                                             }
                                         ]
@@ -414,7 +557,7 @@
                                 });
                                 it('Makes an AJAX call', function () {
                                     sinon.assert.calledOnce($.ajax);
-                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:value)');
+                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:"value")');
                                     expect($.ajax.args[0][0].success).to.be.a('function');
                                     expect($.ajax.args[0][0].error).to.be.a('function');
                                 });
@@ -432,10 +575,12 @@
                                         children: [
                                             {
                                                 field: 'field',
+                                                comparator: 'contains',
                                                 value: 'value'
                                             },
                                             {
                                                 field: 'another',
+                                                comparator: 'contains',
                                                 value: 'search this'
                                             }
                                         ]
@@ -448,7 +593,7 @@
                                 });
                                 it('Makes an AJAX call', function () {
                                     sinon.assert.calledOnce($.ajax);
-                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:value) AND (another:search this)');
+                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:"value") AND (another:"search this")');
                                     expect($.ajax.args[0][0].success).to.be.a('function');
                                     expect($.ajax.args[0][0].error).to.be.a('function');
                                 });
@@ -504,6 +649,7 @@
                                         children: [
                                             {
                                                 field: 'field',
+                                                comparator: 'contains',
                                                 value: 'value'
                                             }
                                         ]
@@ -516,7 +662,7 @@
                                 });
                                 it('Makes an AJAX call', function () {
                                     sinon.assert.calledOnce($.ajax);
-                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:value)&limit=42');
+                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:"value")&limit=42');
                                     expect($.ajax.args[0][0].success).to.be.a('function');
                                     expect($.ajax.args[0][0].error).to.be.a('function');
                                 });
@@ -534,10 +680,12 @@
                                         children: [
                                             {
                                                 field: 'field',
+                                                comparator: 'contains',
                                                 value: 'value'
                                             },
                                             {
                                                 field: 'another',
+                                                comparator: 'contains',
                                                 value: 'search this'
                                             }
                                         ]
@@ -550,7 +698,7 @@
                                 });
                                 it('Makes an AJAX call', function () {
                                     sinon.assert.calledOnce($.ajax);
-                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:value) AND (another:search this)&limit=42');
+                                    expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:"value") AND (another:"search this")&limit=42');
                                     expect($.ajax.args[0][0].success).to.be.a('function');
                                     expect($.ajax.args[0][0].error).to.be.a('function');
                                 });

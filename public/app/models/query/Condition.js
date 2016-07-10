@@ -21,31 +21,19 @@
                     return [
                         {
                             key: 'contains',
-                            label: 'contains',
-                            queryFormat: function (value) {
-                                return '"' + value + '"';
-                            }
+                            labelText: 'contains'
                         },
                         {
-                            key: '!contains',
-                            label: 'does not contain',
-                            queryFormat: function (value) {
-                                return '-"' + value + '"';
-                            }
+                            key: 'notContains',
+                            labelText: 'does not contain'
                         },
                         {
-                            key: 'starts',
-                            label: 'starts with',
-                            queryFormat: function (value) {
-                                return '"' + value + '"*';
-                            }
+                            key: 'startsWith',
+                            labelText: 'starts with'
                         },
                         {
-                            key: '!starts',
-                            label: 'does not start with',
-                            queryFormat: function (value) {
-                                return '-"' + value + '"*';
-                            }
+                            key: 'notStartsWith',
+                            labelText: 'does not start with'
                         }
                     ];
                 });

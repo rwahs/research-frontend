@@ -119,7 +119,7 @@
                     }
                 };
 
-                this.ready = function (callback) {
+                this.ready = function (element, callback) {
                     overlay.loading(false);
                     callback();
                 };

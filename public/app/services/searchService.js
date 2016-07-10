@@ -7,19 +7,27 @@
             'jquery'
         ],
         function (_, $) {
-            return function (baseUrl, options) {
-                var queryString;
+            var comparatorFormatters, queryString;
 
-                options = options || {};
+            comparatorFormatters = {
+                contains: _.template('(<%= field %>:"<%= value %>")'),
+                notContains: _.template('!(<%= field %>:"<%= value %>")'),
+                startsWith: _.template('(<%= field %>:"<%= value %>"*)'),
+                notStartsWith: _.template('!(<%= field %>:"<%= value %>"*)')
+            };
 
-                queryString = function (parameters) {
-                    return _.map(parameters.children, function (child) {
+            queryString = function (parameters) {
+                return _(parameters.children)
+                    .map(function (child) {
                         return child.hasOwnProperty('children') ?
                             '(' + queryString(child) + ')' :
-                            '(' + child.field + ':' + child.value + ')'; // TODO Use comparator
+                            comparatorFormatters[child.comparator](child);
                     })
                     .join(' ' + parameters.operator + ' ');
-                };
+            };
+
+            return function (baseUrl, options) {
+                options = options || {};
 
                 return function (parameters, callback) {
                     $.ajax(_.merge({}, options.ajaxOptions || {}, {

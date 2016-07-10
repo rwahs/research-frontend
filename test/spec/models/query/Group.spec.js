@@ -40,7 +40,7 @@
                     });
                     it('Exposes the correct default values', function () {
                         expect(group.children()).to.have.length(1);
-                        expect(group.selectedOperator().value).to.equal('AND');
+                        expect(group.selectedOperator().key).to.equal('AND');
                     });
                     it('Calculates the correct depth', function () {
                         expect(group.depth()).to.equal(0);
@@ -73,7 +73,7 @@
                     });
                     it('Exposes the correct default values', function () {
                         expect(group.children()).to.have.length(1);
-                        expect(group.selectedOperator().value).to.equal('AND');
+                        expect(group.selectedOperator().key).to.equal('AND');
                     });
                     it('Calculates the correct depth', function () {
                         expect(group.depth()).to.equal(1);
