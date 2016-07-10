@@ -5,9 +5,10 @@
         [
             'lodash',
             'knockout',
-            'config/routes'
+            'config/routes',
+            'util/convertBasicSearch'
         ],
-        function (_, ko, routes) {
+        function (_, ko, routes, convertBasicSearch) {
             return function (parameters) {
                 if (!parameters) {
                     throw new Error('QuickSearchComponent missing parameter map.');
@@ -26,7 +27,7 @@
                     if (this.preventSubmit()) {
                         return false;
                     }
-                    routes.pushState(routes.searchUrlFor(parameters.searchBaseUrl, { query: this.searchText() }), true);
+                    routes.pushState(routes.searchUrlFor(parameters.searchBaseUrl, { query: JSON.stringify(convertBasicSearch('_fulltext', this.searchText())) }), true);
                     return false;
                 };
             };
