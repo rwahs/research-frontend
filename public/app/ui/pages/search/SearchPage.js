@@ -67,6 +67,10 @@
                     return this.pager.currentPage();
                 }.bind(this));
 
+                this.start = ko.pureComputed(function () {
+                    return this.pager.start();
+                }.bind(this));
+
                 this.submittedQuery = ko.pureComputed(function () {
                     return submittedQuery();
                 });
