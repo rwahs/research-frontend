@@ -27,6 +27,7 @@
                 this.results = parameters.results;
                 this.modeSwitcher = parameters.modeSwitcher;
                 this.resultFields = parameters.resultFields;
+                this.start = parameters.start;
 
                 this.displayFor = function (field, result) {
                     if (_.isString(field)) {
