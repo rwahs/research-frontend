@@ -7,7 +7,7 @@ Public research frontend SPA for CollectiveAccess.
 ## Development Environment Setup
 
 You need Node.js 6.x installed.  It may work on previous versions (5.x) but this is untested.  For Linux development
-environments, `nvm` is recommended: https://github.com/creationix/nvm.  
+environments, `nvm` is recommended: https://github.com/creationix/nvm.
 
 To install dependencies, execute the following commands in the project's root directory:
 
@@ -39,7 +39,7 @@ The project uses `gulp` to automate many processes in the development environmen
 
 ### Default (no arguments)
 
-Running `gulp` without any arguments is the equivalent to running `gulp clean`, `gulp qa`, `gulp build` and 
+Running `gulp` without any arguments is the equivalent to running `gulp clean`, `gulp qa`, `gulp build` and
 `gulp watch`, as described below.
 
     gulp
@@ -94,7 +94,7 @@ When running on a server, the application is expected to consist of only a small
 
 An environment is a string that identifies the setting of the application.  You can pass an `--env` argument to any
 `gulp` task to set the environment.  However the local development related tasks will ignore the environment setting;
-this is used for packaging only.  
+this is used for packaging only.
 
 The following examples use an environment of `staging`.  The other accepted value is `uat`, and `production` will be
 supported in future.
@@ -125,4 +125,13 @@ target CA instance must be accessible, in order for the application to run corre
 
 ### Deployment
 
-TODO
+In order to deploy the application to S3 you need to have the relevant AWS credentials set up. In order to do this add
+the following to your ~/.aws/credentials file:
+
+    [rwahs]
+    aws_secret_access_key = <access key for research-frontend-deploy user>
+    aws_access_key_id = <access key ID for research-frontend-deploy user>
+
+Deploying to the different environments is done as follows:
+
+    gulp --env <environment> deploy
