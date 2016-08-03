@@ -22,7 +22,7 @@
                         components();
                     });
                     it('Configures the correct number of components', function () {
-                        expect(ko.components.register.callCount).to.equal(26);
+                        expect(ko.components.register.callCount).to.equal(25);
                     });
                     it('Configures the "library detail" collections component', function () {
                         var args = _.find(ko.components.register.args, { 0: 'collections/library/detail' });
@@ -153,10 +153,6 @@
                         var args = _.find(ko.components.register.args, { 0: 'search/results' });
                         expect(args[1].viewModel.require).to.equal('ui/components/search/results/SearchResultsComponent');
                         expect(args[1].template.require).to.equal('text!ui/components/search/results/search-results.html');
-                    });
-                    it('Configures the image detail partial component', function () {
-                        var args = _.find(ko.components.register.args, { 0: 'partials/image-detail' });
-                        expect(args[1].template.require).to.equal('text!ui/components/partials/image-detail.html');
                     });
                     afterEach(function () {
                         ko.components.register.restore();

@@ -1,123 +1,114 @@
-<section class="detail detail-library">
-    <div class="row">
-        <div class="col-lg-5 col-lg-push-7 col-md-6 col-md-push-6 col-sm-12">
-            <div class="image-container pull-right" data-bind="component: { name: 'partials/image-detail', params: $data }"></div>
-        </div>
-        <div class="col-lg-7 col-lg-pull-5 col-md-6 col-md-pull-6 col-sm-12">
-            <table class="table table-condensed">
-                <tr>
-                    <th scope="row">
-                        <div class="name" data-bind="text: labelFor('Author')"></div>
-                    </th>
-                    <td>
-                        <div class="value" data-bind="component: displayFor('Author')"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <div class="name" data-bind="text: labelFor('Subjects')"></div>
-                    </th>
-                    <td>
-                        <div class="value" data-bind="component: displayFor('Subjects')"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <div class="name" data-bind="text: labelFor('Publisher')"></div>
-                    </th>
-                    <td>
-                        <div class="value" data-bind="component: displayFor('Publisher')"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <div class="name" data-bind="text: labelFor('DateOfPublication')"></div>
-                    </th>
-                    <td>
-                        <div class="value" data-bind="component: displayFor('DateOfPublication')"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <div class="name" data-bind="text: labelFor('PlaceOfPublication')"></div>
-                    </th>
-                    <td>
-                        <div class="value" data-bind="component: displayFor('PlaceOfPublication')"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <div class="name" data-bind="text: labelFor('Edition')"></div>
-                    </th>
-                    <td>
-                        <div class="value" data-bind="component: displayFor('Edition')"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <div class="name" data-bind="text: labelFor('Series')"></div>
-                    </th>
-                    <td>
-                        <div class="value" data-bind="component: displayFor('Series')"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <div class="name" data-bind="text: labelFor('PublicationType')"></div>
-                    </th>
-                    <td>
-                        <div class="value" data-bind="component: displayFor('PublicationType')"></div>
-                    </td>
-                 </tr>
-                 <tr>
-                    <th scope="row">
-                        <div class="name" data-bind="text: labelFor('Size')"></div>
-                    </th>
-                    <td>
-                        <div class="value" data-bind="component: displayFor('Size')"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <div class="name" data-bind="text: labelFor('Collation')"></div>
-                    </th>
-                    <td>
-                        <div class="value" data-bind="component: displayFor('Collation')"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <div class="name" data-bind="text: labelFor('ISBNISSN')"></div>
-                    </th>
-                    <td>
-                        <div class="value" data-bind="component: displayFor('ISBNISSN')"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <div class="name" data-bind="text: labelFor('LibraryNumber')"></div>
-                    </th>
-                    <td>
-                        <div class="value" data-bind="component: displayFor('LibraryNumber')"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <div class="name" data-bind="text: labelFor('Donated')"></div>
-                    </th>
-                    <td>
-                        <div class="value" data-bind="component: displayFor('Donated')"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <div class="name" data-bind="text: labelFor('Purchased')"></div>
-                    </th>
-                    <td>
-                        <div class="value" data-bind="component: displayFor('Purchased')"></div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-</section>
+<table class="table table-condensed library-detail-table">
+    <tr>
+        <th scope="row">
+            <div class="name" data-bind="text: labelFor('Author')"></div>
+        </th>
+        <td>
+            <div class="value" data-bind="component: displayFor('Author')"></div>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">
+            <div class="name" data-bind="text: labelFor('Subjects')"></div>
+        </th>
+        <td>
+            <div class="value" data-bind="component: displayFor('Subjects')"></div>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">
+            <div class="name" data-bind="text: labelFor('Publisher')"></div>
+        </th>
+        <td>
+            <div class="value" data-bind="component: displayFor('Publisher')"></div>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">
+            <div class="name" data-bind="text: labelFor('DateOfPublication')"></div>
+        </th>
+        <td>
+            <div class="value" data-bind="component: displayFor('DateOfPublication')"></div>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">
+            <div class="name" data-bind="text: labelFor('PlaceOfPublication')"></div>
+        </th>
+        <td>
+            <div class="value" data-bind="component: displayFor('PlaceOfPublication')"></div>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">
+            <div class="name" data-bind="text: labelFor('Edition')"></div>
+        </th>
+        <td>
+            <div class="value" data-bind="component: displayFor('Edition')"></div>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">
+            <div class="name" data-bind="text: labelFor('Series')"></div>
+        </th>
+        <td>
+            <div class="value" data-bind="component: displayFor('Series')"></div>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">
+            <div class="name" data-bind="text: labelFor('PublicationType')"></div>
+        </th>
+        <td>
+            <div class="value" data-bind="component: displayFor('PublicationType')"></div>
+        </td>
+     </tr>
+     <tr>
+        <th scope="row">
+            <div class="name" data-bind="text: labelFor('Size')"></div>
+        </th>
+        <td>
+            <div class="value" data-bind="component: displayFor('Size')"></div>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">
+            <div class="name" data-bind="text: labelFor('Collation')"></div>
+        </th>
+        <td>
+            <div class="value" data-bind="component: displayFor('Collation')"></div>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">
+            <div class="name" data-bind="text: labelFor('ISBNISSN')"></div>
+        </th>
+        <td>
+            <div class="value" data-bind="component: displayFor('ISBNISSN')"></div>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">
+            <div class="name" data-bind="text: labelFor('LibraryNumber')"></div>
+        </th>
+        <td>
+            <div class="value" data-bind="component: displayFor('LibraryNumber')"></div>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">
+            <div class="name" data-bind="text: labelFor('Donated')"></div>
+        </th>
+        <td>
+            <div class="value" data-bind="component: displayFor('Donated')"></div>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">
+            <div class="name" data-bind="text: labelFor('Purchased')"></div>
+        </th>
+        <td>
+            <div class="value" data-bind="component: displayFor('Purchased')"></div>
+        </td>
+    </tr>
+</table>
