@@ -9,6 +9,11 @@ article.detail {
         }
     }
 
+    .summary {
+        font-size: @font-size-large;
+        padding-bottom: @padding-large-vertical;
+    }
+
     .row {
         margin-bottom: 1em;
 
@@ -22,6 +27,25 @@ article.detail {
 
         .list-unstyled {
             margin-bottom: 0;
+        }
+    }
+
+    .image-container {
+        width: 400px;
+
+        .public-image-footnote {
+            &:extend(.thumbnail);
+            font-size: @font-size-small;
+            color: @gray;
+            text-align: center;
+        }
+
+        .inaccessible-image-placeholder,
+        .missing-image-placeholder {
+            &:extend(.thumbnail);
+            padding: @padding-large-vertical @padding-large-horizontal;
+            font-size: large;
+            text-align: center;
         }
     }
 }
