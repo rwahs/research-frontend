@@ -1,11 +1,13 @@
 article.detail {
     h1 {
-        .idno {
-            &:extend(.text-muted);
+        .subtitle {
             display: block;
-            font-size: @font-size-small;
-            font-weight: bold;
             padding: @padding-small-vertical 0;
+            font-size: @font-size-small;
+
+            .label {
+                font-size: @font-size-small;
+            }
         }
     }
 

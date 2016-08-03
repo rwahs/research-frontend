@@ -1,9 +1,11 @@
 <article class="detail">
     <!-- ko if: displayRecord -->
-    <div class="label label-default pull-right" data-bind="text: collectionName"></div>
     <h1>
         <span data-bind="component: displayForLabelField()"></span>
-        <span class="idno" data-bind="text: idno"></span>
+        <span class="subtitle">
+            <span class="label label-default" data-bind="text: collectionName"></span>
+            <span class="label label-default" data-bind="text: idno"></span>
+        </span>
     </h1>
     <div data-bind="component: { name: detail, params: $data }"></div>
     <!-- /ko -->
