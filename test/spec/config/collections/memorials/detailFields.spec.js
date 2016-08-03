@@ -82,9 +82,9 @@
                     expect(provenanceField.labelText).to.equal('Provenance');
                 });
                 it('Defines the `MediaMedium` field', function () {
-                    var purchasedField = _.find(detailFields, { key: 'MediaMedium' });
-                    expect(purchasedField.display).to.equal('image');
-                    expect(purchasedField.placeholder).to.equal(false);
+                    var mediaMediumField = _.find(detailFields, { key: 'MediaMedium' });
+                    expect(mediaMediumField.display).to.equal('image');
+                    expect(mediaMediumField.placeholder).to.equal(false);
                 });
             });
         }
