@@ -167,6 +167,11 @@
                         template: { require: 'text!ui/components/search/results/search-results.html' }
                     }
                 );
+
+                ko.components.register(
+                    'partials/image-detail',
+                    { template: { require: 'text!ui/components/partials/image-detail.html' } }
+                );
             };
         }
     );
