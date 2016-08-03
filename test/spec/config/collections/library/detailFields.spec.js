@@ -13,7 +13,7 @@
             describe('The `library/detailFields` module', function () {
                 it('Defines a static array', function () {
                     expect(detailFields).to.be.an('array');
-                    expect(detailFields).to.have.length(18);
+                    expect(detailFields).to.have.length(19);
                 });
                 it('Defines the `type` field', function () {
                     expect(detailFields[0].key).to.equal('type');
@@ -94,6 +94,10 @@
                     var mediaMediumField = _.find(detailFields, { key: 'MediaMedium' });
                     expect(mediaMediumField.display).to.equal('image');
                     expect(mediaMediumField.placeholder).to.equal(false);
+                });
+                it('Defines the `MediaAccess` field', function () {
+                    var mediaMediumField = _.find(detailFields, { key: 'MediaAccess' });
+                    expect(mediaMediumField).to.be.an('object');
                 });
             });
         }
