@@ -29,7 +29,7 @@
                 sort: true
             },
             {
-                key: 'Dates',
+                key: 'ItemDates',
                 labelText: 'Dates',
                 sort: true
             },
@@ -41,17 +41,6 @@
             {
                 key: 'MakersMarks',
                 labelText: 'Makers Marks'
-            },
-            {
-                key: 'Classification',
-                labelText: 'Classification',
-                parse: true,
-                skipNested: 1,
-                filter: true,
-                display: 'hierarchy-list',
-                sort: function (value) {
-                    return value.length > 0 && value[0].length > 0 ? value[0].join(' / ') : undefined;
-                }
             }
         ];
     });
