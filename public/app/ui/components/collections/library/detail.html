@@ -1,18 +1,26 @@
 <section class="detail detail-library">
     <div class="row">
-        <div class="col-md-12">
-            <div class="pull-right" data-bind="component: displayFor('MediaMedium')"></div>
-
-            <div class="name" data-bind="text: labelFor('Author')"></div>
-            <div class="value" data-bind="component: displayFor('Author')"></div>
-            <hr />
-            <div class="name" data-bind="text: labelFor('Subjects')"></div>
-            <div class="value" data-bind="component: displayFor('Subjects')"></div>
+        <div class="col-md-5 col-md-push-7 col-sm-12">
+            <div class="image-container pull-right" data-bind="component: { name: 'partials/image-detail', params: $data }"></div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-12">    
+        <div class="col-md-7 col-md-pull-5 col-sm-12">
             <table class="table table-condensed">
+                <tr>
+                    <th scope="row">
+                        <div class="name" data-bind="text: labelFor('Author')"></div>
+                    </th>
+                    <td>
+                        <div class="value" data-bind="component: displayFor('Author')"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <div class="name" data-bind="text: labelFor('Subjects')"></div>
+                    </th>
+                    <td>
+                        <div class="value" data-bind="component: displayFor('Subjects')"></div>
+                    </td>
+                </tr>
                 <tr>
                     <th scope="row">
                         <div class="name" data-bind="text: labelFor('Publisher')"></div>
@@ -61,7 +69,7 @@
                         <div class="value" data-bind="component: displayFor('PublicationType')"></div>
                     </td>
                  </tr>
-                 <tr>   
+                 <tr>
                     <th scope="row">
                         <div class="name" data-bind="text: labelFor('Size')"></div>
                     </th>
@@ -69,11 +77,6 @@
                         <div class="value" data-bind="component: displayFor('Size')"></div>
                     </td>
                 </tr>
-            </table>
-        </div>
-
-        <div class="col-md-6 col-sm-12">     
-            <table class="table table-condensed">                
                 <tr>
                     <th scope="row">
                         <div class="name" data-bind="text: labelFor('Collation')"></div>
@@ -113,7 +116,7 @@
                     <td>
                         <div class="value" data-bind="component: displayFor('Purchased')"></div>
                     </td>
-                </tr>        
+                </tr>
             </table>
         </div>
     </div>
