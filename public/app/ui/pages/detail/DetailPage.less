@@ -33,8 +33,6 @@ article.detail {
     }
 
     .image-container {
-        width: 400px;
-
         .public-image-footnote {
             &:extend(.thumbnail);
             font-size: @font-size-small;
@@ -48,6 +46,16 @@ article.detail {
             padding: @padding-large-vertical @padding-large-horizontal;
             font-size: large;
             text-align: center;
+        }
+
+        @media (min-width: @screen-md-min) {
+            width: 400px;
+        }
+
+        @media (max-width: @screen-sm-max) {
+            img {
+                width: 100%;
+            }
         }
     }
 }
