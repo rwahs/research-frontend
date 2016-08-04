@@ -13,7 +13,7 @@
             describe('The `museum/detailFields` module', function () {
                 it('Defines a static array', function () {
                     expect(detailFields).to.be.an('array');
-                    expect(detailFields).to.have.length(15);
+                    expect(detailFields).to.have.length(16);
                 });
                 it('Defines the `type` field', function () {
                     expect(detailFields[0].key).to.equal('type');
@@ -80,9 +80,13 @@
                     expect(classificationField.display).to.equal('hierarchy-list');
                 });
                 it('Defines the `MediaMedium` field', function () {
-                    var purchasedField = _.find(detailFields, { key: 'MediaMedium' });
-                    expect(purchasedField.display).to.equal('image');
-                    expect(purchasedField.placeholder).to.equal(false);
+                    var mediaMediumField = _.find(detailFields, { key: 'MediaMedium' });
+                    expect(mediaMediumField.display).to.equal('image');
+                    expect(mediaMediumField.placeholder).to.equal(false);
+                });
+                it('Defines the `MediaAccess` field', function () {
+                    var mediaMediumField = _.find(detailFields, { key: 'MediaAccess' });
+                    expect(mediaMediumField).to.be.an('object');
                 });
             });
         }

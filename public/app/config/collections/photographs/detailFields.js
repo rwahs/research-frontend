@@ -66,6 +66,9 @@
                 key: 'MediaMedium',
                 display: 'image',
                 placeholder: false
+            },
+            {
+                key: 'MediaAccess'
             }
         ];
     });
