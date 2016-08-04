@@ -13,7 +13,7 @@
             describe('The `museum/searchResultFields` module', function () {
                 it('Defines a static array', function () {
                     expect(searchResultFields).to.be.an('array');
-                    expect(searchResultFields).to.have.length(9);
+                    expect(searchResultFields).to.have.length(8);
                 });
                 it('Defines the `MediaThumbnail` field', function () {
                     var mediaField = _.find(searchResultFields, { key: 'MediaThumbnail' });
@@ -40,8 +40,8 @@
                     expect(itemNameField.labelText).to.equal('Item Name');
                     expect(itemNameField.sort).to.equal(true);
                 });
-                it('Defines the `Dates` field', function () {
-                    var datesField = _.find(searchResultFields, { key: 'Dates' });
+                it('Defines the `ItemDates` field', function () {
+                    var datesField = _.find(searchResultFields, { key: 'ItemDates' });
                     expect(datesField.labelText).to.equal('Dates');
                     expect(datesField.sort).to.equal(true);
                 });
@@ -53,15 +53,6 @@
                 it('Defines the `MakersMarks` field', function () {
                     var makersMarksField = _.find(searchResultFields, { key: 'MakersMarks' });
                     expect(makersMarksField.labelText).to.equal('Makers Marks');
-                });
-                it('Defines the `Classification` field', function () {
-                    var classificationField = _.find(searchResultFields, { key: 'Classification' });
-                    expect(classificationField.labelText).to.equal('Classification');
-                    expect(classificationField.parse).to.equal(true);
-                    expect(classificationField.skipNested).to.equal(1);
-                    expect(classificationField.filter).to.equal(true);
-                    expect(classificationField.display).to.equal('hierarchy-list');
-                    expect(_.isFunction(classificationField.sort)).to.equal(true);
                 });
             });
         }
