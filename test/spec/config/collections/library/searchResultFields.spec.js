@@ -60,7 +60,7 @@
                 });
                 it('Defines the `PublicationType` field', function () {
                     var publicationTypeField = _.find(searchResultFields, { key: 'PublicationType' });
-                    expect(publicationTypeField.labelText).to.equal('Type');
+                    expect(publicationTypeField.labelText).to.equal('Publication Type');
                     expect(publicationTypeField.sort).to.equal(true);
                 });
             });

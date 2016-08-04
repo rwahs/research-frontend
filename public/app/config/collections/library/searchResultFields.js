@@ -50,7 +50,7 @@
             },
             {
                 key: 'PublicationType',
-                labelText: 'Type',
+                labelText: 'Publication Type',
                 sort: true
             }
         ];
