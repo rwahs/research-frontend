@@ -14,7 +14,7 @@
 
             simpleApiBaseUrl = 'https://staging-collections-api.histwest.org.au/service.php/simple';
             options = {
-                noCache: false,
+                noCache: true,
                 logErrors: true,
                 limit: 500,
                 ajaxOptions: {
