@@ -29,6 +29,11 @@
 
             return function () {
                 container.register('options.service', options);
+                container.register('options.providence', {
+                    baseUrl: {
+                        objects: 'https://collections.histwest.org.au/index.php/editor/objects/ObjectEditor/Summary/'
+                    }
+                });
 
                 container.register('search.all', cachingService(searchService(simpleApiBaseUrl + '/all_search', options)));
                 container.register('search.library', cachingService(searchService(simpleApiBaseUrl + '/library_search', options)));
