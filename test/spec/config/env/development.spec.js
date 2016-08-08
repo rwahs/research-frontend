@@ -18,6 +18,9 @@
                     beforeEach(function () {
                         configure();
                     });
+                    it('Registers options', function () {
+                        expect(container.isRegistered('options.service')).to.equal(true);
+                    });
                     it('Registers search services', function () {
                         expect(container.isRegistered('search.all')).to.equal(true);
                         expect(container.isRegistered('search.library')).to.equal(true);
@@ -30,6 +33,9 @@
                         expect(container.isRegistered('detail.photographs')).to.equal(true);
                         expect(container.isRegistered('detail.museum')).to.equal(true);
                         expect(container.isRegistered('detail.memorials')).to.equal(true);
+                    });
+                    it('Registers the overlay utility', function () {
+                        expect(container.isRegistered('ui.overlay')).to.equal(true);
                     });
                     afterEach(function () {
                         container.reset();
