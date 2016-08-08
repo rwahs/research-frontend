@@ -26,6 +26,11 @@
                             title: 'The Meaning of Life',
                             description: '<p>Rich text <strong>description</strong>.</p>'
                         });
+                        container.register('options.providence', {
+                            baseUrl: {
+                                objects: 'https://fake.domain/editor/objects/'
+                            }
+                        });
                         container.register('detail.collection', detailService);
                         container.register('settings.collection', {
                             detailFields: 'fixtures/collections/detailFields'
@@ -57,6 +62,7 @@
                             expect(ko.isPureComputed(page.displayRecord)).to.equal(true);
                             expect(ko.isPureComputed(page.collectionName)).to.equal(true);
                             expect(ko.isPureComputed(page.detail)).to.equal(true);
+                            expect(ko.isPureComputed(page.curatorUrl)).to.equal(true);
                         });
                         it('Has the correct initial state', function () {
                             expect(page.detailFields()).to.deep.equal([]);
@@ -65,6 +71,7 @@
                             expect(page.displayRecord()).to.equal(false);
                             expect(page.collectionName()).to.equal(undefined);
                             expect(page.detail()).to.equal('collections/collection/detail');
+                            expect(page.curatorUrl()).to.equal('https://fake.domain/editor/objects/object_id/42');
                         });
                         it('Exposes life cycle methods', function () {
                             expect(page.attaching).to.be.a('function');
@@ -167,6 +174,11 @@
                     var detailService, overlay;
                     beforeEach(function () {
                         detailService = sinon.stub().callsArgWith(1, new Error('Service Error'));
+                        container.register('options.providence', {
+                            baseUrl: {
+                                objects: 'https://fake.domain/editor/objects/'
+                            }
+                        });
                         container.register('detail.collection', detailService);
                         container.register('settings.collection', {
                             collectionName: 'Test',
