@@ -11,6 +11,7 @@
         function (_, ko, container, DynamicRecord) {
             return function (context) {
                 var settings = container.resolve('settings.' + context.params.type),
+                    providence = container.resolve('options.providence'),
                     record = ko.observable(undefined);
 
                 this.detailFields = ko.observableArray();
@@ -36,6 +37,10 @@
                 this.detail = ko.pureComputed(function () {
                     return 'collections/' + context.params.type + '/detail';
                 });
+
+                this.curatorUrl = ko.pureComputed(function () {
+                    return providence.baseUrl.objects + 'object_id/' + context.params.id;
+                }.bind(this));
 
                 this.attaching = function (element, callback) {
                     record(undefined);
