@@ -9,7 +9,7 @@
                         <div data-bind="component: { name: 'search/basic', params: { fields: inputFields, queryObservable: query } }"></div>
                         <!-- /ko -->
                         <!-- ko if: advancedMode -->
-                        <div data-bind="component: { name: 'search/query-builder', params: { fields: inputFields, maxDepth: 3, queryObservable: query } }"></div>
+                        <div data-bind="component: { name: 'search/query-builder', params: { fields: inputFields, maxDepth: 3, queryObservable: query, submit: submit } }"></div>
                         <!-- /ko -->
                         <!-- ko if: hasLimitedResults -->
                         <div class="alert alert-danger">

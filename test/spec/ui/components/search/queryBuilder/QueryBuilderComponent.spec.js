@@ -41,6 +41,7 @@
                         });
                         it('Exposes view helper methods', function () {
                             expect(component.templateFor).to.be.a('function');
+                            expect(component.keypressHandler).to.be.a('function');
                         });
                         it('Sets a Group with a single empty Condition as the root node', function () {
                             expect(component.root() instanceof Group).to.equal(true);
@@ -94,6 +95,7 @@
                         });
                         it('Exposes view helper methods', function () {
                             expect(component.templateFor).to.be.a('function');
+                            expect(component.keypressHandler).to.be.a('function');
                         });
                         it('Sets a the correct query structure', function () {
                             expect(component.root() instanceof Group).to.equal(true);
