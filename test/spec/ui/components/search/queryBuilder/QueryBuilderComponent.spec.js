@@ -3,14 +3,14 @@
 
     define(
         [
+            'lodash',
             'chai',
-            'sinon',
             'knockout',
             'ui/components/search/queryBuilder/QueryBuilderComponent',
             'models/query/Group',
             'models/query/Condition'
         ],
-        function (chai, sinon, ko, QueryBuilderComponent, Group, Condition) {
+        function (_, chai, ko, QueryBuilderComponent, Group, Condition) {
             var expect = chai.expect;
 
             describe('The `QueryBuilderComponent` module', function () {
@@ -25,6 +25,7 @@
                             require([ 'fixtures/collections/searchInputFields' ], function (searchInputFields) {
                                 component = new QueryBuilderComponent({
                                     queryObservable: query,
+                                    submit: _.noop,
                                     fields: ko.observable(searchInputFields),
                                     maxDepth: 3
                                 });
@@ -59,7 +60,7 @@
                         });
                     });
                     describe('When constructed with an initial query', function () {
-                        var query, component;
+                        var query, submit, component;
                         beforeEach(function (done) {
                             query = ko.observable({
                                 operator: 'AND',
@@ -79,6 +80,7 @@
                             require([ 'fixtures/collections/searchInputFields' ], function (searchInputFields) {
                                 component = new QueryBuilderComponent({
                                     queryObservable: query,
+                                    submit: _.noop,
                                     fields: ko.observable(searchInputFields),
                                     maxDepth: 3
                                 });
@@ -123,6 +125,7 @@
                         expect(function () {
                             component = new QueryBuilderComponent({
                                 // The actual fields are unimportant here, but we need something so an empty object will do.
+                                submit: _.noop,
                                 fields: ko.observableArray([ {} ]),
                                 maxDepth: 3
                             });
@@ -136,10 +139,36 @@
                             component = new QueryBuilderComponent({
                                 // The actual fields are unimportant here, but we need something so an empty object will do.
                                 fields: ko.observableArray([ {} ]),
+                                submit: _.noop,
                                 queryObservable: 'foo',
                                 maxDepth: 3
                             });
                         }).to.throw('QueryBuilderComponent missing or invalid required parameter: `queryObservable`.');
+                    });
+                });
+                describe('With missing `submit` parameter', function () {
+                    var component;
+                    it('Throws an error', function () {
+                        expect(function () {
+                            component = new QueryBuilderComponent({
+                                fields: ko.observableArray([ {} ]),
+                                queryObservable: ko.observable(),
+                                maxDepth: 3
+                            });
+                        }).to.throw('QueryBuilderComponent missing or invalid required parameter: `submit`.');
+                    });
+                });
+                describe('With non-function `submit` parameter', function () {
+                    var component;
+                    it('Throws an error', function () {
+                        expect(function () {
+                            component = new QueryBuilderComponent({
+                                fields: ko.observableArray([ {} ]),
+                                submit: 'not a function',
+                                queryObservable: ko.observable(),
+                                maxDepth: 3
+                            });
+                        }).to.throw('QueryBuilderComponent missing or invalid required parameter: `submit`.');
                     });
                 });
                 describe('With missing `fields` parameter', function () {
@@ -147,6 +176,7 @@
                     it('Throws an error', function () {
                         expect(function () {
                             component = new QueryBuilderComponent({
+                                submit: _.noop,
                                 queryObservable: ko.observable(),
                                 maxDepth: 3
                             });
@@ -159,6 +189,7 @@
                         expect(function () {
                             component = new QueryBuilderComponent({
                                 // The actual fields are unimportant here, but we need something so an empty object will do.
+                                submit: _.noop,
                                 fields: ko.observableArray([ {} ]),
                                 queryObservable: ko.observable()
                             });
