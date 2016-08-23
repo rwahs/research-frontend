@@ -136,7 +136,7 @@
                     results([]);
                     this.displayResults(false);
                     this.query(undefined);
-                };
+                }.bind(this);
 
                 this.submit = function (callback) {
                     if (!this.canSubmit()) {
@@ -146,7 +146,7 @@
                     routes.pushState(this.searchUrlFor({ query: JSON.stringify(this.query()) }));
                     doSearch(callback);
                     return false;
-                };
+                }.bind(this);
 
                 this.searchUrlFor = function (overrides) {
                     var query;

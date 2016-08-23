@@ -4,16 +4,20 @@
 
     define(
         [
+            'lodash',
             'knockout',
             'models/query/Group',
             'models/query/Condition'
         ],
-        function (ko, Group, Condition) {
+        function (_, ko, Group, Condition) {
             return function (parameters) {
                 var root;
 
                 if (!parameters.queryObservable || !ko.isObservable(parameters.queryObservable)) {
                     throw new Error('QueryBuilderComponent missing or invalid required parameter: `queryObservable`.');
+                }
+                if (!parameters.submit || !_.isFunction(parameters.submit)) {
+                    throw new Error('QueryBuilderComponent missing or invalid required parameter: `submit`.');
                 }
                 if (!parameters.fields || parameters.fields().length === 0) {
                     throw new Error('QueryBuilderComponent missing required parameter: `fields`.');
@@ -45,6 +49,14 @@
                     if (node instanceof Condition) {
                         return 'condition-template';
                     }
+                };
+
+                this.keypressHandler = function (ignore, evt) {
+                    if (evt.keyCode === 13) {
+                        parameters.submit();
+                        return false;
+                    }
+                    return true;
                 };
             };
         }
