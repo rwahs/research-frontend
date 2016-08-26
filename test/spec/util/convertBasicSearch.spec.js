@@ -19,8 +19,25 @@
                     });
                 });
                 describe('When invoked with a string consisting of only whitespace', function () {
-                    it('Returns undefined', function () {
-                        expect(convertBasicSearch('field', '   ')).to.equal(undefined);
+                    it('Returns the correct query', function () {
+                        // This test documents a slightly strange (but not easily avoidable) behaviour.  The search
+                        // text is `split` on any sequence of whitespace, which here gives an empty string from the
+                        // start of the search text and another empty string from the end of the search text.
+                        expect(convertBasicSearch('field', '   ')).to.deep.equal({
+                            operator: 'AND',
+                            children: [
+                                {
+                                    field: 'field',
+                                    comparator: 'contains',
+                                    value: ''
+                                },
+                                {
+                                    field: 'field',
+                                    comparator: 'contains',
+                                    value: ''
+                                }
+                            ]
+                        });
                     });
                 });
                 describe('When invoked with a single word', function () {
@@ -39,13 +56,26 @@
                 });
                 describe('When invoked with a single word with extraneous whitespace', function () {
                     it('Returns the correct query', function () {
+                        // This test documents a slightly strange (but not easily avoidable) behaviour.  The search
+                        // text is `split` on any sequence of whitespace, which here gives an empty string from the
+                        // start of the search text and another empty string from the end of the search text.
                         expect(convertBasicSearch('field', '  foo  ')).to.deep.equal({
                             operator: 'AND',
                             children: [
                                 {
                                     field: 'field',
                                     comparator: 'contains',
+                                    value: ''
+                                },
+                                {
+                                    field: 'field',
+                                    comparator: 'contains',
                                     value: 'foo'
+                                },
+                                {
+                                    field: 'field',
+                                    comparator: 'contains',
+                                    value: ''
                                 }
                             ]
                         });
@@ -76,20 +106,36 @@
                     });
                 });
                 describe('When invoked with a multi-word string with extraneous whitespace', function () {
-                    expect(convertBasicSearch('field', '  forty    two ')).to.deep.equal({
-                        operator: 'AND',
-                        children: [
-                            {
-                                field: 'field',
-                                comparator: 'contains',
-                                value: 'forty'
-                            },
-                            {
-                                field: 'field',
-                                comparator: 'contains',
-                                value: 'two'
-                            }
-                        ]
+                    it('Returns the correct query', function () {
+                        // This test documents a slightly strange (but not easily avoidable) behaviour.  The search
+                        // text is `split` on any sequence of whitespace, which here gives an empty string from the
+                        // start of the search text and another empty string from the end of the search text.  Internal
+                        // sequences of whitespace are collapsed normally.
+                        expect(convertBasicSearch('field', '  forty    two ')).to.deep.equal({
+                            operator: 'AND',
+                            children: [
+                                {
+                                    field: 'field',
+                                    comparator: 'contains',
+                                    value: ''
+                                },
+                                {
+                                    field: 'field',
+                                    comparator: 'contains',
+                                    value: 'forty'
+                                },
+                                {
+                                    field: 'field',
+                                    comparator: 'contains',
+                                    value: 'two'
+                                },
+                                {
+                                    field: 'field',
+                                    comparator: 'contains',
+                                    value: ''
+                                }
+                            ]
+                        });
                     });
                 });
             });
