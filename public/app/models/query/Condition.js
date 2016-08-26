@@ -59,12 +59,9 @@
                     if (!query.comparator) {
                         throw new Error('Cannot parse Condition query, missing `comparator`');
                     }
-                    if (!query.value) {
-                        throw new Error('Cannot parse Condition query, missing `value`');
-                    }
                     this.selectedField(query.field);
                     this.selectedComparator(query.comparator);
-                    this.value(query.value);
+                    this.value(query.value || '');
                 };
             };
         }

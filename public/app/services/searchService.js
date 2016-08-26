@@ -18,6 +18,9 @@
 
             queryString = function (parameters) {
                 return _(parameters.children)
+                    .filter(function (child) {
+                        return child.hasOwnProperty('children') || child.value;
+                    })
                     .map(function (child) {
                         return child.hasOwnProperty('children') ?
                             '(' + queryString(child) + ')' :

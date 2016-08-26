@@ -58,7 +58,7 @@
                         var childNode;
                         if (child.operator && child.children) {
                             childNode = new Group(queryBuilder, this);
-                        } else if (child.field && child.comparator && child.value) {
+                        } else if (child.field && child.comparator) {
                             childNode = new Condition(queryBuilder);
                         } else {
                             throw new Error('Cannot parse Group query, invalid data encountered in query structure: ' + JSON.stringify(child));

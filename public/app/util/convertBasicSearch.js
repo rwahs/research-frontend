@@ -7,7 +7,6 @@
         ],
         function (_) {
             return function (field, text) {
-                text = text.trim();
                 return text.length === 0 ? undefined : {
                     operator: 'AND',
                     children: _.map(
