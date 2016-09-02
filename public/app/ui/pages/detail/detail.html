@@ -38,8 +38,11 @@
                     for further information.
                 </div>
                 <!-- /ko -->
-                <div class="text-right small">
-                    <a href="#" target="_blank" data-bind="attr: { href: curatorUrl }" class="text-muted" rel="nofollow">Curator View</a>
+                <div class="clearfix">
+                    <!-- ko if: shopUrl -->
+                    <a href="#" target="_blank" data-bind="attr: { href: shopUrl }" class="pull-left btn btn-primary">Buy This Digital Image</a>
+                    <!-- /ko -->
+                    <a href="#" target="_blank" data-bind="attr: { href: curatorUrl }" class="text-muted pull-right small" rel="nofollow">Curator View</a>
                 </div>
             </section>
         </div>

@@ -12,6 +12,7 @@
             return function (context) {
                 var settings = container.resolve('settings.' + context.params.type),
                     providence = container.resolve('options.providence'),
+                    shop = container.resolve('options.shop'),
                     record = ko.observable(undefined);
 
                 this.detailFields = ko.observableArray();
@@ -37,6 +38,12 @@
                 this.detail = ko.pureComputed(function () {
                     return 'collections/' + context.params.type + '/detail';
                 });
+
+                this.shopUrl = ko.pureComputed(function () {
+                    var idno = this.idno();
+                    return idno && context.params.type === 'photographs' ?
+                        (shop.baseUrl.digitalPhotographs + '?idno=' + idno) : undefined;
+                }.bind(this));
 
                 this.curatorUrl = ko.pureComputed(function () {
                     return providence.baseUrl.objects + 'object_id/' + context.params.id;
