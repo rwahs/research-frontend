@@ -1,6 +1,6 @@
 {
   "name": "rwahs-research-frontend",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "SPA frontend for CollectiveAccess SimpleAPI",
   "main": "public/app/main.js",
   "scripts": {
