@@ -20,6 +20,7 @@
                     });
                     it('Registers options', function () {
                         expect(container.isRegistered('options.service')).to.equal(true);
+                        expect(container.isRegistered('options.shop')).to.equal(true);
                         expect(container.isRegistered('options.providence')).to.equal(true);
                     });
                     it('Registers search services', function () {
