@@ -26,13 +26,22 @@
                             title: 'The Meaning of Life',
                             description: '<p>Rich text <strong>description</strong>.</p>'
                         });
+                        container.register('options.shop', {
+                            baseUrl: {
+                                digitalPhotographs: 'https://fake.shop/photographs'
+                            }
+                        });
                         container.register('options.providence', {
                             baseUrl: {
                                 objects: 'https://fake.domain/editor/objects/'
                             }
                         });
                         container.register('detail.collection', detailService);
+                        container.register('detail.photographs', detailService);
                         container.register('settings.collection', {
+                            detailFields: 'fixtures/collections/detailFields'
+                        });
+                        container.register('settings.photographs', {
                             detailFields: 'fixtures/collections/detailFields'
                         });
                         overlay = {
@@ -62,6 +71,7 @@
                             expect(ko.isPureComputed(page.displayRecord)).to.equal(true);
                             expect(ko.isPureComputed(page.collectionName)).to.equal(true);
                             expect(ko.isPureComputed(page.detail)).to.equal(true);
+                            expect(ko.isPureComputed(page.shopUrl)).to.equal(true);
                             expect(ko.isPureComputed(page.curatorUrl)).to.equal(true);
                         });
                         it('Has the correct initial state', function () {
@@ -71,6 +81,7 @@
                             expect(page.displayRecord()).to.equal(false);
                             expect(page.collectionName()).to.equal(undefined);
                             expect(page.detail()).to.equal('collections/collection/detail');
+                            expect(page.shopUrl()).to.equal(undefined); // Because the `type` is not "photographs"
                             expect(page.curatorUrl()).to.equal('https://fake.domain/editor/objects/object_id/42');
                         });
                         it('Exposes life cycle methods', function () {
@@ -166,6 +177,33 @@
                             });
                         });
                     });
+                    describe('When constructed with a type of "photographs"', function () {
+                        var context, page;
+                        beforeEach(function () {
+                            context = {
+                                params: {
+                                    type: 'photographs',
+                                    id: 42
+                                }
+                            };
+                            page = new DetailPage(context);
+                        });
+                        describe('When attached', function () {
+                            var element;
+                            beforeEach(function (done) {
+                                element = document.createElement('div');
+                                page.attaching(element, done);
+                            });
+                            describe('When bound to the view', function () {
+                                beforeEach(function (done) {
+                                    page.binding(element, done);
+                                });
+                                it('Has the correct shop URL', function () {
+                                    expect(page.shopUrl()).to.equal('https://fake.shop/photographs?idno=1984/42');
+                                });
+                            });
+                        });
+                    });
                     afterEach(function () {
                         container.reset();
                     });
@@ -174,6 +212,11 @@
                     var detailService, overlay;
                     beforeEach(function () {
                         detailService = sinon.stub().callsArgWith(1, new Error('Service Error'));
+                        container.register('options.shop', {
+                            baseUrl: {
+                                digitalPhotographs: 'https://fake.shop/photographs'
+                            }
+                        });
                         container.register('options.providence', {
                             baseUrl: {
                                 objects: 'https://fake.domain/editor/objects/'

@@ -29,6 +29,11 @@
 
             return function () {
                 container.register('options.service', options);
+                container.register('options.shop', {
+                    baseUrl: {
+                        digitalPhotographs: 'https://staging-shop.histwest.org.au/index.php/photographs/digital-photograph.html'
+                    }
+                });
                 container.register('options.providence', {
                     baseUrl: {
                         objects: 'https://staging-collections.histwest.org.au/index.php/editor/objects/ObjectEditor/Summary/'
