@@ -329,7 +329,7 @@
                                     });
                                     it('Makes an AJAX call', function () {
                                         sinon.assert.calledOnce($.ajax);
-                                        expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=field:[BLANK] AND another:*');
+                                        expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:[BLANK]) AND (another:*)');
                                         expect($.ajax.args[0][0].success).to.be.a('function');
                                         expect($.ajax.args[0][0].error).to.be.a('function');
                                     });
