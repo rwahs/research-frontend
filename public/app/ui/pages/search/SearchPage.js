@@ -72,9 +72,21 @@
                 });
 
                 this.submittedQueryText = ko.pureComputed(function () {
-                    // TODO Change this into something readable
-                    return JSON.stringify(submittedQuery());
-                });
+                    var labelText, convertToDisplayValue;
+                    labelText = function (child) {
+                        return _.find(this.inputFields(), { key: child.field }).labelText;
+                    }.bind(this);
+                    convertToDisplayValue = function (parameters) {
+                        return _(parameters.children)
+                            .map(function (child) {
+                                return child.hasOwnProperty('children') ?
+                                    '(' + convertToDisplayValue(child) + ')' :
+                                    labelText(child) + ' ' + child.comparator + ' "' + child.value + '"';
+                            }.bind(this))
+                            .join(' ' + parameters.operator + ' ');
+                    }.bind(this);
+                    return convertToDisplayValue(submittedQuery());
+                }.bind(this));
 
                 this.heading = ko.pureComputed(function () {
                     return settings.collectionName + ' Search';
