@@ -54,6 +54,13 @@
                 this.detailUrlFor = function (result) {
                     return routes.detailUrlFor(typeFor(result), result.id());
                 };
+
+                this.navigateTo = function (result) {
+                    var url = this.detailUrlFor(result);
+                    return function () {
+                        routes.pushState(url, true);
+                    }.bind(this);
+                };
             };
         }
     );

@@ -46,6 +46,7 @@
                         expect(component.displayFor).to.be.a('function');
                         expect(component.resultFor).to.be.a('function');
                         expect(component.detailUrlFor).to.be.a('function');
+                        expect(component.navigateTo).to.be.a('function');
                     });
                     describe('The `displayFor` method', function () {
                         describe('For a field using the default display type', function () {
