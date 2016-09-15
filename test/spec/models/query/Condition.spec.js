@@ -31,9 +31,11 @@
                         expect(ko.isObservable(condition.fields)).to.equal(true);
                         expect(ko.isObservable(condition.comparators)).to.equal(true);
                         expect(ko.isObservable(condition.query)).to.equal(true);
+                        expect(ko.isObservable(condition.valueType)).to.equal(true);
                     });
                     it('Exposes helper methods', function () {
                         expect(condition.parse).to.be.a('function');
+                        expect(condition.valueTypeIs).to.be.a('function');
                     });
                     it('Exposes the correct default values', function () {
                         expect(condition.selectedField()).to.equal(undefined);

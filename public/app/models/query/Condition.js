@@ -21,35 +21,59 @@
                     return [
                         {
                             key: 'contains',
-                            labelText: 'contains'
+                            labelText: 'contains',
+                            valueType: 'text'
                         },
                         {
                             key: 'notContains',
-                            labelText: 'does not contain'
+                            labelText: 'does not contain',
+                            valueType: 'text'
                         },
                         {
                             key: 'startsWith',
-                            labelText: 'starts with'
+                            labelText: 'starts with',
+                            valueType: 'text'
                         },
                         {
                             key: 'notStartsWith',
-                            labelText: 'does not start with'
+                            labelText: 'does not start with',
+                            valueType: 'text'
+                        },
+                        {
+                            key: 'empty',
+                            labelText: 'is empty',
+                            valueType: false
+                        },
+                        {
+                            key: 'notEmpty',
+                            labelText: 'is not empty',
+                            valueType: false
                         }
                     ];
                 });
 
+                this.valueType = ko.pureComputed(function () {
+                    var comparator = _(this.comparators()).find({ key: this.selectedComparator() });
+                    return comparator ? comparator.valueType : false;
+                }.bind(this));
+
+                this.valueTypeIs = function (type) {
+                    return this.valueType() === type;
+                }.bind(this);
+
                 this.query = ko.pureComputed(function () {
-                    var field, comparator, value;
-                    field = this.selectedField();
-                    comparator = this.selectedComparator();
-                    value = this.value();
-                    return (field && comparator && value) ?
-                        {
-                            field: field,
-                            comparator: comparator,
-                            value: value
-                        } :
-                        undefined;
+                    var result;
+                    result = {
+                        field: this.selectedField(),
+                        comparator: this.selectedComparator()
+                    };
+                    if (!result.field || !result.comparator) {
+                        return undefined;
+                    }
+                    if (this.valueType()) {
+                        result.value = this.value();
+                    }
+                    return result;
                 }.bind(this));
 
                 this.parse = function (query) {
