@@ -21,14 +21,10 @@
 
             return function (context) {
                 var settings = container.resolve('settings.' + context.params.type),
-                    selectedSearchType = ko.observable(),
                     submittedQuery = ko.observable(),
                     results = ko.observableArray(),
                     initialUrlParameters = qs.parse(window.location.search.replace(/^\?/, '')),
                     overlay = container.resolve('ui.overlay'),
-                    typeFor = function (result) {
-                        return container.resolve('types')[result.data().type];
-                    },
                     doSearch = function (callback) {
                         submittedQuery(this.query());
                         results([]);
@@ -73,6 +69,11 @@
 
                 this.submittedQuery = ko.pureComputed(function () {
                     return submittedQuery();
+                });
+
+                this.submittedQueryText = ko.pureComputed(function () {
+                    // TODO Change this into something readable
+                    return JSON.stringify(submittedQuery());
                 });
 
                 this.heading = ko.pureComputed(function () {

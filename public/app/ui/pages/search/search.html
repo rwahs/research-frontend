@@ -53,6 +53,7 @@
     <p class="text-muted">No results found.</p>
     <!-- /ko -->
     <!-- ko if: hasResults -->
+    <div data-bind="text: submittedQueryText" class="visible-print"></div>
     <div data-bind="component: { name: 'controls/list', params: { pager: pager, sorter: sorter, modeSwitcher: modeSwitcher, searchUrlFor: searchUrlFor } }" class="text-right"></div>
     <div data-bind="component: { name: 'search/results', params: { results: displayedResults, modeSwitcher: modeSwitcher, resultFields: resultFields, start: start } }"></div>
     <!-- /ko -->
