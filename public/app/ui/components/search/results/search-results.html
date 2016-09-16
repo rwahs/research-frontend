@@ -35,7 +35,7 @@
                     </thead>
                     <tbody>
                     <!-- ko foreach: { data: results, as: 'result' } -->
-                    <tr class="result">
+                    <tr class="result" data-bind="click: $parent.navigateTo(result)">
                         <td data-bind="text: $index() + $parent.start() + 1"></td>
                         <!-- ko foreach: { data: $parent.resultFields, as: 'field' } -->
                         <!-- ko if: field.tableColumn !== false -->
