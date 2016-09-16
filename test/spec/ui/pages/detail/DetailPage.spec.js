@@ -288,6 +288,68 @@
                         container.reset();
                     });
                 });
+                describe('When the shop base URL is not configured', function () {
+                    var detailService, overlay;
+                    beforeEach(function () {
+                        detailService = sinon.stub().callsArgWith(1, undefined, {
+                            id: 42,
+                            type: 'Test',
+                            idno: '1984/42',
+                            title: 'The Meaning of Life',
+                            description: '<p>Rich text <strong>description</strong>.</p>'
+                        });
+                        container.register('options.shop', {});
+                        container.register('options.providence', {
+                            baseUrl: {
+                                objects: 'https://fake.domain/editor/objects/'
+                            }
+                        });
+                        container.register('detail.collection', detailService);
+                        container.register('detail.photographs', detailService);
+                        container.register('settings.collection', {
+                            detailFields: 'fixtures/collections/detailFields'
+                        });
+                        container.register('settings.photographs', {
+                            detailFields: 'fixtures/collections/detailFields'
+                        });
+                        overlay = {
+                            loading: sinon.stub(),
+                            error: sinon.stub()
+                        };
+                        container.register('ui.overlay', overlay);
+                        container.seal();
+                    });
+                    describe('When constructed with a type of "photographs"', function () {
+                        var context, page;
+                        beforeEach(function () {
+                            context = {
+                                params: {
+                                    type: 'photographs',
+                                    id: 42
+                                }
+                            };
+                            page = new DetailPage(context);
+                        });
+                        describe('When attached', function () {
+                            var element;
+                            beforeEach(function (done) {
+                                element = document.createElement('div');
+                                page.attaching(element, done);
+                            });
+                            describe('When bound to the view', function () {
+                                beforeEach(function (done) {
+                                    page.binding(element, done);
+                                });
+                                it('Has the correct shop URL', function () {
+                                    expect(page.shopUrl()).to.equal(undefined);
+                                });
+                            });
+                        });
+                    });
+                    afterEach(function () {
+                        container.reset();
+                    });
+                });
             });
         }
     );
