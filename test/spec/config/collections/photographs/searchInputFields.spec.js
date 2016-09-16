@@ -44,9 +44,9 @@
                     expect(searchType.labelText).to.equal('Accession Number');
                     expect(searchType.basicSearch).to.equal(false);
                 });
-                it('Defines the `Creator` field', function () {
-                    var searchType = _.find(searchInputFields, { key: 'ca_objects.Creator' });
-                    expect(searchType.labelText).to.equal('Creator');
+                it('Defines the `DateOfCreation` field', function () {
+                    var searchType = _.find(searchInputFields, { key: 'ca_objects.DateOfCreation' });
+                    expect(searchType.labelText).to.equal('Date of Creation');
                     expect(searchType.basicSearch).to.equal(false);
                 });
                 it('Defines the `Publisher` field', function () {

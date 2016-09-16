@@ -41,7 +41,7 @@
 
                 this.shopUrl = ko.pureComputed(function () {
                     var idno = this.idno();
-                    return idno && context.params.type === 'photographs' ?
+                    return idno && shop.baseUrl && shop.baseUrl.digitalPhotographs && context.params.type === 'photographs' ?
                         (shop.baseUrl.digitalPhotographs + '?idno=' + idno) : undefined;
                 }.bind(this));
 
