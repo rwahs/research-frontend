@@ -12,8 +12,8 @@
             comparatorFormatters = {
                 contains: _.template('(<%= field %>:"<%= value %>")'),
                 notContains: _.template('!(<%= field %>:"<%= value %>")'),
-                startsWith: _.template('(<%= field %>:"<%= value %>"*)'),
-                notStartsWith: _.template('!(<%= field %>:"<%= value %>"*)')
+                startsWith: _.template('(<%= field %>:<%= value %>*)'),
+                notStartsWith: _.template('!(<%= field %>:<%= value %>*)')
             };
 
             queryString = function (parameters) {
