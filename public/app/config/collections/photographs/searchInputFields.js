@@ -33,8 +33,8 @@
                 basicSearch: false
             },
             {
-                key: 'ca_objects.Creator',
-                labelText: 'Creator',
+                key: 'ca_objects.DateOfCreation',
+                labelText: 'Date of Creation',
                 basicSearch: false
             },
             {
