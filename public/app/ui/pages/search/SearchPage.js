@@ -21,14 +21,10 @@
 
             return function (context) {
                 var settings = container.resolve('settings.' + context.params.type),
-                    selectedSearchType = ko.observable(),
                     submittedQuery = ko.observable(),
                     results = ko.observableArray(),
                     initialUrlParameters = qs.parse(window.location.search.replace(/^\?/, '')),
                     overlay = container.resolve('ui.overlay'),
-                    typeFor = function (result) {
-                        return container.resolve('types')[result.data().type];
-                    },
                     doSearch = function (callback) {
                         submittedQuery(this.query());
                         results([]);
@@ -74,6 +70,23 @@
                 this.submittedQuery = ko.pureComputed(function () {
                     return submittedQuery();
                 });
+
+                this.submittedQueryText = ko.pureComputed(function () {
+                    var labelText, convertToDisplayValue;
+                    labelText = function (child) {
+                        return _.find(this.inputFields(), { key: child.field }).labelText;
+                    }.bind(this);
+                    convertToDisplayValue = function (parameters) {
+                        return _(parameters.children)
+                            .map(function (child) {
+                                return child.hasOwnProperty('children') ?
+                                    '(' + convertToDisplayValue(child) + ')' :
+                                    labelText(child) + ' ' + child.comparator + ' "' + child.value + '"';
+                            }.bind(this))
+                            .join(' ' + parameters.operator + ' ');
+                    }.bind(this);
+                    return convertToDisplayValue(submittedQuery());
+                }.bind(this));
 
                 this.heading = ko.pureComputed(function () {
                     return settings.collectionName + ' Search';

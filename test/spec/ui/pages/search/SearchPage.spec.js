@@ -65,6 +65,8 @@
                                     expect(ko.isObservable(page.resultFields)).to.equal(true);
                                     expect(ko.isObservable(page.displayResults)).to.equal(true);
                                     expect(ko.isPureComputed(page.displayedResults)).to.equal(true);
+                                    expect(ko.isPureComputed(page.submittedQuery)).to.equal(true);
+                                    expect(ko.isPureComputed(page.submittedQueryText)).to.equal(true);
                                     expect(ko.isPureComputed(page.heading)).to.equal(true);
                                     expect(ko.isPureComputed(page.advancedModeToggleText)).to.equal(true);
                                     expect(ko.isPureComputed(page.hasResults)).to.equal(true);
