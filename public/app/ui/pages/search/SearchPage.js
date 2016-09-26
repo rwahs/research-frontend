@@ -146,7 +146,7 @@
                     if (!shopOptions) {
                         return undefined;
                     }
-                    return shopOptions.baseUrl + shopOptions.path.search + '?q=' + _.map(submittedQuery().children, 'value').join('+');
+                    return shopOptions.baseUrl + shopOptions.path.search + '?q=' + _(submittedQuery().children).map('value').filter().join('+');
                 });
 
                 this.shopSearchText = ko.pureComputed(function () {
