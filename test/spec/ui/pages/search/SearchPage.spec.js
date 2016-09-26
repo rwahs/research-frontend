@@ -67,8 +67,11 @@
                                     expect(ko.isPureComputed(page.displayedResults)).to.equal(true);
                                     expect(ko.isPureComputed(page.submittedQuery)).to.equal(true);
                                     expect(ko.isPureComputed(page.submittedQueryText)).to.equal(true);
+                                    expect(ko.isPureComputed(page.queryText)).to.equal(true);
+                                    expect(ko.isPureComputed(page.queryModified)).to.equal(true);
                                     expect(ko.isPureComputed(page.heading)).to.equal(true);
                                     expect(ko.isPureComputed(page.advancedModeToggleText)).to.equal(true);
+                                    expect(ko.isPureComputed(page.resultsCountText)).to.equal(true);
                                     expect(ko.isPureComputed(page.hasResults)).to.equal(true);
                                     expect(ko.isPureComputed(page.hasLimitedResults)).to.equal(true);
                                     expect(ko.isPureComputed(page.canSubmit)).to.equal(true);
@@ -90,6 +93,7 @@
                                     expect(page.query()).to.equal(undefined);
                                 });
                                 it('Does not have any results', function () {
+                                    expect(page.resultsCountText()).to.equal('0 results');
                                     expect(page.hasResults()).to.equal(false);
                                     expect(page.hasLimitedResults()).to.equal(false);
                                 });
@@ -104,6 +108,7 @@
                                 });
                                 it('Gives the right default computed values', function () {
                                     expect(page.heading()).to.equal('Collection Search');
+                                    expect(page.resultsCountText()).to.equal('0 results');
                                     expect(page.hasResults()).to.equal(false);
                                     expect(page.hasLimitedResults()).to.equal(false);
                                 });
@@ -140,6 +145,7 @@
                                             expect(page.query()).to.equal(undefined);
                                         });
                                         it('Does not have any results', function () {
+                                            expect(page.resultsCountText()).to.equal('0 results');
                                             expect(page.hasResults()).to.equal(false);
                                             expect(page.hasLimitedResults()).to.equal(false);
                                         });
@@ -186,6 +192,7 @@
                                                     expect(page.advancedMode()).to.equal(false);
                                                 });
                                                 it('Does not have any results', function () {
+                                                    expect(page.resultsCountText()).to.equal('0 results');
                                                     expect(page.hasResults()).to.equal(false);
                                                     expect(page.hasLimitedResults()).to.equal(false);
                                                 });
@@ -210,6 +217,7 @@
                                                     expect(page.advancedMode()).to.equal(false);
                                                 });
                                                 it('Does not have any results', function () {
+                                                    expect(page.resultsCountText()).to.equal('0 results');
                                                     expect(page.hasResults()).to.equal(false);
                                                     expect(page.hasLimitedResults()).to.equal(false);
                                                 });
@@ -250,6 +258,7 @@
                                                     expect(page.advancedMode()).to.equal(false);
                                                 });
                                                 it('Does not have any results', function () {
+                                                    expect(page.resultsCountText()).to.equal('0 results');
                                                     expect(page.hasResults()).to.equal(false);
                                                     expect(page.hasLimitedResults()).to.equal(false);
                                                 });
@@ -284,6 +293,7 @@
                                                     expect(page.advancedMode()).to.equal(false);
                                                 });
                                                 it('Has results below the limit', function () {
+                                                    expect(page.resultsCountText()).to.equal('3 results'); // 3 results defined above
                                                     expect(page.hasResults()).to.equal(true);
                                                     expect(page.hasLimitedResults()).to.equal(false);
                                                 });
@@ -437,6 +447,7 @@
                                             sinon.assert.calledWith(searchService, query);
                                         });
                                         it('Has results that are not limited', function () {
+                                            expect(page.resultsCountText()).to.equal('3 results'); // 3 results defined above
                                             expect(page.hasResults()).to.equal(true);
                                             expect(page.hasLimitedResults()).to.equal(false);
                                         });
@@ -532,6 +543,7 @@
                                             sinon.assert.calledWith(searchService, query);
                                         });
                                         it('Has results that have been limited', function () {
+                                            expect(page.resultsCountText()).to.equal('3 results'); // 3 results defined above
                                             expect(page.hasResults()).to.equal(true);
                                             expect(page.hasLimitedResults()).to.equal(true);
                                         });
@@ -627,6 +639,7 @@
                                             sinon.assert.calledWith(searchService, query);
                                         });
                                         it('Has results that have been limited', function () {
+                                            expect(page.resultsCountText()).to.equal('3 results'); // 3 results defined above
                                             expect(page.hasResults()).to.equal(true);
                                             expect(page.hasLimitedResults()).to.equal(true);
                                         });
@@ -713,6 +726,7 @@
                                         sinon.assert.calledOnce(searchService);
                                     });
                                     it('Does not have any results', function () {
+                                        expect(page.resultsCountText()).to.equal('0 results');
                                         expect(page.hasResults()).to.equal(false);
                                         expect(page.hasLimitedResults()).to.equal(false);
                                     });

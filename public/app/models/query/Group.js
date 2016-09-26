@@ -36,6 +36,10 @@
                     return this.depth() + 1 < queryBuilder.maxDepth();
                 }.bind(this));
 
+                this.allowRemoval = ko.pureComputed(function () {
+                    return !!parentGroup;
+                }.bind(this));
+
                 this.query = ko.pureComputed(function () {
                     return {
                         operator: this.selectedOperator(),
@@ -65,7 +69,7 @@
                         }
                         childNode.parse(child);
                         return childNode;
-                    }));
+                    }.bind(this)));
                 };
 
                 this.addCondition = function () {
