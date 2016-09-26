@@ -136,6 +136,23 @@
                     return !!this.query() && this.query().children.length > 0;
                 }.bind(this));
 
+                this.shopBaseUrl = ko.pureComputed(function () {
+                    var shopOptions = container.resolve('options.shop');
+                    return shopOptions ? shopOptions.baseUrl : undefined;
+                });
+
+                this.shopSearchUrl = ko.pureComputed(function () {
+                    var shopOptions = container.resolve('options.shop');
+                    if (!shopOptions) {
+                        return undefined;
+                    }
+                    return shopOptions.baseUrl + shopOptions.path.search + '?q=' + _.map(submittedQuery().children, 'value').join('+');
+                });
+
+                this.shopSearchText = ko.pureComputed(function () {
+                    return _.map(submittedQuery().children, 'value').join(' ');
+                });
+
                 this.attaching = function (element, callback) {
                     require(
                         [

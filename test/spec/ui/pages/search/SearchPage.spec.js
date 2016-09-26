@@ -75,6 +75,10 @@
                                     expect(ko.isPureComputed(page.hasResults)).to.equal(true);
                                     expect(ko.isPureComputed(page.hasLimitedResults)).to.equal(true);
                                     expect(ko.isPureComputed(page.canSubmit)).to.equal(true);
+                                    // TODO Further tests for these computed observables; no shop details are set above.
+                                    expect(ko.isPureComputed(page.shopBaseUrl)).to.equal(true);
+                                    expect(ko.isPureComputed(page.shopSearchUrl)).to.equal(true);
+                                    expect(ko.isPureComputed(page.shopSearchText)).to.equal(true);
                                 });
                                 it('Exposes life cycle methods', function () {
                                     expect(page.attaching).to.be.a('function');
