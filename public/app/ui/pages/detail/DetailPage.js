@@ -41,12 +41,12 @@
 
                 this.shopUrl = ko.pureComputed(function () {
                     var idno = this.idno();
-                    return idno && shop.baseUrl && shop.baseUrl.digitalPhotographs && context.params.type === 'photographs' ?
-                        (shop.baseUrl.digitalPhotographs + '?idno=' + idno) : undefined;
+                    return idno && shop.baseUrl && shop.path && shop.path.digitalPhotographs && context.params.type === 'photographs' ?
+                        (shop.baseUrl + shop.path.digitalPhotographs + '?idno=' + idno) : undefined;
                 }.bind(this));
 
                 this.curatorUrl = ko.pureComputed(function () {
-                    return providence.baseUrl.objects + 'object_id/' + context.params.id;
+                    return providence.baseUrl + providence.path.objects + 'object_id/' + context.params.id;
                 }.bind(this));
 
                 this.attaching = function (element, callback) {
