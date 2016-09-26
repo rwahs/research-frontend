@@ -39,7 +39,7 @@
                         it('Has the correct default initial state', function () {
                             expect(pager.start()).to.equal(0);
                             expect(pager.pageSize()).to.equal(12);
-                            expect(pager.availablePageSizes()).to.deep.equal([ 12, 24, 48, 96 ]);
+                            expect(pager.availablePageSizes()).to.deep.equal([ 12, 24, 48, 96, 500 ]);
                             expect(pager.fullResultsCount()).to.equal(500);
                             expect(pager.pageCount()).to.equal(42);
                             expect(pager.pageNumber()).to.equal(0);
