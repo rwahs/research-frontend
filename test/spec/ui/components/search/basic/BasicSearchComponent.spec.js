@@ -34,6 +34,7 @@
                             });
                             it('Exposes the correct observables and computed observables', function () {
                                 expect(ko.isObservable(component.searchText)).to.equal(true);
+                                expect(ko.isObservable(component.operator)).to.equal(true);
                                 expect(ko.isPureComputed(component.displayedInputFields)).to.equal(true);
                                 expect(ko.isPureComputed(component.displayFieldSwitch)).to.equal(true);
                                 expect(ko.isPureComputed(component.selectedSearchField)).to.equal(true);
@@ -47,6 +48,9 @@
                             });
                             it('Sets the correct default search text', function () {
                                 expect(component.searchText()).to.equal('');
+                            });
+                            it('Sets the correct default operator', function () {
+                                expect(component.operator()).to.equal('AND');
                             });
                             it('Sets the input fields', function () {
                                 expect(component.displayedInputFields()).to.have.length(2); // see fixtures/collections/searchInputFields.js
@@ -100,6 +104,23 @@
                                         ]
                                     });
                                 });
+                                describe('When the operator is changed', function () {
+                                    beforeEach(function () {
+                                        component.operator('OR');
+                                    });
+                                    it('Sets the value of the query observable correctly', function () {
+                                        expect(query()).to.deep.equal({
+                                            operator: 'OR',
+                                            children: [
+                                                {
+                                                    field: 'first',
+                                                    comparator: 'contains',
+                                                    value: 'query'
+                                                }
+                                            ]
+                                        });
+                                    });
+                                });
                             });
                             describe('With non-empty search text containing multiple words', function () {
                                 beforeEach(function () {
@@ -126,6 +147,33 @@
                                                 value: 'query'
                                             }
                                         ]
+                                    });
+                                });
+                                describe('When the operator is changed', function () {
+                                    beforeEach(function () {
+                                        component.operator('OR');
+                                    });
+                                    it('Sets the value of the query observable correctly', function () {
+                                        expect(query()).to.deep.equal({
+                                            operator: 'OR',
+                                            children: [
+                                                {
+                                                    field: 'first',
+                                                    comparator: 'contains',
+                                                    value: 'multiple'
+                                                },
+                                                {
+                                                    field: 'first',
+                                                    comparator: 'contains',
+                                                    value: 'word'
+                                                },
+                                                {
+                                                    field: 'first',
+                                                    comparator: 'contains',
+                                                    value: 'query'
+                                                }
+                                            ]
+                                        });
                                     });
                                 });
                             });
@@ -161,6 +209,7 @@
                             });
                             it('Exposes the correct observables and computed observables', function () {
                                 expect(ko.isObservable(component.searchText)).to.equal(true);
+                                expect(ko.isObservable(component.operator)).to.equal(true);
                                 expect(ko.isPureComputed(component.displayedInputFields)).to.equal(true);
                                 expect(ko.isPureComputed(component.displayFieldSwitch)).to.equal(true);
                                 expect(ko.isPureComputed(component.selectedSearchField)).to.equal(true);
@@ -174,6 +223,9 @@
                             });
                             it('Sets the correct default search text', function () {
                                 expect(component.searchText()).to.equal('foo bar');
+                            });
+                            it('Sets the correct default operator', function () {
+                                expect(component.operator()).to.equal('AND');
                             });
                             it('Sets the input fields', function () {
                                 expect(component.displayedInputFields()).to.have.length(2); // see fixtures/collections/searchInputFields.js
@@ -222,6 +274,7 @@
                             });
                             it('Exposes the correct observables and computed observables', function () {
                                 expect(ko.isObservable(component.searchText)).to.equal(true);
+                                expect(ko.isObservable(component.operator)).to.equal(true);
                                 expect(ko.isPureComputed(component.displayedInputFields)).to.equal(true);
                                 expect(ko.isPureComputed(component.displayFieldSwitch)).to.equal(true);
                                 expect(ko.isPureComputed(component.selectedSearchField)).to.equal(true);
@@ -235,6 +288,9 @@
                             });
                             it('Sets the correct default search text', function () {
                                 expect(component.searchText()).to.equal('foo');
+                            });
+                            it('Sets the correct default operator', function () {
+                                expect(component.operator()).to.equal('AND');
                             });
                             it('Sets the input fields', function () {
                                 expect(component.displayedInputFields()).to.have.length(2); // see fixtures/collections/searchInputFields.js
@@ -300,6 +356,23 @@
                                         ]
                                     });
                                 });
+                                describe('When the operator is changed', function () {
+                                    beforeEach(function () {
+                                        component.operator('OR');
+                                    });
+                                    it('Sets the value of the query observable correctly', function () {
+                                        expect(query()).to.deep.equal({
+                                            operator: 'OR',
+                                            children: [
+                                                {
+                                                    field: 'only',
+                                                    comparator: 'contains',
+                                                    value: 'query'
+                                                }
+                                            ]
+                                        });
+                                    });
+                                });
                             });
                             describe('With non-empty search text containing multiple words', function () {
                                 beforeEach(function () {
@@ -325,6 +398,33 @@
                                                 value: 'query'
                                             }
                                         ]
+                                    });
+                                });
+                                describe('When the operator is changed', function () {
+                                    beforeEach(function () {
+                                        component.operator('OR');
+                                    });
+                                    it('Sets the value of the query observable correctly', function () {
+                                        expect(query()).to.deep.equal({
+                                            operator: 'OR',
+                                            children: [
+                                                {
+                                                    field: 'only',
+                                                    comparator: 'contains',
+                                                    value: 'multiple'
+                                                },
+                                                {
+                                                    field: 'only',
+                                                    comparator: 'contains',
+                                                    value: 'word'
+                                                },
+                                                {
+                                                    field: 'only',
+                                                    comparator: 'contains',
+                                                    value: 'query'
+                                                }
+                                            ]
+                                        });
                                     });
                                 });
                             });
