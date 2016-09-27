@@ -27,13 +27,15 @@
                             description: '<p>Rich text <strong>description</strong>.</p>'
                         });
                         container.register('options.shop', {
-                            baseUrl: {
-                                digitalPhotographs: 'https://fake.shop/photographs'
+                            baseUrl: 'https://fake.shop/',
+                            path: {
+                                digitalPhotographs: 'photographs'
                             }
                         });
                         container.register('options.providence', {
-                            baseUrl: {
-                                objects: 'https://fake.domain/editor/objects/'
+                            baseUrl: 'https://fake.domain/',
+                            path: {
+                                objects: 'editor/objects/'
                             }
                         });
                         container.register('detail.collection', detailService);
@@ -213,13 +215,15 @@
                     beforeEach(function () {
                         detailService = sinon.stub().callsArgWith(1, new Error('Service Error'));
                         container.register('options.shop', {
-                            baseUrl: {
-                                digitalPhotographs: 'https://fake.shop/photographs'
+                            baseUrl: 'https://fake.shop/',
+                            path: {
+                                digitalPhotographs: 'photographs'
                             }
                         });
                         container.register('options.providence', {
-                            baseUrl: {
-                                objects: 'https://fake.domain/editor/objects/'
+                            baseUrl: 'https://fake.domain/',
+                            path: {
+                                objects: 'editor/objects/'
                             }
                         });
                         container.register('detail.collection', detailService);
@@ -300,8 +304,9 @@
                         });
                         container.register('options.shop', {});
                         container.register('options.providence', {
-                            baseUrl: {
-                                objects: 'https://fake.domain/editor/objects/'
+                            baseUrl: 'https://fake.domain/',
+                            path: {
+                                objects: 'editor/objects/'
                             }
                         });
                         container.register('detail.collection', detailService);

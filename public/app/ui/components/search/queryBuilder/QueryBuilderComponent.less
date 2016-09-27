@@ -57,6 +57,20 @@
 
     .condition {
         background-color: #fff;
+        position: relative;
+        padding-right: @padding-base-horizontal * 4;
+
+        .remove {
+            position: absolute;
+            top: @padding-base-vertical;
+            right: @padding-base-horizontal;
+        }
+
+        input,
+        select {
+            width: auto;
+            max-width: 100%;
+        }
     }
 
     input.form-control.condition-value {

@@ -30,6 +30,7 @@
                         expect(ko.isObservable(group.operators)).to.equal(true);
                         expect(ko.isObservable(group.depth)).to.equal(true);
                         expect(ko.isObservable(group.allowChildren)).to.equal(true);
+                        expect(ko.isObservable(group.allowRemoval)).to.equal(true);
                         expect(ko.isObservable(group.query)).to.equal(true);
                     });
                     it('Exposes helper methods', function () {
@@ -63,6 +64,7 @@
                         expect(ko.isObservable(group.operators)).to.equal(true);
                         expect(ko.isObservable(group.depth)).to.equal(true);
                         expect(ko.isObservable(group.allowChildren)).to.equal(true);
+                        expect(ko.isObservable(group.allowRemoval)).to.equal(true);
                         expect(ko.isObservable(group.query)).to.equal(true);
                     });
                     it('Exposes helper methods', function () {

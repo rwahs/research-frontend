@@ -1,6 +1,14 @@
 <section class="basic-search">
     <div class="form-group">
-        <input placeholder="Search" class="form-control" data-bind="textInput: searchText, attr: { placeholder: placeholder }" />
+        <div class="input-group query-input">
+            <div>
+                <input placeholder="Search" class="form-control" data-bind="textInput: searchText, attr: { placeholder: placeholder }" />
+            </div>
+            <select class="form-control styled-select" data-bind="value: operator">
+                <option value="AND">AND</option>
+                <option value="OR">OR</option>
+            </select>
+        </div>
     </div>
     <!-- ko if: displayFieldSwitch -->
     <div class="form-group">
