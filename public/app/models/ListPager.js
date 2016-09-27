@@ -9,7 +9,7 @@
         function (_, ko) {
             var PAGINATION_JUMP_COUNT = 7,
                 DEFAULT_PAGE_SIZE = 12,
-                DEFAULT_AVAILABLE_PAGE_SIZES = [ 12, 24, 48, 96 ];
+                DEFAULT_AVAILABLE_PAGE_SIZES = [ 12, 24, 48, 96, 500 ];
 
             return function (sourceObservable, start, size, availablePageSizes) {
                 this.start = ko.observable(start || 0);
