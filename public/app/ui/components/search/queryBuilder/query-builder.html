@@ -7,7 +7,7 @@
         <select data-bind="options: fields, optionsCaption: '', optionsText: 'labelText', optionsValue: 'key', value: selectedField" class="form-control field styled-select"></select>
         <select data-bind="options: comparators, optionsCaption: '', optionsText: 'labelText', optionsValue: 'key', value: selectedComparator" class="form-control comparator styled-select"></select>
         <input type="text" data-bind="textInput: value, event: { keypress: $component.keypressHandler }" class="form-control condition-value" />
-        <button class="btn btn-danger btn-xs pull-right" data-bind="click: $parent.removeChild"><span class="glyphicon glyphicon-minus-sign"></span> Remove</button>
+        <button class="btn btn-danger btn-xs remove" data-bind="click: $parent.removeChild"><span class="glyphicon glyphicon-remove"></span></button>
     </div>
 </script>
 
@@ -16,11 +16,13 @@
         <div class="group-controls">
             <select data-bind="options: operators, optionsText: 'labelText', optionsValue: 'key', value: selectedOperator" class="form-control operator styled-select"></select>
             <div class="pull-right">
-                <button class="btn btn-xs btn-success" data-bind="click: addCondition"><span class="glyphicon glyphicon-plus-sign"></span> Add Condition</button>
+                <button class="btn btn-xs btn-success" data-bind="click: addCondition"><span class="glyphicon glyphicon-plus"></span> Condition</button>
                 <!-- ko if: allowChildren -->
-                <button class="btn btn-xs btn-success" data-bind="click: addGroup"><span class="glyphicon glyphicon-plus-sign"></span> Add Group</button>
+                <button class="btn btn-xs btn-success" data-bind="click: addGroup"><span class="glyphicon glyphicon-plus"></span> Group</button>
                 <!-- /ko -->
-                <button class="btn btn-xs btn-danger" data-bind="click: $parent.removeChild"><span class="glyphicon glyphicon-minus-sign"></span> Remove Group</button>
+                <!-- ko if: allowRemoval -->
+                <button class="btn btn-danger btn-xs" data-bind="click: $parent.removeChild"><span class="glyphicon glyphicon-remove"></span></button>
+                <!-- /ko -->
             </div>
         </div>
         <div class="group-conditions">

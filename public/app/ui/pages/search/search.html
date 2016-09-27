@@ -11,6 +11,9 @@
                         <!-- ko if: advancedMode -->
                         <div data-bind="component: { name: 'search/query-builder', params: { fields: inputFields, maxDepth: 3, queryObservable: query, submit: submit } }"></div>
                         <!-- /ko -->
+                        <!-- ko if: queryModified -->
+                        <p>Modified query: <code data-bind="text: queryText"></code>.</p>
+                        <!-- /ko -->
                         <!-- ko if: hasLimitedResults -->
                         <div class="alert alert-danger">
                             <strong>Please note</strong>:
@@ -49,11 +52,11 @@
         </div>
     </div>
     <!-- ko if: displayResults -->
-    <div data-bind="text: submittedQueryText" class="visible-print"></div>
     <!-- ko ifnot: hasResults -->
-    <p class="text-muted">No results found.</p>
+    <p class="text-muted">No results found for: <code data-bind="text: submittedQueryText"></code>.</p>
     <!-- /ko -->
     <!-- ko if: hasResults -->
+    <p>Displaying <strong data-bind="text: resultsCountText"></strong> for: <code data-bind="text: submittedQueryText"></code>.</p>
     <div data-bind="component: { name: 'controls/list', params: { pager: pager, sorter: sorter, modeSwitcher: modeSwitcher, searchUrlFor: searchUrlFor } }" class="text-right"></div>
     <div data-bind="component: { name: 'search/results', params: { results: displayedResults, modeSwitcher: modeSwitcher, resultFields: resultFields, start: start } }"></div>
     <!-- /ko -->

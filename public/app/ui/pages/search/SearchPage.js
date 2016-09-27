@@ -15,9 +15,31 @@
             'util/safelyParseJson'
         ],
         function (_, ko, qs, routes, container, DynamicRecord, ListModeSwitcher, ListSorter, ListPager, safelyParseJson) {
-            var int = function (value) {
-                    return value ? parseInt(value, 10) : undefined;
-                };
+            var int, labelText, convertToDisplayValue;
+
+            int = function (value) {
+                return value ? parseInt(value, 10) : undefined;
+            };
+
+            labelText = function (child, fields) {
+                return _.find(fields, { key: child.field }).labelText;
+            };
+
+            convertToDisplayValue = function (parameters, fields) {
+                if (!parameters || !parameters.children || !parameters.children.length) {
+                    return '';
+                }
+                return _(parameters.children)
+                    .filter(function (child) {
+                        return child.hasOwnProperty('children') ? child.children.length > 0 : child.value.length > 0;
+                    })
+                    .map(function (child) {
+                        return child.hasOwnProperty('children') ?
+                        '(' + convertToDisplayValue(child, fields) + ')' :
+                        labelText(child, fields) + ' ' + child.comparator + ' "' + child.value + '"';
+                    })
+                    .join(' ' + parameters.operator + ' ');
+            };
 
             return function (context) {
                 var settings = container.resolve('settings.' + context.params.type),
@@ -71,21 +93,16 @@
                     return submittedQuery();
                 });
 
+                this.queryText = ko.pureComputed(function () {
+                    return convertToDisplayValue(this.query(), this.inputFields());
+                }.bind(this));
+
                 this.submittedQueryText = ko.pureComputed(function () {
-                    var labelText, convertToDisplayValue;
-                    labelText = function (child) {
-                        return _.find(this.inputFields(), { key: child.field }).labelText;
-                    }.bind(this);
-                    convertToDisplayValue = function (parameters) {
-                        return _(parameters.children)
-                            .map(function (child) {
-                                return child.hasOwnProperty('children') ?
-                                    '(' + convertToDisplayValue(child) + ')' :
-                                    labelText(child) + ' ' + child.comparator + ' "' + child.value + '"';
-                            }.bind(this))
-                            .join(' ' + parameters.operator + ' ');
-                    }.bind(this);
-                    return convertToDisplayValue(submittedQuery());
+                    return convertToDisplayValue(submittedQuery(), this.inputFields());
+                }.bind(this));
+
+                this.queryModified = ko.pureComputed(function () {
+                    return this.queryText() !== this.submittedQueryText();
                 }.bind(this));
 
                 this.heading = ko.pureComputed(function () {
@@ -95,6 +112,11 @@
                 this.advancedModeToggleText = ko.pureComputed(function () {
                     return this.advancedMode() ? 'Back to basic mode' : 'Advanced search';
                 }.bind(this));
+
+                this.resultsCountText = ko.pureComputed(function () {
+                    var count = results().length;
+                    return count === 1 ? '1 result' : count + ' results';
+                });
 
                 this.hasResults = ko.pureComputed(function () {
                     return results().length > 0;
