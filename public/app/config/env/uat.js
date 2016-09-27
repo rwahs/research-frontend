@@ -30,13 +30,16 @@
             return function () {
                 container.register('options.service', options);
                 container.register('options.shop', {
-                    baseUrl: {
-                        digitalPhotographs: 'https://uat-shop.histwest.org.au/index.php/photographs/digital-photograph.html'
+                    baseUrl: 'https://uat-shop.histwest.org.au/index.php/',
+                    path: {
+                        search: 'catalogsearch/result/',
+                        digitalPhotographs: 'photographs/digital-photograph.html'
                     }
                 });
                 container.register('options.providence', {
-                    baseUrl: {
-                        objects: 'https://uat-collections.histwest.org.au/index.php/editor/objects/ObjectEditor/Summary/'
+                    baseUrl: 'https://uat-collections.histwest.org.au/index.php/',
+                    path: {
+                        objects: 'editor/objects/ObjectEditor/Summary/'
                     }
                 });
 

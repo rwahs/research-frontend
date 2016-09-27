@@ -53,10 +53,23 @@
     </div>
     <!-- ko if: displayResults -->
     <!-- ko ifnot: hasResults -->
-    <p class="text-muted">No results found for: <code data-bind="text: submittedQueryText"></code>.</p>
+    <p class="text-muted">
+        No results found for: <code data-bind="text: submittedQueryText"></code>.
+    </p>
     <!-- /ko -->
     <!-- ko if: hasResults -->
-    <p>Displaying <strong data-bind="text: resultsCountText"></strong> for: <code data-bind="text: submittedQueryText"></code>.</p>
+    <p>
+        Displaying <strong data-bind="text: resultsCountText"></strong> for:
+        <code data-bind="text: submittedQueryText"></code>.
+    </p>
+    <!-- /ko -->
+    <!-- ko if: shopBaseUrl -->
+    <p>
+        The <a href="#" target="_blank" data-bind="attr: { href: shopBaseUrl }">shop</a> may have results related to
+        <a href="#" target="_blank" data-bind="text: shopSearchText, attr: { href: shopSearchUrl }">your query</a>.
+    </p>
+    <!-- /ko -->
+    <!-- ko if: hasResults -->
     <div data-bind="component: { name: 'controls/list', params: { pager: pager, sorter: sorter, modeSwitcher: modeSwitcher, searchUrlFor: searchUrlFor } }" class="text-right"></div>
     <div data-bind="component: { name: 'search/results', params: { results: displayedResults, modeSwitcher: modeSwitcher, resultFields: resultFields, start: start } }"></div>
     <!-- /ko -->
