@@ -9,7 +9,8 @@
         ],
         function (_, ko, convertBasicSearch) {
             return function (parameters) {
-                var selectedSearchFieldKey, initialProperties, getPropertiesFromQuery;
+                var selectedSearchFieldKey, initialProperties, getPropertiesFromQuery,
+                    selectedSearchFieldKeySubscription, searchTextSubscription, querySubscription, operatorSubscription;
 
                 // Inverse of `convertBasicSearch`.
                 getPropertiesFromQuery = function (query) {
@@ -42,16 +43,16 @@
                 initialProperties = getPropertiesFromQuery(parameters.queryObservable());
 
                 selectedSearchFieldKey = ko.observable(initialProperties && initialProperties.field ? initialProperties.field : parameters.fields()[0].key);
-                selectedSearchFieldKey.subscribe(function (key) {
+                selectedSearchFieldKeySubscription = selectedSearchFieldKey.subscribe(function (key) {
                     parameters.queryObservable(convertBasicSearch(key, this.searchText(), this.operator()));
                 }.bind(this));
 
                 this.searchText = ko.observable(initialProperties ? initialProperties.text : '');
-                this.searchText.subscribe(function (text) {
+                searchTextSubscription = this.searchText.subscribe(function (text) {
                     parameters.queryObservable(convertBasicSearch(selectedSearchFieldKey(), text, this.operator()));
                 }.bind(this));
 
-                parameters.queryObservable.subscribe(function (query) {
+                querySubscription = parameters.queryObservable.subscribe(function (query) {
                     var properties = getPropertiesFromQuery(query);
                     selectedSearchFieldKey(properties ? properties.field : parameters.fields()[0].key);
                     this.searchText(properties ? properties.text : '');
@@ -59,7 +60,7 @@
                 }.bind(this));
 
                 this.operator = ko.observable(initialProperties && initialProperties.operator ? initialProperties.operator : 'AND');
-                this.operator.subscribe(function (operator) {
+                operatorSubscription = this.operator.subscribe(function (operator) {
                     parameters.queryObservable(convertBasicSearch(selectedSearchFieldKey(), this.searchText(), operator));
                 }.bind(this));
 
@@ -83,6 +84,21 @@
                     var query = convertBasicSearch(selectedSearchFieldKey(), this.searchText(), this.operator());
                     return !_.isEqual(query, parameters.queryObservable());
                 }.bind(this));
+
+                this.dispose = function () {
+                    if (selectedSearchFieldKeySubscription) {
+                        selectedSearchFieldKeySubscription.dispose();
+                    }
+                    if (searchTextSubscription) {
+                        searchTextSubscription.dispose();
+                    }
+                    if (querySubscription) {
+                        querySubscription.dispose();
+                    }
+                    if (operatorSubscription) {
+                        operatorSubscription.dispose();
+                    }
+                };
 
                 this.isSelectedSearchField = function (field) {
                     return selectedSearchFieldKey() === field.key;
