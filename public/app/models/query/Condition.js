@@ -18,43 +18,12 @@
                 });
 
                 this.comparators = ko.pureComputed(function () {
-                    return [
-                        {
-                            key: 'contains',
-                            labelText: 'contains',
-                            valueType: 'text'
-                        },
-                        {
-                            key: 'notContains',
-                            labelText: 'does not contain',
-                            valueType: 'text'
-                        },
-                        {
-                            key: 'startsWith',
-                            labelText: 'starts with',
-                            valueType: 'text'
-                        },
-                        {
-                            key: 'notStartsWith',
-                            labelText: 'does not start with',
-                            valueType: 'text'
-                        },
-                        {
-                            key: 'empty',
-                            labelText: 'is empty',
-                            valueType: false
-                        },
-                        {
-                            key: 'notEmpty',
-                            labelText: 'is not empty',
-                            valueType: false
-                        }
-                    ];
+                    return queryBuilder.comparators();
                 });
 
                 this.valueType = ko.pureComputed(function () {
                     var comparator = _(this.comparators()).find({ key: this.selectedComparator() });
-                    return comparator ? comparator.valueType : false;
+                    return comparator ? comparator.valueType : undefined;
                 }.bind(this));
 
                 this.valueTypeIs = function (type) {
@@ -85,7 +54,7 @@
                     }
                     this.selectedField(query.field);
                     this.selectedComparator(query.comparator);
-                    this.value(query.value || '');
+                    this.value(this.valueType() ? (query.value || '') : undefined);
                 };
             };
         }
