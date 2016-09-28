@@ -15,30 +15,50 @@
             'util/safelyParseJson'
         ],
         function (_, ko, qs, routes, container, DynamicRecord, ListModeSwitcher, ListSorter, ListPager, safelyParseJson) {
-            var int, labelText, convertToDisplayValue;
+            var int, labelText, cleanQuery, convertToDisplayValue;
 
             int = function (value) {
                 return value ? parseInt(value, 10) : undefined;
             };
 
-            labelText = function (child, fields) {
-                return _.find(fields, { key: child.field }).labelText;
+            labelText = function (child, fields, comparators) {
+                var field, comparator;
+                field = _.find(fields, { key: child.field });
+                comparator = _.find(comparators, { key: child.comparator });
+                return field.labelText + ' ' + comparator.labelText + (comparator.valueType ? (' "' + child.value + '"') : '');
             };
 
-            convertToDisplayValue = function (parameters, fields) {
-                if (!parameters || !parameters.children || !parameters.children.length) {
+            cleanQuery = function (query, comparators) {
+                if (query && query.hasOwnProperty('children')) {
+                    query.children = _(query.children)
+                        .filter(function (child) {
+                            var comparator;
+                            if (child.hasOwnProperty('children')) {
+                                return child.children.length > 0;
+                            }
+                            comparator = _.find(comparators, { key: child.comparator });
+                            return !!comparator && (!comparator.valueType || (child.value && child.value.length > 0));
+                        })
+                        .map(function (child) {
+                            return child.hasOwnProperty('children') ? cleanQuery(child, comparators) : child;
+                        })
+                        .value();
+                }
+                return query;
+            };
+
+            convertToDisplayValue = function (query, fields, comparators) {
+                if (!query || !query.children || !query.children.length) {
                     return '';
                 }
-                return _(parameters.children)
-                    .filter(function (child) {
-                        return child.hasOwnProperty('children') ? child.children.length > 0 : child.value.length > 0;
-                    })
+                console.log('children', query.children);
+                return _(query.children)
                     .map(function (child) {
                         return child.hasOwnProperty('children') ?
-                        '(' + convertToDisplayValue(child, fields) + ')' :
-                        labelText(child, fields) + ' ' + child.comparator + ' "' + child.value + '"';
+                            '(' + convertToDisplayValue(child, fields, comparators) + ')' :
+                            labelText(child, fields, comparators);
                     })
-                    .join(' ' + parameters.operator + ' ');
+                    .join(' ' + query.operator + ' ');
             };
 
             return function (context) {
@@ -73,6 +93,7 @@
 
                 this.query = ko.observable(initialUrlParameters.query ? safelyParseJson(initialUrlParameters.query) : undefined);
                 this.advancedMode = ko.observable(!!initialUrlParameters.advanced);
+                this.comparators = ko.observableArray();
                 this.inputFields = ko.observableArray();
                 this.resultFields = ko.observableArray();
                 this.displayResults = ko.observable(false);
@@ -94,11 +115,11 @@
                 });
 
                 this.queryText = ko.pureComputed(function () {
-                    return convertToDisplayValue(this.query(), this.inputFields());
+                    return convertToDisplayValue(cleanQuery(this.query(), this.comparators()), this.inputFields(), this.comparators());
                 }.bind(this));
 
                 this.submittedQueryText = ko.pureComputed(function () {
-                    return convertToDisplayValue(submittedQuery(), this.inputFields());
+                    return convertToDisplayValue(submittedQuery(), this.inputFields(), this.comparators());
                 }.bind(this));
 
                 this.queryModified = ko.pureComputed(function () {
@@ -133,7 +154,8 @@
                 }.bind(this));
 
                 this.canSubmit = ko.pureComputed(function () {
-                    return !!this.query() && this.query().children.length > 0;
+                    var query = cleanQuery(this.query(), this.comparators());
+                    return !!query && query.hasOwnProperty('children') && query.children.length > 0;
                 }.bind(this));
 
                 this.shopBaseUrl = ko.pureComputed(function () {
@@ -153,15 +175,21 @@
                     return _.map(submittedQuery().children, 'value').join(' ');
                 });
 
+                this.displayShopLink = ko.pureComputed(function () {
+                    return this.shopBaseUrl() && this.shopSearchText();
+                }.bind(this));
+
                 this.attaching = function (element, callback) {
                     require(
                         [
+                            settings.comparators,
                             settings.searchInputFields,
                             settings.searchResultFields
                         ],
-                        function (inputFields, resultFields) {
+                        function (comparators, inputFields, resultFields) {
                             this.inputFields(inputFields);
                             this.resultFields(resultFields);
+                            this.comparators(comparators);
                             callback();
                         }.bind(this)
                     );

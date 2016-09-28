@@ -18,38 +18,31 @@
                 });
 
                 this.comparators = ko.pureComputed(function () {
-                    return [
-                        {
-                            key: 'contains',
-                            labelText: 'contains'
-                        },
-                        {
-                            key: 'notContains',
-                            labelText: 'does not contain'
-                        },
-                        {
-                            key: 'startsWith',
-                            labelText: 'starts with'
-                        },
-                        {
-                            key: 'notStartsWith',
-                            labelText: 'does not start with'
-                        }
-                    ];
+                    return queryBuilder.comparators();
                 });
 
+                this.valueType = ko.pureComputed(function () {
+                    var comparator = _(this.comparators()).find({ key: this.selectedComparator() });
+                    return comparator ? comparator.valueType : undefined;
+                }.bind(this));
+
+                this.valueTypeIs = function (type) {
+                    return this.valueType() === type;
+                }.bind(this);
+
                 this.query = ko.pureComputed(function () {
-                    var field, comparator, value;
-                    field = this.selectedField();
-                    comparator = this.selectedComparator();
-                    value = this.value();
-                    return (field && comparator && value) ?
-                        {
-                            field: field,
-                            comparator: comparator,
-                            value: value
-                        } :
-                        undefined;
+                    var result;
+                    result = {
+                        field: this.selectedField(),
+                        comparator: this.selectedComparator()
+                    };
+                    if (!result.field || !result.comparator) {
+                        return undefined;
+                    }
+                    if (this.valueType()) {
+                        result.value = this.value();
+                    }
+                    return result;
                 }.bind(this));
 
                 this.parse = function (query) {
@@ -61,7 +54,7 @@
                     }
                     this.selectedField(query.field);
                     this.selectedComparator(query.comparator);
-                    this.value(query.value || '');
+                    this.value(this.valueType() ? (query.value || '') : undefined);
                 };
             };
         }

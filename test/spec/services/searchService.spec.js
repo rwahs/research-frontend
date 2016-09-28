@@ -292,7 +292,44 @@
                                     });
                                     it('Makes an AJAX call', function () {
                                         sinon.assert.calledOnce($.ajax);
-                                        expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:"value") AND !(another:"search this")');
+                                        expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:"value") AND !(another:"search this") AND (field:"")');
+                                        expect($.ajax.args[0][0].success).to.be.a('function');
+                                        expect($.ajax.args[0][0].error).to.be.a('function');
+                                    });
+                                    it('Records a valid result', function () {
+                                        expect(serviceError).to.equal(undefined);
+                                        expect(serviceResult).to.be.an('array');
+                                        expect(serviceResult).to.have.length(3);
+                                    });
+                                });
+                            });
+                            describe('When invoked with multiple parameters including parameters which don\'t accept a value', function () {
+                                describe('With the "AND" operator', function () {
+                                    var parameters, serviceError, serviceResult;
+                                    beforeEach(function (done) {
+                                        // This can happen, e.g. with a trailing whitespace in the original search text.
+                                        parameters = {
+                                            operator: 'AND',
+                                            children: [
+                                                {
+                                                    field: 'field',
+                                                    comparator: 'empty'
+                                                },
+                                                {
+                                                    field: 'another',
+                                                    comparator: 'notEmpty'
+                                                }
+                                            ]
+                                        };
+                                        service(parameters, function (err, result) {
+                                            serviceError = err;
+                                            serviceResult = result;
+                                            done();
+                                        });
+                                    });
+                                    it('Makes an AJAX call', function () {
+                                        sinon.assert.calledOnce($.ajax);
+                                        expect($.ajax.args[0][0].url).to.equal('http://server.name/path/to/api?q=(field:[BLANK]) AND (another:*)');
                                         expect($.ajax.args[0][0].success).to.be.a('function');
                                         expect($.ajax.args[0][0].error).to.be.a('function');
                                     });

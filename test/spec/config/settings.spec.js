@@ -28,12 +28,14 @@
                     it('Registers the correct settings', function () {
                         expect(container.resolve('settings.all')).to.deep.equal({
                             collectionName: 'All Collections',
+                            comparators: 'config/comparators',
                             searchInputFields: 'config/collections/all/searchInputFields',
                             searchResultFields: 'config/collections/all/searchResultFields'
                         });
                         expect(container.resolve('settings.library')).to.deep.equal({
                             collectionName: 'Library',
                             labelField: 'Title',
+                            comparators: 'config/comparators',
                             searchInputFields: 'config/collections/library/searchInputFields',
                             searchResultFields: 'config/collections/library/searchResultFields',
                             detailFields: 'config/collections/library/detailFields'
@@ -41,6 +43,7 @@
                         expect(container.resolve('settings.memorials')).to.deep.equal({
                             collectionName: 'Public Memorials',
                             labelField: 'ItemName',
+                            comparators: 'config/comparators',
                             searchInputFields: 'config/collections/memorials/searchInputFields',
                             searchResultFields: 'config/collections/memorials/searchResultFields',
                             detailFields: 'config/collections/memorials/detailFields'
@@ -48,6 +51,7 @@
                         expect(container.resolve('settings.museum')).to.deep.equal({
                             collectionName: 'Museum',
                             labelField: 'ItemName',
+                            comparators: 'config/comparators',
                             searchInputFields: 'config/collections/museum/searchInputFields',
                             searchResultFields: 'config/collections/museum/searchResultFields',
                             detailFields: 'config/collections/museum/detailFields'
@@ -55,6 +59,7 @@
                         expect(container.resolve('settings.photographs')).to.deep.equal({
                             collectionName: 'Photographs',
                             labelField: 'Title',
+                            comparators: 'config/comparators',
                             searchInputFields: 'config/collections/photographs/searchInputFields',
                             searchResultFields: 'config/collections/photographs/searchResultFields',
                             detailFields: 'config/collections/photographs/detailFields'

@@ -32,6 +32,7 @@
                                 container.register('search.collection', searchService);
                                 container.register('settings.collection', {
                                     collectionName: 'Collection',
+                                    comparators: 'fixtures/comparators',
                                     searchInputFields: 'fixtures/collections/searchInputFields',
                                     searchResultFields: 'fixtures/collections/searchResultFields'
                                 });
@@ -79,6 +80,7 @@
                                     expect(ko.isPureComputed(page.shopBaseUrl)).to.equal(true);
                                     expect(ko.isPureComputed(page.shopSearchUrl)).to.equal(true);
                                     expect(ko.isPureComputed(page.shopSearchText)).to.equal(true);
+                                    expect(ko.isPureComputed(page.displayShopLink)).to.equal(true);
                                 });
                                 it('Exposes life cycle methods', function () {
                                     expect(page.attaching).to.be.a('function');
@@ -330,6 +332,7 @@
                                 container.register('search.collection', searchService);
                                 container.register('settings.collection', {
                                     collectionName: 'Collection',
+                                    comparators: 'fixtures/comparators',
                                     searchInputFields: 'fixtures/collections/singleSearchInputField',
                                     searchResultFields: 'fixtures/collections/searchResultFields'
                                 });
@@ -395,6 +398,7 @@
                             });
                             container.register('settings.collection', {
                                 collectionName: 'Collection',
+                                comparators: 'fixtures/comparators',
                                 searchInputFields: 'fixtures/collections/searchInputFields',
                                 searchResultFields: 'fixtures/collections/searchResultFields'
                             });
@@ -421,50 +425,55 @@
                             it('Returns an object', function () {
                                 expect(page).to.be.an('object');
                             });
-                            describe('When bound to the view', function () {
+                            describe('When attached', function () {
                                 var containerElement;
                                 beforeEach(function (done) {
                                     containerElement = document.createElement('div');
-                                    page.binding(containerElement, done);
+                                    page.attaching(containerElement, done);
                                 });
-                                describe('With non-empty query', function () {
-                                    var query;
-                                    beforeEach(function () {
-                                        query = {
-                                            operator: 'AND',
-                                            children: [
-                                                {
-                                                    field: 'second',
-                                                    comparator: 'contains',
-                                                    value: 'query'
-                                                }
-                                            ]
-                                        };
-                                        page.query(query);
+                                describe('When bound to the view', function () {
+                                    beforeEach(function (done) {
+                                        page.binding(containerElement, done);
                                     });
-                                    describe('When the search form is submitted', function () {
+                                    describe('With non-empty query', function () {
+                                        var query;
                                         beforeEach(function () {
-                                            page.submit();
+                                            query = {
+                                                operator: 'AND',
+                                                children: [
+                                                    {
+                                                        field: 'second',
+                                                        comparator: 'contains',
+                                                        value: 'query'
+                                                    }
+                                                ]
+                                            };
+                                            page.query(query);
                                         });
-                                        it('Calls the specified search service with the given query', function () {
-                                            sinon.assert.calledOnce(searchService);
-                                            sinon.assert.calledWith(searchService, query);
-                                        });
-                                        it('Has results that are not limited', function () {
-                                            expect(page.resultsCountText()).to.equal('3 results'); // 3 results defined above
-                                            expect(page.hasResults()).to.equal(true);
-                                            expect(page.hasLimitedResults()).to.equal(false);
-                                        });
-                                        it('Is displaying results', function () {
-                                            expect(page.displayResults()).to.equal(true);
-                                        });
-                                        it('Has displayed and then hidden the loading animation', function () {
-                                            expect(overlay.loading.callCount).to.equal(2);
-                                            expect(overlay.loading.getCall(0).args).to.deep.equal([ true ]);
-                                            expect(overlay.loading.getCall(1).args).to.deep.equal([ false ]);
-                                        });
-                                        it('Has not displayed any errors', function () {
-                                            expect(overlay.error.callCount).to.equal(0);
+                                        describe('When the search form is submitted', function () {
+                                            beforeEach(function () {
+                                                page.submit();
+                                            });
+                                            it('Calls the specified search service with the given query', function () {
+                                                sinon.assert.calledOnce(searchService);
+                                                sinon.assert.calledWith(searchService, query);
+                                            });
+                                            it('Has results that are not limited', function () {
+                                                expect(page.resultsCountText()).to.equal('3 results'); // 3 results defined above
+                                                expect(page.hasResults()).to.equal(true);
+                                                expect(page.hasLimitedResults()).to.equal(false);
+                                            });
+                                            it('Is displaying results', function () {
+                                                expect(page.displayResults()).to.equal(true);
+                                            });
+                                            it('Has displayed and then hidden the loading animation', function () {
+                                                expect(overlay.loading.callCount).to.equal(2);
+                                                expect(overlay.loading.getCall(0).args).to.deep.equal([ true ]);
+                                                expect(overlay.loading.getCall(1).args).to.deep.equal([ false ]);
+                                            });
+                                            it('Has not displayed any errors', function () {
+                                                expect(overlay.error.callCount).to.equal(0);
+                                            });
                                         });
                                     });
                                 });
@@ -491,6 +500,7 @@
                             });
                             container.register('settings.collection', {
                                 collectionName: 'Collection',
+                                comparators: 'fixtures/comparators',
                                 searchInputFields: 'fixtures/collections/searchInputFields',
                                 searchResultFields: 'fixtures/collections/searchResultFields'
                             });
@@ -517,50 +527,55 @@
                             it('Returns an object', function () {
                                 expect(page).to.be.an('object');
                             });
-                            describe('When bound to the view', function () {
+                            describe('When attached', function () {
                                 var containerElement;
                                 beforeEach(function (done) {
                                     containerElement = document.createElement('div');
-                                    page.binding(containerElement, done);
+                                    page.attaching(containerElement, done);
                                 });
-                                describe('With non-empty query', function () {
-                                    var query;
-                                    beforeEach(function () {
-                                        query = {
-                                            operator: 'AND',
-                                            children: [
-                                                {
-                                                    field: 'second',
-                                                    comparator: 'contains',
-                                                    value: 'query'
-                                                }
-                                            ]
-                                        };
-                                        page.query(query);
+                                describe('When bound to the view', function () {
+                                    beforeEach(function (done) {
+                                        page.binding(containerElement, done);
                                     });
-                                    describe('When the search form is submitted', function () {
+                                    describe('With non-empty query', function () {
+                                        var query;
                                         beforeEach(function () {
-                                            page.submit();
+                                            query = {
+                                                operator: 'AND',
+                                                children: [
+                                                    {
+                                                        field: 'second',
+                                                        comparator: 'contains',
+                                                        value: 'query'
+                                                    }
+                                                ]
+                                            };
+                                            page.query(query);
                                         });
-                                        it('Calls the specified search service with the given query', function () {
-                                            sinon.assert.calledOnce(searchService);
-                                            sinon.assert.calledWith(searchService, query);
-                                        });
-                                        it('Has results that have been limited', function () {
-                                            expect(page.resultsCountText()).to.equal('3 results'); // 3 results defined above
-                                            expect(page.hasResults()).to.equal(true);
-                                            expect(page.hasLimitedResults()).to.equal(true);
-                                        });
-                                        it('Is displaying results', function () {
-                                            expect(page.displayResults()).to.equal(true);
-                                        });
-                                        it('Has displayed and then hidden the loading animation', function () {
-                                            expect(overlay.loading.callCount).to.equal(2);
-                                            expect(overlay.loading.getCall(0).args).to.deep.equal([ true ]);
-                                            expect(overlay.loading.getCall(1).args).to.deep.equal([ false ]);
-                                        });
-                                        it('Has not displayed any errors', function () {
-                                            expect(overlay.error.callCount).to.equal(0);
+                                        describe('When the search form is submitted', function () {
+                                            beforeEach(function () {
+                                                page.submit();
+                                            });
+                                            it('Calls the specified search service with the given query', function () {
+                                                sinon.assert.calledOnce(searchService);
+                                                sinon.assert.calledWith(searchService, query);
+                                            });
+                                            it('Has results that have been limited', function () {
+                                                expect(page.resultsCountText()).to.equal('3 results'); // 3 results defined above
+                                                expect(page.hasResults()).to.equal(true);
+                                                expect(page.hasLimitedResults()).to.equal(true);
+                                            });
+                                            it('Is displaying results', function () {
+                                                expect(page.displayResults()).to.equal(true);
+                                            });
+                                            it('Has displayed and then hidden the loading animation', function () {
+                                                expect(overlay.loading.callCount).to.equal(2);
+                                                expect(overlay.loading.getCall(0).args).to.deep.equal([ true ]);
+                                                expect(overlay.loading.getCall(1).args).to.deep.equal([ false ]);
+                                            });
+                                            it('Has not displayed any errors', function () {
+                                                expect(overlay.error.callCount).to.equal(0);
+                                            });
                                         });
                                     });
                                 });
@@ -587,6 +602,7 @@
                             });
                             container.register('settings.collection', {
                                 collectionName: 'Collection',
+                                comparators: 'fixtures/comparators',
                                 searchInputFields: 'fixtures/collections/searchInputFields',
                                 searchResultFields: 'fixtures/collections/searchResultFields'
                             });
@@ -613,50 +629,55 @@
                             it('Returns an object', function () {
                                 expect(page).to.be.an('object');
                             });
-                            describe('When bound to the view', function () {
+                            describe('When attached', function () {
                                 var containerElement;
                                 beforeEach(function (done) {
                                     containerElement = document.createElement('div');
-                                    page.binding(containerElement, done);
+                                    page.attaching(containerElement, done);
                                 });
-                                describe('With non-empty query', function () {
-                                    var query;
-                                    beforeEach(function () {
-                                        query = {
-                                            operator: 'AND',
-                                            children: [
-                                                {
-                                                    field: 'second',
-                                                    comparator: 'contains',
-                                                    value: 'query'
-                                                }
-                                            ]
-                                        };
-                                        page.query(query);
+                                describe('When bound to the view', function () {
+                                    beforeEach(function (done) {
+                                        page.binding(containerElement, done);
                                     });
-                                    describe('When the search form is submitted', function () {
+                                    describe('With non-empty query', function () {
+                                        var query;
                                         beforeEach(function () {
-                                            page.submit();
+                                            query = {
+                                                operator: 'AND',
+                                                children: [
+                                                    {
+                                                        field: 'second',
+                                                        comparator: 'contains',
+                                                        value: 'query'
+                                                    }
+                                                ]
+                                            };
+                                            page.query(query);
                                         });
-                                        it('Calls the specified search service with the given query', function () {
-                                            sinon.assert.calledOnce(searchService);
-                                            sinon.assert.calledWith(searchService, query);
-                                        });
-                                        it('Has results that have been limited', function () {
-                                            expect(page.resultsCountText()).to.equal('3 results'); // 3 results defined above
-                                            expect(page.hasResults()).to.equal(true);
-                                            expect(page.hasLimitedResults()).to.equal(true);
-                                        });
-                                        it('Is displaying results', function () {
-                                            expect(page.displayResults()).to.equal(true);
-                                        });
-                                        it('Has displayed and then hidden the loading animation', function () {
-                                            expect(overlay.loading.callCount).to.equal(2);
-                                            expect(overlay.loading.getCall(0).args).to.deep.equal([ true ]);
-                                            expect(overlay.loading.getCall(1).args).to.deep.equal([ false ]);
-                                        });
-                                        it('Has not displayed any errors', function () {
-                                            expect(overlay.error.callCount).to.equal(0);
+                                        describe('When the search form is submitted', function () {
+                                            beforeEach(function () {
+                                                page.submit();
+                                            });
+                                            it('Calls the specified search service with the given query', function () {
+                                                sinon.assert.calledOnce(searchService);
+                                                sinon.assert.calledWith(searchService, query);
+                                            });
+                                            it('Has results that have been limited', function () {
+                                                expect(page.resultsCountText()).to.equal('3 results'); // 3 results defined above
+                                                expect(page.hasResults()).to.equal(true);
+                                                expect(page.hasLimitedResults()).to.equal(true);
+                                            });
+                                            it('Is displaying results', function () {
+                                                expect(page.displayResults()).to.equal(true);
+                                            });
+                                            it('Has displayed and then hidden the loading animation', function () {
+                                                expect(overlay.loading.callCount).to.equal(2);
+                                                expect(overlay.loading.getCall(0).args).to.deep.equal([ true ]);
+                                                expect(overlay.loading.getCall(1).args).to.deep.equal([ false ]);
+                                            });
+                                            it('Has not displayed any errors', function () {
+                                                expect(overlay.error.callCount).to.equal(0);
+                                            });
                                         });
                                     });
                                 });
@@ -677,6 +698,7 @@
                         container.register('search.collection', searchService);
                         container.register('settings.collection', {
                             collectionName: 'Collection',
+                            comparators: 'fixtures/comparators',
                             inputFields: 'fixtures/collections/searchInputFields',
                             resultFields: 'fixtures/collections/searchResultFields'
                         });

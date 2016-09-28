@@ -177,6 +177,9 @@
                                     });
                                 });
                             });
+                            afterEach(function () {
+                                component.dispose();
+                            });
                         });
                         describe('When constructed with an initial query that can be converted to a basic search', function () {
                             var query, component;
@@ -242,6 +245,9 @@
                             it('Does not display the warning about losing query details', function () {
                                 expect(component.displayLostQueryWarning()).to.equal(false);
                             });
+                            afterEach(function () {
+                                component.dispose();
+                            });
                         });
                         describe('When constructed with an initial query that cannot be converted to a basic search', function () {
                             var query, component;
@@ -306,6 +312,9 @@
                             });
                             it('Displays the warning about losing query details', function () {
                                 expect(component.displayLostQueryWarning()).to.equal(true);
+                            });
+                            afterEach(function () {
+                                component.dispose();
                             });
                         });
                     });
@@ -427,6 +436,9 @@
                                         });
                                     });
                                 });
+                            });
+                            afterEach(function () {
+                                component.dispose();
                             });
                         });
                     });

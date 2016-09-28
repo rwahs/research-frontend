@@ -16,11 +16,15 @@
                 });
                 describe('When constructed', function () {
                     var queryBuilder, condition;
-                    beforeEach(function () {
-                        queryBuilder = {
-                            maxDepth: ko.observable(3)
-                        };
-                        condition = new Condition(queryBuilder);
+                    beforeEach(function (done) {
+                        require([ 'fixtures/comparators' ], function (comparators) {
+                            queryBuilder = {
+                                maxDepth: ko.observable(3),
+                                comparators: ko.observable(comparators)
+                            };
+                            condition = new Condition(queryBuilder);
+                            done();
+                        });
                     });
                     it('Exposes observables', function () {
                         expect(ko.isObservable(condition.selectedField)).to.equal(true);
@@ -31,9 +35,11 @@
                         expect(ko.isObservable(condition.fields)).to.equal(true);
                         expect(ko.isObservable(condition.comparators)).to.equal(true);
                         expect(ko.isObservable(condition.query)).to.equal(true);
+                        expect(ko.isObservable(condition.valueType)).to.equal(true);
                     });
                     it('Exposes helper methods', function () {
                         expect(condition.parse).to.be.a('function');
+                        expect(condition.valueTypeIs).to.be.a('function');
                     });
                     it('Exposes the correct default values', function () {
                         expect(condition.selectedField()).to.equal(undefined);
@@ -41,17 +47,32 @@
                         expect(condition.value()).to.equal('');
                     });
                     describe('The `parse` method', function () {
-                        beforeEach(function () {
-                            condition.parse({
-                                field: 'field',
-                                comparator: 'comparator',
-                                value: 'value'
+                        describe('With a field of value type "text"', function () {
+                            beforeEach(function () {
+                                condition.parse({
+                                    field: 'field',
+                                    comparator: 'contains',
+                                    value: 'value'
+                                });
+                            });
+                            it('Sets the correct values', function () {
+                                expect(condition.selectedField()).to.equal('field');
+                                expect(condition.selectedComparator()).to.equal('contains');
+                                expect(condition.value()).to.equal('value');
                             });
                         });
-                        it('Sets the correct values', function () {
-                            expect(condition.selectedField()).to.equal('field');
-                            expect(condition.selectedComparator()).to.equal('comparator');
-                            expect(condition.value()).to.equal('value');
+                        describe('With a field with no value', function () {
+                            beforeEach(function () {
+                                condition.parse({
+                                    field: 'field',
+                                    comparator: 'empty'
+                                });
+                            });
+                            it('Sets the correct values', function () {
+                                expect(condition.selectedField()).to.equal('field');
+                                expect(condition.selectedComparator()).to.equal('empty');
+                                expect(condition.value()).to.equal(undefined);
+                            });
                         });
                     });
                 });

@@ -7,24 +7,23 @@
             'jquery'
         ],
         function (_, $) {
-            var comparatorFormatters, queryString;
+            var comparatorTemplates, queryString;
 
-            comparatorFormatters = {
+            comparatorTemplates = {
                 contains: _.template('(<%= field %>:"<%= value %>")'),
                 notContains: _.template('!(<%= field %>:"<%= value %>")'),
                 startsWith: _.template('(<%= field %>:<%= value %>*)'),
-                notStartsWith: _.template('!(<%= field %>:<%= value %>*)')
+                notStartsWith: _.template('!(<%= field %>:<%= value %>*)'),
+                empty: _.template('(<%= field %>:[BLANK])'),
+                notEmpty: _.template('(<%= field %>:*)')
             };
 
             queryString = function (parameters) {
                 return _(parameters.children)
-                    .filter(function (child) {
-                        return child.hasOwnProperty('children') || child.value;
-                    })
                     .map(function (child) {
                         return child.hasOwnProperty('children') ?
                             '(' + queryString(child) + ')' :
-                            comparatorFormatters[child.comparator](child);
+                            comparatorTemplates[child.comparator](child);
                     })
                     .join(' ' + parameters.operator + ' ');
             };
