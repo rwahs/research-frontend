@@ -11,7 +11,7 @@
         ],
         function (_, ko, Group, Condition) {
             return function (parameters) {
-                var root;
+                var root, rootSubscription;
 
                 if (!parameters.queryObservable || !ko.isObservable(parameters.queryObservable)) {
                     throw new Error('QueryBuilderComponent missing or invalid required parameter: `queryObservable`.');
@@ -22,13 +22,14 @@
                 if (!parameters.fields || parameters.fields().length === 0) {
                     throw new Error('QueryBuilderComponent missing required parameter: `fields`.');
                 }
+                if (!parameters.comparators || parameters.comparators().length === 0) {
+                    throw new Error('QueryBuilderComponent missing required parameter: `comparators`.');
+                }
                 if (!parameters.maxDepth) {
                     throw new Error('QueryBuilderComponent missing required parameter: `maxDepth`.');
                 }
 
                 root = new Group(this);
-                root.parse(parameters.queryObservable());
-                root.query.subscribe(parameters.queryObservable);
 
                 this.root = ko.pureComputed(function () {
                     return root;
@@ -38,9 +39,19 @@
                     return parameters.fields();
                 });
 
+                this.comparators = ko.pureComputed(function () {
+                    return parameters.comparators();
+                });
+
                 this.maxDepth = ko.pureComputed(function () {
                     return parameters.maxDepth;
                 });
+
+                this.dispose = function () {
+                    if (rootSubscription) {
+                        rootSubscription.dispose();
+                    }
+                };
 
                 this.templateFor = function (node) {
                     if (node instanceof Group) {
@@ -58,6 +69,10 @@
                     }
                     return true;
                 };
+
+                // Parse the initial query.
+                root.parse(parameters.queryObservable());
+                rootSubscription = root.query.subscribe(parameters.queryObservable);
             };
         }
     );
