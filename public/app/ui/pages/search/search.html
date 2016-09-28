@@ -63,10 +63,12 @@
         <code data-bind="text: submittedQueryText"></code>.
     </p>
     <!-- /ko -->
-    <!-- ko if: shopBaseUrl -->
+    <!-- ko if: displayShopLink -->
     <p>
-        The <a href="#" target="_blank" data-bind="attr: { href: shopBaseUrl }">shop</a> may have results related to
-        <a href="#" target="_blank" data-bind="text: shopSearchText, attr: { href: shopSearchUrl }">your query</a>.
+        <a href="#" target="_blank" data-bind="attr: { href: shopSearchUrl }">
+            The shop may have results related to
+            <span data-bind="text: shopSearchText">your query</span>
+        </a>.
     </p>
     <!-- /ko -->
     <!-- ko if: hasResults -->
