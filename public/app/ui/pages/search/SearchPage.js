@@ -32,12 +32,9 @@
                 if (query && query.hasOwnProperty('children')) {
                     query.children = _(query.children)
                         .filter(function (child) {
-                            var comparator;
-                            if (child.hasOwnProperty('children')) {
-                                return child.children.length > 0;
-                            }
-                            comparator = _.find(comparators, { key: child.comparator });
-                            return !!comparator && (!comparator.valueType || (child.value && child.value.length > 0));
+                            return child.hasOwnProperty('children') ?
+                                child.children.length > 0 :
+                                !!_.find(comparators, { key: child.comparator });
                         })
                         .map(function (child) {
                             return child.hasOwnProperty('children') ? cleanQuery(child, comparators) : child;
@@ -51,8 +48,12 @@
                 if (!query || !query.children || !query.children.length) {
                     return '';
                 }
-                console.log('children', query.children);
                 return _(query.children)
+                    .filter(function (child) {
+                        return child.hasOwnProperty('children') ?
+                            child.children.length > 0 :
+                            (!!_.find(comparators, { key: child.comparator }) && child.value && child.value.length > 0);
+                    })
                     .map(function (child) {
                         return child.hasOwnProperty('children') ?
                             '(' + convertToDisplayValue(child, fields, comparators) + ')' :
