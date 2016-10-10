@@ -12,7 +12,7 @@
         function (container, searchService, detailService, cachingService, overlay) {
             var simpleApiBaseUrl, options;
 
-            simpleApiBaseUrl = 'https://staging-collections-api.histwest.org.au/service.php/simple';
+            simpleApiBaseUrl = 'https://collections-api.histwest.org.au/service.php/simple';
             options = {
                 noCache: true,
                 logErrors: true,

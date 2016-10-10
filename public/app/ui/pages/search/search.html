@@ -52,25 +52,35 @@
         </div>
     </div>
     <!-- ko if: displayResults -->
-    <!-- ko ifnot: hasResults -->
-    <p class="text-muted">
-        No results found for: <code data-bind="text: submittedQueryText"></code>.
-    </p>
-    <!-- /ko -->
-    <!-- ko if: hasResults -->
-    <p>
-        Displaying <strong data-bind="text: resultsCountText"></strong> for:
-        <code data-bind="text: submittedQueryText"></code>.
-    </p>
-    <!-- /ko -->
-    <!-- ko if: displayShopLink -->
-    <p>
-        <a href="#" target="_blank" data-bind="attr: { href: shopSearchUrl }">
-            The shop may have results related to
-            <span data-bind="text: shopSearchText">your query</span>
-        </a>.
-    </p>
-    <!-- /ko -->
+    <div class="clearfix">
+        <p class="pull-right">
+            <!-- ko if: hasResults -->
+            <a href="#" onclick="window.print();" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-print"></span>
+                Print page
+            </a>
+            <!-- /ko -->
+            <!-- ko if: displayShopLink -->
+            <a href="#" target="_blank" class="btn btn-default btn-sm" data-bind="attr: { href: shopSearchUrl }">
+                <span class="glyphicon glyphicon-search"></span>
+                Search shop for
+                &quot;<span data-bind="text: shopSearchText">your query</span>&quot;
+                <span class="glyphicon glyphicon-new-window"></span>
+            </a>
+            <!-- /ko -->
+        </p>
+        <!-- ko ifnot: hasResults -->
+        <p class="text-muted">
+            No results found for: <code data-bind="text: submittedQueryText"></code>.
+        </p>
+        <!-- /ko -->
+        <!-- ko if: hasResults -->
+        <p>
+            Displaying <strong data-bind="text: resultsCountText"></strong> for:
+            <code data-bind="text: submittedQueryText"></code>.
+        </p>
+        <!-- /ko -->
+    </div>
     <!-- ko if: hasResults -->
     <div data-bind="component: { name: 'controls/list', params: { pager: pager, sorter: sorter, modeSwitcher: modeSwitcher, searchUrlFor: searchUrlFor } }" class="text-right"></div>
     <div data-bind="component: { name: 'search/results', params: { results: displayedResults, modeSwitcher: modeSwitcher, resultFields: resultFields, start: start } }"></div>

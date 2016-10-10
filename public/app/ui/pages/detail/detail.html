@@ -2,6 +2,10 @@
     <!-- ko if: displayRecord -->
     <h1>
         <span data-bind="component: displayForLabelField()"></span>
+        <a href="#" onclick="window.print();" class="btn btn-default btn-sm pull-right">
+            <span class="glyphicon glyphicon-print"></span>
+            Print page
+        </a>
         <span class="subtitle">
             <span class="label label-default" data-bind="text: collectionName"></span>
             <span class="label label-default" data-bind="text: idno"></span>
