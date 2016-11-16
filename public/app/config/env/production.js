@@ -30,12 +30,11 @@
             return function () {
                 container.register('options.service', options);
                 container.register('options.shop', {
-                    // TODO Disabled until the shop goes live.
-                    // baseUrl: 'https://shop.histwest.org.au/index.php/',
-                    // path: {
-                    //     search: 'catalogsearch/result/',
-                    //     digitalPhotographs: 'photographs/digital-photograph.html'
-                    // }
+                    baseUrl: 'https://shop.histwest.org.au/index.php/',
+                    path: {
+                        search: 'catalogsearch/result/',
+                        digitalPhotographs: 'photographs/digital-photograph.html'
+                    }
                 });
                 container.register('options.providence', {
                     baseUrl: 'https://collections.histwest.org.au/index.php/',
